@@ -9,8 +9,8 @@ Who wants to use PHP? we. because we don't like to learn new things. PHP is crap
 
 ## Xanax ironclad rule
 
-We do not believe in PHP libraries. So we will use the library minimally.
-We do not believe in the PHP language. So we don't use a template engine.
+-We do not believe in PHP libraries. So we will use the library minimally.
+-We do not believe in the PHP language. So we don't use a template engine.
 
 I really don’t like programming. I built this tool to program less so that I could just reuse code.
 I’m not a real programmer. I throw together things until it works then I move on. The real programmers will say “Yeah it works but you’re leaking memory everywhere. Perhaps we should fix that.” I’ll just restart Apache every 10 requests.
