@@ -11,6 +11,8 @@ Who wants to use PHP? is we. we use php because we don't like to learn new thing
 
 ## Xanax ironclad rule
 
+![alt text](https://i.redd.it/oul3gz1bvwwy.jpg)
+
 - We do not believe in PHP libraries. So we will use the library minimally.
 - We do not believe in the PHP language. So we don't use a template engine.
 - We will only provide minimal functionality. We believe that what you can do with PHP is limited.
