@@ -15,6 +15,7 @@ Who wants to use PHP? is we. we use php because we don't like to learn new thing
 - We do not believe in the PHP language. So we don't use a template engine.
 - We will only provide minimal functionality. We believe that what you can do with PHP is limited.
 - We don't trust PHP users. But PHP users want something simple.
+- We don't believe in peptherightway. Get out php coding standards
 
 ## We follow the basic idea of PHP (Rasmus Lerdorf)
 
