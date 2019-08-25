@@ -15,7 +15,7 @@ Who wants to use PHP? is we. because we don't like to learn new things. PHP is c
 - We do not believe in the PHP language. So we don't use a template engine.
 - We will only provide minimal functionality. We believe that what you can do with PHP is limited.
 
-## Rasmus Lerdorf
+## We follow the basic idea of PHP (Rasmus Lerdorf)
 
 **I really don’t like programming. I built this tool to program less so that I could just reuse code.**
 
