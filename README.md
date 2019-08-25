@@ -7,7 +7,7 @@ Xanax is a web application framework. We don't trust php, php is dissonance, mak
 
 The problem with PHP is in the language. If you can't change the fundamentals, it doesn't solve the problem.
 
-Who wants to use PHP? we. because we don't like to learn new things. PHP is crap.
+Who wants to use PHP? is we. because we don't like to learn new things. PHP is crap.
 
 ## Xanax ironclad rule
 
