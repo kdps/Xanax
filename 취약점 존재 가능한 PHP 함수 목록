@@ -1,0 +1,367 @@
+Command Execution
+
+1
+2
+3
+4
+5
+6
+7
+8
+exec           - Returns last line of commands output
+passthru       - Passes commands output directly to the browser
+system         - Passes commands output directly to the browser and returns last line
+shell_exec     - Returns commands output
+`` (backticks) - Same as shell_exec()
+popen          - Opens read or write pipe to process of a command
+proc_open      - Similar to popen() but greater degree of control
+pcntl_exec     - Executes a program
+PHP Code Execution
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+eval()
+assert()  - identical to eval()
+preg_replace('/.*/e',...) - /e does an eval() on the match
+create_function()
+include()
+include_once()
+require()
+require_once()
+$_GET['func_name']($_GET['argument']);
+$func = new ReflectionFunction($_GET['func_name']); $func->invoke(); or $func->invokeArgs(array());
+
+List of functions which accept callbacks
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+Function                     => Position of callback arguments
+'ob_start'                   =>  0,
+'array_diff_uassoc'          => -1,
+'array_diff_ukey'            => -1,
+'array_filter'               =>  1,
+'array_intersect_uassoc'     => -1,
+'array_intersect_ukey'       => -1,
+'array_map'                  =>  0,
+'array_reduce'               =>  1,
+'array_udiff_assoc'          => -1,
+'array_udiff_uassoc'         => array(-1, -2),
+'array_udiff'                => -1,
+'array_uintersect_assoc'     => -1,
+'array_uintersect_uassoc'    => array(-1, -2),
+'array_uintersect'           => -1,
+'array_walk_recursive'       =>  1,
+'array_walk'                 =>  1,
+'assert_options'             =>  1,
+'uasort'                     =>  1,
+'uksort'                     =>  1,
+'usort'                      =>  1,
+'preg_replace_callback'      =>  1,
+'spl_autoload_register'      =>  0,
+'iterator_apply'             =>  1,
+'call_user_func'             =>  0,
+'call_user_func_array'       =>  0,
+'register_shutdown_function' =>  0,
+'register_tick_function'     =>  0,
+'set_error_handler'          =>  0,
+'set_exception_handler'      =>  0,
+'session_set_save_handler'   => array(0, 1, 2, 3, 4, 5),
+'sqlite_create_aggregate'    => array(2, 3),
+'sqlite_create_function'     =>  2,
+
+Information Disclosure
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+phpinfo
+posix_mkfifo
+posix_getlogin
+posix_ttyname
+getenv
+get_current_user
+proc_get_status
+get_cfg_var
+disk_free_space
+disk_total_space
+diskfreespace
+getcwd
+getlastmo
+getmygid
+getmyinode
+getmypid
+getmyuid
+
+Other
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+phpinfo
+posix_mkfifo
+posix_getlogin
+posix_ttyname
+getenv
+get_current_user
+proc_get_status
+get_cfg_var
+disk_free_space
+disk_total_space
+diskfreespace
+getcwd
+getlastmo
+getmygid
+getmyinode
+getmypid
+getmyuid
+
+Filesystem Functions
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+// open filesystem handler
+fopen
+tmpfile
+bzopen
+gzopen
+SplFileObject->__construct
+// write to filesystem (partially in combination with reading)
+chgrp
+chmod
+chown
+copy
+file_put_contents
+lchgrp
+lchown
+link
+mkdir
+move_uploaded_file
+rename
+rmdir
+symlink
+tempnam
+touch
+unlink
+imagepng   - 2nd parameter is a path.
+imagewbmp  - 2nd parameter is a path. 
+image2wbmp - 2nd parameter is a path. 
+imagejpeg  - 2nd parameter is a path.
+imagexbm   - 2nd parameter is a path.
+imagegif   - 2nd parameter is a path.
+imagegd    - 2nd parameter is a path.
+imagegd2   - 2nd parameter is a path.
+iptcembed
+ftp_get
+ftp_nb_get
+// read from filesystem
+file_exists
+file_get_contents
+file
+fileatime
+filectime
+filegroup
+fileinode
+filemtime
+fileowner
+fileperms
+filesize
+filetype
+glob
+is_dir
+is_executable
+is_file
+is_link
+is_readable
+is_uploaded_file
+is_writable
+is_writeable
+linkinfo
+lstat
+parse_ini_file
+pathinfo
+readfile
+readlink
+realpath
+stat
+gzfile
+readgzfile
+getimagesize
+imagecreatefromgif
+imagecreatefromjpeg
+imagecreatefrompng
+imagecreatefromwbmp
+imagecreatefromxbm
+imagecreatefromxpm
+ftp_put
+ftp_nb_put
+exif_read_data
+read_exif_data
+exif_thumbnail
+exif_imagetype
+hash_file
+hash_hmac_file
+hash_update_file
+md5_file
+sha1_file
+highlight_file
+show_source
+php_strip_whitespace
+get_meta_tags
+
+
+출처: https://posix.tistory.com/95 [White Security]
