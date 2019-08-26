@@ -14,6 +14,7 @@ https://unit42.paloaltonetworks.com/unit42-exploit-wild-drupalgeddon2-analysis-c
 https://curiousprog.com/2018/10/03/a-wordpress-die-md5-exploit/
 https://www.cloudways.com/blog/protect-php-website-sql-injection/
 https://www.hahwul.com/2018/11/phar-php-deserialization-vulnerability.html
+https://www.owasp.org/index.php/PHP_Object_Injection
 
 The developer intended to read in english.php or french.php, which will alter the application's behavior to display the language of the user's choice. But it is possible to inject another path using the language parameter.
 
