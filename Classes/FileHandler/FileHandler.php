@@ -18,6 +18,10 @@ class FileHandler {
 			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
+		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		}
+		
 		$return = filesize( $filePath );
 		
 		return $return >= 0 ? $return : -1;
@@ -62,6 +66,10 @@ class FileHandler {
 		
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
+		}
+		
+		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$return = filetype( $filePath );
@@ -166,6 +174,10 @@ class FileHandler {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
+		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		}
+		
 		$return = is_file ( $filePath );
 		
 		return $return;
@@ -177,6 +189,10 @@ class FileHandler {
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		}
+		
+		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
 			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
@@ -229,6 +245,10 @@ class FileHandler {
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		}
+		
+		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
 			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
