@@ -8,6 +8,8 @@ class FileValidation {
 		if( preg_match('/..\//i', $filePath) ) {
 			return true;
 		}
+		
+		return false;
 	}
 	
 	function hasExtention ( $filePath ) {
