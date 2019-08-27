@@ -55,6 +55,19 @@ class FileHandler {
 		return $return;
 	}
 	
+	function getContent( $filePath ) {
+		if ( !$this->isExists( $filePath ) ) {
+			throw new FileIsNotExistsException ( "File is not exists" );
+		}
+		
+		$fileHandler = fopen( $filePath, 'r' );
+		$fileSize = $this->getSize( $filePath );
+		$return = fread( $fileHandler, $fileSize );
+		fclose( $fileHandler );
+		
+		return $return;
+	}
+	
 	function Download ( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( "File is not exists" );
