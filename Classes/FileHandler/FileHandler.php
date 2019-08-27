@@ -5,16 +5,17 @@ namespace Xanax;
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Validation\FileValidation;
+use Xanax\Message\FileHandlerMessage;
 
 class FileHandler {
 	
 	public function getSize ( $filePath ) :int {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not Exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not File" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		$return = filesize( $filePath );
@@ -24,15 +25,15 @@ class FileHandler {
 	
 	public function appendFileContent( $filePath, $content ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$fileHandler = fopen( $filePath, 'a' );
@@ -42,11 +43,11 @@ class FileHandler {
 	
 	public function getLastModifiedTime ( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		$return = fileatime($filePath);
@@ -56,11 +57,11 @@ class FileHandler {
 	
 	public function getType ( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		$return = filetype( $filePath );
@@ -70,15 +71,15 @@ class FileHandler {
 	
 	public function getExtention ( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$return = pathinfo($filePath, PATHINFO_EXTENSION);
@@ -88,15 +89,15 @@ class FileHandler {
 	
 	public function getContent( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$fileHandler = fopen( $filePath, 'r' );
@@ -109,15 +110,15 @@ class FileHandler {
 	
 	public function Download ( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$fileHandler = @fopen($filePath, 'rb');
@@ -134,15 +135,15 @@ class FileHandler {
 	
 	public function getInterpretedContent ( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		ob_start();
@@ -151,7 +152,7 @@ class FileHandler {
 			if ( file_exists( $filePath ) ) {
 				@include( $filePath );
 			} else {
-				throw new FileIsNotExistsException ( "File is not exists" );
+				throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 			}
 		}
 		
@@ -162,7 +163,7 @@ class FileHandler {
 	
 	public function isFile ( $filePath ) :bool {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		$return = is_file ( $filePath );
@@ -172,11 +173,11 @@ class FileHandler {
 	
 	public function requireOnce( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
         require_once $filePath;
@@ -184,19 +185,19 @@ class FileHandler {
 	
 	public function Move ( $source, $destination ) :bool {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $source ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $source ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $destination ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$return = rename( $source, $destination );
@@ -206,11 +207,11 @@ class FileHandler {
 	
 	public function isEmpty ( $filePath ) :bool {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		$return = $this->Size( $filePath ) !== 0;
@@ -220,15 +221,15 @@ class FileHandler {
 	
 	public function isExists ( $filePath ) :bool {
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( "File is not exists" );
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( "Target is not file" );
+			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
 		if ( Xanax\Validation\FileValidation->hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?" );
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
 		$return = file_exists( $filePath );
