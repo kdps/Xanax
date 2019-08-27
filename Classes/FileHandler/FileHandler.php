@@ -11,8 +11,6 @@ use Xanax\Validation\FileValidation;
 
 use Xanax\Message\FileHandlerMessage;
 
-use Xanax\Classes\FilenameHandler;
-
 class FileHandler implements FileHandlerInterface {
 	
 	public function __construct () {
@@ -190,7 +188,7 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function isFile ( string $filePath ) :bool {
-		if ( Xanax\Classes\FilenameHandler->isReadable($filePath) ) {
+		if ( Xanax\Validation\FileValidation->isReadable( $filePath ) ) {
 			
 		}
 		
