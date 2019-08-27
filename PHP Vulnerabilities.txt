@@ -1,3 +1,6 @@
+htmlentities, htmlspecialchars bit operation Exploitation
+
+
 https://stackoverflow.com/questions/3115559/exploitable-php-functions
 https://shieldfy.io/security-wiki/php-vulnerabilities/exploitable-php-functions
 https://www.cvedetails.com/vulnerability-list/vendor_id-74/product_id-128/PHP-PHP.html
