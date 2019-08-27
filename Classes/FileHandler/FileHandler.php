@@ -18,8 +18,8 @@ class FileHandler {
 			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
-		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
-			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		if ( Xanax\Validation\FileValidation->isPharProtocol( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUsePharProtocolMessage() );
 		}
 		
 		$return = filesize( $filePath );
@@ -68,8 +68,8 @@ class FileHandler {
 			throw new TargetIsNotFileException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
-		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
-			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		if ( Xanax\Validation\FileValidation->isPharProtocol( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUsePharProtocolMessage() );
 		}
 		
 		$return = filetype( $filePath );
@@ -174,8 +174,8 @@ class FileHandler {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
 		
-		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
-			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		if ( Xanax\Validation\FileValidation->isPharProtocol( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUsePharProtocolMessage() );
 		}
 		
 		$return = is_file ( $filePath );
@@ -192,8 +192,8 @@ class FileHandler {
 			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
-		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
-			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		if ( Xanax\Validation\FileValidation->isPharProtocol( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUsePharProtocolMessage() );
 		}
 		
         require_once $filePath;
@@ -248,8 +248,8 @@ class FileHandler {
 			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
 		}
 		
-		if ( Xanax\Validation\FileValidation->getDoNotUsePharProtocolMessage( $filePath ) ) {
-			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUseSubDirectorySyntaxMessage() );
+		if ( Xanax\Validation\FileValidation->isPharProtocol( $filePath ) ) {
+			throw new StupidIdeaException ( Xanax\Message\FileHandlerMessage->getDoNotUsePharProtocolMessage() );
 		}
 		
 		$return = file_exists( $filePath );
