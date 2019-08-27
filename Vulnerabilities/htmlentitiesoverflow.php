@@ -9,7 +9,9 @@
 		$str1 .= toUTF(977); //MUST start with 977 before bit-shifting
 	}
 	
-	htmlentities($str1, ENT_NOQUOTES, "UTF-8"); //DoS here
+	$str1 = htmlentities($str1, ENT_NOQUOTES, "UTF-8"); //DoS here
+	
+	echo $str1;
 	/*
 		htmlentities() method automatically assumes
 		it is a max of 8 chars.  uses greek theta

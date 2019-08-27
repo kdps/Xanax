@@ -4,8 +4,16 @@ namespace Xanax\Validation;
 
 class FileValidation {
 	
+	function isPharProtocol ( $filePath ) {
+		if( preg_match('/^phar:\/\/.*/i', $filePath) ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	function hasSubfolderSyntax ( $filePath ) {
-		if( preg_match('/..\//i', $filePath) ) {
+		if( preg_match('/..\/$/i', $filePath) ) {
 			return true;
 		}
 		

@@ -43,6 +43,18 @@ class DirectoryHandler {
 		return true;
 	}
 	
+	function Copy ( $directoryPath, $copyPath ) {
+		$directoryIterator = new \RecursiveDirectoryIterator($directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS);
+		$iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
+		foreach ($iterator as $item) {
+			if ($item->isDir()) {
+				$fileSystem->mkdir($copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+			} else {
+				Xanax\Classes\FileHandler->Copy($item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+			}
+		}
+	}
+	
 	function Empty ( $directoryPath ) {
 		if ( !$this->isDirectory( $directoryPath ) ) {
 			

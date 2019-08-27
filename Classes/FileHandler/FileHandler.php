@@ -1,7 +1,6 @@
 <?php
 
 namespace Xanax\Classes;
-
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Validation\FileValidation;
@@ -25,6 +24,16 @@ class FileHandler {
 		$return = filesize( $filePath );
 		
 		return $return >= 0 ? $return : -1;
+	}
+	
+	public function copy ($filePath, $destinationPath) {
+		if ( !$this->isExists( $filePath ) ) {
+			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
+		}
+		
+		$return = copy ( $source, $dest );
+		
+		return $return;
 	}
 	
 	public function appendFileContent( $filePath, $content ) :void {
