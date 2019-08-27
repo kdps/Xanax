@@ -1,0 +1,29 @@
+<?php
+
+namespace Xanax\Interface;
+
+interface DirectoryHandler {
+	
+	public function isDirectory ( $directoryPath );
+	
+	public function Make ( $directoryPath );
+	
+	public function Create ( $directoryPath );
+	
+	public function getFileCount ( $directoryPath );
+	
+	public function isEmpty ( $directoryPath );
+	
+	public function Delete ( $directoryPath );
+	
+	public function Copy ( $directoryPath, $copyPath );
+	
+	public function getMaxDepth ();
+	
+	public function setMaxDepth ( $depth );
+	
+	public function Empty ( $directoryPath );
+	
+	public function getSize ($directoryPath);
+	
+}
