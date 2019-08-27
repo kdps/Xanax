@@ -3,11 +3,17 @@
 namespace Xanax\Classes;
 
 use Xanax\Interface\DirectoryHandlerInterface;
+
 use Xanax\Classes\FileHandler;
+
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
+
 use Xanax\Validation\DirectoryeHandler;
+
 use Xanax\Message\DirectoryeHandlerMessage;
+
+use Xanax\Classes\FilenameHandler;
 
 class DirectoryHandler {
 
@@ -17,36 +23,36 @@ class DirectoryHandler {
 		$this->directoryDepth = -1;
 	}
 	
-	public function isDirectory ( $directoryPath ) {
+	public function isDirectory ( string $directoryPath ) {
 		$return = is_dir( $directoryPath );
 		
 		return $return;
 	}
 	
-	public function Make ( $directoryPath ) {
+	public function Make ( string $directoryPath ) {
 		$this->Create( $directoryPath );
 	}
 	
-	public function Create ( $directoryPath ) {
+	public function Create ( string $directoryPath ) {
 		$return = mkdir( $directoryPath );
 		
 		return $return;
 	}
 	
-	public function getFileCount ( $directoryPath ) :int {
+	public function getFileCount ( string $directoryPath ) :int {
 		$iterator = new \RecursiveDirectoryIterator( $directoryPath, \FilesystemIterator::SKIP_DOTS );
         $return = iterator_count( $iterator );
 		
 		return $return;
 	}
 	
-	public function isEmpty ( $directoryPath ) :bool {
+	public function isEmpty ( string $directoryPath ) :bool {
         $return = ( $this->getFileCount( $directoryPath ) === 0 ) ? true : false;
 		
 		return $return;
 	}
 	
-	public function Delete ( $directoryPath ) {
+	public function Delete ( string $directoryPath ) {
 		if ( $this->isEmpty( $directoryPath ) || $this->Empty ( $directoryPath ) ) {
 			rmdir ( $directoryPath );
 		} else {
@@ -56,7 +62,7 @@ class DirectoryHandler {
 		return true;
 	}
 	
-	public function Copy ( $directoryPath, $copyPath ) {
+	public function Copy ( string $directoryPath, string $copyPath ) {
 		$directoryIterator = new \RecursiveDirectoryIterator( $directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS );
 		$iterator = new \RecursiveIteratorIterator( $directoryIterator, \RecursiveIteratorIterator::SELF_FIRST );
 		foreach ( $iterator as $item ) {
@@ -68,13 +74,13 @@ class DirectoryHandler {
 		}
 	}
 	
-	public function getSize ($directoryPath) {
+	public function getSize ( string $directoryPath ) {
 		if ( !$this->isDirectory( $directoryPath ) ) {
 			
 		}
 		
 		$size = 0;
-		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS)) as $file){
+		foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ) ) as $file ) {
 			$size += $file->getSize();
 		}
 		
@@ -85,7 +91,7 @@ class DirectoryHandler {
 		return $this->directoryDepth;
 	}
 	
-	public function setMaxDepth ( $depth ) {
+	public function setMaxDepth ( int $depth ) {
 		if ( $this->getMaxDepth() === $this->directoryDepth ) {
 			return false;
 		}
@@ -95,7 +101,7 @@ class DirectoryHandler {
 		return true;
 	}
 	
-	public function Empty ( $directoryPath ) {
+	public function Empty ( string $directoryPath ) {
 		if ( !$this->isDirectory( $directoryPath ) ) {
 			
 		}

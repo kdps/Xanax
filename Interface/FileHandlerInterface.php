@@ -31,4 +31,5 @@ interface FileHandlerInterface {
 	public function isEmpty ( $filePath );
 	
 	public function isExists ( $filePath );
+	
 }
