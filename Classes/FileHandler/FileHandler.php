@@ -170,7 +170,7 @@ class FileHandler {
 		return $return;
 	}
 	
-    public function requireOnce( $filePath ) {
+	public function requireOnce( $filePath ) {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( "File is not exists" );
 		}
@@ -180,7 +180,7 @@ class FileHandler {
 		}
 		
         require_once $filePath;
-    }
+	}
 	
 	public function Move ( $source, $destination ) :bool {
 		if ( !$this->isExists( $filePath ) ) {
