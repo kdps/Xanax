@@ -1,12 +1,18 @@
 <?php
 
 namespace Xanax\Classes;
+
+use Xanax\Interface\FileHandlerInterface;
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Validation\FileValidation;
 use Xanax\Message\FileHandlerMessage;
 
-class FileHandler {
+class FileHandler implements FileHandlerInterface {
+	
+	public function __construct () {
+		
+	}
 	
 	public function getSize ( $filePath ) :int {
 		if ( !$this->isExists( $filePath ) ) {
@@ -26,7 +32,7 @@ class FileHandler {
 		return $return >= 0 ? $return : -1;
 	}
 	
-	public function copy ($filePath, $destinationPath) {
+	public function copy ( $filePath, $destinationPath ) {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
