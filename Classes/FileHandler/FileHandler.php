@@ -27,7 +27,7 @@ class FileHandler {
 		return $return >= 0 ? $return : -1;
 	}
 	
-	public function appendFileContent( $filePath, $content ) {
+	public function appendFileContent( $filePath, $content ) :void {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -45,7 +45,7 @@ class FileHandler {
 		fclose($fileHandler);
 	}
 	
-	public function getLastModifiedTime ( $filePath ) {
+	public function getLastModifiedTime ( $filePath ) :string {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -59,7 +59,7 @@ class FileHandler {
 		return $return;
 	}
 	
-	public function getType ( $filePath ) {
+	public function getType ( $filePath ) :string {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -77,7 +77,7 @@ class FileHandler {
 		return $return;
 	}
 	
-	public function getExtention ( $filePath ) {
+	public function getExtention ( $filePath ) :string {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -95,7 +95,7 @@ class FileHandler {
 		return $return;
 	}
 	
-	public function getContent( $filePath ) {
+	public function getContent( $filePath ) :string {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -116,7 +116,7 @@ class FileHandler {
 		return $return;
 	}
 	
-	public function Download ( $filePath ) {
+	public function Download ( $filePath ) :void {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -141,7 +141,7 @@ class FileHandler {
 		fclose($file);
 	}
 	
-	public function getInterpretedContent ( $filePath ) {
+	public function getInterpretedContent ( $filePath ) :string {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
@@ -183,7 +183,7 @@ class FileHandler {
 		return $return;
 	}
 	
-	public function requireOnce( $filePath ) {
+	public function requireOnce( $filePath ) :void {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( Xanax\Message\FileHandlerMessage->getFileIsNotExistsMessage() );
 		}
