@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax;
+namespace Xanax\Classes;
 
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
