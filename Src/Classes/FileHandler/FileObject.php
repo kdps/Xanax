@@ -88,9 +88,9 @@ class FileObject {
 			if ( $this->fileHandlerClass->Copy ( $filePath, $this->filePath ) ) {
 				$this->fileHandlerClass->Delete ( $filePath );
 			}
-			
-			return true;
 		}
+		
+		return true;
 	}
 	
 	public function Seek (int $offset) {
