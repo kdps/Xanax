@@ -1,21 +1,21 @@
 <?php
-namespace Message;
+namespace Xanax\Message\FileHandler;
 
 class FileHandlerMessage {
 	
-	function getTargetIsNotFileMessage () {
+	public static function getTargetIsNotFileMessage () {
 		return "Target is not File";
 	}
 	
-	function getDoNotUseSubDirectorySyntaxMessage () {
+	public static function getDoNotUseSubDirectorySyntaxMessage () {
 		return "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?";
 	}
 	
-	function getDoNotUsePharProtocolMessage () {
+	public static function getDoNotUsePharProtocolMessage () {
 		return "Do not use Phar protocol on this function";
 	}
 	
-	function getFileIsNotExistsMessage () {
+	public static function getFileIsNotExistsMessage () {
 		return "File is not Exists, use isExists function";
 	}
 	
