@@ -50,8 +50,8 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return;
 	}
 	
-	public function Write ( $filePath, $content, $mode = 'w' ) {
-		$fileObject = new FileObject( $filePath, true, $mode );
+	public function Write ( $filePath, $content, $writeMode = 'w' ) {
+		$fileObject = new FileObject( $filePath, true, $writeMode );
 		$fileObject->startHandle();
 		
 		//if ( !$fileObject->successToStartHandle() ) {

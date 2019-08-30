@@ -8,7 +8,7 @@ class FileObject {
 
 	private $confirmFilesize = true;
 	private $writeContentLength;
-	private $mode;
+	private $writeMode;
 	private $filePath;
 	private $fileHandler;
 	private $fileExtension;
@@ -17,12 +17,12 @@ class FileObject {
 	private $writeHandler;
 	private $recoveryMode = false;
 	
-	public function __construct ( $filePath, $recoveryMode = false, $mode = 'w' ) {
+	public function __construct ( $filePath, $recoveryMode = false, $writeMode = 'w' ) {
 		$this->fileHandlerClass = new FileHandler();
 		
 		$this->filePath = $filePath;
 		$this->fileExtension = $this->fileHandlerClass->getExtention( $filePath );
-		$this->mode = $mode;
+		$this->writeMode = $writeMode;
 		
 		$this->recoveryMode = $recoveryMode;
 		if ( $this->recoveryMode ) {
@@ -71,9 +71,9 @@ class FileObject {
 	public function writeContent ( $content ) {
 		$this->confirmFilesize = true;
 		
-		if ( $this->mode === 'w' ) {
+		if ( $this->writeMode === 'w' ) {
 			$this->writeContentLength = strlen( $content );
-		} else if ( $this->mode === 'a' ) {
+		} else if ( $this->writeMode === 'a' ) {
 			$this->writeContentLength = $this->fileHandlerClass->getSize( $this->filePath ); 
 			$this->writeContentLength .= strlen( $content );
 		}
@@ -104,7 +104,7 @@ class FileObject {
 	}
 	
 	public function startHandle () {
-		$this->fileHandler = fopen( $this->getFilePath(), $this->mode );
+		$this->fileHandler = fopen( $this->getFilePath(), $this->writeMode );
 	}
 	
 	public function successToStartHandle () {
