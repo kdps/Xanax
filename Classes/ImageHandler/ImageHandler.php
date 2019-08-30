@@ -185,12 +185,14 @@ class ImageHandler {
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
+		// 00000001(alpha) 00000010(red) 00000011(green) 00000100(blue)
 		$rgb = imagecolorat($imageResource, $x, $y);
+		$alpha = ($rgb >>> 24) & 0xFF;
 		$r = ($rgb >> 16) & 0xFF;
 		$g = ($rgb >> 8) & 0xFF;
 		$b = $rgb & 0xFF;
 		
-		return array($r, $g, $b);
+		return array($alpha, $r, $g, $b);
 	}
 	
 	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue ) {
