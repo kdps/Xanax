@@ -6,16 +6,34 @@ use Xanax\Classes\FileHandler;
 
 class FileObject {
 
-	private $confirmFilesize = true;
-	private $writeContentLength;
-	private $writeMode;
-	private $filePath;
-	private $fileHandler;
-	private $fileExtension;
-	private $fileHandlerClass;
-	private $temporaryPath;
 	private $writeHandler;
+	private $fileHandler;
+	
+	// Determines whether file size capacity is compared
+	private $confirmFilesize = true;
+	
+	// The size of the file last created
+	private $writeContentLength;
+	
+	// File creation mode
+	private $writeMode;
+	
+	// The path of the file to be finally created
+	private $filePath;
+	
+	// File extension
+	private $fileExtension;
+	
+	// Class file for managing file
+	private $fileHandlerClass;
+	
+	// Path of the file to be temporarily saved
+	private $temporaryPath;
+	
+	// File pointer location
 	private $seekOffset;
+	
+	// If the length does not match the contents written, it is returned to the original file
 	private $recoveryMode = false;
 	
 	public function __construct ( $filePath, $recoveryMode = false, $writeMode = 'w' ) {
@@ -29,8 +47,13 @@ class FileObject {
 		$this->recoveryMode = $recoveryMode;
 		if ( $this->recoveryMode ) {
 			do {
-				$this->temporaryPath = sprintf("%s.%s.%s", $filePath, uniqid(rand(), true), $this->fileExtension);
-			} while ( $this->fileHandlerClass->isFile($this->temporaryPath) );
+				$this->temporaryPath = sprintf( "%s.%s.%s", $filePath, uniqid(rand(), true), $this->fileExtension );
+			} while ( $this->fileHandlerClass->isFile( $this->temporaryPath ) );
+		}
+		
+		if ( $this->writeMode === 'a' && $this->fileHandlerClass->isExists( $this->filePath ) ) {
+			$fileContent = file_get_contents( $this->filePath, true );
+			file_put_contents($this->temporaryPath, $fileContent);
 		}
 	}
 	
@@ -101,7 +124,7 @@ class FileObject {
 			$this->writeContentLength = strlen( $content );
 		} else if ( $this->writeMode === 'a' ) {
 			$this->writeContentLength = $this->fileHandlerClass->getSize( $this->filePath ); 
-			$this->writeContentLength .= strlen( $content );
+			$this->writeContentLength += strlen( $content );
 		}
 		
 		$this->writeHandler = fwrite( $this->fileHandler, $content );
@@ -114,7 +137,11 @@ class FileObject {
 			return false;
 		}
 		
-		if ( $this->writeHandler !== (int)$this->writeContentLength ) {
+		if ( $this->writeMode === 'w' && $this->writeHandler !== (int)$this->writeContentLength ) {
+			return false;
+		}
+		
+		if ( $this->writeMode === 'a' && $this->fileHandlerClass->getSize( $this->temporaryPath ) !== (int)$this->writeContentLength ) {
 			return false;
 		}
 		

@@ -88,21 +88,34 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return;
 	}
 	
-	public function Write ( $filePath, $content, $writeMode = 'w' ) {
+	/**
+     * Create a file.
+     *
+     * @param string $filePath   : File path
+     * @param string $content    : File contents
+     * @param string $writeMode  : File creation mode
+	 *
+     * @return bool
+     */
+	public function Write ( string $filePath, string $content, string $writeMode = 'w' ) :bool {
 		$fileObject = new FileObject( $filePath, true, $writeMode );
 		$fileObject->startHandle();
 		
-		//if ( !$fileObject->successToStartHandle() ) {
-		//	return false;
-		//}
+		if ( !$fileObject->successToStartHandle() ) {
+			echo "zz";
+			return false;
+		}
 		
 		$fileObject->writeContent( $content );
 		
-		//if ( !$fileObject->successToWriteContent() ) {
-		//	return false;
-		//}
+		if ( !$fileObject->successToWriteContent() ) {
+			echo "zqz";
+			return false;
+		}
 		
 		$fileObject->closeFileHandle();
+		
+		return true;
 	}
 	
 	public function appendFileContent( string $filePath, string $content, bool $makeNewFile = false ) :bool {
@@ -110,7 +123,7 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		if ( $makeNewFile ) {
+		if ( !$this->isFile( $filePath ) && $makeNewFile ) {
 			$this->Write($filePath, "", 'w');
 		}
 
