@@ -31,7 +31,11 @@ class ImageHandler {
 	}
 	
 	public function getExifData ( $filePath ) {
-		return exif_read_data($filePath, 0, true);
+		if (function_exists('exif_read_data')) {
+			return exif_read_data($filePath, 0, true);
+		}
+		
+		return new stdClass();
 	}
 	
 	public function getType ( $filePath ) {
@@ -44,58 +48,114 @@ class ImageHandler {
 		return $format;
 	}
 	
-	public function Create ( $filePath, $outputPath, $quality = 100 ) {
-		$format = $this->getType( $filePath );
+	public function Create ( $imageResource, $outputPath, $quality = 100 ) {
+		$format = $this->getType( $imageResource );
 		
 		switch ($format) {
 			case 'image/jpeg':
-				imagejpeg($filePath, $outputPath, $quality);
+				imagejpeg($imageResource, $outputPath, $quality);
 				break;
 			case  'image/png':
-				imagepng($filePath, $outputPath);
+				imagepng($imageResource, $outputPath);
 				break;
 			case  'image/gif':
-				imagegif ($filePath, $outputPath);
+				imagegif ($imageResource, $outputPath);
 				break;
 			case  'image/wbmp':
-				imagewbmp($filePath, $outputPath);
+				imagewbmp($imageResource, $outputPath);
 				break;
 			case  'image/webp':
-				imagecreatefromwebp($filePath, $outputPath);
+				imagecreatefromwebp($imageResource, $outputPath);
 				break;
 			case  'image/xbm':
-				imagexbm($filePath, $outputPath);
+				imagexbm($imageResource, $outputPath);
 				break;
 			case  'image/gd':
-				imagegd($filePath, $outputPath);
+				imagegd($imageResource, $outputPath);
 				break;
 			case  'image/gd2':
-				imagegd2($filePath, $outputPath);
+				imagegd2($imageResource, $outputPath);
 				break;
 			default:
 				return false;
 		}
+		
+		return true;
 	}
 	
-	public function getHeight ( $createInstance ) {
+	public function Flip ( $imageResource ) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		switch($type) {
+			case 'vertical':
+				imageflip($imageResource, IMG_FLIP_VERTICAL);
+				break;
+			case 'horizontal':
+				imageflip($imageResource, IMG_FLIP_HORIZONTAL);
+				break;
+			case 'both':
+				imageflip($imageResource, IMG_FLIP_BOTH);
+				break;
+		}
+		
+		return $imageResource;
+	}
+	
+	public function getWidth ( $imageResource ) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+	
 		if (function_exists('exif_read_data')) {
-			$exif = exif_read_data($source_image, 0, true);
+			$exif = exif_read_data($imageResource, 0, true);
+			
+			if (isset($exif['COMPUTED'])) {
+				$tmp = $exif['COMPUTED'];
+				return $tmp['Width'];
+			}
+		} else {
+			return imagesx($imageResource);
+		}
+	}
+	
+	public function getHeight ( $imageResource ) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		if (function_exists('exif_read_data')) {
+			$exif = exif_read_data($imageResource, 0, true);
+			
 			if (isset($exif['COMPUTED'])) {
 				$tmp = $exif['COMPUTED'];
 				return $tmp['Height'];
 			}
 		} else {
-			return $imagesy($source_image);
+			return imagesy($imageResource);
 		}
 	}
 	
-	public function Rotate ( $createInstance, $degrees ) {
-		$image = imagerotate($createInstance, $degrees, 0);
+	public function isResource ( $imageResource ) {
+		if ( gettype($createObject) === 'resource') {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function Rotate ( $imageResource, $degrees ) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		$image = imagerotate($imageResource, $degrees, 0);
 		
 		return $this->getInstance($image);
 	}
 	
-	public function getCreateInstance ( $filePath ) {
+	public function getimageResource ( $filePath ) {
 		$format = $this->getType( $filePath );
 		$createObject = null;
 		
@@ -147,12 +207,20 @@ class ImageHandler {
 	}
 	
 	public function Merge ( $sourceCreateObject, $mergeCreateObject, $transparent ) {
+		if ( !$this->isResource($sourceCreateObject) ) {
+			$sourceCreateObject = $this->getInstance( $sourceCreateObject );
+		}
+		
+		if ( !$this->isResource($mergeCreateObject) ) {
+			$mergeCreateObject = $this->getInstance( $mergeCreateObject );
+		}
+		
 		return imagecopymerge($mergeCreateObject, $sourceCreateObject, 0, 0, 0, 0, imagesx($sourceCreateObject), imagesy($sourceCreateObject), $transparent);
 	}
 	
 	public function getInstance ( $filePath ) {
 		if ( @is_array(getimagesize( $filePath )) ) {
-			return $this->getCreateInstance($filePath);
+			return $this->getimageResource($filePath);
 		}
 		
 		return new stdClass();
