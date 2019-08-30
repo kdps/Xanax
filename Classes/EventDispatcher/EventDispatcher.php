@@ -6,14 +6,18 @@ class EventDispatcher {
 
 	private $listeners = [];
 
-	public function Listen(callable $listener) {
-		$this->listeners[] = $listener;
+	public function Listen( string $event, callable $listener ) {
+		$this->listeners[ $event ][] = $listener;
 	}
 	
-	public function Dispatch(object $event) {
-		foreach ($this->listeners as $listener) {
+	public function Emit( object $event ) {
+		$listeners = $this->listeners[ get_class( $event ) ] ?? [];
+		
+		foreach ($listeners as $listener) {
 			$listener($event);
 		}
+		
+		return $event;
 	}
 	
 }
