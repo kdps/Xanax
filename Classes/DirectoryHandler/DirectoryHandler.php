@@ -53,7 +53,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	
 	public function getFileCount ( string $directoryPath ) :int {
 		$iterator = new \RecursiveDirectoryIterator( $directoryPath, \FilesystemIterator::SKIP_DOTS );
-        $return = iterator_count( $iterator );
+		$return = iterator_count( $iterator );
 		
 		return $return;
 	}
