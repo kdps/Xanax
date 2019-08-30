@@ -78,8 +78,10 @@ class FileObject {
 		
 		$filePath = $this->getFilePath();
 		$currentFileSize = $this->fileHandlerClass->getSize( $filePath );
+		$invalidFileSize = $currentFileSize === -1 ? true : false;
+		$correctFileSize = ( $currentFileSize === (int)$this->writeContentLength );
 		
-		if ( $this->recoveryMode && ( $currentFileSize !== (int)$this->writeContentLength ) ) {
+		if ( $this->recoveryMode && !$invalidFileSize && !$correctFileSize ) {
 			$this->fileHandlerClass->Delete ( $filePath );
 			return false;
 		}
