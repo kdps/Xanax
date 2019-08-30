@@ -2,6 +2,8 @@
 
 namespace Xanax\Classes;
 
+use Xanax\Classes\FileObject;
+
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
@@ -12,8 +14,20 @@ use Xanax\Message\FileHandler\FileHandlerMessage;
 
 class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 	
+	private static $lastError;
+	
 	public function __construct () {
 		
+	}
+	
+	public function Delete ( string $filePath ) :bool {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		unlink($filePath);
+		
+		return true;
 	}
 	
 	public function getSize ( string $filePath ) :int {
@@ -26,28 +40,31 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return >= 0 ? $return : -1;
 	}
 	
-	public function copy ( string $filePath, string $destinationPath ) :bool {
+	public function Copy ( string $filePath, string $destination ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		$return = copy ( $source, $dest );
+		$return = copy ( $filePath, $destination );
 		
 		return $return;
 	}
 	
 	public function Write ( $filePath, $content, $mode = 'w' ) {
-		$fileHandler = fopen($filePath, 'w');
-		if ( $fileHandler == false ) {
-			return false;
-		}
+		$fileObject = new FileObject( $filePath, true, $mode );
+		$fileObject->startHandle();
 		
-		$fwrite = fwrite($fileHandler, $content);
-		if ( $fwrite === false ) {
-			return false;
-		}
+		//if ( !$fileObject->successToStartHandle() ) {
+		//	return false;
+		//}
 		
-		fclose($fileHandler);
+		$fileObject->writeContent( $content );
+		
+		//if ( !$fileObject->successToWriteContent() ) {
+		//	return false;
+		//}
+		
+		$fileObject->closeFileHandle();
 	}
 	
 	public function appendFileContent( string $filePath, string $content, bool $makeNewFile = false ) :bool {
@@ -56,7 +73,7 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		}
 		
 		if ( $makeNewFile ) {
-			
+			$this->Write($filePath, "", 'w');
 		}
 
 		$this->Write($filePath, $content, 'a');
@@ -88,11 +105,11 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return;
 	}
 	
+	public function getBasename ( $fileName, $extension ) {
+		return basename($fileName, $extension).PHP_EOL;
+	}
+	
 	public function getExtention ( string $filePath ) :string {
-		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
-		}
-		
 		$return = pathinfo($filePath, PATHINFO_EXTENSION);
 		
 		return $return;

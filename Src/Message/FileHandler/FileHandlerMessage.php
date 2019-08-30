@@ -8,15 +8,15 @@ class FileHandlerMessage {
 	}
 	
 	public static function getDoNotUseSubDirectorySyntaxMessage () {
-		return "Do not use SubDirectory Syntax stupid, do you have a Intellectual disability?";
+		return "Don't use Subdirectory syntax";
 	}
 	
 	public static function getDoNotUsePharProtocolMessage () {
-		return "Do not use Phar protocol on this function";
+		return "Don't use Phar protocol";
 	}
 	
 	public static function getFileIsNotExistsMessage () {
-		return "File is not Exists, use isExists function";
+		return "File doesn't Exist";
 	}
 	
 }
