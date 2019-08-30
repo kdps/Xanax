@@ -66,7 +66,23 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	
 	public function Delete ( string $directoryPath ) {
 		if ( $this->isEmpty( $directoryPath ) || $this->Empty ( $directoryPath ) ) {
-			rmdir ( $directoryPath );
+			
+			$iterator = new RecursiveIteratorIterator (
+				new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
+				RecursiveIteratorIterator::CHILD_FIRST
+			);
+			
+			$iterator->setMaxDepth( -1 ); // Absolutly delete folders
+			
+			foreach( $iterator as $fileInformation ) {
+				if ( $fileInformation->isDir() ) {
+					if ( delete( $fileInformation->getRealPath() ) === false ) {
+						return false;
+					}
+				}
+			}
+			
+			return true;
 		} else {
 			return false;
 		}
@@ -131,11 +147,11 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 				}
 				
 				if ( !$this->isDirectory($folderPath) ) {
-					continue;
+					return false;
 				}
 				
 				if ( $this->isDirectory($newDirectoryName) ) {
-					continue;
+					return false;
 				}
 				
 				rename ($folderPath, $newDirectoryName);
@@ -169,11 +185,11 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 					}
 					
 					if ( !Xanax\Classes\FilenameHandler->isExists($filePath) ) {
-						continue;
+						return false;
 					}
 					
 					if ( !Xanax\Classes\FilenameHandler->isExists($newFileName) ) {
-						continue;
+						return false;
 					}
 					
                     rename ($filePath, $newFileName);
@@ -201,11 +217,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		}
 		
 		foreach( $iterator as $fileInformation ) {
-			if ( $fileInformation->isDir() ) {
-				if( delete( $fileInformation->getRealPath() ) === false ) {
-					return false;
-				}
-			} else {
+			if ( !$fileInformation->isDir() ) {
 				if( unlink( $fileInformation->getRealPath() ) === false ) {
 					return false;
 				}
