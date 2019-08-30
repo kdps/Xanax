@@ -185,7 +185,7 @@ class ImageHandler {
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
-		// 00000001(alpha) 00000010(red) 00000011(green) 00000100(blue)
+		//  0xAARRGGBB => 00000001(alpha) 00000010(red) 00000011(green) 00000100(blue)
 		$rgb = imagecolorat($imageResource, $x, $y);
 		$alpha = ($rgb >>> 24) & 0xFF;
 		$r = ($rgb >> 16) & 0xFF;
