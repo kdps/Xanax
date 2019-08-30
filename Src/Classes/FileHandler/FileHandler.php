@@ -19,6 +19,27 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 	public function __construct () {
 		
 	}
+	public function isLocked ( string $filePath ) :void {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		if ( !flock($filePath, LOCK_EX) ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function isWritable ( string $filePath ) :void {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		$return = is_writable ( $filePath );
+		
+		return $return;
+	}
 	
 	public function Delete ( string $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {

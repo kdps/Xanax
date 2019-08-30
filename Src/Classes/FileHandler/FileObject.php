@@ -68,7 +68,19 @@ class FileObject {
 		}
 	}
 	
+	public function isLocked () {
+		return $this->fileHandlerClass->isLocked( $this->filePath );
+	}
+	
+	public function isWritable () {
+		return $this->fileHandlerClass->isWritable( $this->filePath );
+	}
+	
 	public function writeContent ( $content ) {
+		if ( !$this->isWritable() || $this->isLocked() ) {
+			return false;
+		}
+		
 		$this->confirmFilesize = true;
 		
 		if ( $this->writeMode === 'w' ) {
@@ -79,6 +91,8 @@ class FileObject {
 		}
 		
 		$this->writeHandler = fwrite( $this->fileHandler, $content );
+		
+		return true;
 	}
 	
 	public function successToWriteContent () {
