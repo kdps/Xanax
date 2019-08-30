@@ -3,7 +3,7 @@
 class ImageHandler {
 	
 	//http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
-	public function is_animated_gif ($filename) {
+	public function isAnimated ($filename) {
 		if (!($fh = @fopen($filename, 'rb'))) {
 			return false;
 		}
@@ -28,6 +28,18 @@ class ImageHandler {
 
 		fclose($fh);
 		return $count > 1;
+	}
+	
+	public function drawRepeat ($imageResource, $width, $height) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		$width = $width || $this->getWidth($imageResource);
+		$height = $height || $this->getHeight($imageResource);
+		
+		imagesettile($imageResource, $image);
+		imagefilledrectangle($imageResource, 0, 0, $width, $height, IMG_COLOR_TILED);
 	}
 	
 	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue) {
@@ -383,6 +395,13 @@ class ImageHandler {
 	public function getInstance ( $filePath ) {
 		if ( @is_array(getimagesize( $filePath )) ) {
 			return $this->getimageResource($filePath);
+		} else {
+			$finfo = getImageSize($filePath);
+			if ($finfo === false) {
+				return false;
+			} 
+			
+			return $filePath;
 		}
 		
 		return new stdClass();
