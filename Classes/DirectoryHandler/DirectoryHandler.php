@@ -15,12 +15,24 @@ use Xanax\Message\DirectoryeHandlerMessage;
 
 use Xanax\Classes\FilenameHandler;
 
-class DirectoryHandler {
+class DirectoryHandler implements DirectoryHandlerInterface {
 
 	private $directoryDepth;
 
 	public function __construct () {
 		$this->directoryDepth = -1;
+	}
+	
+	public function hasCurrentWorkingLocation () {
+		if ( !$this->getCurrentWorkingLocation() ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public function getCurrentWorkingLocation () {
+		return getcwd();
 	}
 	
 	public function isDirectory ( string $directoryPath ) {
@@ -29,12 +41,12 @@ class DirectoryHandler {
 		return $return;
 	}
 	
-	public function Make ( string $directoryPath ) {
+	public function Make ( string $directoryPath, $permission = 644 ) {
 		$this->Create( $directoryPath );
 	}
 	
-	public function Create ( string $directoryPath ) {
-		$return = mkdir( $directoryPath );
+	public function Create ( string $directoryPath, $permission = 644 ) {
+		$return = mkdir( $directoryPath, $permission );
 		
 		return $return;
 	}
@@ -96,7 +108,80 @@ class DirectoryHandler {
 			return false;
 		}
 		
-		$this->directoryDepth = $depth;
+		$this->directoryDepth = intval($depth);
+		
+		return true;
+	}
+	
+	public function Rename ( string $directoryPath, $string, $replacement ) {
+		$iterator = new RecursiveIteratorIterator (
+			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
+			RecursiveIteratorIterator::SELF_FIRST
+		);
+		
+		foreach ($iterator as $folderPath => $fileInformation) {
+			
+			if ( $fileInformation->isDir() ) {
+				
+				$folderPath = $fileInformation->getPathName();
+				$newDirectoryName = preg_replace($replacement, $string, $folderPath);
+			
+				if ($filePath === $newFileName) {
+					continue;
+				}
+				
+				if ( !$this->isDirectory($folderPath) ) {
+					continue;
+				}
+				
+				if ( $this->isDirectory($newDirectoryName) ) {
+					continue;
+				}
+				
+				rename ($folderPath, $newDirectoryName);
+				
+			}
+			
+		}
+		
+		return true;
+	}
+	
+	public function RenameInnerFiles ( string $directoryPath, $string, $replacement ) {
+		$iterator = new RecursiveIteratorIterator (
+			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
+			RecursiveIteratorIterator::SELF_FIRST
+		);
+		
+		foreach ($iterator as $path => $fileInformation) {
+			
+			if ( $fileInformation->isDir() ) {
+				
+				$rootDirectory = $fileInformation->getPathName();
+				
+				foreach ( scandir($rootDirectory) as $targetFilename ) {
+					$filePath = sprintf("%s/%s", $rootDirectory, $targetFilename);
+					$newFileName = preg_replace($replacement, $string, $targetFilename);
+					$newFileName = sprintf("%s/%s", $rootDirectory, $newFileName);
+					
+					if ($filePath === $newFileName) {
+						continue;
+					}
+					
+					if ( !Xanax\Classes\FilenameHandler->isExists($filePath) ) {
+						continue;
+					}
+					
+					if ( !Xanax\Classes\FilenameHandler->isExists($newFileName) ) {
+						continue;
+					}
+					
+                    rename ($filePath, $newFileName);
+				}
+				
+			}
+			
+		}
 		
 		return true;
 	}
@@ -111,17 +196,17 @@ class DirectoryHandler {
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 		
-		if ( $this->directoryDepth !== -1 ) {
-			$iterator->setMaxDepth( $this->directoryDepth );
+		if ( $this->getMaxDepth() !== -1 ) {
+			$iterator->setMaxDepth( $this->getMaxDepth() );
 		}
 		
-		foreach( $iterator as $fileinfo ) {
-			if ( $fileinfo->isDir() ) {
-				if( delete( $fileinfo->getRealPath() ) === false ) {
+		foreach( $iterator as $fileInformation ) {
+			if ( $fileInformation->isDir() ) {
+				if( delete( $fileInformation->getRealPath() ) === false ) {
 					return false;
 				}
 			} else {
-				if( unlink( $fileinfo->getRealPath() ) === false ) {
+				if( unlink( $fileInformation->getRealPath() ) === false ) {
 					return false;
 				}
 			}
