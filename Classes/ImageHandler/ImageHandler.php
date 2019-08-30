@@ -283,10 +283,10 @@ class ImageHandler {
 		}
 	
 		if (function_exists('exif_read_data')) {
-			$exif = exif_read_data($imageResource, 0, true);
+			$exifData = exif_read_data($imageResource, 0, true);
 			
-			if (isset($exif['COMPUTED'])) {
-				$tmp = $exif['COMPUTED'];
+			if (isset($exifData['COMPUTED'])) {
+				$tmp = $exifData['COMPUTED'];
 				return $tmp['Width'];
 			}
 		} else {
