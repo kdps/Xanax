@@ -132,6 +132,14 @@ class FileObject {
 		return true;
 	}
 	
+	public function printFileData ($mbSize = 8) {
+		while( !feof( $this->fileHandler ) ) {
+			print( @fread( $this->fileHandler, (1024 * $mbSize) ) );
+			ob_flush();
+			flush();
+		}
+	}
+	
 	public function successToWriteContent () {
 		if ( !getType($this->writeHandler) === 'integer' ) {
 			return false;
