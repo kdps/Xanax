@@ -30,6 +30,32 @@ class ImageHandler {
 		return $count > 1;
 	}
 	
+	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		$backgroundColor = imagecolorallocate($imageResource, $red, $green, $blue);
+		$outputImage = imagefilledellipse($imageResource, $x, $y, $width, $height, $backgroundColor);
+		return $outputImage;
+	}
+	
+	public function Combine ( $paletteImage, $combineImage, $right = 0, $top = 0) {
+		if ( !$this->isResource($paletteImage) ) {
+			$paletteImage = $this->getInstance( $paletteImage );
+		}
+		
+		if ( !$this->isResource($combineImage) ) {
+			$combineImage = $this->getInstance( $combineImage );
+		}
+		
+		$x = imagesx($paletteImage) - imagesx($combineImage) - $right;
+		$y = imagesy($paletteImage) - imagesy($combineImage) - $top;
+		imagecopy($paletteImage, $combineImage, $x, $y, 0, 0, imagesx($combineImage), imagesy($combineImage));
+
+		return $paletteImage;
+	}
+	
 	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
