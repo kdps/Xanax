@@ -7,8 +7,8 @@ class EventDispatcher {
 	private $listeners = [];
 	
 	public function removeListener( string $eventName, callable $listener ) {
-		if ( $this->hasListener( $eventName ) ) {
-			
+		if ( !$this->hasListener( $eventName ) ) {
+			return false;
 		}
 	}
 	
@@ -20,7 +20,7 @@ class EventDispatcher {
 		return count ($listeners || $this->getListeners());
 	}
 	
-	public function hasListener ( string $eventName ) {
+	public function hasListener ( string $eventName ) :bool {
 		if ( $eventName !== null ) {
 			$listener = $this->getListeners( $eventName );
 			return !empty($listener);
@@ -39,7 +39,7 @@ class EventDispatcher {
 		return false;
 	}
 	
-	public function addListener ( string $eventName, callable $listener ) {
+	public function addListener ( string $eventName, callable $listener ) :void {
 		if ( $this->hasListener( $eventName ) ) {
 			return;
 		}
@@ -47,7 +47,7 @@ class EventDispatcher {
 		$this->listeners[ $eventName ][] = $listener;
 	}
 	
-	public function Emit ( object $event ) {
+	public function Emit ( object $event ) :object {
 		$listeners = $this->getListeners( get_class( $event ) ) ?? [];
 		
 		if ( count($listeners) <= 0 ) {
