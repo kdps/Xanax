@@ -19,9 +19,26 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 	public function __construct () {
 		
 	}
-	public function isLocked ( string $filePath ) :void {
-		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+	
+	public function isValidHandler ($fileHandler) {
+		if ( getType($fileHandler) !== "resource" ) {
+			return false;
+		}
+		
+		if ( get_resource_type ($fileHandler) !== "stream" ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public function isLocked ( $filePath ) :bool {
+		if ( !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
+			return false;
+		}
+		
+		if ( !$this->isValidHandler($filePath) ) {
+			$filePath = fopen($filePath, "r+");
 		}
 		
 		if ( !flock($filePath, LOCK_EX) ) {
@@ -31,9 +48,9 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return false;
 	}
 	
-	public function isWritable ( string $filePath ) :void {
-		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+	public function isWritable ( string $filePath ) :bool {
+		if ( !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
+			return true;
 		}
 		
 		$return = is_writable ( $filePath );

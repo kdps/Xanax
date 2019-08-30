@@ -15,11 +15,13 @@ class FileObject {
 	private $fileHandlerClass;
 	private $temporaryPath;
 	private $writeHandler;
+	private $seekOffset;
 	private $recoveryMode = false;
 	
 	public function __construct ( $filePath, $recoveryMode = false, $writeMode = 'w' ) {
 		$this->fileHandlerClass = new FileHandler();
 		
+		$this->seekOffset = 0;
 		$this->filePath = $filePath;
 		$this->fileExtension = $this->fileHandlerClass->getExtention( $filePath );
 		$this->writeMode = $writeMode;
@@ -66,6 +68,18 @@ class FileObject {
 			
 			return true;
 		}
+	}
+	
+	public function Seek (int $offset) {
+		$seek = fseek( $this->fileHandler, $offset, SEEK_SET );
+		
+		if ( $seek === 0 ) {
+			$this->seekOffset = $offset;
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public function isLocked () {
