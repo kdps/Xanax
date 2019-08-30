@@ -30,6 +30,142 @@ class ImageHandler {
 		return $count > 1;
 	}
 	
+	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		list($origin_width, $origin_height) = getimagesize($src);
+		$ratio = $origin_width / $origin_height;
+		$resizeWidth = $resizeHeight = min($resizeWidth, max($origin_width, $origin_height));
+		
+		if ($ratio < 1) {
+			$resizeWidth = $thumbnail_height * $ratio;
+		} else {
+			$resizeHeight = $thumbnail_width / $ratio;
+		}
+		
+		$outputImage = imagecreatetruecolor($resizeWidth, $resizeHeight);
+		
+		$width = $this->getWidth($imageResource);
+		$height = $this->getHeight($imageResource);
+		
+		//make image alpha
+		imageAlphaBlending($outputImage, false);
+		imageSaveAlpha($outputImage, false);
+
+		imagecopyresampled($outputImage, $imageResource, 0, 0, 0, 0, $resizeWidth, $resizeHeight, $width, $height);
+		
+		return $outputImage;
+	}
+	
+	public function FIlter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') {
+		
+		$type = strtolower($type);
+		
+		if ($type=='reverse') {
+			imagefilter($imageResource, IMG_FILTER_NEGATE);
+		} else if ($type=='gray') {
+			imagefilter($imageResource, IMG_FILTER_GRAYSCALE);
+		} else if ($type=='edge') {
+			imagefilter($imageResource, IMG_FILTER_EDGEDETECT);
+		} else if ($type=='emboss') {
+			imagefilter($imageResource, IMG_FILTER_EMBOSS);
+		} else if ($type=='gaussian_blur') {
+			imagefilter($imageResource, IMG_FILTER_GAUSSIAN_BLUR);
+		} else if ($type=='blur') {
+			imagefilter($imageResource, IMG_FILTER_SELECTIVE_BLUR);
+		} else if ($type=='sketch') {
+			imagefilter($imageResource, IMG_FILTER_MEAN_REMOVAL);
+		} else if ($type=='brightness') {
+			//args1 = Brightness Level
+			imagefilter($imageResource, IMG_FILTER_BRIGHTNESS, $args1);
+		} else if ($type=='brightness') {
+			//args1 = Contrast Level
+			imagefilter($imageResource, IMG_FILTER_CONTRAST, $args1);
+		} else if ($type=='brightness') {
+			//args1 = Smoothness Level
+			imagefilter($imageResource, IMG_FILTER_SMOOTH, $args1);
+		} else if ($type=='pixelate') {
+			//arg1 = Block Size, arg2 = Pixelation Effect Mode
+			imagefilter($imageResource, IMG_FILTER_PIXELATE, $args1, $args2);
+		} else if ($type=='colorize') {
+			//arg1, arg2 & arg3 = red, blue, green / arg4 = alpha channel
+			imagefilter($imageResource, IMG_FILTER_COLORIZE, $args1, $args2, $args3);
+		}
+		
+		return $imageResource;
+	}
+	
+	public function Draw ( $imageResource ) {
+		$format = $this->getType( $imageResource );
+		
+		switch($format) {
+			case 'image/jpeg':
+				header("Content-Type: image/jpeg");
+				imagejpeg($imageResource);
+				break;
+			case 'image/png':
+				header("Content-Type: image/png");
+				imagepng($imageResource);
+				break;
+			case 'image/bmp':
+				header("Content-Type: image/bmp");
+				imagebmp($imageResource);
+				break;
+			case  'image/gif':
+				header("Content-Type: image/gif");
+				imagegif ($imageResource);
+				break;
+			case  'image/wbmp':
+				header("Content-Type: vnd.wap.wbmp");
+				imagewbmp($imageResource);
+				break;
+			case  'image/webp':
+				header("Content-Type: image/webp");
+				imagecreatefromwebp($imageResource);
+				break;
+			case  'image/xbm':
+				header("Content-Type: image/xbm");
+				imagexbm($imageResource);
+				break;
+			case  'image/gd':
+				header("Content-Type: image/gd");
+				imagegd($imageResource);
+				break;
+			case  'image/gd2':
+				header("Content-Type: image/gd2");
+				imagegd($imageResource);
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public function pickColor ( $imageResource, $x, $y ) :array {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		$rgb = imagecolorat($imageResource, $x, $y);
+		$r = ($rgb >> 16) & 0xFF;
+		$g = ($rgb >> 8) & 0xFF;
+		$b = $rgb & 0xFF;
+		
+		return array($r, $g, $b);
+	}
+	
+	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue ) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		$textcolor = imagecolorallocate($imageResource, $red, $green, $blue);
+		imagestring($imageResource, $fontSize, $x, $y, $text, $textcolor);
+		
+		return $imageResource;
+	}
+	
 	public function getExifData ( $filePath ) {
 		if (function_exists('exif_read_data')) {
 			return exif_read_data($filePath, 0, true);
