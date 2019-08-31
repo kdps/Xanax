@@ -15,9 +15,10 @@ use Xanax\Message\FileHandler\FileHandlerMessage;
 class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 	
 	private static $lastError;
+	private $strictMode = true;
 	
-	public function __construct () {
-		
+	public function __construct ($useStrictMode = true) {
+		$this->strictMode = $useStrictMode;
 	}
 	
 	public function isValidHandler ($fileHandler) {
@@ -32,8 +33,32 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return true;
 	}
 	
+	/**
+	 * Gets whether the file can be read.
+	 *
+	 * @param string $filePath    : Path of the file to check
+	 *
+	 * @return bool
+	 */
+	public function isReadable ( $filePath ) :bool {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		$return = is_readable ($filePath);
+		
+		return $return;
+	}
+	
+	/**
+	 * Gets whether the file is locked.
+	 *
+	 * @param string $filePath    : Path of the file to check
+	 *
+	 * @return bool
+	 */
 	public function isLocked ( $filePath ) :bool {
-		if ( !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
+		if ( $this->strictMode && !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
 			return false;
 		}
 		
@@ -48,6 +73,13 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return false;
 	}
 	
+	/**
+	 * Gets whether the file can be written to.
+	 *
+	 * @param string $filePath    : Path of the file to check
+	 *
+	 * @return bool
+	 */
 	public function isWritable ( string $filePath ) :bool {
 		if ( !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
 			return true;
@@ -58,6 +90,13 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Delete the file.
+	 *
+	 * @param string $filePath    : Path of the file to delete
+	 *
+	 * @return bool
+	 */
 	public function Delete ( string $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -68,6 +107,13 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return true;
 	}
 	
+	/**
+	 * Check the size of the file.
+	 *
+	 * @param string $filePath    : Path of the file to get size
+	 *
+	 * @return int
+	 */
 	public function getSize ( string $filePath ) :int {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -78,6 +124,14 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return >= 0 ? $return : -1;
 	}
 	
+	/**
+	 * Copy the file.
+	 *
+	 * @param string $filePath    : Path of the file to copy
+	 * @param string $destination : Path to which copied files are to be saved
+	 *
+	 * @return bool
+	 */
 	public function Copy ( string $filePath, string $destination ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -87,16 +141,16 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		
 		return $return;
 	}
-	
+
 	/**
-     * Create a file.
-     *
-     * @param string $filePath   : File path
-     * @param string $content    : File contents
-     * @param string $writeMode  : File creation mode
+	 * Create a file.
 	 *
-     * @return bool
-     */
+	 * @param string $filePath   : Path of the file to create
+	 * @param string $content    : File contents
+	 * @param string $writeMode  : File creation mode
+	 *
+	 * @return bool
+	 */
 	public function Write ( string $filePath, string $content, string $writeMode = 'w' ) :bool {
 		$fileObject = new FileObject( $filePath, true, $writeMode );
 		$fileObject->startHandle();
@@ -118,7 +172,16 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return true;
 	}
 	
-	public function appendFileContent( string $filePath, string $content, bool $makeNewFile = false ) :bool {
+	/**
+	 * Append the contents to the file.
+	 *
+	 * @param string $filePath    : Path of the file to append contents
+	 * @param string $content     : File contents
+	 * @param bool   $makeNewFile : If the file does not exist, create a new file.
+	 *
+	 * @return bool
+	 */
+	public function appendFileContent( string $filePath, string $content, bool $makeNewFile = true ) :bool {
 		if ( !$this->isFile( $filePath ) && !$makeNewFile ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -132,6 +195,13 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return true;
 	}
 	
+	/**
+	 * Bring the last modified time.
+	 *
+	 * @param string $filePath    : Path of the file to check
+	 *
+	 * @return string
+	 */
 	public function getLastModifiedTime ( string $filePath ) :string {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -142,6 +212,13 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Get the file type.
+	 *
+	 * @param string $filePath    : Path of the file to check
+	 *
+	 * @return string
+	 */
 	public function getType ( string $filePath ) :string {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );

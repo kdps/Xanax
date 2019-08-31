@@ -36,7 +36,7 @@ class FileObject {
 	// If the length does not match the contents written, it is returned to the original file
 	private $recoveryMode = false;
 	
-	public function __construct ( $filePath, $recoveryMode = false, $writeMode = 'w' ) {
+	public function __construct ( string $filePath, bool $recoveryMode = false, string $writeMode = 'w' ) {
 		$this->fileHandlerClass = new FileHandler();
 		
 		$this->seekOffset = 0;
@@ -95,7 +95,7 @@ class FileObject {
 		return true;
 	}
 	
-	public function Seek (int $offset) {
+	public function Seek ( int $offset ) :bool {
 		$seek = fseek( $this->fileHandler, $offset, SEEK_SET );
 		
 		if ( $seek === 0 ) {
@@ -107,15 +107,15 @@ class FileObject {
 		return false;
 	}
 	
-	public function isLocked () {
+	public function isLocked () :bool {
 		return $this->fileHandlerClass->isLocked( $this->filePath );
 	}
 	
-	public function isWritable () {
+	public function isWritable () :bool {
 		return $this->fileHandlerClass->isWritable( $this->filePath );
 	}
 	
-	public function writeContent ( $content ) {
+	public function writeContent ( string $content, $isLarge = false ) :bool {
 		if ( !$this->isWritable() || $this->isLocked() ) {
 			return false;
 		}
@@ -129,12 +129,19 @@ class FileObject {
 			$this->writeContentLength += strlen( $content );
 		}
 		
-		$this->writeHandler = fwrite( $this->fileHandler, $content );
-		
+		if ( $isLarge ) {
+			$pieces = str_split($content, 1024 * 4);
+			foreach ($pieces as $piece) {
+				$this->writeHandler += fwrite( $this->fileHandler, $piece, strlen($piece));
+			}
+		} else {
+			$this->writeHandler = fwrite( $this->fileHandler, $content );
+		}
+	
 		return true;
 	}
 	
-	public function printFileData ($mbSize = 8) {
+	public function printFileData ( int $mbSize = 8 ) {
 		while( !feof( $this->fileHandler ) ) {
 			print( @fread( $this->fileHandler, (1024 * $mbSize) ) );
 			ob_flush();
@@ -142,7 +149,7 @@ class FileObject {
 		}
 	}
 	
-	public function successToWriteContent () {
+	public function successToWriteContent () :bool {
 		if ( !getType($this->writeHandler) === 'integer' ) {
 			return false;
 		}
@@ -158,7 +165,7 @@ class FileObject {
 		return true;
 	}
 	
-	public function getFilePath () {
+	public function getFilePath () :string {
 		if ( $this->recoveryMode ) {
 			$filePath = $this->temporaryPath;
 		} else {
@@ -168,11 +175,11 @@ class FileObject {
 		return $filePath;
 	}
 	
-	public function startHandle () {
+	public function startHandle () :void {
 		$this->fileHandler = fopen( $this->getFilePath(), $this->writeMode );
 	}
 	
-	public function successToStartHandle () {
+	public function successToStartHandle () :bool {
 		if ( ($this->fileHandler) === false ) {
 			return false;
 		}
