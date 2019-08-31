@@ -50,6 +50,7 @@ class FileObject {
 	
 	public function __construct ( string $filePath, bool $recoveryMode = false, string $mode = 'w' ) {
 		$this->fileHandlerClass = new FileHandler();
+		$this->directoryHandler = new DirectoryHandler( $this->fileHandlerClass );
 		
 		$this->seekOffset = 0;
 		$this->filePath = $filePath;
@@ -228,6 +229,24 @@ class FileObject {
 			ob_flush();
 			flush();
 		}
+	}
+	
+	public function isEnoughFreeSpace () :bool {
+		$freeSpace = $this->directoryHandler->getFreeSpace();
+		$capacity = (int)$this->writeContentLength;
+		
+		$bool = $freeSpace < $freeSpace;
+		if ( $this->mode === 'w' && !$bool ) {
+			return false;
+		}
+		
+		$sourceFileSize = $this->fileHandlerClass->getSize( $this->filePath );
+		$bool = ($freeSpace + $sourceFileSize) < $freeSpace;
+		if ( $this->mode === 'a' && !$bool ) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public function successToWriteContent () :bool {

@@ -29,8 +29,8 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		$this->directoryDepth = -1;
 	}
 	
-	public function getFreeSpace () {
-		$diskFreeSpaces = disk_free_space("/");
+	public function getFreeSpace ( $prefix = "/" ) {
+		$diskFreeSpaces = disk_free_space( $prefix );
 		
 		return $diskFreeSpaces;
 	}
