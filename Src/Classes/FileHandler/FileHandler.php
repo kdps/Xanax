@@ -137,7 +137,7 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
-	public function isEqual (  string $filePath, string $string = null ) {
+	public function isEqual (  string $filePath, string $string = null ) :bool {
 		$fileObject = new FileObject( $filePath, false, "r" );
 		$fileObject->startHandle();
 		$bool = $fileObject->isEqual( $string );
@@ -351,7 +351,7 @@ class FileHandler implements FileHandlerInterface {
 		return $this->Write( $filePath, $invertedLines, 'w' );
 	}
 	
-	public function getBasename ( $fileName, $extension = null ) {
+	public function getBasename ( $fileName, $extension = null ) :string {
 		return basename($fileName, $extension).PHP_EOL;
 	}
 	

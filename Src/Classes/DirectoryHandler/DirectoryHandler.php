@@ -53,11 +53,11 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		return $return;
 	}
 	
-	public function Make ( string $directoryPath, $permission = 644 ) {
+	public function Make ( string $directoryPath, int $permission = 644 ) {
 		$this->Create( $directoryPath );
 	}
 	
-	public function Create ( string $directoryPath, $permission = 644 ) {
+	public function Create ( string $directoryPath, int $permission = 644 ) {
 		$return = mkdir( $directoryPath, $permission );
 		
 		return $return;
@@ -144,7 +144,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		return true;
 	}
 	
-	public function Rename ( string $directoryPath, $string, $replacement ) {
+	public function Rename ( string $directoryPath, string $string, string $replacement ) {
 		$iterator = new RecursiveIteratorIterator (
 			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
 			RecursiveIteratorIterator::SELF_FIRST
