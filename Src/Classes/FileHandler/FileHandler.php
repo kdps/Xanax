@@ -92,6 +92,30 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	public function isUnknownFile ( string $filePath ) :bool {
+		if ( $this->getType ( $filePath ) === "unknown" ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function isSymbolicLink ( string $filePath ) :bool {
+		if ( $this->getType ( $filePath ) === "link" ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function isRegularFile ( string $filePath ) :bool {
+		if ( $this->getType ( $filePath ) === "file" ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public function isFile ( string $filePath ) :bool {
 		if ( FileValidation::isReadable( $filePath ) ) {
 			

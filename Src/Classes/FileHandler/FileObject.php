@@ -69,14 +69,6 @@ class FileObject {
 		}
 	}
 	
-	public function isFile () {
-		if ( $this->fileHandlerClass->getType ( $this->filePath ) === "file" ) {
-			return true;
-		}
-		
-		return false;
-	}
-	
 	public function hasWriteContentLength () {
 		if ( $this->writeContentLength === -1 ) {
 			return false;
