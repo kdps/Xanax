@@ -19,8 +19,8 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	private $fileHandler;
 	private $directoryDepth;
 
-	public function __construct ( FileHandlerInterface $fileHandler ) {
-		if ( $fileHandler ) {
+	public function __construct ( $fileHandler ) {
+		if ( $fileHandler instanceof FileHandlerInterface ) {
 			$this->fileHandler = $fileHandler;
 		} else {
 			$this->fileHandler = new DirectoryHandler();
