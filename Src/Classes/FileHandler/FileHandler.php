@@ -188,10 +188,10 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 
-	public function Read ( string $filePath, int $length, string $writeMode = 'r' ) {
+	public function Read ( string $filePath, int $length = -1, string $writeMode = 'r' ) {
 		$fileObject = new FileObject( $filePath, false, $writeMode );
-		if ( !$fileObject->isWritableMode ($writeMode) ) {
-			
+		if ( !$fileObject->isFile() ) {
+			return false;
 		}
 		
 		$fileObject->startHandle();

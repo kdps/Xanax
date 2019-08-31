@@ -69,6 +69,14 @@ class FileObject {
 		}
 	}
 	
+	public function isFile () {
+		if ( $this->fileHandlerClass->getType ( $this->filePath ) === "file" ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public function hasWriteContentLength () {
 		if ( $this->writeContentLength === -1 ) {
 			return false;
@@ -218,7 +226,7 @@ class FileObject {
 		$this->readContent( $this->getCurrentSize() );
 	}
 	
-	public function readContent ( int $fileSize = 0 ) :void {
+	public function readContent ( int $fileSize = 0 ) {
 		$this->readedContent = fread( $this->fileHandler, $fileSize );
 	}
 	
