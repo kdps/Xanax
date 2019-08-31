@@ -72,7 +72,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 				RecursiveIteratorIterator::CHILD_FIRST
 			);
 			
-			$iterator->setMaxDepth( -1 ); // Absolutly delete folders
+			$iterator->setMaxDepth( -1 ); // Absolutely delete folders
 			
 			foreach( $iterator as $fileInformation ) {
 				if ( $fileInformation->isDir() ) {
@@ -93,9 +93,10 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	public function Copy ( string $directoryPath, string $copyPath ) {
 		$directoryIterator = new \RecursiveDirectoryIterator( $directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS );
 		$iterator = new \RecursiveIteratorIterator( $directoryIterator, \RecursiveIteratorIterator::SELF_FIRST );
+		
 		foreach ( $iterator as $item ) {
 			if ( $item->isDir() ) {
-				$this->Create($copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+				$this->Create( $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName() );
 			} else {
 				Xanax\Classes\FileHandler->Copy( $item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName() );
 			}
@@ -108,7 +109,9 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		}
 		
 		$size = 0;
-		foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ) ) as $file ) {
+		foreach( new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ) 
+				) as $file ) {
 			$size += $file->getSize();
 		}
 		
@@ -135,14 +138,14 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 			RecursiveIteratorIterator::SELF_FIRST
 		);
 		
-		foreach ($iterator as $folderPath => $fileInformation) {
+		foreach ( $iterator as $folderPath => $fileInformation ) {
 			
 			if ( $fileInformation->isDir() ) {
 				
 				$folderPath = $fileInformation->getPathName();
-				$newDirectoryName = preg_replace($replacement, $string, $folderPath);
+				$newDirectoryName = preg_replace( $replacement, $string, $folderPath );
 			
-				if ($filePath === $newFileName) {
+				if ( $filePath === $newFileName ) {
 					continue;
 				}
 				
@@ -154,7 +157,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 					return false;
 				}
 				
-				rename ($folderPath, $newDirectoryName);
+				rename ( $folderPath, $newDirectoryName );
 				
 			}
 			
@@ -163,22 +166,28 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		return true;
 	}
 	
-	public function RenameInnerFiles ( string $directoryPath, $string, $replacement ) {
+	public function RenameInnerFiles ( string $directoryPath, $replacement, $string = null ) {
 		$iterator = new RecursiveIteratorIterator (
 			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
 			RecursiveIteratorIterator::SELF_FIRST
 		);
 		
-		foreach ($iterator as $path => $fileInformation) {
+		foreach ( $iterator as $path => $fileInformation ) {
 			
 			if ( $fileInformation->isDir() ) {
 				
 				$rootDirectory = $fileInformation->getPathName();
 				
 				foreach ( scandir($rootDirectory) as $targetFilename ) {
-					$filePath = sprintf("%s/%s", $rootDirectory, $targetFilename);
-					$newFileName = preg_replace($replacement, $string, $targetFilename);
-					$newFileName = sprintf("%s/%s", $rootDirectory, $newFileName);
+					$filePath = sprintf( "%s/%s", $rootDirectory, $targetFilename );
+					
+					$newFileName = $targetFilename;
+					
+					if ( @preg_match( $replacement, null ) === true ) {
+						$newFileName = preg_replace( $replacement, $string, $targetFilename );
+					}
+					
+					$newFileName = sprintf( "%s/%s", $rootDirectory, $newFileName );
 					
 					if ($filePath === $newFileName) {
 						continue;

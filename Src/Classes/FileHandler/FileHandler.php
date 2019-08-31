@@ -19,16 +19,16 @@ class FileHandler implements FileHandlerInterface {
 	private static $lastError;
 	private $strictMode = true;
 	
-	public function __construct ($useStrictMode = true) {
+	public function __construct ( $useStrictMode = true ) {
 		$this->strictMode = $useStrictMode;
 	}
 	
-	public function isValidHandler ($fileHandler) {
+	public function isValidHandler ( $fileHandler ) {
 		if ( getType($fileHandler) !== "resource" ) {
 			return false;
 		}
 		
-		if ( get_resource_type ($fileHandler) !== "stream" ) {
+		if ( get_resource_type ( $fileHandler) !== "stream" ) {
 			return false;
 		}
 		
@@ -60,7 +60,7 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isLocked ( $filePath ) :bool {
-		if ( $this->strictMode && !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
+		if ( $this->strictMode && !$this->isValidHandler( $filePath ) && !$this->isFile( $filePath ) ) {
 			return false;
 		}
 		
@@ -126,10 +126,10 @@ class FileHandler implements FileHandlerInterface {
 		return $return >= 0 ? $return : -1;
 	}
 	
-	public function isEqual (  string $filePath, string $string ) {
+	public function isEqual (  string $filePath, string $string = null ) {
 		$fileObject = new FileObject( $filePath, false, "r" );
 		$fileObject->startHandle();
-		$bool = $fileObject->isEqual($string);
+		$bool = $fileObject->isEqual( $string );
 		$fileObject->closeFileHandle();
 		
 		return $bool;
@@ -162,7 +162,7 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @return bool
 	 */
-	public function Write ( string $filePath, string $content, string $writeMode = 'w' ) :bool {
+	public function Write ( string $filePath, string $content = null, string $writeMode = 'w' ) :bool {
 		$fileObject = new FileObject( $filePath, true, $writeMode );
 		$fileObject->startHandle();
 		
@@ -190,7 +190,7 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @return bool
 	 */
-	public function appendFileContent( string $filePath, string $content, bool $makeNewFile = true ) :bool {
+	public function appendFileContent( string $filePath, string $content = null, bool $makeNewFile = true ) :bool {
 		if ( !$this->isFile( $filePath ) && !$makeNewFile ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -256,7 +256,7 @@ class FileHandler implements FileHandlerInterface {
 		return $this->Write( $filePath, $invertedLines, 'w' );
 	}
 	
-	public function getBasename ( $fileName, $extension ) {
+	public function getBasename ( $fileName, $extension = null ) {
 		return basename($fileName, $extension).PHP_EOL;
 	}
 	
