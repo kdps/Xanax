@@ -1,10 +1,10 @@
 <?php
 
-namespace Xanax\Interface;
+namespace Xanax\Implement;
 
 interface DirectoryHandlerInterface {
 	
-	public function RenameInnerFiles ( string $directoryPath, string $string, string $replacement );
+	public function RenameInnerFiles ( string $directoryPath, $replacement, $string = null );
 	
 	public function hasCurrentWorkingLocation ();
 	

@@ -4,6 +4,7 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\Encode;
 use Xanax\Classes\FileObject;
+use Xanax\Classes\DirectoryHandler;
 
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
@@ -19,8 +20,10 @@ class FileHandler implements FileHandlerInterface {
 	
 	private static $lastError;
 	private $strictMode = true;
+	private $directoryHandler;
 	
 	public function __construct ( $useStrictMode = true ) {
+		$this->directoryHandler = new DirectoryHandler( $this );
 		$this->strictMode = $useStrictMode;
 	}
 	
@@ -214,9 +217,6 @@ class FileHandler implements FileHandlerInterface {
 
 	public function Read ( string $filePath, int $length = -1, string $writeMode = 'r' ) {
 		$fileObject = new FileObject( $filePath, false, $writeMode );
-		if ( !$fileObject->isFile() ) {
-			return false;
-		}
 		
 		$fileObject->startHandle();
 		

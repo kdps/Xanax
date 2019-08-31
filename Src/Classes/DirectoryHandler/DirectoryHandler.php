@@ -2,7 +2,8 @@
 
 namespace Xanax\Classes;
 
-use Xanax\Interface\DirectoryHandlerInterface;
+use Xanax\Implement\DirectoryHandlerInterface;
+use Xanax\Implement\FileHandlerInterface;
 
 use Xanax\Classes\FileHandler;
 
@@ -13,14 +14,25 @@ use Xanax\Validation\DirectoryeHandler;
 
 use Xanax\Message\DirectoryeHandlerMessage;
 
-use Xanax\Classes\FilenameHandler;
-
 class DirectoryHandler implements DirectoryHandlerInterface {
 
+	private $fileHandler;
 	private $directoryDepth;
 
-	public function __construct () {
+	public function __construct ( FileHandlerInterface $fileHandler ) {
+		if ( $fileHandler ) {
+			$this->fileHandler = $fileHandler;
+		} else {
+			$this->fileHandler = new DirectoryHandler();
+		}
+		
 		$this->directoryDepth = -1;
+	}
+	
+	public function getFreeSpace () {
+		$diskFreeSpaces = disk_free_space("/");
+		
+		return $diskFreeSpaces;
 	}
 	
 	public function hasCurrentWorkingLocation () {
@@ -98,7 +110,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 			if ( $item->isDir() ) {
 				$this->Create( $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName() );
 			} else {
-				Xanax\Classes\FileHandler->Copy( $item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName() );
+				$this->fileHandler->Copy( $item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName() );
 			}
 		}
 	}
@@ -193,11 +205,11 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 						continue;
 					}
 					
-					if ( !Xanax\Classes\FilenameHandler->isExists($filePath) ) {
+					if ( !$this->fileHandler->isExists($filePath) ) {
 						return false;
 					}
 					
-					if ( !Xanax\Classes\FilenameHandler->isExists($newFileName) ) {
+					if ( !$this->fileHandler->isExists($newFileName) ) {
 						return false;
 					}
 					
