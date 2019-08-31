@@ -188,7 +188,7 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 
-	public function readAllContent ( string $filePath, string $writeMode = 'r' ) {
+	public function Read ( string $filePath, int $length, string $writeMode = 'r' ) {
 		$fileObject = new FileObject( $filePath, false, $writeMode );
 		if ( !$fileObject->isWritableMode ($writeMode) ) {
 			
@@ -204,12 +204,21 @@ class FileHandler implements FileHandlerInterface {
 			return "";
 		}
 		
-		$fileObject->readAllContent ();
+		if ( $length === -1 ) {
+			$fileObject->readAllContent ();
+		} else {
+			$fileObject->readContent ( $length );
+		}
+		
 		$content = $fileObject->getReadedContent();
 		
 		$fileObject->closeFileHandle();
 		
 		return $content;
+	}
+	
+	public function readAllContent ( string $filePath, string $writeMode = 'r' ) {
+		return $this->Read( $filePath, -1 );
 	}
 	
 	/**

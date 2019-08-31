@@ -15,7 +15,7 @@ class FileObject {
 	private $writeHandler;
 	private $fileHandler;
 	
-	private $readContent;
+	private $readedContent;
 	
 	private $modeList = ["r", "r+", "w", "w+", "a", "a+", "x", "x+", "c", "c+", "e"];
 	
@@ -191,11 +191,11 @@ class FileObject {
 			return "";
 		}
 		
-		return $this->readContent;
+		return $this->readedContent;
 	}
 	
 	public function readedContentIsValid () :bool {
-		if ( $this->readContent === false ) {
+		if ( $this->readedContent === false ) {
 			return false;
 		}
 		
@@ -215,11 +215,11 @@ class FileObject {
 			
 		}
 		
-		$this->readContent = fread( $this->fileHandler, $this->getCurrentSize() );
+		$this->readContent( $this->getCurrentSize() );
 	}
 	
 	public function readContent ( int $fileSize = 0 ) :void {
-		$this->readContent = fread( $this->fileHandler, $fileSize );
+		$this->readedContent = fread( $this->fileHandler, $fileSize );
 	}
 	
 	public function printFileData ( int $mbSize = 8 ) {
@@ -235,11 +235,15 @@ class FileObject {
 			return false;
 		}
 		
-		if ( $this->mode === 'w' && $this->writeHandler !== (int)$this->writeContentLength ) {
+		$isInvalidSize = ( $this->writeHandler !== (int)$this->writeContentLength );
+		
+		if ( $this->mode === 'w' && $isInvalidSize ) {
 			return false;
 		}
 		
-		if ( $this->mode === 'a' && $this->fileHandlerClass->getSize( $this->temporaryPath ) !== (int)$this->writeContentLength ) {
+		$isCorrectSize = ( $this->fileHandlerClass->getSize( $this->temporaryPath ) !== (int)$this->writeContentLength );
+		
+		if ( $this->mode === 'a' && $isCorrectSize ) {
 			return false;
 		}
 		
@@ -257,7 +261,10 @@ class FileObject {
 	}
 	
 	public function startHandle () {
-		if ( $this->isWritableMode() && !$this->fileHandlerClass->isExists( $this->getFilePath() ) ) {
+		$exceptMode = $this->mode === 'w' ? false : true;
+		$isWritableFile = ( $this->isWritableMode() && !$this->fileHandlerClass->isExists( $this->getFilePath() ) );
+		
+		if ( $exceptMode && $isWritableFile ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
