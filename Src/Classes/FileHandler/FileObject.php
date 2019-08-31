@@ -2,17 +2,20 @@
 
 namespace Xanax\Classes;
 
+use Xanax\Classes\Encode;
+use Xanax\Classes\FileHandler;
+
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
 
 use Xanax\Message\FileHandler\FileHandlerMessage;
 
-use Xanax\Classes\FileHandler;
-
 class FileObject {
 
 	private $writeHandler;
 	private $fileHandler;
+	
+	private $readContent;
 	
 	private $modeList = ["r", "r+", "w", "w+", "a", "a+", "x", "x+", "c", "c+", "e"];
 	
@@ -86,7 +89,7 @@ class FileObject {
 		}
 		
 		$filePath = $this->getFilePath();
-		$currentFileSize = $this->fileHandlerClass->getSize( $filePath );
+		$currentFileSize = $this->getCurrentSize();
 		$invalidFileSize = $currentFileSize === -1 ? true : false;
 		$correctFileSize = ( $currentFileSize === (int)$this->writeContentLength );
 		
@@ -116,8 +119,8 @@ class FileObject {
 		return false;
 	}
 	
-	public function isWritableMode () {
-		if ( in_array( $this->mode, $this->readModeList ) ) {
+	public function isWritableMode ( $readMode = null) {
+		if ( in_array( ( $readMode || $this->mode ), $this->readModeList ) ) {
 			return true;
 		}
 		
@@ -174,6 +177,49 @@ class FileObject {
 		}
 	
 		return true;
+	}
+	
+	public function getCurrentSize () :int {
+		$filePath = $this->getFilePath();
+		$currentFileSize = $this->fileHandlerClass->getSize( $filePath );
+		
+		return $currentFileSize;
+	}
+	
+	public function getReadedContent () :string {
+		if ( !$this->readedContentIsValid() ) {
+			return "";
+		}
+		
+		return $this->readContent;
+	}
+	
+	public function readedContentIsValid () :bool {
+		if ( $this->readContent === false ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public function hasReadedContent () {
+		if ( $this->getCurrentSize() > 0 ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function readAllContent () {
+		if ( !$this->hasReadedContent() ) {
+			
+		}
+		
+		$this->readContent = fread( $this->fileHandler, $this->getCurrentSize() );
+	}
+	
+	public function readContent ( int $fileSize = 0 ) :void {
+		$this->readContent = fread( $this->fileHandler, $fileSize );
 	}
 	
 	public function printFileData ( int $mbSize = 8 ) {

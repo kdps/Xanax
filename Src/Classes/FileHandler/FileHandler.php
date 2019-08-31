@@ -2,6 +2,7 @@
 
 namespace Xanax\Classes;
 
+use Xanax\Classes\Encode;
 use Xanax\Classes\FileObject;
 
 use Xanax\Exception\Stupid\StupidIdeaException;
@@ -75,6 +76,49 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
+	public function isEmpty ( string $filePath ) :bool {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		$return = $this->Size( $filePath ) !== 0;
+		
+		return $return;
+	}
+	
+	public function isExists ( string $filePath ) :bool {
+		$return = file_exists( $filePath );
+		
+		return $return;
+	}
+	
+	public function isFile ( string $filePath ) :bool {
+		if ( FileValidation::isReadable( $filePath ) ) {
+			
+		}
+		
+		if ( FileValidation::hasSubfolderSyntax( $filePath ) ) {
+			throw new StupidIdeaException ( FileHandlerMessage::getDoNotUseSubDirectorySyntaxMessage() );
+		}
+		
+		if ( FileValidation::isPharProtocol( $filePath ) ) {
+			throw new StupidIdeaException ( FileHandlerMessage::getDoNotUsePharProtocolMessage() );
+		}
+		
+		$return = is_file ( $filePath );
+		
+		return $return;
+	}
+	
+	public function isEqual (  string $filePath, string $string = null ) {
+		$fileObject = new FileObject( $filePath, false, "r" );
+		$fileObject->startHandle();
+		$bool = $fileObject->isEqual( $string );
+		$fileObject->closeFileHandle();
+		
+		return $bool;
+	}
+	
 	/**
 	 * Gets whether the file can be written to.
 	 *
@@ -126,15 +170,6 @@ class FileHandler implements FileHandlerInterface {
 		return $return >= 0 ? $return : -1;
 	}
 	
-	public function isEqual (  string $filePath, string $string = null ) {
-		$fileObject = new FileObject( $filePath, false, "r" );
-		$fileObject->startHandle();
-		$bool = $fileObject->isEqual( $string );
-		$fileObject->closeFileHandle();
-		
-		return $bool;
-	}
-	
 	/**
 	 * Copy the file.
 	 *
@@ -153,6 +188,30 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 
+	public function readAllContent ( string $filePath, string $writeMode = 'r' ) {
+		$fileObject = new FileObject( $filePath, false, $writeMode );
+		if ( !$fileObject->isWritableMode ($writeMode) ) {
+			
+		}
+		
+		$fileObject->startHandle();
+		
+		if ( !$fileObject->successToStartHandle() ) {
+			return false;
+		}
+		
+		if ( !$fileObject->hasReadedContent() ) {
+			return "";
+		}
+		
+		$fileObject->readAllContent ();
+		$content = $fileObject->getReadedContent();
+		
+		$fileObject->closeFileHandle();
+		
+		return $content;
+	}
+	
 	/**
 	 * Create a file.
 	 *
@@ -251,8 +310,7 @@ class FileHandler implements FileHandlerInterface {
 	 */
 	public function reverseContent ( string $filePath ) :bool {
 		$fileLines = file( $filePath );
-		$invertedLines = array_reverse( $fileLines );
-		
+		$invertedLines = strrev ( array_shift( $fileLines ) );
 		return $this->Write( $filePath, $invertedLines, 'w' );
 	}
 	
@@ -320,24 +378,6 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
-	public function isFile ( string $filePath ) :bool {
-		if ( FileValidation::isReadable( $filePath ) ) {
-			
-		}
-		
-		if ( FileValidation::hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( FileHandlerMessage::getDoNotUseSubDirectorySyntaxMessage() );
-		}
-		
-		if ( FileValidation::isPharProtocol( $filePath ) ) {
-			throw new StupidIdeaException ( FileHandlerMessage::getDoNotUsePharProtocolMessage() );
-		}
-		
-		$return = is_file ( $filePath );
-		
-		return $return;
-	}
-	
 	public function requireOnce( string $filePath ) :void {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -356,22 +396,6 @@ class FileHandler implements FileHandlerInterface {
 		}
 		
 		$return = rename( $source, $destination );
-		
-		return $return;
-	}
-	
-	public function isEmpty ( string $filePath ) :bool {
-		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
-		}
-		
-		$return = $this->Size( $filePath ) !== 0;
-		
-		return $return;
-	}
-	
-	public function isExists ( string $filePath ) :bool {
-		$return = file_exists( $filePath );
 		
 		return $return;
 	}
