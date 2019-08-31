@@ -8,11 +8,13 @@ use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
 
+use Xanax\Implement\FileHandlerInterface;
+
 use Xanax\Validation\FileValidation;
 
 use Xanax\Message\FileHandler\FileHandlerMessage;
 
-class FileHandler implements \Xanax\Implement\FileHandlerInterface {
+class FileHandler implements FileHandlerInterface {
 	
 	private static $lastError;
 	private $strictMode = true;
@@ -124,6 +126,15 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		return $return >= 0 ? $return : -1;
 	}
 	
+	public function isEqual (  string $filePath, string $string ) {
+		$fileObject = new FileObject( $filePath, false, "r" );
+		$fileObject->startHandle();
+		$bool = $fileObject->isEqual($string);
+		$fileObject->closeFileHandle();
+		
+		return $bool;
+	}
+	
 	/**
 	 * Copy the file.
 	 *
@@ -156,14 +167,12 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		$fileObject->startHandle();
 		
 		if ( !$fileObject->successToStartHandle() ) {
-			echo "zz";
 			return false;
 		}
 		
 		$fileObject->writeContent( $content );
 		
 		if ( !$fileObject->successToWriteContent() ) {
-			echo "zqz";
 			return false;
 		}
 		
@@ -231,6 +240,20 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 		$return = filetype( $filePath );
 		
 		return $return;
+	}
+	
+	/**
+	 * Write the contents of the file backwards.
+	 *
+	 * @param string $filePath    : Path of the file to write
+	 *
+	 * @return bool
+	 */
+	public function reverseContent ( string $filePath ) :bool {
+		$fileLines = file( $filePath );
+		$invertedLines = array_reverse( $fileLines );
+		
+		return $this->Write( $filePath, $invertedLines, 'w' );
 	}
 	
 	public function getBasename ( $fileName, $extension ) {
@@ -348,10 +371,6 @@ class FileHandler implements \Xanax\Implement\FileHandlerInterface {
 	}
 	
 	public function isExists ( string $filePath ) :bool {
-		if ( !$this->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
-		}
-		
 		$return = file_exists( $filePath );
 		
 		return $return;

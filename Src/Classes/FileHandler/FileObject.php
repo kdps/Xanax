@@ -2,12 +2,21 @@
 
 namespace Xanax\Classes;
 
+use Xanax\Exception\FileHandler\FileIsNotExistsException;
+use Xanax\Exception\FileHandler\TargetIsNotFileException;
+
+use Xanax\Message\FileHandler\FileHandlerMessage;
+
 use Xanax\Classes\FileHandler;
 
 class FileObject {
 
 	private $writeHandler;
 	private $fileHandler;
+	
+	private $modeList = ["r", "r+", "w", "w+", "a", "a+", "x", "x+", "c", "c+", "e"];
+	
+	private $readModeList = ["r", "r+"];
 	
 	// Determines whether file size capacity is compared
 	private $confirmFilesize = true;
@@ -16,7 +25,7 @@ class FileObject {
 	private $writeContentLength;
 	
 	// File creation mode
-	private $writeMode;
+	private $mode;
 	
 	// The path of the file to be finally created
 	private $filePath;
@@ -36,13 +45,13 @@ class FileObject {
 	// If the length does not match the contents written, it is returned to the original file
 	private $recoveryMode = false;
 	
-	public function __construct ( string $filePath, bool $recoveryMode = false, string $writeMode = 'w' ) {
+	public function __construct ( string $filePath, bool $recoveryMode = false, string $mode = 'w' ) {
 		$this->fileHandlerClass = new FileHandler();
 		
 		$this->seekOffset = 0;
 		$this->filePath = $filePath;
 		$this->fileExtension = $this->fileHandlerClass->getExtention( $filePath );
-		$this->writeMode = $writeMode;
+		$this->mode = $mode;
 		
 		$this->recoveryMode = $recoveryMode;
 		if ( $this->recoveryMode ) {
@@ -51,7 +60,7 @@ class FileObject {
 			} while ( $this->fileHandlerClass->isFile( $this->temporaryPath ) );
 		}
 		
-		if ( $this->writeMode === 'a' && $this->fileHandlerClass->isExists( $this->filePath ) ) {
+		if ( $this->mode === 'a' && $this->fileHandlerClass->isExists( $this->filePath ) ) {
 			$fileContent = file_get_contents( $this->filePath, true );
 			file_put_contents($this->temporaryPath, $fileContent);
 		}
@@ -107,6 +116,32 @@ class FileObject {
 		return false;
 	}
 	
+	public function isWritableMode () {
+		if ( in_array( $this->mode, $this->readModeList ) ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function isEqual ( string $string ) {
+		if ( !$this->fileHandlerClass->isExists( $this->getFilePath() ) ) {
+			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		$bool = false;
+		
+		while ( $isEqual = fgets( $this->fileHandler ) ) {
+			if ( $isEqual === $string ) {
+				$bool = true;
+			} else {
+				$bool = false;
+			}
+		}
+		
+		return $bool;
+	}
+	
 	public function isLocked () :bool {
 		return $this->fileHandlerClass->isLocked( $this->filePath );
 	}
@@ -122,9 +157,9 @@ class FileObject {
 		
 		$this->confirmFilesize = true;
 		
-		if ( $this->writeMode === 'w' ) {
+		if ( $this->mode === 'w' ) {
 			$this->writeContentLength = strlen( $content );
-		} else if ( $this->writeMode === 'a' ) {
+		} else if ( $this->mode === 'a' ) {
 			$this->writeContentLength = $this->fileHandlerClass->getSize( $this->filePath ); 
 			$this->writeContentLength += strlen( $content );
 		}
@@ -154,11 +189,11 @@ class FileObject {
 			return false;
 		}
 		
-		if ( $this->writeMode === 'w' && $this->writeHandler !== (int)$this->writeContentLength ) {
+		if ( $this->mode === 'w' && $this->writeHandler !== (int)$this->writeContentLength ) {
 			return false;
 		}
 		
-		if ( $this->writeMode === 'a' && $this->fileHandlerClass->getSize( $this->temporaryPath ) !== (int)$this->writeContentLength ) {
+		if ( $this->mode === 'a' && $this->fileHandlerClass->getSize( $this->temporaryPath ) !== (int)$this->writeContentLength ) {
 			return false;
 		}
 		
@@ -175,8 +210,12 @@ class FileObject {
 		return $filePath;
 	}
 	
-	public function startHandle () :void {
-		$this->fileHandler = fopen( $this->getFilePath(), $this->writeMode );
+	public function startHandle () {
+		if ( $this->isWritableMode() && !$this->fileHandlerClass->isExists( $this->getFilePath() ) ) {
+			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		$this->fileHandler = fopen( $this->getFilePath(), $this->mode );
 	}
 	
 	public function successToStartHandle () :bool {
