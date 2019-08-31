@@ -201,7 +201,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 						return false;
 					}
 					
-                    rename ($filePath, $newFileName);
+					rename ($filePath, $newFileName);
 				}
 				
 			}
