@@ -50,12 +50,12 @@ class EventDispatcher {
 	public function Emit ( object $event ) :object {
 		$listeners = $this->getListeners( get_class( $event ) ) ?? [];
 		
-		if ( count($listeners) <= 0 ) {
+		if ( count( $listeners ) <= 0 ) {
 			return;
 		}
 		
 		foreach ($listeners as $listener) {
-			$listener($event);
+			$listener( $event );
 		}
 		
 		return $event;

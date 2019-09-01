@@ -21,6 +21,8 @@ class FileObject {
 	
 	private $readModeList = ["r", "r+"];
 	
+	private $acceptExtension = [];
+	
 	// Determines whether file size capacity is compared
 	private $confirmFilesize = true;
 	
@@ -61,6 +63,14 @@ class FileObject {
 		if ( $this->recoveryMode ) {
 			$this->setRecoveryFile ();
 		}
+	}
+	
+	public function getAcceptExtension ( array $extension ) {
+		return $acceptExtension;
+	}
+	
+	public function setAcceptExtension ( array $extension ) {
+		$acceptExtension = is_array ( $extension ) ? $extension : [ $extension ];
 	}
 	
 	private function setRecoveryFile () {

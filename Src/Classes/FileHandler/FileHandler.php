@@ -104,9 +104,18 @@ class FileHandler implements FileHandlerInterface {
 		
 		return false;
 	}
-	
+
+	public function getSymbolicLink ( string $symbolicLink ) {
+		if ( !$this->isSymbolicLink( $symbolicLink ) ) {
+		}
+		
+		$return = readlink( $symbolicLink );
+		
+		return $return;
+	}
+
 	public function isSymbolicLink ( string $filePath ) :bool {
-		if ( $this->getType ( $filePath ) === "link" ) {
+		if ( is_link( $filePath ) && $this->getType ( $filePath ) === "link" ) {
 			return true;
 		}
 		
