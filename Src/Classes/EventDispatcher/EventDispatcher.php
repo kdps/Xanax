@@ -6,6 +6,15 @@ class EventDispatcher {
 
 	private $listeners = [];
 	
+	public function Dispose() {
+	}
+	
+	public function addSubscriber() {
+	}
+	
+	public function removeSubscriber() {
+	}
+	
 	public function removeListener( string $eventName, callable $listener ) {
 		if ( !$this->hasListener( $eventName ) ) {
 			return false;
@@ -17,7 +26,7 @@ class EventDispatcher {
 	}
 	
 	public function getListenerCount ($listeners) :int {
-		return count ($listeners || $this->getListeners());
+		return count ( $listeners || $this->getListeners() );
 	}
 	
 	public function hasListener ( string $eventName ) :bool {
