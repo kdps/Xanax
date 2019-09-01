@@ -4,7 +4,216 @@ use Xanax\Classes\OperationSystem
 
 class String {
 	
-	public static function getRandomString( $length = 1 ) {
+	public function filterVariable ( mixed $string, $type ) {
+		switch ($type) {
+			case (preg_match('/^MaxLength\((.*\))$/', $type, $matches) ? true : false) :
+				if (strlen($string) > $matches[1]) {
+					$string = null;
+				}
+				
+				break;
+			case (preg_match('/^Bracket\((.*\))$/', $type, $matches) ? true : false) :
+				if (isset($matches[1])) {
+					$regex = $matches[1];
+					$regex = '/^<'.$regex.'>([\s\S]*?)<\/'.$regex.'>$/i';
+					if (preg_match($regex, $string, $matches)) {
+						if (isset($matches[1])) {
+							$string = $matches[1];
+						} else {
+							$string = null;
+						}
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'strnum':
+				if (preg_match("/^[A-Za-z0-9]+$/i", $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'phonenumber':
+				if (preg_match("/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/g", $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'url':
+				if (preg_match("/^(http\:\/\/)*[.a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'email':
+				if (preg_match("/^[^@]+@[._a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'urlparam':
+				if (preg_match("/([^=&?]+)=([^&#]*)/g", $string, $matches)) {
+					if (count($matches) === 1) {
+						if (isset($matches[1])) {
+							$string = $matches[1];
+						} else {
+							$string = null;
+						}
+					} else if (count($matches)>1) {
+						$string = $matches;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'label':
+				if (preg_match("/\[([a-zA-Z0-9\s_-]+)\]/i", $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'functionname':
+				if (preg_match_all("/(\[?[a-zA-Z0-9\s_-]+\]?)/", $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'deny':
+				$string = null;
+				
+				break;
+			case 'doublequotation':
+				if (preg_match('/^"(.*)"$/', $key, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'siniglequotation':
+				if (preg_match('/^\'(.*)\'$/', $string, $matches)) {
+					if (isset($matches[1])) {
+						$string = $matches[1];
+					} else {
+						$string = null;
+					}
+				} else {
+					$string = null;
+				}
+				
+				break;
+			case 'withouthtml':
+				$string = strip_tags($string);
+				break;
+			case 'json':
+				if (!$this::isJSON($string)) {
+					$string = null;
+				}
+				
+				break;
+			case 'numbers':
+				//not include negative numbers
+				if (!is_numeric($string) || !is_int($string)) {
+					if (preg_match('/^(\d[\d\.]+)$/', $key, $matches)) {
+						if (isset($matches[1])) {
+							$string = $matches[1];
+						} else {
+							$string = 0;
+						}
+					} else {
+						$string = 0;
+					}
+				}
+				
+				break;
+			case 'number':
+				if (!is_numeric($string) || !is_int($string)) {
+					if (preg_match('/^(\d+)$/', $string, $matches)) {
+						if (isset($matches[1])) {
+							$string = $matches[1];
+						} else {
+							$string = 0;
+						}
+					} else {
+						$string = 0;
+					}
+				}
+				
+				break;
+			case 'string':
+				if (!is_string($string)) {
+					$string = null;
+				}
+				
+				break;
+			case 'int':
+				$string = intval($string);
+				
+				break;
+			case 'float':
+				$string = intval($string);
+				$string = (float)sprintf("% u",$string);
+				if ($string < 0) {
+					$string = 0;
+				}
+				
+				break;
+			case 'bool':
+				$string = ($string === true) ? true : (($string === false) ? false : false);
+				
+				break;
+			default:
+				break;
+		}
+		
+		return $string;
+	}
+	
+	public function getRandomString( $length = 1 ) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
 		$randomString = "";
@@ -16,15 +225,15 @@ class String {
 		return $randomString;
 	}
 	
-	public static function escapeSlash( $string ) {
+	public function escapeSlash( $string ) {
 		return stripslashes($string);
 	}
 	
-	public static function isNumber( $string ) {
+	public function isNumber( $string ) {
 		return is_numeric($string);
 	}
 	
-	public static function removeUtf8Bom( $string ) {
+	public function removeUtf8Bom( $string ) {
 		$source = preg_replace('/^\xEF\xBB\xBF/', '', $string);
 		
 		return $source;
@@ -111,7 +320,7 @@ class String {
 		return $result;
 	}
 	
-	public static function removeDot( string $string ) {
+	public function removeDot( string $string ) {
 		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", "$1-$2-$3$4-$5", $string);
 	}
 	
@@ -119,7 +328,7 @@ class String {
 		return strtoupper($string);
 	}
 	
-	public static function removeNullBytes( string $string ) {
+	public function removeNullBytes( string $string ) {
 		$clean = str_replace("\x00", '', $string); 
 		$clean = str_replace("\0", '', $string); 
 		$clean = str_replace(chr(0), '', $string);
