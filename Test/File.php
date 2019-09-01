@@ -1,19 +1,19 @@
 <?php
 
 $PATH = require __DIR__."/_PATH.php";
-require $PATH."/Interface/DirectoryHandler/DirectoryHandlerInterface.php";
-require $PATH."/Interface/FileHandler/FileHandlerInterface.php";
+require $PATH."/Interface/Directory/DirectoryHandlerInterface.php";
+require $PATH."/Interface/File/FileHandlerInterface.php";
 require $PATH."/Validation/FileValidation.php";
 require $PATH."/Validation/PHPValidation.php";
-require $PATH."/Message/FileHandler/FileHandlerMessage.php";
-require $PATH."/Exception/FileHandler/IOException.php";
-require $PATH."/Exception/FileHandler/TargetIsNotFileException.php";
-require $PATH."/Exception/FileHandler/FileIsNotExistsException.php";
+require $PATH."/Message/File/FileHandlerMessage.php";
+require $PATH."/Exception/File/IOException.php";
+require $PATH."/Exception/File/TargetIsNotFileException.php";
+require $PATH."/Exception/File/FileIsNotExistsException.php";
 require $PATH."/Classes/Encode/Encode.php";
-require $PATH."/Classes/FileSystemHandler/FileSystemHandler.php";
-require $PATH."/Classes/DirectoryHandler/DirectoryHandler.php";
-require $PATH."/Classes/FileHandler/FileObject.php";
-require $PATH."/Classes/FileHandler/FileHandler.php";
+require $PATH."/Classes/FileSystem/FileSystemHandler.php";
+require $PATH."/Classes/Directory/DirectoryHandler.php";
+require $PATH."/Classes/File/FileObject.php";
+require $PATH."/Classes/File/FileHandler.php";
 
 use Xanax\Classes\FileHandler;
 use Xanax\Classes\FileObject;
