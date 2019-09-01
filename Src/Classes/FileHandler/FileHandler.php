@@ -137,10 +137,10 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
-	public function isEqual (  string $filePath, string $string = null ) :bool {
+	public function isEqualByLine (  string $filePath, string $string = null ) :bool {
 		$fileObject = new FileObject( $filePath, false, "r" );
 		$fileObject->startHandle();
-		$bool = $fileObject->isEqual( $string );
+		$bool = $fileObject->isEqualByLine( $string );
 		$fileObject->closeFileHandle();
 		
 		return $bool;
@@ -215,6 +215,17 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 
+	public function Merge ( string $filePath, string $mergeFile ) :bool {
+		$fileObject = new FileObject( $filePath, false, "a" );
+		$fileObject->startHandle();
+		
+		$fileObject->appendContent( $mergeFile );
+		
+		$fileObject->closeFileHandle();
+		
+		return true;
+	}
+	
 	public function Read ( string $filePath, int $length = -1, string $writeMode = 'r' ) {
 		$fileObject = new FileObject( $filePath, false, $writeMode );
 		if ( !$fileObject->isEnoughFreeSpace() ) {

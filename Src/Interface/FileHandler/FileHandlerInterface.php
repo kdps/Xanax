@@ -16,9 +16,11 @@ interface FileHandlerInterface {
 	
 	public function isUnknownFile ( string $filePath ) :bool;
 	
-	public function isEqual (  string $filePath, string $string = null ) :bool;
+	public function isEqualByLine (  string $filePath, string $string = null ) :bool;
 	
 	public function isWritable ( string $filePath ) :bool;
+	
+	public function Merge ( string $filePath, string $mergeFile ) :bool;
 	
 	public function Delete ( string $filePath ) :bool;
 	

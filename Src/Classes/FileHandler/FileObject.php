@@ -52,17 +52,21 @@ class FileObject {
 		$this->fileHandlerClass = new FileHandler();
 		$this->directoryHandler = new DirectoryHandler( $this->fileHandlerClass );
 		
+		$this->mode = $mode;
 		$this->seekOffset = 0;
 		$this->filePath = $filePath;
 		$this->fileExtension = $this->fileHandlerClass->getExtention( $filePath );
-		$this->mode = $mode;
 		
 		$this->recoveryMode = $recoveryMode;
 		if ( $this->recoveryMode ) {
-			do {
-				$this->temporaryPath = sprintf( "%s.%s.%s", $filePath, uniqid(rand(), true), $this->fileExtension );
-			} while ( $this->fileHandlerClass->isFile( $this->temporaryPath ) );
+			$this->setRecoveryFile ();
 		}
+	}
+	
+	private function setRecoveryFile () {
+		do {
+			$this->temporaryPath = sprintf( "%s.%s.%s", $filePath, uniqid(rand(), true), $this->fileExtension );
+		} while ( $this->fileHandlerClass->isFile( $this->temporaryPath ) );
 		
 		if ( $this->mode === 'a' && $this->fileHandlerClass->isExists( $this->filePath ) ) {
 			$fileContent = file_get_contents( $this->filePath, true );
@@ -128,7 +132,20 @@ class FileObject {
 		return false;
 	}
 	
-	public function isEqual ( string $string ) {
+	public function appendContent ( $filePath ) {
+		$fileHandler = fopen($filePath, "r");
+
+        $line = fgets($fileHandler);
+
+        while ($line !== false) {
+            fputs($this->fileHandler, $line);
+            $line = fgets($fileHandler);
+        }
+
+        fclose($fileHandler);
+	}
+	
+	public function isEqualByLine ( string $string ) {
 		if ( !$this->fileHandlerClass->isExists( $this->getFilePath() ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}

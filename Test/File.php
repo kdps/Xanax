@@ -20,5 +20,5 @@ use Xanax\Classes\FileObject;
 $fileHandler = new FileHandler();
 $fileHandler->appendFileContent(__DIR__."/file.txt", "test", true);
 $content = $fileHandler->readAllContent(__DIR__."/file.txt");
-
+echo $fileHandler->isEqualByLine(__DIR__."/file.txt", "test") ? "true" : "false";
 echo $content;
