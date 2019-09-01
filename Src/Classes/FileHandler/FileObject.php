@@ -55,7 +55,7 @@ class FileObject {
 		$this->mode = $mode;
 		$this->seekOffset = 0;
 		$this->filePath = $filePath;
-		$this->fileExtension = $this->fileHandlerClass->getExtention( $filePath );
+		$this->fileExtension = $this->fileHandlerClass->getExtention( $this->filePath );
 		
 		$this->recoveryMode = $recoveryMode;
 		if ( $this->recoveryMode ) {
@@ -65,7 +65,7 @@ class FileObject {
 	
 	private function setRecoveryFile () {
 		do {
-			$this->temporaryPath = sprintf( "%s.%s.%s", $filePath, uniqid(rand(), true), $this->fileExtension );
+			$this->temporaryPath = sprintf( "%s.%s.%s", $this->filePath, uniqid(rand(), true), $this->fileExtension );
 		} while ( $this->fileHandlerClass->isFile( $this->temporaryPath ) );
 		
 		if ( $this->mode === 'a' && $this->fileHandlerClass->isExists( $this->filePath ) ) {

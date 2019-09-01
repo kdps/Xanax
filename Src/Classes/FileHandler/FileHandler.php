@@ -21,8 +21,10 @@ class FileHandler implements FileHandlerInterface {
 	private static $lastError;
 	private $strictMode = true;
 	private $directoryHandler;
+	private $fileSystemHandler;
 	
 	public function __construct ( $useStrictMode = true ) {
+		$this->fileSystemHandler = new FileSystemHandler();
 		$this->directoryHandler = new DirectoryHandler( $this );
 		$this->strictMode = $useStrictMode;
 	}
@@ -414,6 +416,26 @@ class FileHandler implements FileHandlerInterface {
 		}
 		
 		fclose($file);
+	}
+	
+	public function isCorrectInode ( $filePath ) :bool {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		if ( $this->fileSystemHandler->getCurrentInode() === $this->getInode( $filePath ) ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function getInode ( $filePath ) {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		return $this->fileSystemHandler->getInodeNumber( $filePath );
 	}
 	
 	public function getInterpretedContent ( string $filePath ) :string {

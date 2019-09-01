@@ -10,6 +10,7 @@ require $PATH."/Exception/FileHandler/IOException.php";
 require $PATH."/Exception/FileHandler/TargetIsNotFileException.php";
 require $PATH."/Exception/FileHandler/FileIsNotExistsException.php";
 require $PATH."/Classes/Encode/Encode.php";
+require $PATH."/Classes/FileSystemHandler/FileSystemHandler.php";
 require $PATH."/Classes/DirectoryHandler/DirectoryHandler.php";
 require $PATH."/Classes/FileHandler/FileObject.php";
 require $PATH."/Classes/FileHandler/FileHandler.php";
