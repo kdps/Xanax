@@ -146,6 +146,16 @@ class FileHandler implements FileHandlerInterface {
 		return $bool;
 	}
 	
+	public function isExecutable () {
+		if ( !$this->isFile( $filePath ) ) {
+			return false;
+		}
+		
+		$return = is_executable ( $filePath );
+		
+		return $return;
+	}
+	
 	/**
 	 * Gets whether the file can be written to.
 	 *
@@ -154,7 +164,7 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isWritable ( string $filePath ) :bool {
-		if ( !$this->isValidHandler($filePath) && !$this->isFile( $filePath ) ) {
+		if ( !$this->isFile( $filePath ) ) {
 			return true;
 		}
 		
