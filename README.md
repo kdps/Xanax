@@ -22,6 +22,8 @@ Who wants to use PHP? is we. we use php because we don't like to learn new thing
 
 ## We follow the basic idea of PHP (Rasmus Lerdorf)
 
+![alt text](https://steemitimages.com/DQmcj7GATxiT77ffk65gU96bBSGRKJG4keLi4sEjGn79j3e/10.%20php%20inventor%20-%20coding.jpg)
+
 I really don’t like programming. I built this tool to program less so that I could just reuse code.**
 
 I’m not a real programmer. I throw together things until it works then I move on. The real programmers will say “Yeah it works but you’re leaking memory everywhere. Perhaps we should fix that.” I’ll just restart Apache every 10 requests.**
