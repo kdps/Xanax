@@ -4,7 +4,6 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\Encode;
 use Xanax\Classes\FileObject;
-use Xanax\Classes\DirectoryHandler;
 
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
@@ -20,12 +19,8 @@ class FileHandler implements FileHandlerInterface {
 	
 	private static $lastError;
 	private $strictMode = true;
-	private $directoryHandler;
-	private $fileSystemHandler;
 	
 	public function __construct ( $useStrictMode = true ) {
-		$this->fileSystemHandler = new FileSystemHandler();
-		$this->directoryHandler = new DirectoryHandler( $this );
 		$this->strictMode = $useStrictMode;
 	}
 	
@@ -427,24 +422,24 @@ class FileHandler implements FileHandlerInterface {
 		fclose($file);
 	}
 	
-	public function isCorrectInode ( $filePath ) :bool {
+	public function isCorrectInode ( \Xanax\Implement\FileSystemInterface $fileSystemHandler, $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		if ( $this->fileSystemHandler->getCurrentInode() === $this->getInode( $filePath ) ) {
+		if ( $fileSystemHandler->getCurrentInode() === $this->getInode( $filePath ) ) {
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public function getInode ( $filePath ) {
+	public function getInode ( \Xanax\Implement\FileSystemInterface $fileSystemHandler, $filePath ) {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		return $this->fileSystemHandler->getInodeNumber( $filePath );
+		return $fileSystemHandler->getInodeNumber( $filePath );
 	}
 	
 	public function getInterpretedContent ( string $filePath ) :string {
