@@ -1,3 +1,3 @@
 <?php
 
-return __DIR__.'/../Src';
+return __DIR__.'/../Classes/Src';
