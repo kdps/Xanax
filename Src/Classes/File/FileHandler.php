@@ -242,8 +242,17 @@ class FileHandler implements FileHandlerInterface {
 		return true;
 	}
 	
-	public function Read ( string $filePath, int $length = -1, string $writeMode = 'r' ) {
-		$fileObject = new FileObject( $filePath, false, $writeMode );
+	/**
+	 * Read the file.
+	 *
+	 * @param string $filePath  : Path of the file
+	 * @param int    $length    : Read length
+	 * @param int    $writeMode : Mode of file handler
+	 *
+	 * @return bool
+	 */
+	public function Read ( string $filePath, int $length = -1, string $mode = 'r' ) {
+		$fileObject = new FileObject( $filePath, false, $mode );
 		if ( !$fileObject->isEnoughFreeSpace() ) {
 			$this::$lastError = "Disk space is not enough";
 			return false;

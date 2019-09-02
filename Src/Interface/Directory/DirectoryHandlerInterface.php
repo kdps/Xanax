@@ -4,6 +4,8 @@ namespace Xanax\Implement;
 
 interface DirectoryHandlerInterface {
 	
+	public function getFreeSpace ( $prefix = "/" );
+	
 	public function RenameInnerFiles ( string $directoryPath, $replacement, $string = null );
 	
 	public function hasCurrentWorkingLocation ();
