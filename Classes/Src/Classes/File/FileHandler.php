@@ -138,7 +138,6 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isContainFolder ( string $basePath, string $filePath ) :bool {
-		
 		$realBasePath = realpath( $basePath );
 		$realFilePath = realpath( dirname ($filePath ) );
 		
