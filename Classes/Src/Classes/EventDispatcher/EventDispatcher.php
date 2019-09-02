@@ -8,26 +8,26 @@ class EventDispatcher {
 	
 	public function Dispatch( $event, string $eventName = null ) {
 		if (\is_object($event)) {
-            $eventName = $eventName ?? \get_class($event);
+			$eventName = $eventName ?? \get_class($event);
 		}
 		
 		if (!$eventName) {
-            $eventName = $event;
-            $event = new EventInstance();
+			$eventName = $event;
+			$event = new EventInstance();
 		}
 		
 		$listeners = $this->getListeners($eventName);
-        
-        if ($listeners) {
-            $this->callListeners($listeners, $eventName, $event);
-        }
+
+		if ($listeners) {
+			$this->callListeners($listeners, $eventName, $event);
+		}
 	}
 	
 	protected function callListeners( iterable $listeners, string $eventName, object $event ) {
-        foreach ($listeners as $listener) {
-            $listener($event, $eventName, $this);
-        }
-    }
+		foreach ($listeners as $listener) {
+			$listener($event, $eventName, $this);
+		}
+	}
 
 	public function Dispose() {
 	}
@@ -72,10 +72,6 @@ class EventDispatcher {
 	}
 	
 	public function addListener ( string $eventName, callable $listener ) :void {
-		if ( $this->hasListener( $eventName ) ) {
-			return;
-		}
-		
 		$this->listeners[ $eventName ][] = $listener;
 	}
 	
