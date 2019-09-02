@@ -1,6 +1,6 @@
 <?php
 
-class Session {
+class SessionHandler {
 	
 	public function isStated () {
 		if (session_status() == PHP_SESSION_NONE && empty($_SESSION)) {

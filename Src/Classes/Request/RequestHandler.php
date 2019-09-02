@@ -1,6 +1,6 @@
 <?php
 
-class Request {
+class RequestHandler {
 	
 	public $RequestMessage = [
 		100 => 'Continue',

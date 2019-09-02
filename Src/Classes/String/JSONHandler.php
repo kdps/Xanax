@@ -2,7 +2,7 @@
 
 namespace Xanax\Classes;
 
-class JSON {
+class JSONHandler {
 
 	public function Decode ( $string ) {
 		return json_decode($string);

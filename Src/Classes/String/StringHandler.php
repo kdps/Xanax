@@ -2,7 +2,7 @@
 
 use Xanax\Classes\OperationSystem
 
-class String {
+class StringHandler {
 	
 	public function filterVariable ( mixed $string, $type ) {
 		switch ($type) {

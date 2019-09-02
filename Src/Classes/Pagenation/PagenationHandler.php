@@ -8,7 +8,7 @@
 
 namespace Xanax\Classes;
 
-class Pagenation {
+class PagenationHandler {
 	
 	var $current_page;
 	var $list_count;

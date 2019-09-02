@@ -4,24 +4,24 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\Encode;
 use Xanax\Classes\FileObject;
-
+use Xanax\Classes\FileSystemHandler;
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
-
+use Xanax\Implement\FileSystemInterface;
 use Xanax\Implement\FileHandlerInterface;
-
 use Xanax\Validation\FileValidation;
-
 use Xanax\Message\FileHandler\FileHandlerMessage;
 
 class FileHandler implements FileHandlerInterface {
 	
 	private static $lastError;
 	private $strictMode = true;
+	private $fileSystemHandler;
 	
-	public function __construct ( $useStrictMode = true ) {
-		$this->strictMode = $useStrictMode;
+	public function __construct ( $useStrictMode = true, FileHandlerInterface $fileSystemHandler = null ) {
+		$this->fileSystemHandler = $fileSystemHandler;
+		$this->strictMode = $fileSystemHandler || new FileSystemHandler();
 	}
 	
 	public function isValidHandler ( $fileHandler ) {
@@ -431,24 +431,24 @@ class FileHandler implements FileHandlerInterface {
 		fclose($file);
 	}
 	
-	public function isCorrectInode ( \Xanax\Implement\FileSystemInterface $fileSystemHandler, $filePath ) :bool {
+	public function isCorrectInode ( $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		if ( $fileSystemHandler->getCurrentInode() === $this->getInode( $filePath ) ) {
+		if ( $this->fileSystemHandler->getCurrentInode() === $this->getInode( $filePath ) ) {
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public function getInode ( \Xanax\Implement\FileSystemInterface $fileSystemHandler, $filePath ) {
+	public function getInode (  $filePath ) {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		return $fileSystemHandler->getInodeNumber( $filePath );
+		return $this->fileSystemHandler->getInodeNumber( $filePath );
 	}
 	
 	public function getInterpretedContent ( string $filePath ) :string {
