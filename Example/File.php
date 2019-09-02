@@ -50,6 +50,7 @@ class FileExample {
 	}
 	
 }
+
 $fileExample = new FileExample();
 $fileHandler = new FileHandler();
 

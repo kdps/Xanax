@@ -40,6 +40,13 @@ class FileHandler implements FileHandlerInterface {
 		return true;
 	}
 	
+	public function createCache ( string $filePath, string $destination ) {
+		$cached = fopen($filePath, 'w');
+		fwrite($destination, ob_get_contents());
+		fclose($destination);
+		ob_end_flush();
+	}
+	
 	/**
 	 * Gets whether the file can be read.
 	 *
@@ -55,6 +62,14 @@ class FileHandler implements FileHandlerInterface {
 		$return = is_readable ($filePath);
 		
 		return $return;
+	}
+	
+	public function parseINI ( $filePath ) {
+		return parse_ini_file( $filePath );
+	}
+	
+	public function getMIMEType ( $filePath ) {
+		return mime_content_type ( $filePath );
 	}
 	
 	/**
@@ -230,9 +245,49 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function getSize ( string $filePath ) :int {
+	public function getSize ( string $filePath, bool $humanReadable ) :int {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		if ( $humanReadable ) {
+			clearstatcache();
+			
+			if (file_exists($file)) {
+				$bytes = filesize($file);
+			} else {
+				$bytes = $file;
+			}
+			
+			$bytes = 0;
+			
+			if ($bytes > 0) {
+				if ($bytes >= 1208925819614629174706176) {
+					$bytes = number_format($bytes / 1208925819614629174706176, 2).'YB';
+				} elseif ($bytes >= 1180591620717411303424) {
+					$bytes = number_format($bytes / 1180591620717411303424, 2).'ZB';
+				} elseif ($bytes >= 1152921504606846976) {
+					$bytes = number_format($bytes / 1152921504606846976, 2).'EB';
+				} elseif ($bytes >= 1125899906842624) {
+					$bytes = number_format($bytes / 1125899906842624, 2).'PB';
+				} elseif ($bytes >= 1099511627776) {
+					$bytes = number_format($bytes / 1099511627776, 2).'TB';
+				} elseif ($bytes >= 1073741824) {
+					$bytes = number_format($bytes / 1073741824, 2).'GB';
+				} elseif ($bytes >= 1048576) {
+					$bytes = number_format($bytes / 1048576, 2).'MB';
+				} elseif ($bytes >= 1024) {
+					$bytes = number_format($bytes / 1024, 2).'KB';
+				} elseif ($bytes > 1) {
+					$bytes = $bytes.' BYTES';
+				} elseif ($bytes == 1) {
+					$bytes = $bytes.' BYTE';
+				} else {
+					$bytes = '0 BYTES';
+				}
+			}
+			
+			return $bytes;
 		}
 		
 		$return = filesize( $filePath );
