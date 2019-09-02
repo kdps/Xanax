@@ -2,6 +2,7 @@
 
 $PATH = require __DIR__."/_PATH.php";
 require $PATH."/Interface/Directory/DirectoryHandlerInterface.php";
+require $PATH."/Interface/File/FileSystemInterface.php";
 require $PATH."/Interface/File/FileHandlerInterface.php";
 require $PATH."/Validation/FileValidation.php";
 require $PATH."/Validation/PHPValidation.php";
@@ -21,5 +22,7 @@ use Xanax\Classes\FileObject;
 $fileHandler = new FileHandler();
 $fileHandler->appendFileContent(__DIR__."/file.txt", "test", true);
 $content = $fileHandler->readAllContent(__DIR__."/file.txt");
-echo $fileHandler->isEqualByLine(__DIR__."/file.txt", "test") ? "true" : "false";
-echo $content;
+//echo $fileHandler->isEqualByLine(__DIR__."/file.txt", "test") ? "true" : "false";
+//echo $content;
+
+echo $fileHandler->isContainFolder("./", __DIR__."/file.txt") ? "true" : "false";

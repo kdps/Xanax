@@ -2,6 +2,8 @@
 
 namespace Xanax\Classes;
 
+use Xanax\Implement\FileSystemInterface as FileSystemInterface;
+
 class FileSystemHandler implements FileSystemInterface {
 	
 	public function __construct () {

@@ -11,6 +11,7 @@ use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
 use Xanax\Implement\FileSystemInterface as FileSystemInterface;
 use Xanax\Implement\FileHandlerInterface as FileHandlerInterface;
+use Xanax\Implement\DirectoryHandlerInterface as DirectoryHandlerInterface;
 use Xanax\Validation\FileValidation as FileValidation;
 use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
@@ -21,10 +22,10 @@ class FileHandler implements FileHandlerInterface {
 	private $fileSystemHandler;
 	private $directoryHandler;
 	
-	public function __construct ( $useStrictMode = true, FileHandlerInterface $fileSystemHandler = null ) {
-		$this->strictMode = $fileSystemHandler;
-		$this->fileSystemHandler = $fileSystemHandler || new FileSystemHandler();
-		$this->directoryHandler = $directoryHandler || new DirectoryHandler();
+	public function __construct ( $useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, FileHandlerInterface $directoryHandler = null  ) {
+		$this->strictMode = $useStrictMode;
+		$this->fileSystemHandler = $fileSystemHandler;// || new FileSystemHandler();
+		$this->directoryHandler = $directoryHandler;// || new DirectoryHandler();
 	}
 	
 	public function isValidHandler ( $fileHandler ) {
@@ -131,7 +132,8 @@ class FileHandler implements FileHandlerInterface {
 	public function isContainFolder ( string $basePath, string $filePath ) {
 		$realBasePath = realpath( $basePath );
 		$realFilePath = realpath( $filePath );
-		if ( $realFilePath === false || substr($realFilePath, strlen($realBasePath)) !== $realBasePath ) {
+		
+		if ( $realFilePath === false || strncmp($realFilePath, $realBasePath, strlen($realBasePath)) !== 0 {
 			return false;
 		}
 		
