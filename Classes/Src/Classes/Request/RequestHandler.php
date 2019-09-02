@@ -96,8 +96,12 @@ class RequestHandler {
 		return $_SERVER['HTTP_ACCEPT_ENCODING'];
 	}
 	
+	public function isXmlHttpRequest() {
+		return (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+	}
+	
 	public function isAjax() {
-		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $this->isXmlHttpRequest()) {
 			return true;
 		}
 		
