@@ -263,7 +263,8 @@ class FileHandler implements FileHandlerInterface {
 			
 			if ($bytes > 0) {
 				$sizes = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
-				$factor = $bytes > (1024 ** 6) ? floor((strlen($bytes) - 1) / 3) : (strlen($bytes >> 10) > 1 ? ((strlen($bytes >> 10) - 1) / 3) + 1 : 1);
+				$measure = strlen($bytes >> 10);
+				$factor = $bytes < (1024 ** 6) ? ($measure > 1 ? ((($measure - 1) / 3) + 1) : 1) : floor((strlen($bytes) - 1) / 3);
 				$capacity = $bytes / pow(1024, $factor);
 				return sprintf("%s%s%s", $capacity, $sizes[$factor], ($capacity === intval($capacity) ?: "ytes"));
 			}
