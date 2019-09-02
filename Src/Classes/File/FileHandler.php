@@ -128,7 +128,7 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
-	public function isFileInFolder ( string $basePath, string $filePath ) {
+	public function isContainFolder ( string $basePath, string $filePath ) {
 		$realBasePath = realpath( $basePath );
 		$realFilePath = realpath( $filePath );
 		if ( $realFilePath === false || substr($realFilePath, strlen($realBasePath)) !== $realBasePath ) {
@@ -147,7 +147,7 @@ class FileHandler implements FileHandlerInterface {
 			if ( $targetDirectory === null ) {
 				throw new StupidIdeaException ( FileHandlerMessage::getDoNotUseSubDirectorySyntaxMessage() );
 			} else {
-				if ( !$this->isFileInFolder( $containDirectory, $filePath ) ) {
+				if ( !$this->isContainFolder( $containDirectory, $filePath ) ) {
 					return false;
 				}
 			}
