@@ -19,10 +19,20 @@ require $PATH."/Classes/File/FileHandler.php";
 use Xanax\Classes\FileHandler;
 use Xanax\Classes\FileObject;
 
-$fileHandler = new FileHandler();
-$fileHandler->appendFileContent(__DIR__."/file.txt", "test", true);
-$content = $fileHandler->readAllContent(__DIR__."/file.txt");
-//echo $fileHandler->isEqualByLine(__DIR__."/file.txt", "test") ? "true" : "false";
-//echo $content;
+function appendContent () {
+	$fileHandler = new FileHandler();
+	$fileHandler->appendFileContent(__DIR__."/file.txt", "test", true);
+}
 
-echo $fileHandler->isContainFolder("./", __DIR__."/file.txt") ? "true" : "false";
+function readAllContent () {
+	$fileHandler = new FileHandler();
+	return $fileHandler->readAllContent(__DIR__."/file.txt");
+}
+
+function isEqualByLine () {
+	return $fileHandler->isEqualByLine(__DIR__."/file.txt", "test");
+}
+
+function isContainFolder() {
+	return $fileHandler->isContainFolder("./", __DIR__."/file.txt");
+}
