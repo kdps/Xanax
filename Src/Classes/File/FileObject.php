@@ -260,6 +260,10 @@ class FileObject {
 	
 	public function isEnoughFreeSpace () :bool {
 		$freeSpace = $this->directoryHandler->getFreeSpace();
+		if ( $freeSpace === -1 ) {
+			return true;
+		}
+		
 		$capacity = (int)$this->writeContentLength;
 		
 		$bool = $freeSpace < $freeSpace;

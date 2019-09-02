@@ -30,7 +30,11 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 	public function getFreeSpace ( $prefix = "/" ) {
-		$diskFreeSpaces = disk_free_space( $prefix );
+		$diskFreeSpaces = -1;
+		
+		if ( function_exists ("getFreeSpace")) {
+			$diskFreeSpaces = disk_free_space( $prefix );
+		}
 		
 		return $diskFreeSpaces;
 	}
