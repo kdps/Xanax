@@ -10,11 +10,13 @@ interface FileHandlerInterface {
 	
 	public function isExists ( string $filePath ) :bool;
 	
+	public function isContainFolder ( string $basePath, string $filePath ) :bool;
+	
 	public function isCorrectInode ( $filePath ) :bool;
 	
 	public function isValidHandler ( $fileHandler );
 	
-	public function isReadable ( $filePath ) :bool;
+	public function isReadable ( string $filePath ) :bool;
 	
 	public function isLocked ( $filePath ) :bool;
 	
@@ -30,7 +32,7 @@ interface FileHandlerInterface {
 	
 	public function getSize ( string $filePath ) : int;
 	
-	public function getInode ( $filePath );
+	public function getInode ( string $filePath );
 	
 	public function getLastModifiedTime ( string $filePath ) :string;
 	
@@ -38,7 +40,7 @@ interface FileHandlerInterface {
 	
 	public function getExtention ( string $filePath ) :string;
 	
-	public function getBasename ( $fileName, $extension = null ) :string;
+	public function getBasename ( string $fileName, $extension = null ) :string;
 	
 	public function getContent( string $filePath ) :string;
 	

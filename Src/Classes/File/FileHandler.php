@@ -47,7 +47,7 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @return bool
 	 */
-	public function isReadable ( $filePath ) :bool {
+	public function isReadable ( string $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -141,7 +141,7 @@ class FileHandler implements FileHandlerInterface {
 		$realBasePath = realpath( $basePath );
 		$realFilePath = realpath( $filePath );
 		
-		if ( $realFilePath === false || strncmp($realFilePath, $realBasePath, strlen($realBasePath)) !== 0 {
+		if ( $realFilePath === false || strncmp($realFilePath, $realBasePath, strlen($realBasePath)) !== 0 ) {
 			return false;
 		}
 		
@@ -414,7 +414,7 @@ class FileHandler implements FileHandlerInterface {
 		return $this->Write( $filePath, $invertedLines, 'w' );
 	}
 	
-	public function getBasename ( $fileName, $extension = null ) :string {
+	public function getBasename ( string $fileName, $extension = null ) :string {
 		return basename($fileName, $extension).PHP_EOL;
 	}
 	
@@ -470,7 +470,7 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
-	public function getInode (  $filePath ) {
+	public function getInode ( string $filePath ) {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
