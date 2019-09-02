@@ -129,7 +129,15 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
-	public function isContainFolder ( string $basePath, string $filePath ) {
+	/**
+	 * Make sure the file location exists under a specific folder.
+	 *
+	 * @param string $basePath : Lowest folder location
+	 * @param string $filePath : File path
+	 *
+	 * @return bool
+	 */
+	public function isContainFolder ( string $basePath, string $filePath ) :bool {
 		$realBasePath = realpath( $basePath );
 		$realFilePath = realpath( $filePath );
 		
@@ -148,10 +156,8 @@ class FileHandler implements FileHandlerInterface {
 		if ( FileValidation::hasSubfolderSyntax( $filePath ) ) {
 			if ( $targetDirectory === null ) {
 				throw new StupidIdeaException ( FileHandlerMessage::getDoNotUseSubDirectorySyntaxMessage() );
-			} else {
-				if ( !$this->isContainFolder( $containDirectory, $filePath ) ) {
-					return false;
-				}
+			} else if ( !$this->isContainFolder( $containDirectory, $filePath ) ) {
+				return false;
 			}
 		}
 		
