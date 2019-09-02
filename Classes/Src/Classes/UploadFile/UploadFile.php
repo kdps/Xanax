@@ -16,6 +16,40 @@ class UploadFile {
 		}
 	}
 	
+	public function getErrorMessageFromCode ( $error ) {
+		switch ($error) {
+			case UPLOAD_ERR_OK:
+				$response = 'There is no error, the file uploaded with success.';
+				break;
+			case UPLOAD_ERR_INI_SIZE:
+				$response = 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
+				break;
+			case UPLOAD_ERR_FORM_SIZE:
+				$response = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
+				break;
+			case UPLOAD_ERR_PARTIAL:
+				$response = 'The uploaded file was only partially uploaded.';
+				break;
+			case UPLOAD_ERR_NO_FILE:
+				$response = 'No file was uploaded.';
+				break;
+			case UPLOAD_ERR_NO_TMP_DIR:
+				$response = 'Missing a temporary folder. Introduced in PHP 4.3.10 and PHP 5.0.3.';
+				break;
+			case UPLOAD_ERR_CANT_WRITE:
+				$response = 'Failed to write file to disk. Introduced in PHP 5.1.0.';
+				break;
+			case UPLOAD_ERR_EXTENSION:
+				$response = 'File upload stopped by extension. Introduced in PHP 5.2.0.';
+				break;
+			default:
+				$response = 'Unknown upload error';
+				break;
+		}
+		
+		return $response;
+	}
+	
 	public function hasError ( $name ) {
 		if ($this->getFileError( $name ) !== UPLOAD_ERR_OK) {
 			return false;
