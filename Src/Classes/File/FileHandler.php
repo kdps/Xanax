@@ -2,26 +2,29 @@
 
 namespace Xanax\Classes;
 
-use Xanax\Classes\Encode;
-use Xanax\Classes\FileObject;
-use Xanax\Classes\FileSystemHandler;
+use Xanax\Classes\Encode as Encode;
+use Xanax\Classes\FileObject as FileObject;
+use Xanax\Classes\FileSystemHandler as FileSystemHandler;
+use Xanax\Classes\DirectoryHandler as DirectoryHandler;
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
-use Xanax\Implement\FileSystemInterface;
-use Xanax\Implement\FileHandlerInterface;
-use Xanax\Validation\FileValidation;
-use Xanax\Message\FileHandler\FileHandlerMessage;
+use Xanax\Implement\FileSystemInterface as FileSystemInterface;
+use Xanax\Implement\FileHandlerInterface as FileHandlerInterface;
+use Xanax\Validation\FileValidation as FileValidation;
+use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
 class FileHandler implements FileHandlerInterface {
 	
 	private static $lastError;
 	private $strictMode = true;
 	private $fileSystemHandler;
+	private $directoryHandler;
 	
 	public function __construct ( $useStrictMode = true, FileHandlerInterface $fileSystemHandler = null ) {
-		$this->fileSystemHandler = $fileSystemHandler;
-		$this->strictMode = $fileSystemHandler || new FileSystemHandler();
+		$this->strictMode = $fileSystemHandler;
+		$this->fileSystemHandler = $fileSystemHandler || new FileSystemHandler();
+		$this->directoryHandler = $directoryHandler || new DirectoryHandler();
 	}
 	
 	public function isValidHandler ( $fileHandler ) {
@@ -125,13 +128,29 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
-	public function isFile ( string $filePath ) :bool {
+	public function isFileInFolder ( string $basePath, string $filePath ) {
+		$realBasePath = realpath( $basePath );
+		$realFilePath = realpath( $filePath );
+		if ( $realFilePath === false || substr($realFilePath, strlen($realBasePath)) !== $realBasePath ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public function isFile ( string $filePath, array $containDirectory = null ) :bool {
 		if ( FileValidation::isReadable( $filePath ) ) {
 			
 		}
 		
 		if ( FileValidation::hasSubfolderSyntax( $filePath ) ) {
-			throw new StupidIdeaException ( FileHandlerMessage::getDoNotUseSubDirectorySyntaxMessage() );
+			if ( $targetDirectory === null ) {
+				throw new StupidIdeaException ( FileHandlerMessage::getDoNotUseSubDirectorySyntaxMessage() );
+			} else {
+				if ( !$this->isFileInFolder( $containDirectory, $filePath ) ) {
+					return false;
+				}
+			}
 		}
 		
 		if ( FileValidation::isPharProtocol( $filePath ) ) {

@@ -2,6 +2,14 @@
 
 class SessionHandler {
 	
+	public function __construct () {
+		if (is_cli()) {
+			return;
+		}
+		
+		
+	}
+	
 	public function isStated () {
 		if (session_status() == PHP_SESSION_NONE && empty($_SESSION)) {
 			return false;
