@@ -1,15 +1,15 @@
 <?php
 
 $Database['default'] = array (
-	'DataSourceName' =>    '',
+	'dataSourceName' =>    '',
 	'Database' =>          '',
-	'HostName' =>          'localhost',
-	'UserName' =>          '',
+	'Hostname' =>          'localhost',
+	'Username' =>          '',
 	'Password' =>          '',
-	'DatabaseDriver' =>    'PDO', // Only PDO support
-	'DatabasePrefix' =>    '',
-	'CacheON' =>           FALSE,
-	'CacheDirectory' =>    '',
-	'CharacterSet' =>      'utf8',
-	'DatabaseCollation' => 'utf8_general_ci'
+	'databaseDriver' =>    'PDO', // Only PDO support
+	'databasePrefix' =>    '',
+	'cacheEnable' =>       FALSE,
+	'cacheDirectory' =>    '',
+	'characterSet' =>      'utf8',
+	'databaseCollation' => 'utf8_general_ci'
 );

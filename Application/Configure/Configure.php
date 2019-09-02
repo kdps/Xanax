@@ -3,6 +3,6 @@
 $configure['rootDirectory'] = ".";
 $configure['indexPage'] = "index.php";
 $configure['Language'] = "english";
-$configure['CharacterSet'] = "UTF-8";
-$configure['SessionDriver'] = 'files';
-$configure['SessionDriver'] = 'files';
+$configure['characterSet'] = "UTF-8";
+$configure['sessionDriver'] = 'files';
+$configure['sessionDriver'] = 'files';
