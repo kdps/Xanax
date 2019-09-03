@@ -10,6 +10,12 @@ The problem with PHP is in the language. If you can't change the fundamentals, i
 
 Who wants to use PHP? is we. we use php because we don't like to learn new things. PHP is crap.
 
+## Xanax Component
+
+Insert Sort
+
+![alt text](https://github.com/kdps/Xanax/blob/master/Benchmark/bench.png)
+
 ## Xanax ironclad rule
 
 ![alt text](https://i.redd.it/oul3gz1bvwwy.jpg)
