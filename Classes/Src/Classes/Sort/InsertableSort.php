@@ -17,10 +17,6 @@ class InsertableSort {
 					$isSorted = false;
 				}
 			}
-			
-			if ($isSorted && $iterator > $count) {
-				$iterator += 1;
-			}
 		}
 		
 		return array_reverse($array);
