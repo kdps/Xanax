@@ -152,6 +152,14 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
+	public function createLock ( $filePath ) {
+		touch( $filePath );
+	}
+	
+	public function Lock ( $fileHandler ) {
+		@flock($fileHandler, LOCK_EX);
+	}
+	
 	/**
 	 * Check if the file empty.
 	 *
