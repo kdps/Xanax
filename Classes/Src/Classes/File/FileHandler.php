@@ -95,6 +95,13 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
+	/**
+	 * Check if the file empty.
+	 *
+	 * @param string $filePath    : Path of the file
+	 *
+	 * @return bool
+	 */
 	public function isEmpty ( string $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -105,6 +112,13 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Check if the file exists.
+	 *
+	 * @param string $filePath    : Path of the file
+	 *
+	 * @return bool
+	 */
 	public function isExists ( string $filePath ) :bool {
 		$return = file_exists( $filePath );
 		
@@ -119,6 +133,13 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 
+	/**
+	 * Gets the symbolic link
+	 *
+	 * @param string $symbolicLink : Path of symbolic link
+	 *
+	 * @return bool
+	 */
 	public function getSymbolicLink ( string $symbolicLink ) {
 		if ( !$this->isSymbolicLink( $symbolicLink ) ) {
 		}
@@ -185,6 +206,14 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Checks for a match on a line in the file.
+	 *
+	 * @param string $filePath : Path of file
+	 * @param string $string   : Text to compare
+	 *
+	 * @return bool
+	 */
 	public function isEqualByLine (  string $filePath, string $string = null ) :bool {
 		$fileObject = new FileObject( $filePath, false, "r" );
 		$fileObject->startHandle();
@@ -194,7 +223,14 @@ class FileHandler implements FileHandlerInterface {
 		return $bool;
 	}
 	
-	public function isExecutable () {
+	/**
+	 * Make sure the file is executable on your system.
+	 *
+	 * @param string $filePath : Path of file
+	 *
+	 * @return bool
+	 */
+	public function isExecutable ( $filePath ) {
 		if ( !$this->isFile( $filePath ) ) {
 			return false;
 		}
@@ -296,6 +332,14 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 
+	/**
+	 * Combine the two files.
+	 *
+	 * @param string $filePath  : Path of file
+	 * @param string $mergeFile : Path of the file to merge
+	 *
+	 * @return bool
+	 */
 	public function Merge ( string $filePath, string $mergeFile ) :bool {
 		$fileObject = new FileObject( $filePath, false, "a" );
 		$fileObject->startHandle();
@@ -456,6 +500,13 @@ class FileHandler implements FileHandlerInterface {
 		return basename($fileName, $extension).PHP_EOL;
 	}
 	
+	/**
+	 * Get the file's extension.
+	 *
+	 * @param string $filePath  : Path of the file
+	 *
+	 * @return string
+	 */
 	public function getExtention ( string $filePath ) :string {
 		$return = pathinfo($filePath, PATHINFO_EXTENSION);
 		
@@ -475,6 +526,13 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Download the file.
+	 *
+	 * @param string $filePath     : Path of the file
+	 *
+	 * @return string
+	 */
 	public function Download ( string $filePath ) :bool {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -516,6 +574,13 @@ class FileHandler implements FileHandlerInterface {
 		return $this->fileSystemHandler->getInodeNumber( $filePath );
 	}
 	
+	/**
+	 * Gets the interpreted file content.
+	 *
+	 * @param string $filePath     : Path of the file
+	 *
+	 * @return string
+	 */
 	public function getInterpretedContent ( string $filePath ) :string {
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -544,6 +609,14 @@ class FileHandler implements FileHandlerInterface {
 		require_once $filePath;
 	}
 	
+	/**
+	 * Move the file to a specific location.
+	 *
+	 * @param string $filePath     : Path of the file
+	 * @param string $destination  : Where to move the file
+	 *
+	 * @return string
+	 */
 	public function Move ( string $source, string $destination ) :bool {
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
