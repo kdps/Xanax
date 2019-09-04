@@ -156,8 +156,29 @@ class FileHandler implements FileHandlerInterface {
 		touch( $filePath );
 	}
 	
-	public function Lock ( $fileHandler ) {
-		@flock($fileHandler, LOCK_EX);
+	public function Unlock ( $fileHandler) {
+		if ( !$this->isValidHandler( $fileHandler ) ) {
+			
+		}
+		
+		flock($fileHandler, LOCK_UN);
+	}
+	
+	public function Lock ( $fileHandler, $mode = 'r'  ) {
+		if ( !$this->isValidHandler( $fileHandler ) ) {
+			
+		}
+		
+		$mode = strtolower($mode);
+
+		switch ( $mode ) {
+			case 'r':
+				flock($fileHandler, LOCK_SH);
+				break;
+			case 'w':
+				flock($fileHandler, LOCK_EX);
+				break;
+		}
 	}
 	
 	/**
