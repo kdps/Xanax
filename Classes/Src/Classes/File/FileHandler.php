@@ -17,6 +17,8 @@ use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
 class FileHandler implements FileHandlerInterface {
 	
+	protected $useStatFunction = ["stat", "lstat", "file_exists", "is_writable", "is_readable", "is_executable", "is_file", "is_dir", "is_link", "filectime", "fileatime", "filemtime", "fileinode", "filegroup", "fileowner", "filesize", "filetype", "fileperms"];
+
 	private static $lastError;
 	private $strictMode = true;
 	private $fileSystemHandler;
@@ -26,6 +28,14 @@ class FileHandler implements FileHandlerInterface {
 		$this->strictMode = $useStrictMode;
 		$this->fileSystemHandler = $fileSystemHandler;// || new FileSystemHandler();
 		$this->directoryHandler = $directoryHandler;// || new DirectoryHandler();
+	}
+	
+	public function clearStatatusCache ( $filePath ) :void {
+		clearstatcache(true, $filePath);
+	}
+	
+	protected function convertToNomalizePath ( $filePath ) {
+		return rtrim($filePath, DIRECTORY_SEPARATOR); // Remove last Directory separator
 	}
 	
 	public function isValidHandler ( $fileHandler ) {
@@ -41,6 +51,9 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function createCache ( string $filePath, string $destination ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		$destination = $this->convertToNomalizePath($destination);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -63,6 +76,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isReadable ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -77,6 +92,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function parseINI ( $filePath ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -89,6 +106,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function getMIMEType ( $filePath ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -108,6 +127,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isLocked ( $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -139,6 +160,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isEmpty ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -156,12 +179,16 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isExists ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$return = file_exists( $filePath );
 		
 		return $return;
 	}
 	
 	public function isUnknownFile ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( $this->getType ( $filePath ) === "unknown" ) {
 			return true;
 		}
@@ -186,6 +213,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 
 	public function isSymbolicLink ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( is_link( $filePath ) && $this->getType ( $filePath ) === "link" ) {
 			return true;
 		}
@@ -194,6 +223,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function isRegularFile ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( $this->getType ( $filePath ) === "file" ) {
 			return true;
 		}
@@ -210,6 +241,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isContainFolder ( string $basePath, string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$realBasePath = realpath( $basePath );
 		$realFilePath = realpath( dirname ($filePath ) );
 		
@@ -221,6 +254,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function isFile ( string $filePath, array $containDirectory = null ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( FileValidation::isReadable( $filePath ) ) {
 			
 		}
@@ -251,6 +286,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isEqualByLine (  string $filePath, string $string = null ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$fileObject = new FileObject( $filePath, false, "r" );
 		$fileObject->startHandle();
 		$bool = $fileObject->isEqualByLine( $string );
@@ -267,6 +304,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isExecutable ( $filePath ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -275,6 +314,7 @@ class FileHandler implements FileHandlerInterface {
 			return false;
 		}
 		
+		$this->clearStatatusCache( $filePath );
 		$return = is_executable ( $filePath );
 		
 		return $return;
@@ -288,6 +328,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function isWritable ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -296,6 +338,7 @@ class FileHandler implements FileHandlerInterface {
 			return true;
 		}
 		
+		$this->clearStatatusCache( $filePath );
 		$return = is_writable ( $filePath );
 		
 		return $return;
@@ -309,6 +352,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function Delete ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -330,6 +375,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return int
 	 */
 	public function getSize ( string $filePath, bool $humanReadable ) :int {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -339,7 +386,7 @@ class FileHandler implements FileHandlerInterface {
 		}
 		
 		if ( $humanReadable ) {
-			clearstatcache();
+			$this->clearStatatusCache( $filePath );
 			
 			if (file_exists($file)) {
 				$bytes = filesize($file);
@@ -361,6 +408,7 @@ class FileHandler implements FileHandlerInterface {
 			return $bytes;
 		}
 		
+		$this->clearStatatusCache( $filePath );
 		$return = filesize( $filePath );
 		
 		return $return >= 0 ? $return : -1;
@@ -375,6 +423,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function Copy ( string $filePath, string $destination ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -397,6 +447,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function Merge ( string $filePath, string $mergeFile ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$fileObject = new FileObject( $filePath, false, "a" );
 		$fileObject->startHandle();
 		
@@ -417,6 +469,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function Read ( string $filePath, int $length = -1, string $mode = 'r' ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$fileObject = new FileObject( $filePath, false, $mode );
 		if ( !$fileObject->isEnoughFreeSpace() ) {
 			$this::$lastError = "Disk space is not enough";
@@ -447,6 +501,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function readAllContent ( string $filePath, string $writeMode = 'r' ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		return $this->Read( $filePath, -1 );
 	}
 	
@@ -460,6 +516,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function Write ( string $filePath, string $content = null, string $writeMode = 'w' ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$fileObject = new FileObject( $filePath, true, $writeMode );
 		$fileObject->startHandle();
 		
@@ -488,6 +546,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function appendFileContent( string $filePath, string $content = null, bool $makeNewFile = true ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isFile( $filePath ) && !$makeNewFile ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -509,6 +569,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function getLastModifiedTime ( string $filePath ) :string {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -517,6 +579,7 @@ class FileHandler implements FileHandlerInterface {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
+		$this->clearStatatusCache( $filePath );
 		$return = fileatime($filePath);
 		
 		return $return;
@@ -530,6 +593,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function getType ( string $filePath ) :string {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -542,6 +607,7 @@ class FileHandler implements FileHandlerInterface {
 			throw new StupidIdeaException ( FileHandlerMessage::getDoNotUsePharProtocolMessage() );
 		}
 		
+		$this->clearStatatusCache( $filePath );
 		$return = filetype( $filePath );
 		
 		return $return;
@@ -555,8 +621,11 @@ class FileHandler implements FileHandlerInterface {
 	 * @return bool
 	 */
 	public function reverseContent ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$fileLines = file( $filePath );
 		$invertedLines = strrev ( array_shift( $fileLines ) );
+		
 		return $this->Write( $filePath, $invertedLines, 'w' );
 	}
 	
@@ -572,12 +641,16 @@ class FileHandler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function getExtention ( string $filePath ) :string {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		$return = pathinfo($filePath, PATHINFO_EXTENSION);
 		
 		return $return;
 	}
 	
 	public function getContent( string $filePath ) :string {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -602,6 +675,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function Download ( string $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -627,6 +702,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function isCorrectInode ( $filePath ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -643,6 +720,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function getInode ( string $filePath ) {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -662,6 +741,8 @@ class FileHandler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function getInterpretedContent ( string $filePath ) :string {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -686,6 +767,8 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 	public function requireOnce( string $filePath ) :void {
+		$filePath = $this->convertToNomalizePath($filePath);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -706,6 +789,9 @@ class FileHandler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function Move ( string $source, string $destination ) :bool {
+		$filePath = $this->convertToNomalizePath($filePath);
+		$destination = $this->convertToNomalizePath($destination);
+		
 		if ( !$this->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
