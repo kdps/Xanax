@@ -63,6 +63,14 @@ class FileObject {
 		if ( $this->recoveryMode ) {
 			$this->setRecoveryFile ();
 		}
+		
+		if ( !$this->fileHandlerClass->isExists( $filePath ) ) {
+			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		if ( !$this->fileHandlerClass->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
 	}
 	
 	public function getAcceptExtension ( array $extension ) {
