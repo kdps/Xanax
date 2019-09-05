@@ -5,7 +5,7 @@
 	"keywords": ["php framework", "php library"],
 	"license": "MIT",
 	"require": {
-		"php": ">=5.5"
+		"php": ">=7.1"
 	},
 	"autoload": {
 		"psr-4": {"Xanax\\": "Classes/Src/"},
