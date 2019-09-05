@@ -630,14 +630,14 @@ class FileHandler implements FileHandlerInterface {
 			"1298231840",
 			
 			"1229206276",
-			"1229206275", //TIT2
+			"1229206275", /* 3DIMP3 */ //TIT2
 			"1229206274", //FTT2
 			
 			"1213486160",
 			
 			"4294698052",
 			"4294697028",
-			"4294692964",
+			"4294692964", /* dMP3 */
 			"4294692932", //DInfo
 			
 			"4294688864",
@@ -658,7 +658,7 @@ class FileHandler implements FileHandlerInterface {
 			"4294676672",
 			"4294676580",
 			"4294676576",
-			"4294676548", //DXing
+			"4294676548", /* DMp3 */ //DXing
 			"4294676544",
 			"4294676484",
 			"4294676480",
@@ -685,31 +685,31 @@ class FileHandler implements FileHandlerInterface {
 			"218783877"
 		);
 		
-		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 ) {
+		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 /* ZMEXE */ ) {
 			return "EXE";
 		} else if ( in_array($fileDescription, $mp3FileHeader)) {
 			return "MP3";
 		} else if ( $fileDescription === 1297377380 || $fileDescription === 749685) {
 			return "MID";
-		} else if ( $fileDescription === 4292411374 || $fileDescription === 4292411390 || $fileDescription === 4292411360 || $fileDescription === 4292411361 || $fileDescription === 4292411355 || $fileDescription === 4292411362 || $fileDescription === 4292411372 || $fileDescription === 4292411390 || $fileDescription === 4292411390) {
+		} else if ( $fileDescription === 4292411374 || $fileDescription === 4292411390 || $fileDescription === 4292411360 /* JPG */ || $fileDescription === 4292411361 || $fileDescription === 4292411355 || $fileDescription === 4292411362 || $fileDescription === 4292411372 || $fileDescription === 4292411390 || $fileDescription === 4292411390) {
 			return "JPG";
 		} else if ( $fileDescription === 799024 ) {
 			return "ZIP";
-		} else if ( $fileDescription === 1347093252 ) {
+		} else if ( $fileDescription === 1347093252 /* KPZIP/PPTX */) {
 			return "ZIP/PPTX";
-		} else if ( $fileDescription === 1195984440 ) {
+		} else if ( $fileDescription === 1195984440 /* 8FIGGIF */) {
 			return "GIF";
 		} else if ( $fileDescription === 1297771520 ) {
 			return "DLL";
-		} else if ( $fileDescription === 1275068416 ) {
+		} else if ( $fileDescription === 1275068416 /* LLNK */) {
 			return "LNK";
 		} else if ( $fileDescription === 1534799920 || $fileDescription === 1531200838 ) {
 			return "URL";
-		} else if ( $fileDescription === 2303741511 ) {
+		} else if ( $fileDescription === 2303741511 /* GNPPNG */) {
 			return "PNG";
 		} else if ( $fileDescription === 1162758471 ) {
 			return "MUS";
-		} else if ( $fileDescription === 28 ) { //ftypM4A
+		} else if ( $fileDescription === 28 /* M4A */ ) { //ftypM4A
 			return "M4A";
 		} else if ( $fileDescription === 757935405 ) {
 			return "CAP";
@@ -729,11 +729,15 @@ class FileHandler implements FileHandlerInterface {
 			return "ICODATA";
 		} else if ( $fileDescription === 4294845184 ) {
 			return "AIMPPL4";
+		} else if ( $fileDescription === 1230263110 ) {
+			return "CHM";
+		} else if ( $fileDescription === 3503231456 ) {
+			return "MSI";
 		} else if ( $fileDescription === 1380533830 ) {
 			return "AVI/WAV";
 		} else if ( $fileDescription === 1346979398 ) {
 			return "WAV";
-		} else if ( $fileDescription === 1112356435 || $fileDescription === 1112364703 || $fileDescription === 1112364798) {
+		} else if ( $fileDescription === 1112356435 || $fileDescription === 1112364703 || $fileDescription === 1112364798 || $fileDescription === 1112356374) {
 			return "BMP";
 		} else if ( $fileDescription === 1481650957 || $fileDescription === 1112344120 || $fileDescription === 1112355844 || $fileDescription === 1112356444 ) {
 			return "XP3";
@@ -747,7 +751,7 @@ class FileHandler implements FileHandlerInterface {
 			return "MP4";
 		} else if ( $fileDescription === 626017350 ) {
 			return "PDF";
-		} else if ( $fileDescription === 1382117921 ) {
+		} else if ( $fileDescription === 1382117921 /* !raRRAR */) {
 			return "RAR";
 		} else if ( $fileDescription === 1162299201 ) {
 			return "EGG";

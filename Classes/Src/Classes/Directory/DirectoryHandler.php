@@ -225,6 +225,31 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		return true;
 	}
 	
+	public function getFileList ( $sort = false ) {
+		$fileList = array();
+		
+		$iterator = new RecursiveIteratorIterator (
+			new RecursiveDirectoryIterator( "./mp3", RecursiveDirectoryIterator::SKIP_DOTS ),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
+		
+		if ( $this->getMaxDepth() !== -1 ) {
+			$iterator->setMaxDepth( $this->getMaxDepth() );
+		}
+		
+		foreach( $iterator as $fileInformation ) {
+			if ( $fileInformation->isFile() ) {
+				$fileList[] = $fileInformation->getRealPath();
+			}
+		}
+		
+		if ( $sort ) {
+			sort ( $fileList );
+		}
+		
+		return $fileList;
+	}
+	
 	public function Empty ( string $directoryPath ) {
 		if ( !$this->isDirectory( $directoryPath ) ) {
 			

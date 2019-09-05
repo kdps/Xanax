@@ -36,23 +36,10 @@ class FileExample {
 	function getTypeByHeader() {
 		$fileHandler = new FileHandler();
 		$directoryHandler = new DirectoryHandler();
-		
-		$iterator = new RecursiveIteratorIterator (
-			new RecursiveDirectoryIterator( "./mp3", RecursiveDirectoryIterator::SKIP_DOTS ),
-			RecursiveIteratorIterator::CHILD_FIRST
-		);
-		
-		$iterator->setMaxDepth( 10 );
-		
-		foreach( $iterator as $fileInformation ) {
-			if ( !$fileInformation->isDir() ) {
-				
-				echo $fileHandler->getTypeByHeader($fileInformation->getRealPath())."<br>";
-			}
+		$fileList = $directoryHandler->getFileList();
+		foreach($fileList as $file) {
+			echo $fileHandler->getTypeByHeader($file)."<br>";
 		}
-		
-		
-		echo "<br>";
 	}
 	
 }
