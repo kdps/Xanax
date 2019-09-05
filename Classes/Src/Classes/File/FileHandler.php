@@ -161,8 +161,12 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
-	public function createLock ( $filePath ) {
-		touch( $filePath );
+	public function createTemporary ( $directory, $prefix ) {
+		return $tmpfname = tempnam( $directory, $prefix );
+	}
+	
+	public function setAccessAndModificatinTime ( $filePath, $time, $atime ) {
+		touch( $filePath, $time, $atime );
 	}
 	
 	public function Unlock ( $fileHandler) {
