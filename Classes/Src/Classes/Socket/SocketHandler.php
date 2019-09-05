@@ -15,6 +15,22 @@ class SocketHandler {
 		return socket_create( $domain, $type, $protocol );
 	}
 	
+	public function getPeerName ( $socketHandler, $address, $port ) {
+		socket_getpeername ( $socketHandler, $address, $port );
+	}
+	
+	public function Close ( $socketHandler ) :void {
+		socket_close ( $socketHandler );
+	}
+	
+	public function Listen ( $socketHandler ) :bool {
+		socket_listen ( $socketHandler );
+	}
+	
+	public function Bind ( $socketHandler, $address, $port ) :bool {
+		socket_bind ( $socketHandler, $address, $port );
+	}
+	
 	public function readPacket ( $socketHandler, $length, $type = PHP_BINARY_READ ) :string {
 		socket_read( $socketHandler, $length, $type );
 	}

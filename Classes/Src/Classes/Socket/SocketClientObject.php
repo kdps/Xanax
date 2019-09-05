@@ -6,7 +6,6 @@ use Xanax\Classes\SocketHandler as SocketHandler;
 
 class SocketClientObject {
 	
-	private $connectedStatus = false;
 	private $SocketHandlerClass;
 	private $SocketHandler;
 	
@@ -20,23 +19,26 @@ class SocketClientObject {
 			return false;
 		}
 		
-		
+		return true;
 	}
 	
-	public function Connect( $domain = AF_INET, $type = SOCK_STREAM, $protocol = SOL_TCP, $address, $port) {
+	public function Close () {
+		$this->SocketHandlerClass->Close();
+	}
+	
+	public function Connect( $address, $port, $domain = AF_INET, $type = SOCK_STREAM, $protocol = SOL_TCP) :bool {
 		$this->SocketHandler = $this->SocketHandlerClass->Create( $domain, $type, $protocol );
 		
 		if ( !$this->SocketHandler ) {
-			$this->connectedStatus = false;
+			return false;
 		}
 		
 		$result = $this->SocketHandlerClass->Connect( $this->SocketHandler, $address, $port );
 		if ( !$result ) {
-			$this->connectedStatus = false;
+			return false;
 		}
+		
+		return true;
 	}
 
-	public function isConnected () :bool {
-		return $this->connectedStatus;
-	}
 }
