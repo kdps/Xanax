@@ -516,7 +516,7 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function getSize ( string $filePath, bool $humanReadable ) :int {
+	public function getSize ( string $filePath, bool $humanReadable = false ) :int {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
 		if ( !$this->isExists( $filePath ) ) {

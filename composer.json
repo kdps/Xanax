@@ -1,15 +1,14 @@
 {
-	"name": "kdps/Xanax",
+	"name": "kdps/xanax",
 	"type": "project",
 	"description": "PHP Framework or Libraries",
 	"keywords": ["php framework", "php library"],
 	"license": "MIT",
 	"require": {
-		"ext-sockets": "*",
-		"php": ">=7.0"
+		"php": ">=5.5"
 	},
 	"autoload": {
-		"psr-4": {"Xanax\\Raw\\": "Classes/Src"},
+		"psr-4": {"Xanax\\": "Classes/Src/"},
         "classmap": [
             ""
         ]
@@ -23,5 +22,5 @@
         "psr-4": {
             "Tests\\": "tests/"
         }
-    },
+    }
 }

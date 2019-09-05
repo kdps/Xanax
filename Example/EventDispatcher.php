@@ -1,8 +1,7 @@
 <?php
 
-$PATH = require __DIR__."/_PATH.php";
-require $PATH."/Classes/EventDispatcher/EventDispatcher.php";
-require $PATH."/Classes/EventDispatcher/EventInstance.php";
+include("./../vendor/autoload.php");
+
 use Xanax\Classes\EventDispatcher;
 
 class Listener {
