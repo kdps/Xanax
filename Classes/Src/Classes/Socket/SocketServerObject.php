@@ -4,14 +4,37 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\SocketHandler as SocketHandler;
 
-class SocketSingleServerObject {
+class SocketServerObject {
 	
+	private $multipleAcceptedSocketCount = 0;
+	private $multipleAcceptedSocket;
+	private $multipleClientSocket = array();
 	private $clientBindHandler;
 	private $SocketHandlerClass;
 	private $SocketHandler;
 	
 	public function __construct( $socketHandler ) {
 		$this->SocketHandlerClass = $socketHandler;
+	}
+	
+	public function getAcceptedMultipleClient () {
+		return $this->multipleAcceptedSocketCount;
+	}
+	
+	public function hasAcceptedMultipleClient () {
+		if ( $this->getAcceptedMultipleClient() > 0 ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function selectArrayClient ( $timeout = 10, $write = null, $except = null ) :void {
+		$this->multipleAcceptedSocketCount = $this->SocketHandlerClass->Select( $this->multipleAcceptedSocket, $timeout, $write, $except );
+	}
+	
+	public function setArrayClient () {
+		$this->multipleAcceptedSocket = array_merge(array( $this->SocketHandler ), $this->multipleClientSocket );
 	}
 	
 	public function Close () {

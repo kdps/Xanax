@@ -15,12 +15,22 @@ class SocketHandler {
 		return socket_create( $domain, $type, $protocol );
 	}
 	
-	public function getPeerName ( $socketHandler, $address, $port ) {
-		socket_getpeername ( $socketHandler, $address, $port );
+	public function getPeerName ( $socketHandler ) :array {
+		$hasPeerInfo = socket_getpeername ( $socketHandler, $address, $port );
+		
+		if ( $hasPeerInfo ) {
+			return array('IPAddress'=>$address, 'Port'=>$port);
+		}
+		
+		return array();
 	}
 	
 	public function Close ( $socketHandler ) :void {
 		socket_close ( $socketHandler );
+	}
+	
+	public function Select ( array $socketArray, $write = null, $except = null, $timeout = 10 ) {
+		return socket_select($socketArray, $write, $except, $timeout);
 	}
 	
 	public function AcceptConnect ( $socketHandler ) {
