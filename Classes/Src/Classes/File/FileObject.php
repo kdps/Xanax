@@ -28,8 +28,10 @@ class FileObject {
 	 * Append syntax : b, t
 	 */
 	private $modeList = ["r", "r+", "w", "w+", "a", "a+", "x", "x+", "c", "c+", "e"];
-	
+
 	private $readModeList = ["r", "r+"];
+	
+	private $createIfModeEmpty = ["w", "w+", "a"];
 	
 	private $acceptExtension = [];
 	
@@ -73,6 +75,7 @@ class FileObject {
 		if ( $this->recoveryMode ) {
 			$this->setRecoveryFile ();
 		}
+		
 		
 		/*if ( !$this->fileHandlerClass->isExists( $filePath ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
@@ -152,7 +155,15 @@ class FileObject {
 		return false;
 	}
 	
-	public function isWritableMode ( $readMode = null) {
+	public function isCreateIfModeEmpty ( $readMode = null) {
+		if ( in_array( ( $readMode || $this->mode ), $this->createIfModeEmpty ) ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function isReadable ( $readMode = null) {
 		if ( in_array( ( $readMode || $this->mode ), $this->readModeList ) ) {
 			return true;
 		}
@@ -336,10 +347,9 @@ class FileObject {
 	}
 	
 	public function startHandle () {
-		$exceptMode = $this->mode === 'w' ? false : true;
-		$isWritableFile = ( $this->isWritableMode() && !$this->fileHandlerClass->isExists( $this->getFilePath() ) );
+		$fileIsNotExists = ( !$this->isCreateIfModeEmpty() && !$this->fileHandlerClass->isExists( $this->getFilePath() ) );
 		
-		if ( $exceptMode && $isWritableFile ) {
+		if ( $fileIsNotExists ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
