@@ -52,7 +52,7 @@ interface FileHandlerInterface {
 	
 	public function copy ( string $filePath, string $destinationPath ) :bool;
 	
-	public function appendContent( string $filePath, string $content = null, bool $makeNewFile = true ) :bool;
+	public function appendContent( string $filePath, string $content = null, bool $overwrite = true ) :bool;
 	
 	public function Write ( string $filePath, string $content = null, string $writeMode = 'w' ) :bool;
 	

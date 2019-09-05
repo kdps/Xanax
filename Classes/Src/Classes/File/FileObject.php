@@ -31,7 +31,7 @@ class FileObject {
 
 	private $readModeList = ["r", "r+"];
 	
-	private $createIfModeEmpty = ["w", "w+", "a"];
+	private $createIfModeEmpty = ["w", "w+", "a", "c"];
 	
 	private $acceptExtension = [];
 	

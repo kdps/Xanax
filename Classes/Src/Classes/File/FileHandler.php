@@ -697,21 +697,16 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @param string $filePath
 	 * @param string $content
-	 * @param bool   $makeNewFile
 	 *
 	 * @return bool
 	 */
-	public function appendContent( string $filePath, string $content = null, bool $stream = false, bool $makeNewFile = true ) :bool {
+	public function appendContent( string $filePath, string $content = null, bool $stream = false, bool $overwrite = true ) :bool {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
-		if ( !$this->isFile( $filePath ) && !$makeNewFile ) {
+		if ( !$overwrite && $this->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
-		if ( !$this->isFile( $filePath ) && $makeNewFile ) {
-			$this->Write($filePath, "", 'w');
-		}
-
 		if ($stream) {
 			file_put_contents( $filePath, $content, FILE_APPEND | LOCK_EX );
 		} else {
