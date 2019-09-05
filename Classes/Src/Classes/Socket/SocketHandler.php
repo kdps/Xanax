@@ -23,6 +23,10 @@ class SocketHandler {
 		socket_close ( $socketHandler );
 	}
 	
+	public function AcceptConnect ( $socketHandler ) {
+		socket_accept( $socketHandler );
+	}
+	
 	public function Listen ( $socketHandler ) :bool {
 		socket_listen ( $socketHandler );
 	}
@@ -35,7 +39,11 @@ class SocketHandler {
 		socket_read( $socketHandler, $length, $type );
 	}
 	
-	public function writeSocket ( $socketHandler, $buffer, $length ) :int {
+	public function writeSocket ( $socketHandler, $buffer, $length = -1 ) :int {
+		if ( $length === -1 ) {
+			$length = strlen( $buffer );
+		}
+		
 		return socket_write( $socketHandler, $buffer, $length );
 	}
 	

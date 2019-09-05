@@ -4,7 +4,7 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\SocketHandler as SocketHandler;
 
-class SocketClientObject {
+class SocketSingleClientObject {
 	
 	private $SocketHandlerClass;
 	private $SocketHandler;

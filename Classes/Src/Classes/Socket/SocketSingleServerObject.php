@@ -4,8 +4,9 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\SocketHandler as SocketHandler;
 
-class SocketServerObject {
+class SocketSingleServerObject {
 	
+	private $clientBindHandler;
 	private $SocketHandlerClass;
 	private $SocketHandler;
 	
@@ -36,7 +37,19 @@ class SocketServerObject {
 		
 		return true;
 	}
-
+	
+	public function AcceptClient () {
+		$bind = $this->SocketHandlerClass->AcceptConnect ( $this->SocketHandler );
+		
+		if ( $bind ) {
+			$this->clientBindHandler = $bind;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
 }
 
 ?>
