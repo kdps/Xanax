@@ -30,7 +30,7 @@ interface FileHandlerInterface {
 	
 	public function isWritable ( string $filePath ) :bool;
 	
-	public function getSize ( string $filePath ) : int;
+	public function getSize ( string $filePath, bool $humanReadable ) :int;
 	
 	public function getInode ( string $filePath );
 	
