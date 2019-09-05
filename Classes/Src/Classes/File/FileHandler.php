@@ -203,7 +203,35 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
-	public function createTemporary ( $directory, $prefix ) {
+	public function getLine ( string $fileHandler, int $length) :string {
+		if ( !$this->isValidHandler( $fileHandler ) ) {
+			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
+		}
+		
+		fgets ( $fileHandler, $length );
+	}
+	
+	public function getCharacter ( string $fileHandler, int $length) :string {
+		if ( !$this->isValidHandler( $fileHandler ) ) {
+			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
+		}
+		
+		fgetc ( $fileHandler, $length );
+	}
+	
+	public function getPermissions ( $filePath ) :int {
+		return fileperms( $filePath );
+	}
+	
+	public function getOwnser ( $filePath ) :int {
+		return fileowner( $filePath );
+	}
+	
+	public function createTemporary () :resource {
+		return tmpfile();
+	}
+	
+	public function createUniqueTemporary ( $directory, $prefix ) {
 		return $tmpfname = tempnam( $directory, $prefix );
 	}
 	
@@ -573,6 +601,10 @@ class FileHandler implements FileHandlerInterface {
 		return true;
 	}
 	
+	public function changeUmask ( $mask ) :int {
+		return umask( $mask );
+	}
+	
 	/**
 	 * Read the file.
 	 *
@@ -675,6 +707,7 @@ class FileHandler implements FileHandlerInterface {
 		} else {
 			$this->Write( $filePath, $content, 'a' );
 		}
+		
 		return true;
 	}
 	
