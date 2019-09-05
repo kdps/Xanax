@@ -4,7 +4,7 @@ namespace Xanax\Implement;
 
 interface FileHandlerInterface {
 	
-	public function isFile ( string $filePath ) :bool;
+	public function isFile ( string $filePath, string $containDirectory = null ) :bool;
 	
 	public function isEmpty ( string $filePath ) :bool;
 	

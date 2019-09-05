@@ -31,14 +31,35 @@ class FileHandler implements FileHandlerInterface {
 		$this->directoryHandler = $directoryHandler;// || new DirectoryHandler();
 	}
 	
+	/**
+	 * Delete the state of the file.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function clearStatatusCache ( $filePath ) :void {
 		clearstatcache(true, $filePath);
 	}
 	
+	/**
+	 * Delete the last directory separator.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	protected function convertToNomalizePath ( $filePath ) {
 		return rtrim($filePath, DIRECTORY_SEPARATOR); // Remove last Directory separator
 	}
 	
+	/**
+	 * Make sure the file handler is of type resource.
+	 *
+	 * @param string $fileHandler
+	 *
+	 * @return bool
+	 */
 	public function isValidHandler ( $fileHandler ) {
 		if ( getType($fileHandler) !== "resource" ) {
 			return false;
@@ -51,6 +72,13 @@ class FileHandler implements FileHandlerInterface {
 		return true;
 	}
 	
+	/**
+	 * Gets the current file pointer position.
+	 *
+	 * @param string $fileHandler
+	 *
+	 * @return bool
+	 */
 	public function getPointerLocation ( $fileHandler ) {
 		if ( !$this->isValidHandler( $fileHandler ) ) {
 			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
@@ -80,7 +108,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Gets whether the file can be read.
 	 *
-	 * @param string $filePath    : Path of the file to check
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -100,6 +128,13 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Interpret the INI file.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function parseINI ( $filePath ) {
 		$filePath = $this->convertToNomalizePath($filePath);
 		
@@ -114,6 +149,13 @@ class FileHandler implements FileHandlerInterface {
 		return parse_ini_file( $filePath );
 	}
 	
+	/**
+	 * Gets the MIME of the file.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function getMIMEType ( $filePath ) {
 		$filePath = $this->convertToNomalizePath($filePath);
 		
@@ -131,7 +173,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Gets whether the file is locked.
 	 *
-	 * @param string $filePath    : Path of the file to check
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -169,6 +211,13 @@ class FileHandler implements FileHandlerInterface {
 		touch( $filePath, $time, $atime );
 	}
 	
+	/**
+	 * Unlock the file.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function Unlock ( $fileHandler) {
 		if ( !$this->isValidHandler( $fileHandler ) ) {
 			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
@@ -177,6 +226,13 @@ class FileHandler implements FileHandlerInterface {
 		flock($fileHandler, LOCK_UN); // Unlock file handler
 	}
 	
+	/**
+	 * Lock the file.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function Lock ( $fileHandler, $mode = 'r'  ) {
 		if ( !$this->isValidHandler( $fileHandler ) ) {
 			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
@@ -197,7 +253,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Check if the file empty.
 	 *
-	 * @param string $filePath    : Path of the file
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -216,7 +272,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Check if the file exists.
 	 *
-	 * @param string $filePath    : Path of the file
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -241,7 +297,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Gets the symbolic link
 	 *
-	 * @param string $symbolicLink : Path of symbolic link
+	 * @param string $symbolicLink
 	 *
 	 * @return bool
 	 */
@@ -277,8 +333,8 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Make sure the file location exists under a specific folder.
 	 *
-	 * @param string $basePath : Lowest folder location
-	 * @param string $filePath : File path
+	 * @param string $basePath
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -295,7 +351,15 @@ class FileHandler implements FileHandlerInterface {
 		return true;
 	}
 	
-	public function isFile ( string $filePath, array $containDirectory = null ) :bool {
+	/**
+	 * Check that the file is correct.
+	 *
+	 * @param string $filePath
+	 * @param array $containDirectory
+	 *
+	 * @return bool
+	 */
+	public function isFile ( string $filePath, string $containDirectory = null ) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 		
 		if ( FileValidation::isReadable( $filePath ) ) {
@@ -322,8 +386,8 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Checks for a match on a line in the file.
 	 *
-	 * @param string $filePath : Path of file
-	 * @param string $string   : Text to compare
+	 * @param string $filePath
+	 * @param string $string
 	 *
 	 * @return bool
 	 */
@@ -341,7 +405,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Make sure the file is executable on your system.
 	 *
-	 * @param string $filePath : Path of file
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -365,7 +429,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Gets whether the file can be written to.
 	 *
-	 * @param string $filePath    : Path of the file to check
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -389,7 +453,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Delete the file.
 	 *
-	 * @param string $filePath    : Path of the file to delete
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -412,7 +476,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Check the size of the file.
 	 *
-	 * @param string $filePath    : Path of the file to get size
+	 * @param string $filePath
 	 *
 	 * @return int
 	 */
@@ -459,8 +523,8 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Copy the file.
 	 *
-	 * @param string $filePath    : Path of the file to copy
-	 * @param string $destination : Path to which copied files are to be saved
+	 * @param string $filePath
+	 * @param string $destination
 	 *
 	 * @return bool
 	 */
@@ -483,8 +547,8 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Combine the two files.
 	 *
-	 * @param string $filePath  : Path of file
-	 * @param string $mergeFile : Path of the file to merge
+	 * @param string $filePath
+	 * @param string $mergeFile
 	 *
 	 * @return bool
 	 */
@@ -504,9 +568,9 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Read the file.
 	 *
-	 * @param string $filePath  : Path of the file
-	 * @param int    $length    : Read length
-	 * @param int    $writeMode : Mode of file handler
+	 * @param string $filePath
+	 * @param int    $length
+	 * @param int    $mode
 	 *
 	 * @return bool
 	 */
@@ -551,16 +615,16 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Create a file.
 	 *
-	 * @param string $filePath   : Path of the file to create
-	 * @param string $content    : File contents
-	 * @param string $writeMode  : File creation mode
+	 * @param string $filePath
+	 * @param string $content
+	 * @param string $writeMode
 	 *
 	 * @return bool
 	 */
-	public function Write ( string $filePath, string $content = null, string $writeMode = 'w' ) :bool {
+	public function Write ( string $filePath, string $content = null, string $mode = 'w' ) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 		
-		$fileObject = new FileObject( $filePath, true, $writeMode );
+		$fileObject = new FileObject( $filePath, true, $mode );
 		$fileObject->startHandle();
 		
 		if ( !$fileObject->successToStartHandle() ) {
@@ -581,9 +645,9 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Append the contents to the file.
 	 *
-	 * @param string $filePath    : Path of the file to append contents
-	 * @param string $content     : File contents
-	 * @param bool   $makeNewFile : If the file does not exist, create a new file.
+	 * @param string $filePath
+	 * @param string $content
+	 * @param bool   $makeNewFile
 	 *
 	 * @return bool
 	 */
@@ -606,7 +670,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Bring the last modified time.
 	 *
-	 * @param string $filePath    : Path of the file to check
+	 * @param string $filePath
 	 *
 	 * @return string
 	 */
@@ -630,7 +694,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Get the file type.
 	 *
-	 * @param string $filePath    : Path of the file to check
+	 * @param string $filePath
 	 *
 	 * @return string
 	 */
@@ -658,7 +722,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Write the contents of the file backwards.
 	 *
-	 * @param string $filePath    : Path of the file to write
+	 * @param string $filePath
 	 *
 	 * @return bool
 	 */
@@ -678,7 +742,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Get the file's extension.
 	 *
-	 * @param string $filePath  : Path of the file
+	 * @param string $filePath
 	 *
 	 * @return string
 	 */
@@ -690,6 +754,13 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Get the contents of the file.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return string
+	 */
 	public function getContent( string $filePath ) :string {
 		$filePath = $this->convertToNomalizePath($filePath);
 		
@@ -712,7 +783,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Download the file.
 	 *
-	 * @param string $filePath     : Path of the file
+	 * @param string $filePath
 	 *
 	 * @return string
 	 */
@@ -778,7 +849,7 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Gets the interpreted file content.
 	 *
-	 * @param string $filePath     : Path of the file
+	 * @param string $filePath
 	 *
 	 * @return string
 	 */
@@ -825,8 +896,8 @@ class FileHandler implements FileHandlerInterface {
 	/**
 	 * Move the file to a specific location.
 	 *
-	 * @param string $filePath     : Path of the file
-	 * @param string $destination  : Where to move the file
+	 * @param string $filePath
+	 * @param string $destination
 	 *
 	 * @return string
 	 */
