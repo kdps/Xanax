@@ -1,2 +1,10 @@
 {
+	"name": "kdps/Xanax",
+	"description": "PHP Framework or Libraries",
+	"keywords": ["php framework", "php library"],
+	"license": "MIT",
+	 "require": {
+        "ext-sockets": "*",
+        "php": ">=7.0"
+    }
 }
