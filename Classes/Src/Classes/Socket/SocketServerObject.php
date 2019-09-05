@@ -6,9 +6,10 @@ use Xanax\Classes\SocketHandler as SocketHandler;
 
 class SocketServerObject {
 	
-	private $multipleAcceptedSocketCount = 0;
-	private $multipleAcceptedSocket;
-	private $multipleClientSocket = array();
+	private $arrayAcceptedSocketInfo = array();
+	private $arrayAcceptedSocket = array();
+	private $arrayAcceptedSocketCount = 0;
+	private $arrayClientSocket = array();
 	private $clientBindHandler;
 	private $SocketHandlerClass;
 	private $SocketHandler;
@@ -17,12 +18,35 @@ class SocketServerObject {
 		$this->SocketHandlerClass = $socketHandler;
 	}
 	
-	public function getAcceptedMultipleClient () {
-		return $this->multipleAcceptedSocketCount;
+	public function exceptSocketInArray ( $arrayClientSocket, $arrayAcceptedSocketInfo, $AcceptedSocketInArray  ) {
+		if (isset($arrayClientSocket[$AcceptedSocketInArray])) {
+			unset($arrayClientSocket[$AcceptedSocketInArray]);
+		}
+		
+		if (isset($arrayAcceptedSocketInfo[$AcceptedSocketInArray])) {
+			unset($arrayAcceptedSocketInfo[$AcceptedSocketInArray]);
+		}
+		
+		if ( !$this->getAcceptedClientInArray() ) {
+			$arrayAcceptedSocketInfo = array();
+			$arrayAcceptedSocket = array();
+		}
 	}
 	
-	public function hasAcceptedMultipleClient () {
-		if ( $this->getAcceptedMultipleClient() > 0 ) {
+	public function getAcceptedClientInArray () {
+		if ( count($arrayAcceptedSocketInfo) ===0 ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public function getAcceptedClientInArray () {
+		return $this->arrayAcceptedSocketCount;
+	}
+	
+	public function hasAcceptedClientInArray () {
+		if ( $this->getAcceptedarrayClient() > 0 ) {
 			return true;
 		}
 		
@@ -30,11 +54,11 @@ class SocketServerObject {
 	}
 	
 	public function selectArrayClient ( $timeout = 10, $write = null, $except = null ) :void {
-		$this->multipleAcceptedSocketCount = $this->SocketHandlerClass->Select( $this->multipleAcceptedSocket, $timeout, $write, $except );
+		$this->arrayAcceptedSocketCount = $this->SocketHandlerClass->Select( $this->arrayAcceptedSocket, $timeout, $write, $except );
 	}
 	
 	public function setArrayClient () {
-		$this->multipleAcceptedSocket = array_merge(array( $this->SocketHandler ), $this->multipleClientSocket );
+		$this->arrayAcceptedSocket = array_merge(array( $this->SocketHandler ), $this->arrayClientSocket );
 	}
 	
 	public function Close () {
