@@ -17,6 +17,16 @@ class FileObject {
 	
 	private $readedContent;
 	
+	/*
+	 * r : Read only
+	 * r+ : Read and write
+	 * w : Write only
+	 * w+ : Write and read
+	 * a : Read only
+	 * a+ : Read and read
+	 *
+	 * Append syntax : b, t
+	 */
 	private $modeList = ["r", "r+", "w", "w+", "a", "a+", "x", "x+", "c", "c+", "e"];
 	
 	private $readModeList = ["r", "r+"];
