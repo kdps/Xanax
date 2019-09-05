@@ -615,6 +615,162 @@ class FileHandler implements FileHandlerInterface {
 		return umask( $mask );
 	}
 	
+	public function getTypeByHeader ( string $filePath ) {
+		$fsize = filesize($filePath) < 1000 ? filesize($filePath) : 1000;
+		if ($fsize <= 4) {
+			return "EMPTY";
+		}
+		
+		$header = $this->Read( $filePath, $fsize );
+		$fileDescription = array_shift(unpack("N", $header));
+		
+		$mp3FileHeader = array(
+			"24",         //ftyp3gp4isom3gp4
+			
+			"1298231840",
+			
+			"1229206276",
+			"1229206275", //TIT2
+			"1229206274", //FTT2
+			
+			"1213486160",
+			
+			"4294698052",
+			"4294697028",
+			"4294692964",
+			"4294692932", //DInfo
+			
+			"4294688864",
+			"4294684772",
+			"4294684768",
+			"4294684676",
+			"4294684672",
+			"4294680676",
+			"4294680672",
+			"4294680644",
+			"4294680640",
+			
+			"4294677604",
+			"4294677572",
+			"4294677092",
+			
+			"4294676676",
+			"4294676672",
+			"4294676580",
+			"4294676576",
+			"4294676548", //DXing
+			"4294676544",
+			"4294676484",
+			"4294676480",
+			"4294664388",
+			"4294660292",
+			
+			"4294652100",
+			"4294611968",
+			
+			"4294166724",
+			
+			"4294156388",
+			
+			"4294148292",
+			"4294145108",
+			
+			"4293101764",
+			
+			"287310080",
+			
+			"218821433",
+			"218818698",
+			"218777924",
+			"218783877"
+		);
+		
+		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 ) {
+			return "EXE";
+		} else if ( in_array($fileDescription, $mp3FileHeader)) {
+			return "MP3";
+		} else if ( $fileDescription === 1297377380 || $fileDescription === 749685) {
+			return "MID";
+		} else if ( $fileDescription === 4292411374 || $fileDescription === 4292411390 || $fileDescription === 4292411360 || $fileDescription === 4292411361 || $fileDescription === 4292411355 || $fileDescription === 4292411362 || $fileDescription === 4292411372 || $fileDescription === 4292411390 || $fileDescription === 4292411390) {
+			return "JPG";
+		} else if ( $fileDescription === 799024 ) {
+			return "ZIP";
+		} else if ( $fileDescription === 1347093252 ) {
+			return "ZIP/PPTX";
+		} else if ( $fileDescription === 1195984440 ) {
+			return "GIF";
+		} else if ( $fileDescription === 1297771520 ) {
+			return "DLL";
+		} else if ( $fileDescription === 1275068416 ) {
+			return "LNK";
+		} else if ( $fileDescription === 1534799920 || $fileDescription === 1531200838 ) {
+			return "URL";
+		} else if ( $fileDescription === 2303741511 ) {
+			return "PNG";
+		} else if ( $fileDescription === 1162758471 ) {
+			return "MUS";
+		} else if ( $fileDescription === 28 ) { //ftypM4A
+			return "M4A";
+		} else if ( $fileDescription === 757935405 ) {
+			return "CAP";
+		} else if ( $fileDescription === 1297303124 ) {
+			return "TLB";
+		} else if ( $fileDescription === 168100097 ) {
+			return "PCX";
+		} else if ( $fileDescription === 1681144425 ) {
+			return "TORRENTDATA";
+		} else if ( $fileDescription === 1680945210 ) {
+			return "DAT";
+		} else if ( $fileDescription === 1332176723 ) {
+			return "OGG";
+		} else if ( $fileDescription === 1346655281 ) {
+			return "PDF";
+		} else if ( $fileDescription === 256 ) {
+			return "ICODATA";
+		} else if ( $fileDescription === 4294845184 ) {
+			return "AIMPPL4";
+		} else if ( $fileDescription === 1380533830 ) {
+			return "AVI/WAV";
+		} else if ( $fileDescription === 1346979398 ) {
+			return "WAV";
+		} else if ( $fileDescription === 1112356435 || $fileDescription === 1112364703 || $fileDescription === 1112364798) {
+			return "BMP";
+		} else if ( $fileDescription === 1481650957 || $fileDescription === 1112344120 || $fileDescription === 1112355844 || $fileDescription === 1112356444 ) {
+			return "XP3";
+		} else if ( $fileDescription === 807842421 ) {
+			return "WMV";
+		} else if ( $fileDescription === 1180128006 || $fileDescription === 1180128009 || $fileDescription === 1129796358) {
+			return "SWF";
+		} else if ( $fileDescription === 440786851 ) {
+			return "WEBM";
+		} else if ( $fileDescription === 20 || $fileDescription === 32 ) {
+			return "MP4";
+		} else if ( $fileDescription === 626017350 ) {
+			return "PDF";
+		} else if ( $fileDescription === 1382117921 ) {
+			return "RAR";
+		} else if ( $fileDescription === 1162299201 ) {
+			return "EGG";
+		} else if ( $fileDescription === 1625958656 ) {
+			return "ARJ";
+		} else if ( $fileDescription === 0 ) {
+			return "EMPTY";
+		} else if ( $fileDescription === 1681406561 ) {
+			return "TORRENT";
+		} else if ( $fileDescription === 1531860826 ) {
+			return "NWC";
+		} else if ( $fileDescription === 1179407873 ) {
+			return "FLV";
+		} else if ( $fileDescription === 557605234 ) {
+			return "IPK";
+		} else if ( $fileDescription === 1433299316 ) {
+			return "UnityFS";
+		} else {
+			return "UNKNOWN";
+		}
+		
+	}
+	
 	/**
 	 * Read the file.
 	 *

@@ -4,6 +4,7 @@ include("./../vendor/autoload.php");
 
 use Xanax\Classes\EventDispatcher;
 
+use Xanax\Classes\DirectoryHandler;
 use Xanax\Classes\FileHandler;
 use Xanax\Classes\FileObject;
 
@@ -32,6 +33,28 @@ class FileExample {
 		echo "<br>";
 	}
 	
+	function getTypeByHeader() {
+		$fileHandler = new FileHandler();
+		$directoryHandler = new DirectoryHandler();
+		
+		$iterator = new RecursiveIteratorIterator (
+			new RecursiveDirectoryIterator( "./mp3", RecursiveDirectoryIterator::SKIP_DOTS ),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
+		
+		$iterator->setMaxDepth( 10 );
+		
+		foreach( $iterator as $fileInformation ) {
+			if ( !$fileInformation->isDir() ) {
+				
+				echo $fileHandler->getTypeByHeader($fileInformation->getRealPath())."<br>";
+			}
+		}
+		
+		
+		echo "<br>";
+	}
+	
 }
 
 $fileExample = new FileExample();
@@ -42,4 +65,5 @@ $eventDispatcher->addListener("foo.test", array($fileExample, 'appendContent'));
 $eventDispatcher->addListener("foo.test", array($fileExample, 'readAllContent'));
 $eventDispatcher->addListener("foo.test", array($fileExample, 'isEqualByLine'));
 $eventDispatcher->addListener("foo.test", array($fileExample, 'isContainFolder'));
-$eventDispatcher->Dispatch("foo.test");
+$eventDispatcher->addListener("foo.test2", array($fileExample, 'getTypeByHeader'));
+$eventDispatcher->Dispatch("foo.test2");
