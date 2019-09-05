@@ -7,6 +7,10 @@ class FileHandlerMessage {
 		return "Target is not File";
 	}
 	
+	public static function getInvalidFileHandler () {
+		return "Handler type is not a resource";
+	}
+	
 	public static function getDoNotUseSubDirectorySyntaxMessage () {
 		return "Don't use Subdirectory syntax";
 	}

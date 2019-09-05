@@ -4,7 +4,7 @@ namespace Xanax\Implement;
 
 interface FileHandlerInterface {
 	
-	public function isFile ( string $filePath ) :bool;
+	public function isFile ( string $filePath, string $containDirectory = null ) :bool;
 	
 	public function isEmpty ( string $filePath ) :bool;
 	
@@ -30,7 +30,7 @@ interface FileHandlerInterface {
 	
 	public function isWritable ( string $filePath ) :bool;
 	
-	public function getSize ( string $filePath ) : int;
+	public function getSize ( string $filePath, bool $humanReadable ) :int;
 	
 	public function getInode ( string $filePath );
 	
@@ -52,7 +52,7 @@ interface FileHandlerInterface {
 	
 	public function copy ( string $filePath, string $destinationPath ) :bool;
 	
-	public function appendFileContent( string $filePath, string $content = null, bool $makeNewFile = true ) :bool;
+	public function appendContent( string $filePath, string $content = null, bool $makeNewFile = true ) :bool;
 	
 	public function Write ( string $filePath, string $content = null, string $writeMode = 'w' ) :bool;
 	

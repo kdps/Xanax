@@ -1,29 +1,25 @@
 <?php
 
 namespace Xanax\Classes;
-
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use Xanax\Implement\DirectoryHandlerInterface;
 use Xanax\Implement\FileHandlerInterface;
-
 use Xanax\Classes\FileHandler;
-
 use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
-
 use Xanax\Validation\DirectoryeHandler;
-
 use Xanax\Message\DirectoryeHandlerMessage;
-
 class DirectoryHandler implements DirectoryHandlerInterface {
 
 	private $fileHandler;
 	private $directoryDepth;
 
-	public function __construct ( $fileHandler ) {
+	public function __construct ( FileHandlerInterface $fileHandler = null ) {
 		if ( $fileHandler instanceof FileHandlerInterface ) {
 			$this->fileHandler = $fileHandler;
 		} else {
-			$this->fileHandler = new DirectoryHandler();
+			$this->fileHandler = new FileHandler();
 		}
 		
 		$this->directoryDepth = -1;
@@ -32,7 +28,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	public function getFreeSpace ( $prefix = "/" ) {
 		$diskFreeSpaces = -1;
 		
-		if ( function_exists ("getFreeSpace")) {
+		if ( function_exists ("disk_free_space")) {
 			$diskFreeSpaces = disk_free_space( $prefix );
 		}
 		
