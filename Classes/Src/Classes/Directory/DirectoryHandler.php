@@ -1,6 +1,7 @@
 <?php
 
 namespace Xanax\Classes;
+
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Xanax\Implement\DirectoryHandlerInterface;
@@ -10,6 +11,7 @@ use Xanax\Exception\Stupid\StupidIdeaException;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
 use Xanax\Validation\DirectoryeHandler;
 use Xanax\Message\DirectoryeHandlerMessage;
+
 class DirectoryHandler implements DirectoryHandlerInterface {
 
 	private $fileHandler;
@@ -249,3 +251,5 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 }
+
+?>

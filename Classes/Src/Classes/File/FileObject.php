@@ -199,8 +199,15 @@ class FileObject {
 		return $this->fileHandlerClass->isWritable( $this->filePath );
 	}
 	
+	public function removeTemporary () {
+		if ( $this->recoveryMode ) {
+			$this->fileHandlerClass->Delete( $this->temporaryPath );
+		}
+	}
+	
 	public function writeContent ( string $content, $isLarge = false ) :bool {
 		if ( !$this->isWritable() || $this->isLocked() ) {
+			$this->removeTemporary();
 			return false;
 		}
 		

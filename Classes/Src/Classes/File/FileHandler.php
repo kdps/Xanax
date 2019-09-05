@@ -27,8 +27,18 @@ class FileHandler implements FileHandlerInterface {
 	
 	public function __construct ( $useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, DirectoryHandlerInterface $directoryHandler = null  ) {
 		$this->strictMode = $useStrictMode;
-		$this->fileSystemHandler = $fileSystemHandler;// || new FileSystemHandler();
-		$this->directoryHandler = $directoryHandler;// || new DirectoryHandler();
+		
+		if ( $fileSystemHandler ) {
+			$this->fileSystemHandler = $fileSystemHandler;
+		} else {
+			$this->fileSystemHandler = new FileSystemHandler();
+		}
+		
+		if ( $directoryHandler ) {
+			$this->directoryHandler = $directoryHandler;
+		} else {
+			$this->directoryHandler = new DirectoryHandler( $this );
+		}
 	}
 	
 	/**
@@ -181,7 +191,7 @@ class FileHandler implements FileHandlerInterface {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+			return false;
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
@@ -473,7 +483,7 @@ class FileHandler implements FileHandlerInterface {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
 		if ( !$this->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+			return true;
 		}
 		
 		if ( !$this->isFile( $filePath ) ) {
@@ -963,3 +973,5 @@ class FileHandler implements FileHandlerInterface {
 	}
 	
 }
+
+?>
