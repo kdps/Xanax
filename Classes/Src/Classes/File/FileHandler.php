@@ -9,6 +9,7 @@ use Xanax\Classes\DirectoryHandler as DirectoryHandler;
 use Xanax\Exception\Stupid\StupidIdeaException as StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException as FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException as TargetIsNotFileException;
+use Xanax\Exception\FileHandler\InvalidFileHandler as InvalidFileHandler;
 use Xanax\Implement\FileSystemInterface as FileSystemInterface;
 use Xanax\Implement\FileHandlerInterface as FileHandlerInterface;
 use Xanax\Implement\DirectoryHandlerInterface as DirectoryHandlerInterface;
@@ -48,6 +49,14 @@ class FileHandler implements FileHandlerInterface {
 		}
 		
 		return true;
+	}
+	
+	public function getPointerLocation ( $fileHandler ) {
+		if ( !$this->isValidHandler( $fileHandler ) ) {
+			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
+		}
+		
+		return ftell( $fileHandler );
 	}
 	
 	public function createCache ( string $filePath, string $destination ) {
@@ -158,25 +167,25 @@ class FileHandler implements FileHandlerInterface {
 	
 	public function Unlock ( $fileHandler) {
 		if ( !$this->isValidHandler( $fileHandler ) ) {
-			
+			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
 		}
 		
-		flock($fileHandler, LOCK_UN);
+		flock($fileHandler, LOCK_UN); // Unlock file handler
 	}
 	
 	public function Lock ( $fileHandler, $mode = 'r'  ) {
 		if ( !$this->isValidHandler( $fileHandler ) ) {
-			
+			throw new InvalidFileHandler ( FileHandlerMessage::getInvalidFileHandler() );
 		}
 		
 		$mode = strtolower($mode);
 
 		switch ( $mode ) {
 			case 'r':
-				flock($fileHandler, LOCK_SH);
+				flock($fileHandler, LOCK_SH); // Lock of read mode
 				break;
 			case 'w':
-				flock($fileHandler, LOCK_EX);
+				flock($fileHandler, LOCK_EX); // Lock of write mode
 				break;
 		}
 	}
