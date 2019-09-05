@@ -28,7 +28,7 @@ class FileExample {
 	
 	function appendContent () {
 		$fileHandler = new FileHandler();
-		$fileHandler->appendFileContent(__DIR__."/file.txt", "test", true);
+		$fileHandler->appendContent(__DIR__."/file.txt", "test", true);
 	}
 
 	function readAllContent () {
