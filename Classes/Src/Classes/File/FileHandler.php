@@ -622,6 +622,8 @@ class FileHandler implements FileHandlerInterface {
 		}
 		
 		$header = $this->Read( $filePath, $fsize );
+		
+		/* ISO 8859-1 */
 		$fileDescription = array_shift(unpack("N", $header));
 		
 		$mp3FileHeader = array(
@@ -710,7 +712,7 @@ class FileHandler implements FileHandlerInterface {
 			"184548224",
 		);
 		
-		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 /* EXEMZ */ ) {
+		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 /* MZ */ ) {
 			return "EXE";
 		} else if ( in_array($fileDescription, $mp3FileHeader)) {
 			return "MP3";
@@ -720,13 +722,31 @@ class FileHandler implements FileHandlerInterface {
 			return "JPG";
 		} else if ( $fileDescription === 771752170 ) {
 			return "GBA";
+		} else if ( $fileDescription === 1332176723 ) {
+			return "OGG/OGA/OGV";
+		} else if ( $fileDescription === 943870035 ) {
+			return "PSD";
 		} else if ( $fileDescription === 1313166106 /* NES */ ) {
 			return "NES";
+		} else if ( $fileDescription === 1229866072 ) {
+			return "IDX";
+		} else if ( $fileDescription === 1280985424 ) {
+			return "LZ";
+		} else if ( $fileDescription === 1144008753 ) {
+			return "ISO";
+		} else if ( $fileDescription === 2037396327 ) {
+			return "3GP/3G2";
+		} else if ( $fileDescription === 1413760326 ) {
+			return "TDEF";
+		} else if ( $fileDescription === 1413760326 ) {
+			return "TDEF";
+		} else if ( $fileDescription === 1716281667 ) {
+			return "FLAG";
 		} else if ( $fileDescription === 799024 ) {
 			return "ZIP";
-		} else if ( $fileDescription === 1347093252 /* KPZIP/PPTX */) {
+		} else if ( $fileDescription === 1347093252 /* PK, KPZIP/PPTX */) {
 			return "ZIP/PPTX";
-		} else if ( $fileDescription === 1195984440 /* GIF8 (GIF89a) */) {
+		} else if ( $fileDescription === 1178089313 /* GIF8 (GIF87a) */ || $fileDescription === 1195984440 /* GIF8 (GIF89a) */) {
 			return "GIF";
 		} else if ( $fileDescription === 1297771520 ) {
 			return "DLL";
@@ -762,8 +782,8 @@ class FileHandler implements FileHandlerInterface {
 			return "CHM";
 		} else if ( $fileDescription === 3503231456 ) {
 			return "MSI";
-		} else if ( $fileDescription === 1380533830 ) {
-			return "AVI/WAV";
+		} else if ( $fileDescription === 1380533830 /* RIFF */ ) {
+			return "AVI/WAV/CPR";
 		} else if ( $fileDescription === 1346979398 ) {
 			return "WAV";
 		} else if ( $fileDescription === 1112356435 || $fileDescription === 1112364703 || $fileDescription === 1112364798 || $fileDescription === 1112356374) {
@@ -776,11 +796,11 @@ class FileHandler implements FileHandlerInterface {
 			return "SWF";
 		} else if ( $fileDescription === 440786851 ) {
 			return "WEBM";
-		} else if ( $fileDescription === 20 || $fileDescription === 32 /* MP4 */) {
+		} else if ( $fileDescription === 20 || $fileDescription === 32 /* MP4 (ftypisom isomiso2avc1mp41) */ ) {
 			return "MP4";
-		} else if ( $fileDescription === 626017350 ) {
+		} else if ( $fileDescription === 626017350 /* PDF*/ ) {
 			return "PDF";
-		} else if ( $fileDescription === 1382117921 /* RARRar! */) {
+		} else if ( $fileDescription === 1382117921 /* Rar! */ ) {
 			return "RAR";
 		} else if ( $fileDescription === 1162299201 ) {
 			return "EGG";
