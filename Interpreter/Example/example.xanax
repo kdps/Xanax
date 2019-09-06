@@ -1,0 +1,29 @@
+Class FunctionList {
+	
+	Private Static __get = "data";
+	Private String Data;
+
+	@Format(data.format=[/^[A-Za-z]{1,}$/u]);
+	Public Void FunctionList(String data) {
+		this.Data = data;
+	}
+	
+	Public String Get (String A) {
+		return this->Data.A;
+	}
+	
+	Public Static String __Get () {
+		return this->__get;
+	}
+	
+}
+
+print (FunctionList::__Get());
+
+FunctionList functionList = new FunctionList("test");
+String Data = functionList->Get();
+print Data;
+
+If ( FileExists("Test.txt") ) {
+	WriteFile ("NewFile.txt", "test");
+}
