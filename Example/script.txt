@@ -1,0 +1,5 @@
+String A = "ABCD"
+String B = "CCCC"
+GetData(1, 2, 3, 4)
+GetData(1*4*56,234)
+GetData(1>>4*56,234)
