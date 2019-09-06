@@ -628,16 +628,16 @@ class FileHandler implements FileHandlerInterface {
 			/* ftyp3gp4isom3gp4 */
 			"24",
 			
-			/* OD! (p Hq) */
+			/* !DO (p Hq) */
 			"1008813135",
 			
 			"1298231840",
 			
-			/* 3DI (TSSE) */
+			/* ID3 (TSSE) */
 			"1229206276",
-			/* 3DI (GEOB, TYER, TALB, TSSE, TXXX, TPE1, TIT2, TCON, PRIV, TRCK) */
+			/* ID3 (GEOB, TYER, TALB, TSSE, TXXX, TPE1, TIT2, TCON, PRIV, TRCK) */
 			"1229206275",
-			/* 3DI (TALB, TSS, TT2, FTT2, TPE1) */
+			/* ID3 (TALB, TIT2, TSS, TT2, FTT2, TPE1) */
 			"1229206274", 
 			
 			"1213486160",
@@ -671,6 +671,7 @@ class FileHandler implements FileHandlerInterface {
 			"4294676672",
 			/* d (dInfo) */
 			"4294676580",
+			/* ` */
 			"4294676576",
 			/* D (DXing) */
 			"4294676548",
@@ -696,6 +697,9 @@ class FileHandler implements FileHandlerInterface {
 			
 			"4293101764",
 			
+			/* ÿû */
+			"3284124603",
+			
 			"287310080",
 			
 			"218821433",
@@ -706,23 +710,23 @@ class FileHandler implements FileHandlerInterface {
 			"184548224",
 		);
 		
-		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 /* ZMEXE */ ) {
+		if (  $fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 /* EXEMZ */ ) {
 			return "EXE";
 		} else if ( in_array($fileDescription, $mp3FileHeader)) {
 			return "MP3";
-		} else if ( $fileDescription === 1297377380 || $fileDescription === 749685) {
+		} else if ( $fileDescription === 1297377380 /* MThd */ || $fileDescription === 749685) {
 			return "MID";
-		} else if ( $fileDescription === 4292411374 || $fileDescription === 4292411360 /* JPG */ || $fileDescription === 4292411361 || $fileDescription === 4292411355 || $fileDescription === 4292411362 || $fileDescription === 4292411372) {
+		} else if ( $fileDescription === 4292411374 || $fileDescription === 4292411360 /* JPG, JFIF */ || $fileDescription === 4292411361 /* Exif JPG */ || $fileDescription === 4292411355 || $fileDescription === 4292411362 || $fileDescription === 4292411372) {
 			return "JPG";
-		} else if ( $fileDescription === 771752170 /* SEN */ ) {
+		} else if ( $fileDescription === 771752170 ) {
 			return "GBA";
-		} else if ( $fileDescription === 1313166106 /* SEN */ ) {
+		} else if ( $fileDescription === 1313166106 /* NES */ ) {
 			return "NES";
 		} else if ( $fileDescription === 799024 ) {
 			return "ZIP";
 		} else if ( $fileDescription === 1347093252 /* KPZIP/PPTX */) {
 			return "ZIP/PPTX";
-		} else if ( $fileDescription === 1195984440 /* 8FIGGIF */) {
+		} else if ( $fileDescription === 1195984440 /* GIF8 (GIF89a) */) {
 			return "GIF";
 		} else if ( $fileDescription === 1297771520 ) {
 			return "DLL";
@@ -730,7 +734,7 @@ class FileHandler implements FileHandlerInterface {
 			return "LNK";
 		} else if ( $fileDescription === 1534799920 || $fileDescription === 1531200838 ) {
 			return "URL";
-		} else if ( $fileDescription === 2303741511 /* GNPPNG */) {
+		} else if ( $fileDescription === 2303741511 /* PNG */) {
 			return "PNG";
 		} else if ( $fileDescription === 1162758471 ) {
 			return "MUS";
@@ -776,7 +780,7 @@ class FileHandler implements FileHandlerInterface {
 			return "MP4";
 		} else if ( $fileDescription === 626017350 ) {
 			return "PDF";
-		} else if ( $fileDescription === 1382117921 /* !raRRAR */) {
+		} else if ( $fileDescription === 1382117921 /* RARRar! */) {
 			return "RAR";
 		} else if ( $fileDescription === 1162299201 ) {
 			return "EGG";
@@ -786,7 +790,7 @@ class FileHandler implements FileHandlerInterface {
 			return "EMPTY";
 		} else if ( $fileDescription === 1681406561 ) {
 			return "TORRENT";
-		} else if ( $fileDescription === 1531860826 ) {
+		} else if ( $fileDescription === 1531860826 /* NWZ */ ) {
 			return "NWC";
 		} else if ( $fileDescription === 1179407873 ) {
 			return "FLV";
