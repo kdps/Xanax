@@ -2,7 +2,9 @@
 
 namespace Xanax\Classes;
 
-class SocketHandler {
+use Xanax\Implement\SocketHandlerInterface;
+
+class SocketHandler implements SocketHandlerInterface {
 	
 	/*
 	 *

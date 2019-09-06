@@ -1,6 +1,10 @@
 <?php
 
-class ImageHandler {
+namespace Xanax\Classes;
+
+use Xanax\Implement\ImageHandlerInterface;
+
+class ImageHandler implements ImageHandlerInterface {
 	
 	//http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
 	public function isAnimated ($filename) {
@@ -369,7 +373,7 @@ class ImageHandler {
 		return $createObject;
 	}
 	
-	public function getBlank ($width, $height, $red, $blue, $green) {
+	public function getBlank ( $width, $height, $red, $blue, $green ) {
 		$image = imagecreatetruecolor($width, $height);
 		$background_color = imagecolorallocate($image, $red, $green, $blue);
 		imagefilledrectangle($image,0,0,$width,$height,$background_color);

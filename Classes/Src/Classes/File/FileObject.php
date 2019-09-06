@@ -4,13 +4,12 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\Encode;
 use Xanax\Classes\FileHandler;
-
+use Xanax\Implement\FileObjectInterface;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
-
 use Xanax\Message\FileHandler\FileHandlerMessage;
 
-class FileObject {
+class FileObject implements FileObjectInterface {
 
 	private $writeHandler;
 	private $fileHandler;
@@ -84,6 +83,9 @@ class FileObject {
 		if ( !$this->fileHandlerClass->isFile( $filePath ) ) {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}*/
+	}
+	public function __destruct() {
+		$this->removeTemporary();
 	}
 	
 	public function getAcceptExtension ( array $extension ) {
@@ -212,7 +214,9 @@ class FileObject {
 	
 	public function removeTemporary () {
 		if ( $this->recoveryMode ) {
-			$this->fileHandlerClass->Delete( $this->temporaryPath );
+			if ( $this->fileHandlerClass->isExists( $this->temporaryPath ) ) {
+				$this->fileHandlerClass->Delete( $this->temporaryPath );
+			}
 		}
 	}
 	

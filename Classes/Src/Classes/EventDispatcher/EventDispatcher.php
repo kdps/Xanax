@@ -2,7 +2,9 @@
 
 namespace Xanax\Classes;
 
-class EventDispatcher {
+use Xanax\Implement\EventDispatcherInterface;
+
+class EventDispatcher implements EventDispatcherInterface {
 
 	private $listeners = [];
 	
