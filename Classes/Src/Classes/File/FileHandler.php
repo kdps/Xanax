@@ -615,7 +615,7 @@ class FileHandler implements FileHandlerInterface {
 		return umask( $mask );
 	}
 	
-	public function getTypeByHeader ( string $filePath ) {
+	public function getTypeByHeader ( string $filePath ) :string {
 		$fsize = filesize($filePath) < 100 ? filesize($filePath) : 100;
 		if ($fsize <= 4) {
 			return "EMPTY";

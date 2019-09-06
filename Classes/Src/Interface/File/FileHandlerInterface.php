@@ -44,6 +44,8 @@ interface FileHandlerInterface {
 	
 	public function getContent( string $filePath ) :string;
 	
+	public function getTypeByHeader ( string $filePath ) :string;
+	
 	public function getInterpretedContent ( string $filePath ) :string;
 	
 	public function Merge ( string $filePath, string $mergeFile ) :bool;
