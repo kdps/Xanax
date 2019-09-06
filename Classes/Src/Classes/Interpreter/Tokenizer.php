@@ -10,8 +10,8 @@ class Tokenizer {
 		$count = strlen( $string );
 		
 		// Lexical analysis
-		for ($i = 0; $i < strlen($count); $i++) {
-			
+		for ($i = 0; $i < $count; $i++) {
+			$character = $string{$i};
 		}
 	}
 	
