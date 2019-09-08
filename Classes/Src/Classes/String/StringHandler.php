@@ -4,6 +4,20 @@ use Xanax\Classes\OperationSystem
 
 class StringHandler {
 	
+	public function getMaxAllocationSize ( string $string ) :int {
+		$memory_limit = ini_get('memory_limit');
+		if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
+			if ($matches[2] == 'M') {
+				$memory_limit = $matches[1] * 1024 * 1024;
+			} else if ($matches[2] == 'K') {
+				$memory_limit = $matches[1] * 1024;
+			}
+		}
+		
+		$maxAllocationSize = $memory_limit - 2097184;
+		return (int)($maxAllocationSize / strlen($string));
+	}
+	
 	public function filterVariable ( mixed $string, $type ) {
 		switch ($type) {
 			case (preg_match('/^MaxLength\((.*\))$/', $type, $matches) ? true : false) :
