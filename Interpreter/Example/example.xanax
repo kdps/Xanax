@@ -1,11 +1,36 @@
-Class FunctionList {
+Class SampleFunction(Xanax\Class) {
+
+	@Override
+	Public String Overloading (Integer A) {
+		return "AA";
+	}
+	
+}
+
+use Xanax\Classes\ClassA;
+use .\ClassB;
+
+Class FunctionList(Xanax\Class) extend SampleFunction {
+	
+	@AutoClassFileGenerator("Interface", "FunctionListInterface");
+	
+	@AutoWire 
+	Interface FunctionListInterface;
 	
 	Private Static __get = "data";
 	Private String Data;
 
 	@Format(data.format=[/^[A-Za-z]{1,}$/u]);
-	Public Void FunctionList(String data) {
+	Public Void FunctionList( String data ) {
 		this.Data = data;
+	}
+	
+	Public String Overloading (Integer A) {
+		return "A";
+	}
+	
+	Public String Overloading (Integer A, Integer B) {
+		return "B";
 	}
 	
 	Public String Get (String A) {
@@ -17,6 +42,9 @@ Class FunctionList {
 	}
 	
 }
+
+// Unlike Java, it works without classes.
+import Xanax\DataIO as DataIO;
 
 print (FunctionList::__Get());
 
