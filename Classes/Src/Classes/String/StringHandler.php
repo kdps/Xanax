@@ -1,6 +1,6 @@
 <?php
 
-use Xanax\Classes\OperationSystem
+use Xanax\Classes\OperationSystem;
 
 class StringHandler {
 	
@@ -16,6 +16,14 @@ class StringHandler {
 		
 		$maxAllocationSize = $memory_limit - 2097184;
 		return (int)($maxAllocationSize / strlen($string));
+	}
+	
+	public function Repeat ( string $string, int $multiplier ) {
+		if ($this->getMaxAllocationSize($string) > $multiplier ) {
+			
+		}
+		
+		return str_repeat( $string, $multiplier );
 	}
 	
 	public function filterVariable ( mixed $string, $type ) {
