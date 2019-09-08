@@ -20,7 +20,7 @@ class StringHandler {
 	
 	public function Repeat ( string $string, int $multiplier ) {
 		if ($this->getMaxAllocationSize($string) > $multiplier ) {
-			
+			// Memory allocated error
 		}
 		
 		return str_repeat( $string, $multiplier );
