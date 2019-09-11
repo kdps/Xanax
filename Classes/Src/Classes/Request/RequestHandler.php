@@ -51,6 +51,18 @@ class RequestHandler {
 		509 => 'Bandwidth Limit Exceeded'
 	];
 	
+	public function isHttpsProtocol() :bool {
+		return empty($_SERVER['HTTPS']) ? false : $_SERVER['HTTPS'] === 'on' ? true : false;
+	}
+	
+	public function getProtocol() :string {
+		return substr(strtolower($_SERVER['SERVER_PROTOCOL']), 0, strpos(strtolower($_SERVER['SERVER_PROTOCOL']), '/'));
+	}
+	
+	public function getPort() :string {
+		return $_SERVER['SERVER_PORT'];
+	}
+	
 	public function getReferer() {
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			return $_SERVER['HTTP_REFERER'];
