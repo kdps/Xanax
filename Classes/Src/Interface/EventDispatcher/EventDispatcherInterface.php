@@ -6,8 +6,6 @@ interface EventDispatcherInterface {
 	
 	public function Dispatch( $event, string $eventName = null );
 	
-	protected function callListeners( iterable $listeners, string $eventName, object $event );
-	
 	public function removeListener( string $eventName, callable $listener );
 	
 	public function getListeners ($eventName = '');

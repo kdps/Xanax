@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class HTMLHandler {
 	
 	public static function generateParameter($attributes = []) {

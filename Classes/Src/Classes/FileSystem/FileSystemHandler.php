@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Xanax\Classes;
 
 use Xanax\Implement\FileSystemInterface as FileSystemInterface;

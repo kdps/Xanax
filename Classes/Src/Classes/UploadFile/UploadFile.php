@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Xanax\Classes;
 
 class UploadFile {
@@ -82,7 +84,7 @@ class UploadFile {
 		return $this->Get($name, 'error');
 	}
 	
-	public function isExists ( $name ) {
+	public function isExists ( $name = 'tmp_file' ) {
 		if ( $this->Get($name) === null ) {
 			return false;
 		}
