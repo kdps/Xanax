@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class RequestHandler {
 	
 	public $RequestMessage = [
@@ -50,6 +52,27 @@ class RequestHandler {
 		507 => 'Insufficient Storage',
 		509 => 'Bandwidth Limit Exceeded'
 	];
+	
+	public function getBrowserInfo() :array {
+		$browserInfo = array();
+		if (!empty(ini_get("browscap"))) {
+			$browserInfo = print_r(get_browser(null, true));
+		}
+		
+		return $browserInfo;
+	}
+	
+	public function isHttpsProtocol() :bool {
+		return empty($_SERVER['HTTPS']) ? false : $_SERVER['HTTPS'] === 'on' ? true : false;
+	}
+	
+	public function getProtocol() :string {
+		return substr(strtolower($_SERVER['SERVER_PROTOCOL']), 0, strpos(strtolower($_SERVER['SERVER_PROTOCOL']), '/'));
+	}
+	
+	public function getPort() :string {
+		return $_SERVER['SERVER_PORT'];
+	}
 	
 	public function getReferer() {
 		if (isset($_SERVER['HTTP_REFERER'])) {

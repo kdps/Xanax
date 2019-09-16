@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @class Pagenation
- *
- * @Generate Pagenation
- */
+declare(strict_types = 1);
 
 namespace Xanax\Classes;
 

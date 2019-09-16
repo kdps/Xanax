@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class OperationSystem {
 	
 	public function is4BitOSBitOS () {

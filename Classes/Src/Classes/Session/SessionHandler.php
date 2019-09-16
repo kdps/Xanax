@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 class SessionHandler {
 	
 	public function __construct () {
 		if (is_cli()) {
 			return;
 		}
-		
 		
 	}
 	
