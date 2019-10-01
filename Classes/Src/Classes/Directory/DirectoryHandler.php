@@ -58,16 +58,28 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 	public function Make ( string $directoryPath, int $permission = 644 ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$this->Create( $directoryPath );
 	}
 	
 	public function Create ( string $directoryPath, int $permission = 644 ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$return = mkdir( $directoryPath, $permission );
 		
 		return $return;
 	}
 	
 	public function getFileCount ( string $directoryPath ) :int {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$iterator = new \RecursiveDirectoryIterator( $directoryPath, \FilesystemIterator::SKIP_DOTS );
 		$return = iterator_count( $iterator );
 		
@@ -75,12 +87,20 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 	public function isEmpty ( string $directoryPath ) :bool {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
         $return = ( $this->getFileCount( $directoryPath ) === 0 ) ? true : false;
 		
 		return $return;
 	}
 	
 	public function Delete ( string $directoryPath ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		if ( $this->isEmpty( $directoryPath ) || $this->Empty ( $directoryPath ) ) {
 			
 			$iterator = new RecursiveIteratorIterator (
@@ -107,6 +127,10 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 	public function Copy ( string $directoryPath, string $copyPath ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$directoryIterator = new \RecursiveDirectoryIterator( $directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS );
 		$iterator = new \RecursiveIteratorIterator( $directoryIterator, \RecursiveIteratorIterator::SELF_FIRST );
 		
@@ -121,7 +145,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	
 	public function getSize ( string $directoryPath ) {
 		if ( !$this->isDirectory( $directoryPath ) ) {
-			
+			throw new DirectoryIsNotExistsException();
 		}
 		
 		$size = 0;
@@ -149,6 +173,10 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 	public function Rename ( string $directoryPath, string $string, string $replacement ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$iterator = new RecursiveIteratorIterator (
 			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
 			RecursiveIteratorIterator::SELF_FIRST
@@ -183,6 +211,10 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	}
 	
 	public function RenameInnerFiles ( string $directoryPath, $replacement, $string = null ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$iterator = new RecursiveIteratorIterator (
 			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
 			RecursiveIteratorIterator::SELF_FIRST
@@ -227,11 +259,15 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 		return true;
 	}
 	
-	public function getFileList ( $sort = false ) {
+	public function getFileList ( $directoryPath = './', $sort = false ) {
+		if ( !$this->isDirectory( $directoryPath ) ) {
+			throw new DirectoryIsNotExistsException();
+		}
+		
 		$fileList = array();
 		
 		$iterator = new RecursiveIteratorIterator (
-			new RecursiveDirectoryIterator( "./mp3", RecursiveDirectoryIterator::SKIP_DOTS ),
+			new RecursiveDirectoryIterator( $directoryPath, RecursiveDirectoryIterator::SKIP_DOTS ),
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 		
@@ -254,7 +290,7 @@ class DirectoryHandler implements DirectoryHandlerInterface {
 	
 	public function Empty ( string $directoryPath ) {
 		if ( !$this->isDirectory( $directoryPath ) ) {
-			
+			throw new DirectoryIsNotExistsException();
 		}
 		
 		$iterator = new RecursiveIteratorIterator (

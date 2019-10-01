@@ -76,15 +76,6 @@ class FileObject implements FileObjectInterface {
 		if ( $this->recoveryMode ) {
 			$this->setRecoveryFile ();
 		}
-		
-		
-		/*if ( !$this->fileHandlerClass->isExists( $filePath ) ) {
-			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
-		}
-		
-		if ( !$this->fileHandlerClass->isFile( $filePath ) ) {
-			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
-		}*/
 	}
 	public function __destruct() {
 		$this->removeTemporary();
@@ -94,7 +85,7 @@ class FileObject implements FileObjectInterface {
 		return $acceptExtension;
 	}
 	
-	public function setAcceptExtension ( array $extension ) {
+	public function setAcceptExtension ( $extension ) {
 		$acceptExtension = is_array ( $extension ) ? $extension : [ $extension ];
 	}
 	
@@ -109,7 +100,7 @@ class FileObject implements FileObjectInterface {
 		}
 	}
 	
-	public function hasWriteContentLength () {
+	public function hasWriteContentLength () :bool {
 		if ( $this->writeContentLength === -1 ) {
 			return false;
 		}
@@ -117,7 +108,7 @@ class FileObject implements FileObjectInterface {
 		return true;
 	}
 	
-	public function closeFileHandle () {
+	public function closeFileHandle () :bool {
 		fclose( $this->fileHandler );
 		
 		if ( !$this->recoveryMode ) {
@@ -132,6 +123,10 @@ class FileObject implements FileObjectInterface {
 		$currentFileSize = $this->getCurrentSize();
 		$invalidFileSize = $currentFileSize === -1 ? true : false;
 		$correctFileSize = ( $currentFileSize === (int)$this->writeContentLength );
+		
+		if ( $this->recoveryMode && $this->fileHandlerClass->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}			
 		
 		if ( $this->recoveryMode && !$invalidFileSize && !$correctFileSize ) {
 			$this->fileHandlerClass->Delete ( $filePath );
@@ -159,7 +154,7 @@ class FileObject implements FileObjectInterface {
 		return false;
 	}
 	
-	public function isCreateIfModeEmpty ( $readMode = null) {
+	public function isCreateIfModeEmpty ( $readMode = null) :bool {
 		if ( in_array( ( $readMode || $this->mode ), $this->createIfModeEmpty ) ) {
 			return true;
 		}
@@ -167,7 +162,7 @@ class FileObject implements FileObjectInterface {
 		return false;
 	}
 	
-	public function isReadable ( $readMode = null) {
+	public function isReadable ( $readMode = null) :bool {
 		if ( in_array( ( $readMode || $this->mode ), $this->readModeList ) ) {
 			return true;
 		}
@@ -175,7 +170,7 @@ class FileObject implements FileObjectInterface {
 		return false;
 	}
 	
-	public function appendContent ( $filePath ) {
+	public function appendContent ( $filePath ) :void {
 		$fileHandler = fopen($filePath, "r");
 
         $line = fgets($fileHandler);
@@ -188,7 +183,7 @@ class FileObject implements FileObjectInterface {
         fclose($fileHandler);
 	}
 	
-	public function isEqualByLine ( string $string ) {
+	public function isEqualByLine ( string $string ) :bool {
 		if ( !$this->fileHandlerClass->isExists( $this->getFilePath() ) ) {
 			throw new FileIsNotExistsException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
@@ -206,11 +201,21 @@ class FileObject implements FileObjectInterface {
 		return $bool;
 	}
 	
+	public function injectFileIsNotExistsException () :void {
+		if ( $this->recoveryMode && $this->fileHandlerClass->isFile( $this->filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}	
+	}
+	
 	public function isLocked () :bool {
+		$this->injectFileIsNotExistsException();
+		
 		return $this->fileHandlerClass->isLocked( $this->filePath );
 	}
 	
 	public function isWritable () :bool {
+		$this->injectFileIsNotExistsException();
+		
 		return $this->fileHandlerClass->isWritable( $this->filePath );
 	}
 	
@@ -222,7 +227,7 @@ class FileObject implements FileObjectInterface {
 		}
 	}
 	
-	public function writeContent ( string $content, $isLarge = false ) :bool {
+	public function writeContent ( string $content, $isLarge = false, int $bufferSize ) :bool {
 		if ( !$this->isWritable() || $this->isLocked() ) {
 			$this->removeTemporary();
 			return false;
@@ -238,7 +243,7 @@ class FileObject implements FileObjectInterface {
 		}
 		
 		if ( $isLarge ) {
-			$pieces = str_split($content, 1024 * 4);
+			$pieces = str_split($content, $bufferSize ? $bufferSize : (1024 * 4) );
 			foreach ($pieces as $piece) {
 				$this->writeHandler += fwrite( $this->fileHandler, $piece, strlen($piece));
 			}
@@ -257,27 +262,15 @@ class FileObject implements FileObjectInterface {
 	}
 	
 	public function getReadedContent () :string {
-		if ( !$this->readedContentIsValid() ) {
-			return "";
-		}
-		
-		return $this->readedContent;
+		return ( !$this->readedContentIsValid() ) ? "" : $this->readedContent;
 	}
 	
 	public function readedContentIsValid () :bool {
-		if ( $this->readedContent === false ) {
-			return false;
-		}
-		
-		return true;
+		return $this->readedContent === false ? true : false;
 	}
 	
 	public function hasReadedContent () {
-		if ( $this->getCurrentSize() > 0 ) {
-			return true;
-		}
-		
-		return false;
+		return $this->getCurrentSize() > 0 ? true : false;
 	}
 	
 	public function readAllContent () {
@@ -288,11 +281,11 @@ class FileObject implements FileObjectInterface {
 		$this->readContent( $this->getCurrentSize() );
 	}
 	
-	public function readContent ( int $fileSize = 0 ) {
+	public function readContent ( int $fileSize = 0 ) :void {
 		$this->readedContent = fread( $this->fileHandler, $fileSize );
 	}
 	
-	public function printFileData ( int $mbSize = 8 ) {
+	public function printFileData ( int $mbSize = 8 ) :void {
 		while( !feof( $this->fileHandler ) ) {
 			print( @fread( $this->fileHandler, (1024 * $mbSize) ) );
 			ob_flush();
@@ -352,7 +345,7 @@ class FileObject implements FileObjectInterface {
 		return $filePath;
 	}
 	
-	public function startHandle () {
+	public function startHandle () :void {
 		$fileIsNotExists = ( !$this->isCreateIfModeEmpty() && !$this->fileHandlerClass->isExists( $this->getFilePath() ) );
 		
 		if ( $fileIsNotExists ) {

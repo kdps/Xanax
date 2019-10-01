@@ -266,11 +266,35 @@ class FileHandler implements FileHandlerInterface {
 		flock($fileHandler, LOCK_UN); // Unlock file handler
 	}
 	
+	/**
+	 * Change mode of file
+	 *
+	 * @param string $filePath
+	 * @param int    $mode
+	 *
+	 * @return bool
+	 */
 	public function changeMode ( string $filePath, int $mode ) :bool {
-		return chmod( $filePath, $mode );
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
+		return chmod( $filePath, $mode ) ? true : false;
 	}
 	
+	/**
+	 * Change group of file
+	 *
+	 * @param string $filePath
+	 * @param int    $mode
+	 *
+	 * @return bool
+	 */
 	public function changeGroup ( string $filePath, string $group ) :bool {
+		if ( !$this->isFile( $filePath ) ) {
+			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
+		}
+		
 		return chgrp( $filePath, $group );
 	}
 	
@@ -542,7 +566,7 @@ class FileHandler implements FileHandlerInterface {
 		if ( $humanReadable ) {
 			$this->clearStatatusCache( $filePath );
 			
-			if (file_exists($file)) {
+			if ( file_exists($file) ) {
 				$bytes = filesize($file);
 			} else {
 				$bytes = $file;
@@ -551,7 +575,7 @@ class FileHandler implements FileHandlerInterface {
 			$bytes = 0;
 			
 			if ($bytes > 0) {
-				$sizes = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+				$sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 				$measure = strlen($bytes >> 10);
 				$factor = $bytes < (1024 ** 6) ? ($measure > 1 ? floor((($measure - 1) / 3) + 1) : 1) : floor((strlen($bytes) - 1) / 3);
 				$capacity = $bytes / pow(1024, $factor);
@@ -1046,7 +1070,7 @@ class FileHandler implements FileHandlerInterface {
 	 *
 	 * @return string
 	 */
-	public function Download ( string $filePath ) :bool {
+	public function Download ( string $filePath, int $bufferSize = 0 ) :bool {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
 		if ( !$this->isExists( $filePath ) ) {
@@ -1058,13 +1082,13 @@ class FileHandler implements FileHandlerInterface {
 		}
 		
 		$fileHandler = @fopen($filePath, 'rb');
-		if ($fileHandler === false) {
+		if ( $fileHandler === false ) {
 			return false;
 		}
 		
-		if ($fileHandler) {
-			while(!feof($fileHandler)) {
-				print(@fread($fileHandler, 1024 * 8));
+		if ( $fileHandler ) {
+			while( !feof( $fileHandler ) ) {
+				print( @fread( $fileHandler, $bufferSize > 0 ? $bufferSize : (1024 * 8) ) );
 				ob_flush();
 				flush();
 			}
