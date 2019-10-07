@@ -1081,7 +1081,7 @@
 						}
 						
 						// Ajax Callback
-						if ($.core.Validate.isFunc(A.ajaxCallbacks[callback])) {
+						if ( $.core.Validate.isFunc(A.ajaxCallbacks[callback]) ) {
 							try {
 								args = (args === null) ? '' : args;
 								if (args) {

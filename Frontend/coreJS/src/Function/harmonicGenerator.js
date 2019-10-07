@@ -50,10 +50,14 @@
 			this.augmentedSeventhChord = [0, 4, 8, 10], // 7+, C, E, G#, Bb
 			this.SeventhFlat5Chord = [0, 4, 6, 10], // 7b5, C, E, Gb, Bb
 			this.SeventhSharp5Chord = [0, 4, 8, 10], // 7+5, C, E, G#, Bb
-
+			this.SixthChord = [0, 4, 7, 9], // 6, C, E, G, A
+			this.minorSixthChord = [0, 3, 7, 9], // 6, C, Eb, G, A
+			this.SixthNinthChord = [0, 2, 4, 7, 9], // 6, C, D, E, G, A
+			
 			this.chordList = {
 				"majorChord": this.majorChord, 
 				"minorChord": this.minorChord, 
+				"SixthChord": this.SixthChord,
 				"augmentedChord": this.augmentedChord, 
 				"suspendedChord": this.suspendedChord, 
 				"diminishedChord": this.diminishedChord, 
@@ -67,9 +71,10 @@
 				"SeventhSharp5Chord": this.SeventhSharp5Chord, 
 				"germanAugmentedSixthChord": this.germanAugmentedSixthChord, 
 				"frenchAugmentedSixthChord": this.frenchAugmentedSixthChord, 
-				"italianAugmentedSixthChord": this.italianAugmentedSixthChord
+				"italianAugmentedSixthChord": this.italianAugmentedSixthChord,
+				"minorSixthChord": this.minorSixthChord,
+				"SixthNinthChord": this.SixthNinthChord
 			},
-
 
 			this.aeolianChord = {
 				"Cm7": {
@@ -484,6 +489,14 @@
 			});
 			
 			return scaleArr;
+		},
+
+		getSixthChord: function (root) {
+			return this.getChord(root, "SixthChord");
+		},
+
+		getSixthNinthChord: function (root) {
+			return this.getChord(root, "SixthNinthChord");
 		},
 
 		getMajorChord: function (root) {
