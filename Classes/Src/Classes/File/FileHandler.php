@@ -99,6 +99,13 @@ class FileHandler implements FileHandlerInterface {
 		return ftell( $fileHandler );
 	}
 	
+	/**
+	 * Create a cache file
+	 *
+	 * @param string $fileHandler
+	 *
+	 * @return bool
+	 */
 	public function createCache ( string $filePath, string $destination ) {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		$destination = $this->convertToNomalizePath($destination);
@@ -235,7 +242,7 @@ class FileHandler implements FileHandlerInterface {
 		return fileperms( $filePath );
 	}
 	
-	public function getOwnser ( $filePath ) :int {
+	public function getOwner ( $filePath ) :int {
 		return fileowner( $filePath );
 	}
 	
@@ -356,6 +363,13 @@ class FileHandler implements FileHandlerInterface {
 		return $return;
 	}
 	
+	/**
+	 * Check if the file type is unknown.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function isUnknownFile ( string $filePath ) :bool {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
@@ -392,6 +406,13 @@ class FileHandler implements FileHandlerInterface {
 		return false;
 	}
 	
+	/**
+	 * Check if the file type is regular.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function isRegularFile ( string $filePath ) :bool {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
@@ -563,8 +584,9 @@ class FileHandler implements FileHandlerInterface {
 			throw new TargetIsNotFileException ( FileHandlerMessage::getFileIsNotExistsMessage() );
 		}
 		
+		$this->clearStatatusCache( $filePath );
+			
 		if ( $humanReadable ) {
-			$this->clearStatatusCache( $filePath );
 			
 			if ( file_exists($file) ) {
 				$bytes = filesize($file);
@@ -586,7 +608,6 @@ class FileHandler implements FileHandlerInterface {
 			return $bytes;
 		}
 		
-		$this->clearStatatusCache( $filePath );
 		$return = filesize( $filePath );
 		
 		return $return >= 0 ? $return : -1;
@@ -890,6 +911,15 @@ class FileHandler implements FileHandlerInterface {
 		return $content;
 	}
 	
+	/**
+	 * Read the file contents.
+	 *
+	 * @param string $filePath
+	 * @param int    $length
+	 * @param int    $mode
+	 *
+	 * @return bool
+	 */
 	public function readAllContent ( string $filePath, string $writeMode = 'r' ) {
 		$filePath = $this->convertToNomalizePath( $filePath );
 		
