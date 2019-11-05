@@ -369,7 +369,6 @@ class StringHandler {
 		
 		return bin2hex($output);
 	}
-	 
 	
 	public function getRandomBytes( int $length = 32 ) {
 		$bytes = min(32, $length);
@@ -396,4 +395,5 @@ class StringHandler {
 		
 		return $output;
 	}
+	
 }

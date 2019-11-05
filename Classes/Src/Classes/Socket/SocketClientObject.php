@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Xanax\Classes;
 
-use Xanax\Classes\SocketHandler as SocketHandler;
+use Xanax\Classes\SocketHandler;
 
 class SocketClientObject {
 	
@@ -15,8 +15,9 @@ class SocketClientObject {
 		$this->SocketHandlerClass = $socketHandler;
 	}
 	
-	public function sendPacket ( $string ) {
+	public function sendPacket ( $string = "" ) {
 		$result = $this->SocketHandlerClass->writeSocket( $this->SocketHandler, $string, strlen($string) );
+		
 		if ( $result === 0 ) {
 			return false;
 		}
@@ -36,6 +37,7 @@ class SocketClientObject {
 		}
 		
 		$result = $this->SocketHandlerClass->Connect( $this->SocketHandler, $address, $port );
+		
 		if ( !$result ) {
 			return false;
 		}

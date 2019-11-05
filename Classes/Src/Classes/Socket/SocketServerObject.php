@@ -21,12 +21,12 @@ class SocketServerObject {
 	}
 	
 	public function exceptSocketInArray ( $arrayClientSocket, $arrayAcceptedSocketInfo, $AcceptedSocketInArray  ) {
-		if (isset($arrayClientSocket[$AcceptedSocketInArray])) {
-			unset($arrayClientSocket[$AcceptedSocketInArray]);
+		if ( isset( $arrayClientSocket[$AcceptedSocketInArray] ) ) {
+			unset( $arrayClientSocket[$AcceptedSocketInArray] );
 		}
 		
-		if (isset($arrayAcceptedSocketInfo[$AcceptedSocketInArray])) {
-			unset($arrayAcceptedSocketInfo[$AcceptedSocketInArray]);
+		if ( isset( $arrayAcceptedSocketInfo[$AcceptedSocketInArray] ) ) {
+			unset( $arrayAcceptedSocketInfo[$AcceptedSocketInArray] );
 		}
 		
 		if ( !$this->getAcceptedClientInArray() ) {
@@ -36,7 +36,7 @@ class SocketServerObject {
 	}
 	
 	public function getAcceptedClientInArray () {
-		if ( count($arrayAcceptedSocketInfo) ===0 ) {
+		if ( count($arrayAcceptedSocketInfo) === 0 ) {
 			return false;
 		}
 		
@@ -60,7 +60,7 @@ class SocketServerObject {
 	}
 	
 	public function setArrayClient () {
-		$this->arrayAcceptedSocket = array_merge(array( $this->SocketHandler ), $this->arrayClientSocket );
+		$this->arrayAcceptedSocket = array_merge( array( $this->SocketHandler ), $this->arrayClientSocket );
 	}
 	
 	public function Close () {

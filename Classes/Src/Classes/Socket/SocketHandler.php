@@ -23,7 +23,10 @@ class SocketHandler implements SocketHandlerInterface {
 		$hasPeerInfo = socket_getpeername ( $socketHandler, $address, $port );
 		
 		if ( $hasPeerInfo ) {
-			return array('IPAddress'=>$address, 'Port'=>$port);
+			return array(
+				'IPAddress' => $address,
+				'Port' => $port
+			);
 		}
 		
 		return array();
@@ -34,7 +37,7 @@ class SocketHandler implements SocketHandlerInterface {
 	}
 	
 	public function Select ( array $socketArray, $write = null, $except = null, $timeout = 10 ) {
-		return socket_select($socketArray, $write, $except, $timeout);
+		return socket_select( $socketArray, $write, $except, $timeout );
 	}
 	
 	public function AcceptConnect ( $socketHandler ) {
@@ -65,8 +68,12 @@ class SocketHandler implements SocketHandlerInterface {
 		return socket_connect( $socketHandler, $address, $port );
 	}
 	
+	public function getErrorMessage ( $message = "" ) {
+		return socket_strerror( $message );
+	}
+	
 	public function getLastErrorMessage () {
-		return socket_strerror(socket_last_error());
+		return $this->getErrorMessage( socket_last_error() );
 	}
 	
 }
