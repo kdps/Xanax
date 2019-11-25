@@ -4,6 +4,10 @@ declare(strict_types = 1);
 
 class OperationSystem {
 	
+	public function isCommandLineInterface() {
+		return (php_sapi_name() === 'cli');
+	}
+
 	public function is4BitOSBitOS () {
 		if ( PHP_INT_MAX == 7 ) { // Maximum value of 4-bit sign integer
 			return true;
