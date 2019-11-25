@@ -2,6 +2,6 @@
 
 namespace Xanax\Interpreter;
 
-class Parser {
-	
+class Parser
+{
 }
