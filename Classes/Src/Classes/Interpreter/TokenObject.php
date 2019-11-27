@@ -4,13 +4,13 @@ namespace Xanax\Classes;
 
 class TokenObject
 {
-    private $type;
+	private $type;
 
-    private $string;
+	private $string;
 
-    public function __construct($type, $string)
-    {
-        $this->type = $type;
-        $this->string = $string;
-    }
+	public function __construct($type, $string)
+	{
+		$this->type = $type;
+		$this->string = $string;
+	}
 }

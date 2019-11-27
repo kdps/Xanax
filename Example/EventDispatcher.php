@@ -6,10 +6,10 @@ use Xanax\Classes\EventDispatcher;
 
 class Listener
 {
-    public function action()
-    {
-        echo 'test';
-    }
+	public function action()
+	{
+		echo 'test';
+	}
 }
 
 $eventDispatcher = new EventDispatcher();

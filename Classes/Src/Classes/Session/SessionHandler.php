@@ -6,119 +6,142 @@ namespace Xanax\Classes;
 
 class SessionHandler
 {
-    public function __construct()
-    {
-    }
+	public function __construct()
+	{
+	}
 
-    public function isExtensionLoaded()
-    {
-        if (!extension_loaded('session')) {
-            return false;
-        }
+	public function isExtensionLoaded()
+	{
+		if (!extension_loaded('session')) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function getStatus()
-    {
-        $status = session_status();
+	public function getStatus()
+	{
+		$status = session_status();
 
-        return $status;
-    }
+		return $status;
+	}
 
-    public function getSessionId()
-    {
-        $sessionId = session_id();
+	public function getSessionId()
+	{
+		$sessionId = session_id();
 
-        return $sessionId;
-    }
+		return $sessionId;
+	}
 
-    public function hasSessionId()
-    {
-        if ($this->getSessionId() == '') {
-            return false;
-        }
+	public function hasSessionId()
+	{
+		if ($this->getSessionId() == '') {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function isOneExists()
-    {
-        if ($this->getStatus() == PHP_SESSION_ACTIVE) {
-            return false;
-        }
+	public function isOneExists()
+	{
+		if ($this->getStatus() == PHP_SESSION_ACTIVE) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function isExists()
-    {
-        if ($this->getStatus() == PHP_SESSION_NONE) {
-            return false;
-        }
+	public function isExists()
+	{
+		if ($this->getStatus() == PHP_SESSION_NONE) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function isDisabled()
-    {
-        if ($this->getStatus() == PHP_SESSION_DISABLED) {
-            return false;
-        }
+	public function isDisabled()
+	{
+		if ($this->getStatus() == PHP_SESSION_DISABLED) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function isStated()
-    {
-        if (!$this->isExists() && empty($_SESSION)) {
-            return false;
-        }
+	public function isStated()
+	{
+		if (!$this->isExists() && empty($_SESSION)) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function getSavePath()
-    {
-        return session_save_path();
-    }
+	public function getSavePath()
+	{
+		return session_save_path();
+	}
 
-    public function setSavePath($path = '')
-    {
-        return session_save_path($path);
-    }
+	public function setSavePath($path = '')
+	{
+		return session_save_path($path);
+	}
 
-    public function Commit()
-    {
-        session_commit();
-    }
+	public function Commit()
+	{
+		session_commit();
+	}
 
-    public function RegenerateId($use = true)
-    {
-        session_regenerate_id($use);
-    }
+	public function RegenerateId($use = true)
+	{
+		session_regenerate_id($use);
+	}
 
-    public function useCookies()
-    {
-        if (ini_get('session.use_cookies')) {
-            return true;
-        }
+	public function useCookies()
+	{
+		if (ini_get('session.use_cookies')) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public function Destroy()
-    {
-        session_destroy();
-    }
+	public function Destroy()
+	{
+		session_destroy();
+	}
 
-    public function Get($parameter)
-    {
-        return $_SESSION[$parameter] ? $_SESSION[$parameter] : null;
-    }
+	public function Set($key, $value, $overwrite = true, $valid = false)
+	{
+		$setSessionVar = function ($key, $value) {
+			$_SESSION[$key] = $value;
+		};
 
-    public function Unset() :bool
-    {
-        return session_unset();
-    }
+		if (isset($_SESSION[$key])) {
+			if ($overwrite === true) {
+				$setSessionVar($key, $value);
+			} else {
+				return false;
+			}
+		} else {
+			$setSessionVar($key, $value);
+		}
+
+		if ($valid === true && $_SESSION[$key] !== $value) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function Get($key)
+	{
+		return $_SESSION[$key] ? $_SESSION[$key] : null;
+	}
+
+	public function Unset() :bool
+	{
+		return session_unset();
+	}
 }

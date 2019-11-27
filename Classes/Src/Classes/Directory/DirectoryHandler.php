@@ -12,309 +12,307 @@ use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
 
 class DirectoryHandler implements DirectoryHandlerInterface
 {
-    private $fileHandler;
-    private $directoryDepth;
-
-    public function __construct(FileHandlerInterface $fileHandler = null)
-    {
-        if ($fileHandler instanceof FileHandlerInterface) {
-            $this->fileHandler = $fileHandler;
-        } else {
-            $this->fileHandler = new FileHandler();
-        }
-
-        $this->directoryDepth = -1;
-    }
-
-    public function getFreeSpace($prefix = '/')
-    {
-        $diskFreeSpaces = -1;
-
-        if (function_exists('disk_free_space')) {
-            $diskFreeSpaces = disk_free_space($prefix);
-        }
-
-        return $diskFreeSpaces;
-    }
-
-    public function hasCurrentWorkingLocation()
-    {
-        if (!$this->getCurrentWorkingLocation()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function getCurrentWorkingLocation()
-    {
-        return getcwd();
-    }
-
-    public function isDirectory(string $directoryPath)
-    {
-        $return = is_dir($directoryPath);
-
-        return $return;
-    }
-
-    public function Make(string $directoryPath, int $permission = 644)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $this->Create($directoryPath);
-    }
-
-    public function Create(string $directoryPath, int $permission = 644)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $return = mkdir($directoryPath, $permission);
-
-        return $return;
-    }
-
-    public function getFileCount(string $directoryPath) :int
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $iterator = new \RecursiveDirectoryIterator($directoryPath, \FilesystemIterator::SKIP_DOTS);
-        $return = iterator_count($iterator);
-
-        return $return;
-    }
-
-    public function isEmpty(string $directoryPath) :bool
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $return = ($this->getFileCount($directoryPath) === 0) ? true : false;
-
-        return $return;
-    }
-
-    public function Delete(string $directoryPath)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        if ($this->isEmpty($directoryPath) || $this->Empty($directoryPath)) {
-            $iterator = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            $iterator->setMaxDepth(-1); // Absolutely delete folders
-
-            foreach ($iterator as $fileInformation) {
-                if ($fileInformation->isDir()) {
-                    if (delete($fileInformation->getRealPath()) === false) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function Copy(string $directoryPath, string $copyPath)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $directoryIterator = new \RecursiveDirectoryIterator($directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
-
-        foreach ($iterator as $item) {
-            if ($item->isDir()) {
-                $this->Create($copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
-            } else {
-                $this->fileHandler->Copy($item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
-            }
-        }
-    }
-
-    public function getSize(string $directoryPath)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $size = 0;
-        foreach (new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS)
-        ) as $file) {
-            $size += $file->getSize();
-        }
-
-        return $size;
-    }
-
-    public function getMaxDepth()
-    {
-        return $this->directoryDepth;
-    }
-
-    public function setMaxDepth(int $depth)
-    {
-        if ($this->getMaxDepth() === $this->directoryDepth) {
-            return false;
-        }
-
-        $this->directoryDepth = intval($depth);
-
-        return true;
-    }
-
-    public function Rename(string $directoryPath, string $string, string $replacement)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-
-        foreach ($iterator as $folderPath => $fileInformation) {
-            if ($fileInformation->isDir()) {
-                $folderPath = $fileInformation->getPathName();
-                $newDirectoryName = preg_replace($replacement, $string, $folderPath);
-
-                if ($filePath === $newFileName) {
-                    continue;
-                }
-
-                if (!$this->isDirectory($folderPath)) {
-                    return false;
-                }
-
-                if ($this->isDirectory($newDirectoryName)) {
-                    return false;
-                }
-
-                rename($folderPath, $newDirectoryName);
-            }
-        }
-
-        return true;
-    }
-
-    public function RenameInnerFiles(string $directoryPath, $replacement, $string = null)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-
-        foreach ($iterator as $path => $fileInformation) {
-            if ($fileInformation->isDir()) {
-                $rootDirectory = $fileInformation->getPathName();
-
-                foreach (scandir($rootDirectory) as $targetFilename) {
-                    $filePath = sprintf('%s/%s', $rootDirectory, $targetFilename);
-
-                    $newFileName = $targetFilename;
-
-                    if (@preg_match($replacement, null) === true) {
-                        $newFileName = preg_replace($replacement, $string, $targetFilename);
-                    }
-
-                    $newFileName = sprintf('%s/%s', $rootDirectory, $newFileName);
-
-                    if ($filePath === $newFileName) {
-                        continue;
-                    }
-
-                    if (!$this->fileHandler->isExists($filePath)) {
-                        return false;
-                    }
-
-                    if (!$this->fileHandler->isExists($newFileName)) {
-                        return false;
-                    }
-
-                    rename($filePath, $newFileName);
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public function getFileList($directoryPath = './', $sort = false)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $fileList = [];
-
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::CHILD_FIRST
-        );
-
-        if ($this->getMaxDepth() !== -1) {
-            $iterator->setMaxDepth($this->getMaxDepth());
-        }
-
-        foreach ($iterator as $fileInformation) {
-            if ($fileInformation->isFile()) {
-                $fileList[] = $fileInformation->getRealPath();
-            }
-        }
-
-        if ($sort) {
-            sort($fileList);
-        }
-
-        return $fileList;
-    }
-
-    public function Empty(string $directoryPath)
-    {
-        if (!$this->isDirectory($directoryPath)) {
-            throw new DirectoryIsNotExistsException();
-        }
-
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::CHILD_FIRST
-        );
-
-        if ($this->getMaxDepth() !== -1) {
-            $iterator->setMaxDepth($this->getMaxDepth());
-        }
-
-        foreach ($iterator as $fileInformation) {
-            if (!$fileInformation->isDir()) {
-                if (unlink($fileInformation->getRealPath()) === false) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
+	private $fileHandler;
+	private $directoryDepth;
+
+	public function __construct(FileHandlerInterface $fileHandler = null)
+	{
+		if ($fileHandler instanceof FileHandlerInterface) {
+			$this->fileHandler = $fileHandler;
+		} else {
+			$this->fileHandler = new FileHandler();
+		}
+
+		$this->directoryDepth = -1;
+	}
+
+	public function getFreeSpace($prefix = '/')
+	{
+		$diskFreeSpaces = -1;
+
+		if (function_exists('disk_free_space')) {
+			$diskFreeSpaces = disk_free_space($prefix);
+		}
+
+		return $diskFreeSpaces;
+	}
+
+	public function hasCurrentWorkingLocation()
+	{
+		if (!$this->getCurrentWorkingLocation()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function getCurrentWorkingLocation()
+	{
+		return getcwd();
+	}
+
+	public function isDirectory(string $directoryPath)
+	{
+		$return = is_dir($directoryPath);
+
+		return $return;
+	}
+
+	public function Make(string $directoryPath, int $permission = 644)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$this->Create($directoryPath);
+	}
+
+	public function Create(string $directoryPath, int $permission = 644)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$return = mkdir($directoryPath, $permission);
+
+		return $return;
+	}
+
+	public function getFileCount(string $directoryPath) :int
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$iterator = new \RecursiveDirectoryIterator($directoryPath, \FilesystemIterator::SKIP_DOTS);
+		$return = iterator_count($iterator);
+
+		return $return;
+	}
+
+	public function isEmpty(string $directoryPath) :bool
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$return = ($this->getFileCount($directoryPath) === 0) ? true : false;
+
+		return $return;
+	}
+
+	public function Delete(string $directoryPath)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		if ($this->isEmpty($directoryPath) || $this->Empty($directoryPath)) {
+			$iterator = new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
+				RecursiveIteratorIterator::CHILD_FIRST
+			);
+
+			$iterator->setMaxDepth(-1); // Absolutely delete folders
+
+			foreach ($iterator as $fileInformation) {
+				if ($fileInformation->isDir()) {
+					if (delete($fileInformation->getRealPath()) === false) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function Copy(string $directoryPath, string $copyPath)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$directoryIterator = new \RecursiveDirectoryIterator($directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS);
+		$iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
+
+		foreach ($iterator as $item) {
+			if ($item->isDir()) {
+				$this->Create($copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+			} else {
+				$this->fileHandler->Copy($item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+			}
+		}
+	}
+
+	public function getSize(string $directoryPath)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$size = 0;
+		foreach (new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS)
+		) as $file) {
+			$size += $file->getSize();
+		}
+
+		return $size;
+	}
+
+	public function getMaxDepth()
+	{
+		return $this->directoryDepth;
+	}
+
+	public function setMaxDepth(int $depth)
+	{
+		if ($this->getMaxDepth() === $this->directoryDepth) {
+			return false;
+		}
+
+		$this->directoryDepth = intval($depth);
+
+		return true;
+	}
+
+	public function Rename(string $directoryPath, string $string, string $replacement)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::SELF_FIRST
+		);
+
+		foreach ($iterator as $folderPath => $fileInformation) {
+			if ($fileInformation->isDir()) {
+				$folderPath = $fileInformation->getPathName();
+				$newDirectoryName = preg_replace($replacement, $string, $folderPath);
+
+				if ($filePath === $newFileName) {
+					continue;
+				}
+
+				if (!$this->isDirectory($folderPath)) {
+					return false;
+				}
+
+				if ($this->isDirectory($newDirectoryName)) {
+					return false;
+				}
+
+				rename($folderPath, $newDirectoryName);
+			}
+		}
+
+		return true;
+	}
+
+	public function RenameInnerFiles(string $directoryPath, $replacement, $string = null)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::SELF_FIRST
+		);
+
+		foreach ($iterator as $path => $fileInformation) {
+			if ($fileInformation->isDir()) {
+				$rootDirectory = $fileInformation->getPathName();
+
+				foreach (scandir($rootDirectory) as $targetFilename) {
+					$filePath = sprintf('%s/%s', $rootDirectory, $targetFilename);
+
+					$newFileName = $targetFilename;
+
+					if (@preg_match($replacement, null) === true) {
+						$newFileName = preg_replace($replacement, $string, $targetFilename);
+					}
+
+					$newFileName = sprintf('%s/%s', $rootDirectory, $newFileName);
+
+					if ($filePath === $newFileName) {
+						continue;
+					}
+
+					if (!$this->fileHandler->isExists($filePath)) {
+						return false;
+					}
+
+					if (!$this->fileHandler->isExists($newFileName)) {
+						return false;
+					}
+
+					rename($filePath, $newFileName);
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public function getFileList($directoryPath = './', $sort = false)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$fileList = [];
+
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
+
+		if ($this->getMaxDepth() !== -1) {
+			$iterator->setMaxDepth($this->getMaxDepth());
+		}
+
+		foreach ($iterator as $fileInformation) {
+			if ($fileInformation->isFile()) {
+				$fileList[] = $fileInformation->getRealPath();
+			}
+		}
+
+		if ($sort) {
+			sort($fileList);
+		}
+
+		return $fileList;
+	}
+
+	public function Empty(string $directoryPath)
+	{
+		if (!$this->isDirectory($directoryPath)) {
+			throw new DirectoryIsNotExistsException();
+		}
+
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
+
+		if ($this->getMaxDepth() !== -1) {
+			$iterator->setMaxDepth($this->getMaxDepth());
+		}
+
+		foreach ($iterator as $fileInformation) {
+			if (!$fileInformation->isDir()) {
+				if (unlink($fileInformation->getRealPath()) === false) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 }
