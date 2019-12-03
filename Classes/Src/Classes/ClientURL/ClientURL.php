@@ -21,12 +21,32 @@ class ClientURL
 		return self::$session;
 	}
 	
-	public function __construct( $url = '' )
+	public function Option()
+	{
+		if (!$this->Option) {
+			$this->Option = new ClientURLOption(self::$session);
+		}
+		
+		return $this->Option;
+	}
+	
+	public function Information()
+	{
+		if (!$this->Information) {
+			$this->Information = new ClientURLLastTransferInformation(self::$session);
+		}
+		
+		return $this->Information;
+	}
+	
+	public function __construct( $url = '', $useLocalMethod = false )
 	{
 		self::$session = $this->getSession();
 		
-		$this->Option = new ClientURLOption(self::$session);
-		$this->Information = new ClientURLLastTransferInformation(self::$session);
+		if ($useLocalMethod) {
+			$this->Option = new ClientURLOption(self::$session);
+			$this->Information = new ClientURLLastTransferInformation(self::$session);
+		}
 	}
 	
 	public function Close()
