@@ -2,6 +2,6 @@
 
 namespace Xanax\Classes;
 
-class IterableFileHandler {
-	
+class IterableFileHandler
+{
 }

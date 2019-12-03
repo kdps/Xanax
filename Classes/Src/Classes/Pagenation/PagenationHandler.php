@@ -1,52 +1,53 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class PagenationHandler {
-	
-	var $current_page;
-	var $list_count;
-	var $page_count;
-	var $point;           // goted page count
-	var $page_margin = 0; // page margin for center align
-	var $first_page = 0;  // first page number
-	var $last_page;       // number of total items
-	
+class PagenationHandler
+{
+	public $current_page;
+	public $list_count;
+	public $page_count;
+	public $point;           // goted page count
+	public $page_margin = 0; // page margin for center align
+	public $first_page = 0;  // first page number
+	public $last_page;       // number of total items
+
 	/**
 	 * Constructor
 	 *
 	 * @param int $last_page  : number of total items
 	 * @param int $current_page : current page number
 	 * @param int $list_count   : number of page links displayed at one time
-	 *	 
+	 *
 	 * @return void
 	 */
-	function __construct($current_page = 1, $item_count = 20, $document_count = 10, $list_count = 10) {
+	public function __construct($current_page = 1, $item_count = 20, $document_count = 10, $list_count = 10)
+	{
 		$page_margin = 0;
 		$first_page = 0;
-		
+
 		$half_page_count = ceil($list_count / 2);
-		
+
 		$last_page = ceil($document_count / $item_count);
 		$last_page = ($last_page < 0) ? 1 : $last_page;
-		
+
 		if ($last_page > $list_count) {
 			if ($current_page > $last_page - ($list_count - 1)) {
 				$page_margin = $last_page - $list_count;
 				$first_page = $page_margin < $list_count ? 0 : -1;
-			} else if ($current_page > $half_page_count) {
+			} elseif ($current_page > $half_page_count) {
 				$page_margin = $current_page - ($half_page_count);
 				$first_page = $page_margin > $list_count ? 0 : -1;
 			}
-			
+
 			if ($current_page > $last_page - ($list_count - 1) && $current_page < $last_page - ($half_page_count - 1)) {
 				$page_margin = $current_page - $half_page_count;
 				$first_page = $page_margin > $list_count ? 0 : -1;
 			}
 		}
-		
+
 		$this->page_count = (int)$last_page;
 		$this->page_margin = (int)$page_margin;
 		$this->first_page = (int)$first_page;
@@ -54,87 +55,92 @@ class PagenationHandler {
 		$this->current_page = (int)$current_page;
 		$this->list_count = (int)$list_count;
 	}
-	
+
 	/**
 	 * get a last page.
 	 *
 	 * @return int
 	 */
-	function getLastPage() {
+	public function getLastPage()
+	{
 		return $this->page_count;
 	}
-	
+
 	/**
 	 * get a link of last page.
 	 *
 	 * @return String
 	 */
-	function getLastPageLink() {
+	public function getLastPageLink()
+	{
 		return str::getUrl(__MODULEID, $_GET[__MODULEID], 'page', $this->getLastPage(), 'srl', '');
 	}
-	
+
 	/**
 	 * get a comment link of last page.
 	 *
 	 * @return String
 	 */
-	function getCommentPageLink() {
+	public function getCommentPageLink()
+	{
 		return str::getUrl(__MODULEID, $_GET[__MODULEID], 'cpage', $value, 'act', 'getCommentPage');
 	}
-	
+
 	/**
 	 * get a page link.
 	 *
 	 * @return String
 	 */
-	function getPageLink() {
+	public function getPageLink()
+	{
 		return str::getUrl(__MODULEID, $_GET[__MODULEID], 'page', $this->getCurrentPage(), 'srl', '');
 	}
-	
+
 	/**
 	 * make sure this page is the same as the current page.
 	 *
 	 * @return boolean
 	 */
-	function isCurrentPage() {
+	public function isCurrentPage()
+	{
 		return ($_GET['page'] == $this->getCurrentPage()) ? true : false;
 	}
-	
+
 	/**
 	 * make sure this comment page is the same as the current page.
 	 *
 	 * @return boolean
 	 */
-	function isCurrentCPage() {
+	public function isCurrentCPage()
+	{
 		return ($_GET['cpage'] == $this->getCurrentPage()) ? true : false;
 	}
-	
+
 	/**
 	 * make sure has next page.
 	 *
 	 * @return boolean
 	 */
-	function hasNextPage() {
+	public function hasNextPage()
+	{
 		$page = $this->first_page + (++$this->point);
-		
+
 		if ($page > ($this->list_count) || $this->getCurrentPage() > $this->last_page) {
 			$this->point = 0;
-			
+
 			return false;
 		} else {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * get a current page.
 	 *
 	 * @return int
 	 */
-	function getCurrentPage() {
+	public function getCurrentPage()
+	{
 		return ($this->page_margin + $this->first_page + $this->point);
 	}
-	
 }
-
-?>

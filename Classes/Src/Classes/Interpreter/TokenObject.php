@@ -2,15 +2,15 @@
 
 namespace Xanax\Classes;
 
-class TokenObject {
-	
+class TokenObject
+{
 	private $type;
-	
+
 	private $string;
-	
-	public function __construct ( $type, $string ) {
+
+	public function __construct($type, $string)
+	{
 		$this->type = $type;
 		$this->string = $string;
 	}
-	
 }
