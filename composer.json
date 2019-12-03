@@ -1,0 +1,27 @@
+{
+  "name": "kdps/xanax",
+  "type": "project",
+  "description": "PHP Framework or Libraries",
+  "keywords": ["php framework", "php library"],
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5",
+    "phpmailer/phpmailer": "^6.1"
+  },
+  "autoload": {
+    "psr-4": {"Xanax\\": "Classes/Src/"},
+    "classmap": [
+      ""
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  }
+}
