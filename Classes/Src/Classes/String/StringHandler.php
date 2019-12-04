@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Xanax\Exception\MemoryAllocatedException;
+
 class StringHandler
 {
 	public function getMaxAllocationSize(string $string) :int
@@ -23,6 +25,7 @@ class StringHandler
 	{
 		if ($this->getMaxAllocationSize($string) > $multiplier) {
 			// Memory allocated error
+			throw new MemoryAllocatedException("Memory Allocated");
 		}
 
 		return str_repeat($string, $multiplier);
@@ -415,4 +418,5 @@ class StringHandler
 
 		return $output;
 	}
+	
 }

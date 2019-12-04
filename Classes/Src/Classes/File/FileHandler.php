@@ -40,8 +40,11 @@ class FileHandler implements FileHandlerInterface
 	];
 
 	private static $lastError;
+	
 	private $strictMode = true;
+	
 	private $fileSystemHandler;
+	
 	private $directoryHandler;
 
 	public function __construct($useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, DirectoryHandlerInterface $directoryHandler = null)
