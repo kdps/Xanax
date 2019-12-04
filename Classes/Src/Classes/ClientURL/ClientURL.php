@@ -16,17 +16,37 @@ class ClientURL implements ClientURLInterface
 	
 	public function getSession()
 	{
-		if (self::$session == null) {
-			self::$session = curl_init();
+		if ( self::$session == null ) {
+			self::$session = $this->Initialize();
 		}
 		
 		return self::$session;
 	}
 	
+	public function getLastErrorMessage() :string
+	{
+		return curl_error(self::$session);
+	}
+	
+	public function getLastErrorNumber() :int
+	{
+		return curl_errno(self::$session);
+	}
+	
+	public function Initialize( $instance = '' )
+	{
+		return curl_init( $instance );
+	}
+	
+	public function Reset()
+	{
+		curl_reset( self::$session );
+	}
+	
 	public function Option()
 	{
-		if (!$this->Option) {
-			$this->Option = new ClientURLOption(self::$session);
+		if ( !$this->Option ) {
+			$this->Option = new ClientURLOption( self::$session );
 		}
 		
 		return $this->Option;
@@ -34,8 +54,8 @@ class ClientURL implements ClientURLInterface
 	
 	public function Information()
 	{
-		if (!$this->Information) {
-			$this->Information = new ClientURLLastTransferInformation(self::$session);
+		if ( !$this->Information ) {
+			$this->Information = new ClientURLLastTransferInformation( self::$session );
 		}
 		
 		return $this->Information;
@@ -46,8 +66,8 @@ class ClientURL implements ClientURLInterface
 		self::$session = $this->getSession();
 		
 		if ($useLocalMethod) {
-			$this->Option = new ClientURLOption(self::$session);
-			$this->Information = new ClientURLLastTransferInformation(self::$session);
+			$this->Option = new ClientURLOption( self::$session );
+			$this->Information = new ClientURLLastTransferInformation( self::$session );
 		}
 	}
 	
