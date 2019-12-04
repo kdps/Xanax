@@ -7,7 +7,9 @@ namespace Xanax\Classes;
 use Xanax\Classes\ClientURLOption as ClientURLOption;
 use Xanax\Classes\ClientURLLastTransferInformation as ClientURLLastTransferInformation;
 
-class ClientURL
+use Xanax\Implement\ClientURLInterface;
+
+class ClientURL implements ClientURLInterface
 {
 	
 	private static $session;
@@ -39,7 +41,7 @@ class ClientURL
 		return $this->Information;
 	}
 	
-	public function __construct( $useLocalMethod = true, $url = '' )
+	public function __construct( bool $useLocalMethod = true, string $url = '' )
 	{
 		self::$session = $this->getSession();
 		
@@ -49,12 +51,12 @@ class ClientURL
 		}
 	}
 	
-	public function setOption( $option, $value )
+	public function setOption( int $option, $value ) :void
 	{
 		curl_setopt( self::$session, $option, $value );
 	}
 	
-	public function Close()
+	public function Close() :void
 	{
 		curl_close( self::$session );
 	}
