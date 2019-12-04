@@ -39,7 +39,7 @@ class ClientURL
 		return $this->Information;
 	}
 	
-	public function __construct( $url = '', $useLocalMethod = false )
+	public function __construct( $useLocalMethod = true, $url = '' )
 	{
 		self::$session = $this->getSession();
 		
@@ -49,6 +49,11 @@ class ClientURL
 		}
 	}
 	
+	public function setOption( $option, $value )
+	{
+		curl_setopt( self::$session, $option, $value );
+	}
+	
 	public function Close()
 	{
 		curl_close( self::$session );
@@ -56,7 +61,7 @@ class ClientURL
 	
 	public function Execute()
 	{
-		return curl_exec(self::$session);
+		return curl_exec( self::$session );
 	}
 	
 }
