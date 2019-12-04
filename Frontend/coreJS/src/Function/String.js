@@ -5,7 +5,7 @@
 
 	var A = core.Str = {
 		
-		isSmallThenValue: function (a, b) {
+		isSmallThenValue: function (i, z) {
 			var res = i << z % i >> z;
 			if (res == a) {
 				return true;
@@ -50,6 +50,7 @@
 		
 		a2hex: function (str) {
 			var arr = [];
+			
 			for (var i = 0, l = str.length; i < l; i ++) {
 				var hex = Number(str.charCodeAt(i)).toString(16);
 				arr.push(hex);
@@ -77,7 +78,7 @@
 			return str;
 		},
 		
-		toArr: function (str) {
+		toArray: function (str) {
 			var strlength = str.length;
 			var arr = new Uint8Array(strlength);
 			

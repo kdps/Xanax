@@ -33,13 +33,13 @@
 				return vid.play(); 
 			// resolve
 			},
-		 function(args) {
+			function(args) {
 				if (typeof onSuccessCallback == 'function') {
 					onSuccessCallback(args);
 				}
 			// reject
 			},
-		 function(args) {
+			function(args) {
 				if (typeof onErrorCallback == 'function') {
 					onErrorCallback(args);
 				}

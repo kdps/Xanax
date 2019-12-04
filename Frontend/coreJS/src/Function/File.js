@@ -23,6 +23,7 @@
 		
 		getBytes: function (format) {
 			var bytes = 0;
+			
 			if (format.indexOf('TB') != -1) {
 				bytes = parseFloat(format) * (1024 << 30);
 			} else if (format.indexOf('GB') != -1) {
@@ -105,7 +106,7 @@
 			}
 		},
 		
-		readArrBuffer: function (file) {
+		readArrayBuffer: function (file) {
 			var fr = this.get();
 			fr.readAsArrayBuffer(file);
 		},

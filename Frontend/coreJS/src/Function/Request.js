@@ -996,6 +996,7 @@
 		 **/
 		ajax: function (type, url, params, callback, datatype, message, userargs, contenttype) {
 			isAjaxProcessing = true; //global
+			
 			if (!datatype) {
 				datatype = "text";
 			}
@@ -1009,7 +1010,9 @@
 					contenttype = "application/x-www-form-urlencoded;charset=UTF-8";
 				}
 			}
+			
 			contenttype = "application/x-www-form-urlencoded;charset=UTF-8";
+			
 			try {
 				var $self = this;
 				$self.setWaitForm(message);
