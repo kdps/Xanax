@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-use Xanax\Implement\ClientURLInterface;
+use Xanax\Implement\ClientURLOptionInterface;
 
 class ClientURLOption interface ClientURLOptionInterface
 {

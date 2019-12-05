@@ -2,7 +2,7 @@
 
 namespace Xanax\Implement;
 
-interface ClientURLInterface
+interface ClientURLOptionInterface
 {
 	public function setURL(string $url);
 	
