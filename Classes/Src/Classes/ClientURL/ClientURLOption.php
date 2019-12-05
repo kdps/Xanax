@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class ClientURLOption
+use Xanax\Implement\ClientURLInterface;
+
+class ClientURLOption interface ClientURLOptionInterface
 {
 	private static $session;
 

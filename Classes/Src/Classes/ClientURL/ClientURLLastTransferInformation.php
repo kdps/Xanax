@@ -262,4 +262,14 @@ class ClientURLLastTransferInformation
 	{
 		return curl_getinfo(self::$session, CURLINFO_HTTP_CONNECTCODE);
 	}
+
+	/**
+	 * Get errno number from last connect failure
+	 *
+	 * @return mixed
+	 */
+	public function getLastConnectFailureErrorNumber()
+	{
+		return curl_getinfo(self::$session, CURLINFO_OS_ERRNO);
+	}
 }
