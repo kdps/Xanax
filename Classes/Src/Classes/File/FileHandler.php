@@ -123,7 +123,7 @@ class FileHandler implements FileHandlerInterface
 
 		return ftell($fileHandler);
 	}
-
+	
 	/**
 	 * Create a cache file
 	 *
@@ -729,195 +729,193 @@ class FileHandler implements FileHandlerInterface
 
 		$mp3FileHeader = [
 			/* ftyp3gp4isom3gp4 */
-			'24',
+			'0x18',
 
 			/* !DO (p Hq) */
-			'1008813135',
+			'0x3C21444F',
 
-			'1298231840',
+			'0x4D617220',
 
 			/* ID3 (TSSE) */
-			'1229206276',
+			'0x2F271E8',
 			/* ID3 (GEOB, TYER, TALB, TSSE, TXXX, TPE1, TIT2, TCON, PRIV, TRCK) */
-			'1229206275',
+			'0x49443303',
 			/* ID3 (TALB, TIT2, TSS, TT2, FTT2, TPE1) */
-			'1229206274',
+			'0x49443302',
 
-			'1213486160',
+			'0x2E4BEAA',
 
-			'4294698052',
-			'4294697028',
+			'0xFFFBE444',
+			'0xFFFBE044',
 			/* d (dInfo) */
-			'4294692964',
+			'0xFFFBD064',
 			/* D (DInfo) */
-			'4294692932',
+			'0xFFFBD044',
 
-			'4294688864',
-			'4294684772',
+			'0xFFFBC060',
+			'0xFFFBB064',
 			/* ` */
-			'4294684768',
+			'0xFFFBB060',
 			/*  */
-			'4294684676',
-			'4294684672',
-			'4294680676',
+			'0xFFFBB004',
+			'0xFFFBB000',
+			'0xFFFBA064',
 			/* ` */
-			'4294680672',
+			'0xFFFBA060',
 			/* D */
-			'4294680644',
-			'4294680640',
+			'0xFFFBA044',
+			'0xFFFBA040',
 
-			'4294677604',
-			'4294677572',
-			'4294677092',
+			'0xFFFB9464',
+			'0xFFFB9444',
+			'0xFFFB9264',
 
-			'4294676676',
-			'4294676672',
+			'0xFFFB90C4',
+			'0xFFFB90C0',
 			/* d (dInfo) */
-			'4294676580',
+			'0xFFFB9064',
 			/* ` */
-			'4294676576',
+			'0xFFFB9060',
 			/* D (DXing) */
-			'4294676548',
+			'0xFFFB9044',
 			/* @ */
-			'4294676544',
-			'4294676484',
-			'4294676480',
+			'0xFFFB9040',
+			'0xFFFB9004',
+			'0xFFFB9000',
 			/* p */
-			'4294668484',
+			'0xFFFB70C4',
 			/* ` */
-			'4294664388',
-			'4294660292',
+			'0xFFFB60C4',
+			'0xFFFB50C4',
 
-			'4294652100',
-			'4294611968',
+			'0xFFFB30C4',
+			'0xFFFA9400',
 
-			'4294166724',
+			'0xFFF3C8C4',
 
-			'4294156388',
+			'0xFFF3A064',
 
-			'4294148292',
-			'4294145108',
+			'0xFFF380C4',
+			'0xFFF37454',
 
-			'4293101764',
+			'0xFFE388C4',
 
 			/* ÿû */
-			'3284124603',
+			'0xC3BFC3BB',
 
-			'287310080',
+			'0x11200100',
 
-			'218821433',
-			'218818698',
-			'218777924',
-			'218783877',
+			'0xD0AF339',
+			'0xD0AE88A',
+			'0xD0A4944',
+			'0xD0A6085',
 			/* � (dInfo)*/
-			'184548224',
+			'0xAFFFB80',
 		];
 
-		if ($fileDescription === 1297766144 || $fileDescription === 1297764352 || $fileDescription === 1297794049 || $fileDescription === 1297778688 || $fileDescription === 1297780736 /* MZ */) {
+		if ($fileDescription === 0x4D5A5700 || $fileDescription === 0x4D5A5000 || $fileDescription === 0x4D5AC401 || $fileDescription === 0x4D5A8800 || $fileDescription === 0x4D5A9000 /* MZ */) {
 			return 'EXE';
 		} elseif (in_array($fileDescription, $mp3FileHeader)) {
 			return 'MP3';
-		} elseif ($fileDescription === 1297377380 /* MThd */ || $fileDescription === 749685) {
+		} elseif ($fileDescription === 0x4D546864 /* MThd */ || $fileDescription === 0xB7075) {
 			return 'MID';
-		} elseif ($fileDescription === 4292411374 || $fileDescription === 4292411360 /* JPG, JFIF */ || $fileDescription === 4292411361 /* Exif JPG */ || $fileDescription === 4292411355 || $fileDescription === 4292411362 || $fileDescription === 4292411372) {
+		} elseif ($fileDescription === 0xFFD8FFEE || $fileDescription === 0xFFD8FFE0 /* JPG, JFIF */ || $fileDescription === 0xFFD8FFE1 /* Exif JPG */ || $fileDescription === 0xFFD8FFDB || $fileDescription === 0xFFD8FFE2 || $fileDescription === 0xFFD8FFEC) {
 			return 'JPG';
-		} elseif ($fileDescription === 771752170) {
+		} elseif ($fileDescription === 0x2E0000EA) {
 			return 'GBA';
-		} elseif ($fileDescription === 1332176723) {
+		} elseif ($fileDescription === 0x4F676753) {
 			return 'OGG/OGA/OGV';
-		} elseif ($fileDescription === 943870035) {
+		} elseif ($fileDescription === 0x38425053) {
 			return 'PSD';
-		} elseif ($fileDescription === 1313166106 /* NES */) {
+		} elseif ($fileDescription === 0x4E45531A /* NES */) {
 			return 'NES';
-		} elseif ($fileDescription === 1229866072) {
+		} elseif ($fileDescription === 0x494E4458) {
 			return 'IDX';
-		} elseif ($fileDescription === 1280985424) {
+		} elseif ($fileDescription === 0x4C5A4950) {
 			return 'LZ';
-		} elseif ($fileDescription === 1144008753) {
+		} elseif ($fileDescription === 0x44303031) {
 			return 'ISO';
-		} elseif ($fileDescription === 2037396327) {
+		} elseif ($fileDescription === 0x79703367) {
 			return '3GP/3G2';
-		} elseif ($fileDescription === 1413760326) {
+		} elseif ($fileDescription === 0x54444546) {
 			return 'TDEF';
-		} elseif ($fileDescription === 1413760326) {
-			return 'TDEF';
-		} elseif ($fileDescription === 1716281667) {
+		} elseif ($fileDescription === 0x664C6143) {
 			return 'FLAG';
-		} elseif ($fileDescription === 799024) {
+		} elseif ($fileDescription === 0xC3130) {
 			return 'ZIP';
-		} elseif ($fileDescription === 1347093252 /* PK, KPZIP/PPTX */) {
+		} elseif ($fileDescription === 0x504B0304 /* PK, KPZIP/PPTX */) {
 			return 'ZIP/PPTX';
-		} elseif ($fileDescription === 1178089313 /* GIF8 (GIF87a) */ || $fileDescription === 1195984440 /* GIF8 (GIF89a) */) {
+		} elseif ($fileDescription === 0x46383761 /* GIF8 (GIF87a) */ || $fileDescription === 0x47494638 /* GIF8 (GIF89a) */) {
 			return 'GIF';
-		} elseif ($fileDescription === 1297771520) {
+		} elseif ($fileDescription === 0x4D5A6C00) {
 			return 'DLL';
-		} elseif ($fileDescription === 1275068416 /* LLNK */) {
+		} elseif ($fileDescription === 0x4C000000 /* LLNK */) {
 			return 'LNK';
-		} elseif ($fileDescription === 1534799920 || $fileDescription === 1531200838) {
+		} elseif ($fileDescription === 0x5B7B3030 || $fileDescription === 0x5B444546) {
 			return 'URL';
-		} elseif ($fileDescription === 2303741511 /* PNG */) {
+		} elseif ($fileDescription === 0x89504E47 /* PNG */) {
 			return 'PNG';
-		} elseif ($fileDescription === 1162758471) {
+		} elseif ($fileDescription === 0x454E4947) {
 			return 'MUS';
-		} elseif ($fileDescription === 28 /* M4A */) { //ftypM4A
+		} elseif ($fileDescription === 0x1C /* M4A */) { //ftypM4A
 			return 'M4A';
-		} elseif ($fileDescription === 757935405) {
+		} elseif ($fileDescription === 0x2D2D2D2D) {
 			return 'CAP';
-		} elseif ($fileDescription === 1297303124) {
+		} elseif ($fileDescription === 0x4D534654) {
 			return 'TLB';
-		} elseif ($fileDescription === 168100097) {
+		} elseif ($fileDescription === 0xA050101) {
 			return 'PCX';
-		} elseif ($fileDescription === 1681144425) {
+		} elseif ($fileDescription === 0x64343A69) {
 			return 'TORRENTDATA';
-		} elseif ($fileDescription === 1680945210) {
+		} elseif ($fileDescription === 0x6431303A) {
 			return 'DAT';
-		} elseif ($fileDescription === 1332176723) {
+		} elseif ($fileDescription === 0x4F676753) {
 			return 'OGG';
-		} elseif ($fileDescription === 1346655281) {
+		} elseif ($fileDescription === 0x50445431) {
 			return 'PDF';
-		} elseif ($fileDescription === 256) {
+		} elseif ($fileDescription === 0x100) {
 			return 'ICODATA';
-		} elseif ($fileDescription === 4294845184) {
+		} elseif ($fileDescription === 0xFFFE2300) {
 			return 'AIMPPL4';
-		} elseif ($fileDescription === 1230263110) {
+		} elseif ($fileDescription === 0x49545346) {
 			return 'CHM';
-		} elseif ($fileDescription === 3503231456) {
+		} elseif ($fileDescription === 0xD0CF11E0) {
 			return 'MSI';
-		} elseif ($fileDescription === 1380533830 /* RIFF */) {
+		} elseif ($fileDescription === 0x52494646 /* RIFF */) {
 			return 'AVI/WAV/CPR';
-		} elseif ($fileDescription === 1346979398) {
+		} elseif ($fileDescription === 0x50494646) {
 			return 'WAV';
-		} elseif ($fileDescription === 1112356435 || $fileDescription === 1112364703 || $fileDescription === 1112364798 || $fileDescription === 1112356374) {
+		} elseif ($fileDescription === 0x424D3653 || $fileDescription === 0x424D569F || $fileDescription === 0x424D56FE || $fileDescription === 0x424D3616) {
 			return 'BMP';
-		} elseif ($fileDescription === 1481650957 || $fileDescription === 1112344120 || $fileDescription === 1112355844 || $fileDescription === 1112356444) {
+		} elseif ($fileDescription === 0x5850330D || $fileDescription === 0x424D0638 || $fileDescription === 0x424D3404 || $fileDescription === 0x424D365C) {
 			return 'XP3';
-		} elseif ($fileDescription === 807842421) {
+		} elseif ($fileDescription === 0x3026B275) {
 			return 'WMV';
-		} elseif ($fileDescription === 1180128006 || $fileDescription === 1180128009 || $fileDescription === 1129796358) {
+		} elseif ($fileDescription === 0x46575306 || $fileDescription === 0x46575309 || $fileDescription === 0x43575306) {
 			return 'SWF';
-		} elseif ($fileDescription === 440786851) {
+		} elseif ($fileDescription === 0x1A45DFA3) {
 			return 'WEBM';
 		} elseif ($fileDescription === 20 || $fileDescription === 32 /* MP4 (ftypisom isomiso2avc1mp41) */) {
 			return 'MP4';
-		} elseif ($fileDescription === 626017350 /* PDF*/) {
+		} elseif ($fileDescription === 0x25504446 /* PDF*/) {
 			return 'PDF';
-		} elseif ($fileDescription === 1382117921 /* Rar! */) {
+		} elseif ($fileDescription === 0x52617221 /* Rar! */) {
 			return 'RAR';
-		} elseif ($fileDescription === 1162299201) {
+		} elseif ($fileDescription === 0x45474741) {
 			return 'EGG';
-		} elseif ($fileDescription === 1625958656) {
+		} elseif ($fileDescription === 0x60EA2900) {
 			return 'ARJ';
 		} elseif ($fileDescription === 0) {
 			return 'EMPTY';
-		} elseif ($fileDescription === 1681406561) {
+		} elseif ($fileDescription === 0x64383A61) {
 			return 'TORRENT';
-		} elseif ($fileDescription === 1531860826 /* NWZ */) {
+		} elseif ($fileDescription === 0x5B4E575A /* NWZ */) {
 			return 'NWC';
-		} elseif ($fileDescription === 1179407873) {
+		} elseif ($fileDescription === 0x464C5601) {
 			return 'FLV';
-		} elseif ($fileDescription === 557605234) {
+		} elseif ($fileDescription === 0x213C6172) {
 			return 'IPK';
-		} elseif ($fileDescription === 1433299316) {
+		} elseif ($fileDescription === 0x556E6974) {
 			return 'UnityFS';
 		} else {
 			return 'UNKNOWN';
@@ -1039,6 +1037,56 @@ class FileHandler implements FileHandlerInterface
 	}
 
 	/**
+	 * Bring the last access time.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return string
+	 */
+	public function getLastAccessDate($filePath)
+	{
+		$filePath = $this->convertToNomalizePath($filePath);
+
+		if (!$this->isExists($filePath)) {
+			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
+		}
+
+		if (!$this->isFile($filePath)) {
+			return false;
+		}
+
+		$this->clearStatatusCache($filePath);
+		$return = fileatime($filePath);
+
+		return $return;
+	}
+
+	/**
+	 * Bring the created time.
+	 *
+	 * @param string $filePath
+	 *
+	 * @return string
+	 */
+	public function getCreatedDate($filePath)
+	{
+		$filePath = $this->convertToNomalizePath($filePath);
+
+		if (!$this->isExists($filePath)) {
+			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
+		}
+
+		if (!$this->isFile($filePath)) {
+			return false;
+		}
+
+		$this->clearStatatusCache($filePath);
+		$return = filectime($filePath);
+
+		return $return;
+	}
+
+	/**
 	 * Bring the last modified time.
 	 *
 	 * @param string $filePath
@@ -1058,7 +1106,7 @@ class FileHandler implements FileHandlerInterface
 		}
 
 		$this->clearStatatusCache($filePath);
-		$return = fileatime($filePath);
+		$return = filemtime($filePath);
 
 		return $return;
 	}
