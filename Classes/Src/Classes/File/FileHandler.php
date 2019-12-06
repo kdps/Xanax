@@ -813,13 +813,54 @@ class FileHandler implements FileHandlerInterface
 			'0xAFFFB80',
 		];
 
-		if ($fileDescription === 0x4D5A5700 || $fileDescription === 0x4D5A5000 || $fileDescription === 0x4D5AC401 || $fileDescription === 0x4D5A8800 || $fileDescription === 0x4D5A9000 /* MZ */) {
+		$exeFileHeader = [
+			'0x4D5A5700',
+			'0x4D5A5000',
+			'0x4D5AC401',
+			'0x4D5A8800',
+			/* MZ */
+			'0x4D5A9000'
+		];
+		
+		$jpgFileHeader = [
+			'0xFFD8FFEE',
+			/* JPG, JFIF */
+			'0xFFD8FFE0',
+			/* Exif JPG */
+			'0xFFD8FFE1',
+			'0xFFD8FFDB',
+			/* MZ */
+			'0xFFD8FFE2',
+			'0xFFD8FFEC'
+		];
+		
+		$bmpFileHeader = [
+			'0x424D3653',
+			'0x424D569F',
+			'0x424D56FE',
+			'0x424D3616',
+		];
+		
+		$xp3FileHeader = [
+			'0x5850330D',
+			'0x424D0638',
+			'0x424D3404',
+			'0x424D365C',
+		];
+		
+		$swfFileHeader = [
+			'0x46575306',
+			'0x46575309',
+			'0x43575306'
+		];
+		
+		if (in_array($fileDescription, $exeFileHeader)) {
 			return 'EXE';
 		} elseif (in_array($fileDescription, $mp3FileHeader)) {
 			return 'MP3';
 		} elseif ($fileDescription === 0x4D546864 /* MThd */ || $fileDescription === 0xB7075) {
 			return 'MID';
-		} elseif ($fileDescription === 0xFFD8FFEE || $fileDescription === 0xFFD8FFE0 /* JPG, JFIF */ || $fileDescription === 0xFFD8FFE1 /* Exif JPG */ || $fileDescription === 0xFFD8FFDB || $fileDescription === 0xFFD8FFE2 || $fileDescription === 0xFFD8FFEC) {
+		} elseif (in_array($fileDescription, $jpgFileHeader)) {
 			return 'JPG';
 		} elseif ($fileDescription === 0x2E0000EA) {
 			return 'GBA';
@@ -885,13 +926,13 @@ class FileHandler implements FileHandlerInterface
 			return 'AVI/WAV/CPR';
 		} elseif ($fileDescription === 0x50494646) {
 			return 'WAV';
-		} elseif ($fileDescription === 0x424D3653 || $fileDescription === 0x424D569F || $fileDescription === 0x424D56FE || $fileDescription === 0x424D3616) {
+		} elseif (in_array($fileDescription, $bmpFileHeader)) {
 			return 'BMP';
-		} elseif ($fileDescription === 0x5850330D || $fileDescription === 0x424D0638 || $fileDescription === 0x424D3404 || $fileDescription === 0x424D365C) {
+		} elseif (in_array($fileDescription, $xp3FileHeader)) {
 			return 'XP3';
 		} elseif ($fileDescription === 0x3026B275) {
 			return 'WMV';
-		} elseif ($fileDescription === 0x46575306 || $fileDescription === 0x46575309 || $fileDescription === 0x43575306) {
+		} elseif (in_array($fileDescription, $swfFileHeader)) {
 			return 'SWF';
 		} elseif ($fileDescription === 0x1A45DFA3) {
 			return 'WEBM';
