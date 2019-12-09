@@ -764,8 +764,10 @@ class FileHandler implements FileHandlerInterface
 
 		$header = $this->Read($filePath, $fsize);
 
+		$bigEndianUnpack = unpack('N', $header);
+
 		/* ISO 8859-1 */
-		$fileDescription = array_shift(unpack('N', $header));
+		$fileDescription = array_shift($bigEndianUnpack);
 
 		$mp3FileHeader = [
 			/* ftyp3gp4isom3gp4 */

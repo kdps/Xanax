@@ -12,7 +12,8 @@ class Listener
 	}
 }
 
-$eventDispatcher = new EventDispatcher();
 $listener = new Listener();
+
+$eventDispatcher = new EventDispatcher();
 $eventDispatcher->addListener('foo.test', [$listener, 'action']);
 $eventDispatcher->Dispatch('foo.test');
