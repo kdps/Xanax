@@ -6,7 +6,7 @@ namespace Xanax\Classes;
 
 use Xanax\Implement\ClientURLOptionInterface;
 
-class ClientURLOption interface ClientURLOptionInterface
+class ClientURLOption implements ClientURLOptionInterface
 {
 	private static $session;
 
@@ -17,14 +17,21 @@ class ClientURLOption interface ClientURLOptionInterface
 		self::$session = $session;
 	}
 
+	public function returnContext()
+	{
+		return $this;
+	}
+
 	/**
 	 * Provide the URL to use in the request
 	 *
 	 * @return void
 	 */
-	public function setURL(string $url) :void
+	public function setURL(string $url)
 	{
 		curl_setopt(self::$session, CURLOPT_URL, $url);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -32,9 +39,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setSSLVerifypeer(bool $bool = true) :void
+	public function setSSLVerifypeer(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_SSL_VERIFYPEER, $bool);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -42,9 +51,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setTimeout(bool $timeout = true) :void
+	public function setTimeout(bool $timeout = true)
 	{
 		curl_setopt(self::$session, CURLOPT_TIMEOUT, $timeout);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -52,9 +63,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPostField(int $fields = 0) :void
+	public function setPostField(int $fields = 0)
 	{
 		curl_setopt(self::$session, CURLOPT_POSTFIELDS, $fields);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -62,9 +75,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPostFieldSize(int $size = 0) :void
+	public function setPostFieldSize(int $size = 0)
 	{
 		curl_setopt(self::$session, CURLOPT_POSTFIELDSIZE, $size);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -72,9 +87,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setFollowLocationHeader(int $size = 0) :void
+	public function setFollowLocationHeader(int $size = 0)
 	{
 		curl_setopt(self::$session, CURLOPT_FOLLOWLOCATION, $size);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -82,14 +99,18 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setFTPUseEPSV(int $size = 0) :void
+	public function setFTPUseEPSV(int $size = 0)
 	{
 		curl_setopt(self::$session, CURLOPT_FTP_USE_EPSV, $size);
+		
+		return $this->returnContext();
 	}
 
-	public function setFileHandler($filePointer) :void
+	public function setFileHandler($filePointer)
 	{
 		curl_setopt(self::$session, CURLOPT_FILE, $filePointer);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -97,9 +118,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setDnsUseGlobalCache(bool $bool = true) :void
+	public function setDnsUseGlobalCache(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_DNS_USE_GLOBAL_CACHE, $bool);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -107,14 +130,18 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setUserAgent($userAgent = '') :void
+	public function setUserAgent($userAgent = '')
 	{
 		curl_setopt(self::$session, CURLOPT_USERAGENT, $userAgent);
+		
+		return $this->returnContext();
 	}
 
-	public function setAcceptEncoding($encoding = '') :void
+	public function setAcceptEncoding($encoding = '')
 	{
 		curl_setopt(self::$session, CURLOPT_ENCODING, $encoding);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -122,9 +149,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setCookieHeader($cookieData = '') :void
+	public function setCookieHeader($cookieData = '')
 	{
 		curl_setopt(self::$session, CURLOPT_COOKIE, $cookieData);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -132,9 +161,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function useCookieSession(bool $bool = true) :void
+	public function useCookieSession(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_COOKIESESSION, $bool);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -142,9 +173,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setMaximumConnectionCount(bool $maximumConnection = true) :void
+	public function setMaximumConnectionCount(bool $maximumConnection = true)
 	{
 		curl_setopt(self::$session, CURLOPT_MAXCONNECTS, $maximumConnection);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -152,9 +185,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setAutoReferer(bool $bool = true) :void
+	public function setAutoReferer(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_AUTOREFERER, $bool);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -162,17 +197,21 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setEmptyBody(bool $bool = true) :void
+	public function setEmptyBody(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_NOBODY, $bool);
+		
+		return $this->returnContext();
 	}
 
-	public function setConnectionTimeout(bool $timeout = true, bool $useMilliseconds = false) :void
+	public function setConnectionTimeout(bool $timeout = true, bool $useMilliseconds = false)
 	{
 		if ($useMilliseconds) {
-			$this->setConnectionTimeoutMilliseconds($timeout);
+			return $this->setConnectionTimeoutMilliseconds($timeout);
 		} else {
 			curl_setopt(self::$session, CURLOPT_CONNECTTIMEOUT, $timeout);
+		
+			return $this->returnContext();
 		}
 	}
 
@@ -181,24 +220,32 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setConnectionTimeoutMilliseconds(bool $timeout = true) :void
+	public function setConnectionTimeoutMilliseconds(bool $timeout = true)
 	{
 		curl_setopt(self::$session, CURLOPT_CONNECTTIMEOUT_MS, $timeout);
+		
+		return $this->returnContext();
 	}
 
-	public function setNobody(bool $bool = true) :void
+	public function setNobody(bool $bool = true)
 	{
 		$this->setEmptyBody($bool);
+		
+		return $this->returnContext();
 	}
 
-	public function setBinaryTransfer(bool $bool = true) :void
+	public function setBinaryTransfer(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_BINARYTRANSFER, $bool);
+		
+		return $this->returnContext();
 	}
 
-	public function setMaximumUploadSpeed(int $bytePerSeconds = 1000) :void
+	public function setMaximumUploadSpeed(int $bytePerSeconds = 1000)
 	{
 		$this->setMaximumSendSpeed($bytePerSeconds);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -206,14 +253,18 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setMaximumSendSpeed(int $bytePerSeconds = 1000) :void
+	public function setMaximumSendSpeed(int $bytePerSeconds = 1000)
 	{
 		curl_setopt(self::$session, CURLOPT_MAX_SEND_SPEED_LARGE, $bytePerSeconds);
+		
+		return $this->returnContext();
 	}
 
-	public function setMaximumDownloadSpeed(int $bytePerSeconds = 1000) :void
+	public function setMaximumDownloadSpeed(int $bytePerSeconds = 1000)
 	{
 		$this->setMaximumReceiveSpeed($bytePerSeconds);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -221,12 +272,14 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setMaximumReceiveSpeed(int $bytePerSeconds = 1000) :void
+	public function setMaximumReceiveSpeed(int $bytePerSeconds = 1000)
 	{
 		curl_setopt(self::$session, CURLOPT_MAX_RECV_SPEED_LARGE, $bytePerSeconds);
+		
+		return $this->returnContext();
 	}
 
-	public function setHeader(string $key, string $value, bool $overwrite = false) :void
+	public function setHeader(string $key, string $value, bool $overwrite = false)
 	{
 		$headerData = [$key, $value];
 
@@ -237,9 +290,11 @@ class ClientURLOption interface ClientURLOptionInterface
 		} else {
 			curl_setopt(self::$session, CURLOPT_HTTPHEADER, $headerData);
 		}
+		
+		return $this->returnContext();
 	}
 
-	public function setAcceptContentType(string $applicationType) :void
+	public function setAcceptContentType(string $applicationType)
 	{
 		$key = '';
 
@@ -255,17 +310,17 @@ class ClientURLOption interface ClientURLOptionInterface
 				break;
 		}
 
-		$this->setHeader(sprintf('Accept: %s', $key), sprintf('Content-Type: %s', $key));
+		return $this->setHeader(sprintf('Accept: %s', $key), sprintf('Content-Type: %s', $key));
 	}
 
-	public function setAcceptXmlContentType() :void
+	public function setAcceptXmlContentType()
 	{
-		$this->setAcceptContentType('xml');
+		return $this->setAcceptContentType('xml');
 	}
 
-	public function setAcceptJsonContentType() :void
+	public function setAcceptJsonContentType()
 	{
-		$this->setAcceptContentType('json');
+		return $this->setAcceptContentType('json');
 	}
 
 	/**
@@ -273,9 +328,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setHeaders($headers = []) :void
+	public function setHeaders($headers = [])
 	{
 		curl_setopt(self::$session, CURLOPT_HTTPHEADER, $headers);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -283,9 +340,11 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPort(bool $port = true) :void
+	public function setPort(bool $port = true)
 	{
 		curl_setopt(self::$session, CURLOPT_PORT, $port);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -293,14 +352,18 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPostMethod(bool $bool = true) :void
+	public function setPostMethod(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_POST, $bool);
+		
+		return $this->returnContext();
 	}
 
-	public function setReturnTransfer(bool $hasResponse = true) :void
+	public function setReturnTransfer(bool $hasResponse = true)
 	{
 		curl_setopt(self::$session, CURLOPT_RETURNTRANSFER, $hasResponse);
+		
+		return $this->returnContext();
 	}
 
 	/**
@@ -308,8 +371,10 @@ class ClientURLOption interface ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setReturnHeader(bool $hasResponse = true) :void
+	public function setReturnHeader(bool $hasResponse = true)
 	{
 		curl_setopt(self::$session, CURLOPT_HEADER, $hasResponse);
+		
+		return $this->returnContext();
 	}
 }

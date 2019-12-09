@@ -18,7 +18,7 @@ interface ClientURLInterface
 	
 	public function Information();
 	
-	public function setOption( $option, $value );
+	public function setOption(int $option, $value );
 	
 	public function Close();
 	

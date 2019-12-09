@@ -69,7 +69,7 @@ class ClientURL implements ClientURLInterface
 		}
 	}
 
-	public function setOption(int $option, $value) :void
+	public function setOption(int $option, $value)
 	{
 		curl_setopt(self::$session, $option, $value);
 	}

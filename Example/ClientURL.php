@@ -5,7 +5,9 @@ include './../vendor/autoload.php';
 use Xanax\Classes\ClientURL;
 
 $cURL = new ClientURL();
-$cURL->Option->setURL('localhost');
-$cURL->Option->setReturnTransfer(true);
+$cURL->Option->setURL('http://www.computerusermanual.com/')
+			 ->setReturnTransfer(true);
 
-echo $cURL->Execute();
+$html = $cURL->Execute();
+
+echo $html;
