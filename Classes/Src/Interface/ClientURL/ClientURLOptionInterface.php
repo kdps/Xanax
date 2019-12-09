@@ -34,7 +34,7 @@ interface ClientURLOptionInterface
 	
 	public function setAutoReferer(bool $bool = true);
 	
-	public function setEmptyBody(bool $bool = true);
+	public function setBodyEmpty(bool $bool = true);
 	
 	public function setConnectionTimeout(bool $timeout = true, bool $useMilliseconds = false);
 	

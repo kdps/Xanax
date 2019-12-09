@@ -22,6 +22,13 @@ class ClientURLOption implements ClientURLOptionInterface
 		return $this;
 	}
 
+	public function disableCache(bool $bool)
+	{
+		curl_setopt(self::$session, CURLOPT_FRESH_CONNECT, $bool);
+		
+		return $this->returnContext();
+	}
+
 	/**
 	 * Provide the URL to use in the request
 	 *
@@ -197,7 +204,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setEmptyBody(bool $bool = true)
+	public function setBodyEmpty(bool $bool = true)
 	{
 		curl_setopt(self::$session, CURLOPT_NOBODY, $bool);
 		
@@ -229,7 +236,7 @@ class ClientURLOption implements ClientURLOptionInterface
 
 	public function setNobody(bool $bool = true)
 	{
-		$this->setEmptyBody($bool);
+		$this->setBodyEmpty($bool);
 		
 		return $this->returnContext();
 	}
