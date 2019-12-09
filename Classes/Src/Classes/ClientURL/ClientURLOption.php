@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xanax\Classes;
 
 use Xanax\Implement\ClientURLOptionInterface;
+use Xanax\Classes\MIME;
 
 class ClientURLOption implements ClientURLOptionInterface
 {
@@ -301,31 +302,23 @@ class ClientURLOption implements ClientURLOptionInterface
 		return $this->returnContext();
 	}
 
-	public function setAcceptContentType(string $applicationType)
+	public function setContentType(string $applicationType)
 	{
-		$key = '';
+		$value = '';
 
-		switch ($applicationType) {
-			case 'xml':
-				$key = 'application/xml';
-				break;
-			case 'json':
-				$key = 'application/json';
-				break;
-			default:
-				$key = $applicationType;
-				break;
-		}
+		// https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types
+		$mime = new MIME($applicationType);
+		$mimeType = $mime->getType();
 
-		return $this->setHeader(sprintf('Accept: %s', $key), sprintf('Content-Type: %s', $key));
+		return $this->setHeader('Content-Type', $mimeType);
 	}
 
-	public function setAcceptXmlContentType()
+	public function setXmlContentType()
 	{
 		return $this->setAcceptContentType('xml');
 	}
 
-	public function setAcceptJsonContentType()
+	public function setJsonContentType()
 	{
 		return $this->setAcceptContentType('json');
 	}
