@@ -64,6 +64,15 @@ class FileHandler implements FileHandlerInterface
 		}
 	}
 
+	/**
+	 * Check if two files are identical
+	 *
+	 * @param string $filePath
+	 * @param string $secondPath
+	 * @param int    $chunkSize
+	 *
+	 * @return bool
+	 */
 	public function isEqual($firstPath, $secondPath, $chunkSize = 500){
 
 		// First check if file are not the same size as the fastest method
@@ -157,7 +166,8 @@ class FileHandler implements FileHandlerInterface
 	/**
 	 * Create a cache file
 	 *
-	 * @param string $fileHandler
+	 * @param string $filePath
+	 * @param string $destination
 	 *
 	 * @return bool
 	 */
@@ -745,7 +755,7 @@ class FileHandler implements FileHandlerInterface
 		return umask($mask);
 	}
 
-	public function getTypeByHeader(string $filePath) :string
+	public function getHeaderType(string $filePath) :string
 	{
 		$fsize = filesize($filePath) < 100 ? filesize($filePath) : 100;
 		if ($fsize <= 4) {
