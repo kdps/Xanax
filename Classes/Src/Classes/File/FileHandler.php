@@ -64,6 +64,36 @@ class FileHandler implements FileHandlerInterface
 		}
 	}
 
+	public function isEqual($firstPath, $secondPath, $chunkSize = 500){
+
+		// First check if file are not the same size as the fastest method
+		if(filesize($firstPath) !== filesize($secondPath)){
+			return false;
+		}
+
+		// Compare the first ${chunkSize} bytes
+		// This is fast and binary files will most likely be different 
+		$fp1 = fopen($firstPath, 'r');
+		$fp2 = fopen($secondPath, 'r');
+		$chunksAreEqual = fread($fp1, $chunkSize) == fread($fp2, $chunkSize);
+		fclose($fp1);
+		fclose($fp2);
+
+		if(!$chunksAreEqual){
+			return false;
+		}
+
+		// Compare hashes
+		// SHA1 calculates a bit faster than MD5
+		$firstChecksum = sha1_file($firstPath);
+		$secondChecksum = sha1_file($secondPath);
+		if($firstChecksum != $secondChecksum){
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Delete the state of the file.
 	 *
