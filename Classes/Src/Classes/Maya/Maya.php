@@ -128,6 +128,7 @@ class Maya
 			}
 
 			$self->text_i = $start;
+			
 			return strlen($rule) + 1;
 		} else {
 			$pattern_pos = strpos($text, $rule, $start);
@@ -136,6 +137,7 @@ class Maya
 				return $self->line_pass($pattern_pos + 1, $rule, $text);
 			} else {
 				$self->text_i = $start;
+				
 				return $passage == 0 ? strlen($rule) + 1 : $passage + 1;
 			}
 		}
@@ -144,6 +146,7 @@ class Maya
 	public function line_add($start, $rule)
 	{
 		$this->addon_text = $rule;
+		
 		return $start + 1;
 	}
 
