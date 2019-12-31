@@ -49,8 +49,12 @@ class StringHandler
 			case (preg_match('/^Bracket\((.*\))$/', $type, $matches) ? true : false):
 				if (isset($matches[1])) {
 					$regex = $matches[1];
-					$regex = '/^<' . $regex . '>([\s\S]*?)<\/' . $regex . '>$/i';
-					if (preg_match($regex, $string, $matches)) {
+					if (preg_match('/^[A-Za-z0-9]+$/i', $regex, $matches)) {
+						$string = $matches[1];
+						$regex = '/^<' . $string . '>([\s\S]*?)<\/' . $string . '>$/i';
+					}
+					
+					if ($regex && preg_match($regex, $string, $matches)) {
 						if (isset($matches[1])) {
 							$string = $matches[1];
 						} else {
