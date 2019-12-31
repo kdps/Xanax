@@ -425,7 +425,7 @@ class FileHandler implements FileHandlerInterface
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		$return = $this->Size($filePath) !== 0;
+		$return = $this->getSize($filePath) !== 0;
 
 		return $return;
 	}
