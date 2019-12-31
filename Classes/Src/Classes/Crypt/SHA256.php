@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Xanax\Classes;
+
 class SHA256
 {
 	public function Encrypt($string, $useBase64 = true)

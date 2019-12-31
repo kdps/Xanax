@@ -51,15 +51,21 @@ class FileHandler implements FileHandlerInterface
 	{
 		$this->strictMode = $useStrictMode;
 
-		if ($fileSystemHandler) {
+		if ($fileSystemHandler) 
+		{
 			$this->fileSystemHandler = $fileSystemHandler;
-		} else {
+		} 
+		else 
+		{
 			$this->fileSystemHandler = new FileSystemHandler();
 		}
 
-		if ($directoryHandler) {
+		if ($directoryHandler) 
+		{
 			$this->directoryHandler = $directoryHandler;
-		} else {
+		}
+		else 
+		{
 			$this->directoryHandler = new DirectoryHandler($this);
 		}
 	}
@@ -73,10 +79,12 @@ class FileHandler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isEqual($firstPath, $secondPath, $chunkSize = 500){
+	public function isEqual($firstPath, $secondPath, $chunkSize = 500)
+	{
 
 		// First check if file are not the same size as the fastest method
-		if(filesize($firstPath) !== filesize($secondPath)){
+		if (filesize($firstPath) !== filesize($secondPath))
+		{
 			return false;
 		}
 
@@ -88,7 +96,8 @@ class FileHandler implements FileHandlerInterface
 		fclose($fp1);
 		fclose($fp2);
 
-		if(!$chunksAreEqual){
+		if (!$chunksAreEqual)
+		{
 			return false;
 		}
 
@@ -1406,11 +1415,13 @@ class FileHandler implements FileHandlerInterface
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
-		if (!$this->isExists($filePath)) {
+		if (!$this->isExists($filePath)) 
+		{
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if (!$this->isFile($filePath)) {
+		if (!$this->isFile($filePath)) 
+		{
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
@@ -1430,11 +1441,13 @@ class FileHandler implements FileHandlerInterface
 		$filePath = $this->convertToNomalizePath($filePath);
 		$destination = $this->convertToNomalizePath($destination);
 
-		if (!$this->isExists($filePath)) {
+		if (!$this->isExists($filePath)) 
+		{
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if (!$this->isFile($source)) {
+		if (!$this->isFile($source)) 
+		{
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
