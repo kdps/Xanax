@@ -10,6 +10,7 @@ class Header
 	{
 		header($data);
 	}
+	
 	public function responseWithKey($key, $value)
 	{
 		$responseData = "$key : $value";
@@ -78,6 +79,11 @@ class Header
 		$this->responseStatus($code, $responseMessage);
 	}
 	
+	public static function fileAttachment($fileName)
+	{
+		header("Content-Disposition: attachment; filename=$fileName");
+	}
+
 	public function getStatusMessageByCode($code)
 	{
 		$stateMessage = '';
@@ -146,4 +152,53 @@ class Header
 		$this->XContentTypeOption('nosniff');
 	}
 	
+	public static function fileZip()
+	{
+		header('Content-Type: application/zip; charset=UTF-8');
+	}
+
+	public static function fileXml()
+	{
+		header('Content-Type: text/xml; charset=UTF-8');
+	}
+
+	public static function fileJson()
+	{
+		header('Content-Type: application/json');
+	}
+
+	public static function filePdf()
+	{
+		header('Content-Type: application/pdf');
+	}
+
+	public static function fileGif()
+	{
+		header('Content-Type: image/gif');
+	}
+
+	public static function fileJpeg()
+	{
+		header('Content-type: image/jpeg');
+	}
+
+	public static function fileJpg()
+	{
+		header('Content-type: image/jpg');
+	}
+
+	public static function filePng()
+	{
+		header('Content-type: image/png');
+	}
+
+	public static function fileHtml()
+	{
+		header('Content-Type: text/html; charset=UTF-8');
+	}
+
+	public static function fileJavascript()
+	{
+		header('Content-Type: text/javascript; charset=UTF-8');
+	}
 }
