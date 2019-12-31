@@ -14,7 +14,7 @@ interface FileObjectInterface
 
 	public function Seek(int $offset) :bool;
 
-	public function isCreateIfModeEmpty($readMode = null);
+	public function hasMode($readMode = null);
 
 	public function isReadable($readMode = null);
 

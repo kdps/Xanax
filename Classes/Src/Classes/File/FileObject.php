@@ -17,12 +17,13 @@ class FileObject implements FileObjectInterface
 	private $readedContent;
 
 	/*
-	 * r : Read only
+	 * r  : Read only
 	 * r+ : Read and write
-	 * w : Write only
+	 * w  : Write only
 	 * w+ : Write and read
-	 * a : Read only
+	 * a  : Read only
 	 * a+ : Read and read
+	 * c  : Read and write
 	 *
 	 * Append syntax : b, t
 	 */
@@ -161,7 +162,7 @@ class FileObject implements FileObjectInterface
 		return false;
 	}
 
-	public function isCreateIfModeEmpty($readMode = null) :bool
+	public function hasMode($readMode = null) :bool
 	{
 		if (in_array(($readMode || $this->mode), $this->createIfModeEmpty)) {
 			return true;
@@ -372,7 +373,7 @@ class FileObject implements FileObjectInterface
 
 	public function startHandle() :void
 	{
-		$fileIsNotExists = (!$this->isCreateIfModeEmpty() && !$this->fileHandlerClass->isExists($this->getFilePath()));
+		$fileIsNotExists = (!$this->hasMode() && !$this->fileHandlerClass->isExists($this->getFilePath()));
 
 		if ($fileIsNotExists) {
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
