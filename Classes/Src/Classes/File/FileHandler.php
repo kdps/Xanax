@@ -757,15 +757,20 @@ class FileHandler implements FileHandlerInterface
 
 	public function getHeaderType(string $filePath) :string
 	{
-		$fsize = filesize($filePath) < 100 ? filesize($filePath) : 100;
-		if ($fsize <= 4) {
+		$size = filesize($filePath);
+		$size = $size > 100 ? 100 : $size;
+		
+		if ($size <= 4) {
 			return 'EMPTY';
 		}
 
-		$header = $this->Read($filePath, $fsize);
-
-		$bigEndianUnpack = unpack('N', $header);
-
+		$header = $this->Read($filePath, $size);
+		if ($header) {
+			$bigEndianUnpack = unpack('N', $header);
+		} else {
+			return 'EMPTY';
+		}
+		
 		/* ISO 8859-1 */
 		$fileDescription = array_shift($bigEndianUnpack);
 
@@ -1000,7 +1005,13 @@ class FileHandler implements FileHandlerInterface
 			return 'IPK';
 		} elseif ($fileDescription === 0x556E6974) {
 			return 'UnityFS';
+		} elseif ($fileDescription === 0x3C3F7068) {
+			return 'PHP';
+		} elseif ($fileDescription === 0x3C3F786D) {
+			return 'XML';
 		} else {
+			echo $fileDescription;
+			echo $filePath;
 			return 'UNKNOWN';
 		}
 	}
@@ -1017,7 +1028,7 @@ class FileHandler implements FileHandlerInterface
 	public function Read(string $filePath, int $length = -1, string $mode = 'r')
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
-
+		
 		$fileObject = new FileObject($filePath, false, $mode);
 		if (!$fileObject->isEnoughFreeSpace()) {
 			$this::$lastError = 'Disk space is not enough';

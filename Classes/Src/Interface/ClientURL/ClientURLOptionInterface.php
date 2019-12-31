@@ -38,6 +38,8 @@ interface ClientURLOptionInterface
 	
 	public function setConnectionTimeout(bool $timeout = true, bool $useMilliseconds = false);
 	
+	public function setContentType(string $applicationType);
+	
 	public function setConnectionTimeoutMilliseconds(bool $timeout = true);
 	
 	public function setNobody(bool $bool = true);
@@ -54,11 +56,9 @@ interface ClientURLOptionInterface
 	
 	public function setHeader(string $key, string $value, bool $overwrite = false);
 	
-	public function setAcceptContentType(string $applicationType);
+	public function setXmlContentType();
 	
-	public function setAcceptXmlContentType();
-	
-	public function setAcceptJsonContentType();
+	public function setJsonContentType();
 	
 	public function setHeaders($headers = []);
 	

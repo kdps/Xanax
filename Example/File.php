@@ -35,13 +35,13 @@ class FileExample
 		echo '<br>';
 	}
 
-	public function getTypeByHeader()
+	public function getHeaderType()
 	{
 		$fileHandler = new FileHandler();
 		$directoryHandler = new DirectoryHandler();
 		$fileList = $directoryHandler->getFileList();
 		foreach ($fileList as $file) {
-			echo $fileHandler->getTypeByHeader($file) . '<br>';
+			echo $fileHandler->getHeaderType($file) . '<br>';
 		}
 	}
 }
@@ -54,5 +54,5 @@ $eventDispatcher->addListener('foo.test', [$fileExample, 'appendContent']);
 $eventDispatcher->addListener('foo.test', [$fileExample, 'readAllContent']);
 $eventDispatcher->addListener('foo.test', [$fileExample, 'isEqualByLine']);
 $eventDispatcher->addListener('foo.test', [$fileExample, 'isContainFolder']);
-$eventDispatcher->addListener('foo.test2', [$fileExample, 'getTypeByHeader']);
+$eventDispatcher->addListener('foo.test2', [$fileExample, 'getHeaderType']);
 $eventDispatcher->Dispatch('foo.test2');

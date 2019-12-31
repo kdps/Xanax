@@ -8,8 +8,6 @@ interface FileObjectInterface
 
 	public function setAcceptExtension(array $extension);
 
-	private function setRecoveryFile();
-
 	public function hasWriteContentLength();
 
 	public function closeFileHandle();
@@ -30,13 +28,13 @@ interface FileObjectInterface
 
 	public function removeTemporary();
 
-	public function writeContent(string $content, $isLarge = false) :bool;
+	public function writeContent(string $content, $isLarge = false, int $bufferSize) :bool;
 
 	public function getCurrentSize() :int;
 
 	public function getReadedContent() :string;
 
-	public function readedContentIsValid() :bool;
+	public function isReadedContentValid() :bool;
 
 	public function hasReadedContent();
 

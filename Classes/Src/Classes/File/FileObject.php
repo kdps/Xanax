@@ -280,12 +280,12 @@ class FileObject implements FileObjectInterface
 
 	public function getReadedContent() :string
 	{
-		return (!$this->readedContentIsValid()) ? '' : $this->readedContent;
+		return (!$this->isReadedContentValid()) ? '' : $this->readedContent;
 	}
 
-	public function readedContentIsValid() :bool
+	public function isReadedContentValid() :bool
 	{
-		return $this->readedContent === false ? true : false;
+		return !($this->readedContent === false);
 	}
 
 	public function hasReadedContent()
