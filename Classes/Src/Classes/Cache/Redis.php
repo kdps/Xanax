@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Xanax\Classes;
+
 class Redis
 {
 	public static function init($host, $port = '6379')

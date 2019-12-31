@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Xanax\Classes;
+
 class HTMLHandler
 {
 	public static function generateParameter($attributes = [])

@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Xanax\Classes;
+
 class Apc
 {
 	public function Truncate()
