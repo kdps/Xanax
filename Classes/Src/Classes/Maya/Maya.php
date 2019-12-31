@@ -2,15 +2,15 @@
 
 class Maya
 {
-	private static $self = null;
-	private $addon_text = null;
+	private static $self   = null;
+	private $addon_text    = null;
 	private $global_static = 0;
-	private $text_i = 0;
-	private $text_z = 0;
-	private $debug = true;
+	private $text_i        = 0;
+	private $text_z        = 0;
+	private $debug         = true;
 
 	public $self_position = 0;
-	public $text_len = 0;
+	public $text_len      = 0;
 
 	public function __construct()
 	{
@@ -59,7 +59,7 @@ class Maya
 
 	public function line_execute_match_right($start, $rule, $text, $mode)
 	{
-		$self = self::getself();
+		$self                = self::getself();
 		$self->global_static = false;
 
 		$check_rule_split = strpos($rule, '||');
@@ -99,6 +99,7 @@ class Maya
 
 				if ($check_rule !== false) {
 					$self->text_i = $check_rule;
+
 					return $start + 1;
 				}
 			} elseif ($mode == 'equal') {
@@ -128,7 +129,7 @@ class Maya
 			}
 
 			$self->text_i = $start;
-			
+
 			return strlen($rule) + 1;
 		} else {
 			$pattern_pos = strpos($text, $rule, $start);
@@ -137,7 +138,7 @@ class Maya
 				return $self->line_pass($pattern_pos + 1, $rule, $text);
 			} else {
 				$self->text_i = $start;
-				
+
 				return $passage == 0 ? strlen($rule) + 1 : $passage + 1;
 			}
 		}
@@ -146,15 +147,15 @@ class Maya
 	public function line_add($start, $rule)
 	{
 		$this->addon_text = $rule;
-		
+
 		return $start + 1;
 	}
 
 	public function line_execute($start, $rule, $pattern, $text)
 	{
-		$self = self::getself();
+		$self        = self::getself();
 		$pattern_pos = strpos($rule, $pattern);
-		$escape_pos = substr($rule, $pattern_pos + 1, 1);
+		$escape_pos  = substr($rule, $pattern_pos + 1, 1);
 		if ($pattern_pos !== false) {
 			if ($escape_pos === '^') {
 				$self->line_execute($pattern_pos, substr($rule, $pattern_pos), $pattern, $text);
@@ -188,7 +189,7 @@ class Maya
 	{
 		$self = self::getself();
 
-		$self->debug = $debug;
+		$self->debug  = $debug;
 		$self->text_i = 0;
 
 		$match_rule_init = ['!', '#', '@', '$', '+'];

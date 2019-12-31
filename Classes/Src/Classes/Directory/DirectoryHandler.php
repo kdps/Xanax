@@ -85,7 +85,7 @@ class DirectoryHandler implements DirectoryHandlerInterface
 		}
 
 		$iterator = new \RecursiveDirectoryIterator($directoryPath, \FilesystemIterator::SKIP_DOTS);
-		$return = iterator_count($iterator);
+		$return   = iterator_count($iterator);
 
 		return $return;
 	}
@@ -136,7 +136,7 @@ class DirectoryHandler implements DirectoryHandlerInterface
 		}
 
 		$directoryIterator = new \RecursiveDirectoryIterator($directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS);
-		$iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
+		$iterator          = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
 
 		foreach ($iterator as $item) {
 			if ($item->isDir()) {
@@ -192,7 +192,7 @@ class DirectoryHandler implements DirectoryHandlerInterface
 
 		foreach ($iterator as $folderPath => $fileInformation) {
 			if ($fileInformation->isDir()) {
-				$folderPath = $fileInformation->getPathName();
+				$folderPath       = $fileInformation->getPathName();
 				$newDirectoryName = preg_replace($replacement, $string, $folderPath);
 
 				if ($filePath === $newFileName) {

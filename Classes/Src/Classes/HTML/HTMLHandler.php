@@ -7,7 +7,7 @@ class HTMLHandler
 	public static function generateParameter($attributes = [])
 	{
 		$result = '';
-		
+
 		foreach ($attributes as $key => $val) {
 			$pair = sprintf("'%s'", $val);
 			if ($result) {

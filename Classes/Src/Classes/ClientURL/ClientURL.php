@@ -64,7 +64,7 @@ class ClientURL implements ClientURLInterface
 		self::$session = $this->getSession();
 
 		if ($useLocalMethod) {
-			$this->Option = new ClientURLOption(self::$session);
+			$this->Option      = new ClientURLOption(self::$session);
 			$this->Information = new ClientURLLastTransferInformation(self::$session);
 		}
 	}

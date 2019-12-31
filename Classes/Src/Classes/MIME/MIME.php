@@ -6,13 +6,11 @@ namespace Xanax\Classes;
 
 class MIME
 {
-	
 	private static $extension = '';
-	
+
 	private $mimeTypes = [
-	
 		/* Text */
-	
+
 		'html' => [
 			'mimeType' => 'text/html'
 		],
@@ -28,9 +26,9 @@ class MIME
 		'ics' => [
 			'mimeType' => 'text/calendar'
 		],
-		
+
 		/* Image */
-	
+
 		'tif' => [
 			'mimeType' => 'image/tiff'
 		],
@@ -64,9 +62,9 @@ class MIME
 		'xcf' => [
 			'mimeType' => 'image/x-xcf'
 		],
-		
+
 		/* Video */
-		
+
 		'avi' => [
 			'mimeType' => 'video/x-msvideo'
 		],
@@ -79,10 +77,9 @@ class MIME
 		'ogg' => [
 			'mimeType' => 'video/ogg'
 		],
-		
-	
+
 		/* Audio */
-		
+
 		'oga' => [
 			'mimeType' => 'audio/ogg'
 		],
@@ -101,9 +98,9 @@ class MIME
 		'midi' => [
 			'mimeType' => 'audio/midi'
 		],
-		
+
 		/* Compression */
-		
+
 		'tar' => [
 			'mimeType' => 'application/x-tar'
 		],
@@ -125,9 +122,9 @@ class MIME
 		'7z' => [
 			'mimeType' => 'application/x-7z-compressed'
 		],
-		
+
 		/* Application */
-		
+
 		'abw' => [
 			'mimeType' => 'application/x-abiword'
 		],
@@ -177,28 +174,27 @@ class MIME
 			'mimeType' => 'application/xml'
 		]
 	];
-	
+
 	public function __construct($extension = '')
 	{
-		if ( $extension ) {
+		if ($extension) {
 			self::$extension = $extension;
 		}
 	}
-	
+
 	public function getFileType()
 	{
 		return mime_content_type();
 	}
-	
+
 	public function getType($extension = '')
 	{
 		$mimeType = '';
-		
-		if ( isset( $this->mimeTypes[ $extension ] ) ) {
-			$mimeType = $this->mimeTypes[ $extension ][ 'mimeType' ];
+
+		if (isset($this->mimeTypes[$extension])) {
+			$mimeType = $this->mimeTypes[$extension]['mimeType'];
 		}
-		
+
 		return $mimeType;
 	}
-	
 }

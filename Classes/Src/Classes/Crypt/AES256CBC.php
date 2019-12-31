@@ -15,7 +15,7 @@ class AES256CBC
 		}
 
 		$ivsize = openssl_cipher_iv_length(self::METHOD);
-		$iv = openssl_random_pseudo_bytes($ivsize);
+		$iv     = openssl_random_pseudo_bytes($ivsize);
 
 		$ciphertext = openssl_encrypt(
 			$string,
@@ -36,8 +36,8 @@ class AES256CBC
 			throw new Exception('Needs a 256-bit key!');
 		}
 
-		$ivsize = openssl_cipher_iv_length(self::METHOD);
-		$iv = mb_substr($string, 0, $ivsize, '8bit');
+		$ivsize     = openssl_cipher_iv_length(self::METHOD);
+		$iv         = mb_substr($string, 0, $ivsize, '8bit');
 		$ciphertext = mb_substr($string, $ivsize, null, '8bit');
 
 		return openssl_decrypt(

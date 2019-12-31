@@ -11,7 +11,7 @@ class PagenationHandler
 	public $page_count;
 	public $point;           // goted page count
 	public $page_margin = 0; // page margin for center align
-	public $first_page = 0;  // first page number
+	public $first_page  = 0;  // first page number
 	public $last_page;       // number of total items
 
 	/**
@@ -26,7 +26,7 @@ class PagenationHandler
 	public function __construct($current_page = 1, $item_count = 20, $document_count = 10, $list_count = 10)
 	{
 		$page_margin = 0;
-		$first_page = 0;
+		$first_page  = 0;
 
 		$half_page_count = ceil($list_count / 2);
 
@@ -36,24 +36,24 @@ class PagenationHandler
 		if ($last_page > $list_count) {
 			if ($current_page > $last_page - ($list_count - 1)) {
 				$page_margin = $last_page - $list_count;
-				$first_page = $page_margin < $list_count ? 0 : -1;
+				$first_page  = $page_margin < $list_count ? 0 : -1;
 			} elseif ($current_page > $half_page_count) {
 				$page_margin = $current_page - ($half_page_count);
-				$first_page = $page_margin > $list_count ? 0 : -1;
+				$first_page  = $page_margin > $list_count ? 0 : -1;
 			}
 
 			if ($current_page > $last_page - ($list_count - 1) && $current_page < $last_page - ($half_page_count - 1)) {
 				$page_margin = $current_page - $half_page_count;
-				$first_page = $page_margin > $list_count ? 0 : -1;
+				$first_page  = $page_margin > $list_count ? 0 : -1;
 			}
 		}
 
-		$this->page_count = (int)$last_page;
-		$this->page_margin = (int)$page_margin;
-		$this->first_page = (int)$first_page;
-		$this->last_page = (int)$last_page;
-		$this->current_page = (int)$current_page;
-		$this->list_count = (int)$list_count;
+		$this->page_count   = (int) $last_page;
+		$this->page_margin  = (int) $page_margin;
+		$this->first_page   = (int) $first_page;
+		$this->last_page    = (int) $last_page;
+		$this->current_page = (int) $current_page;
+		$this->list_count   = (int) $list_count;
 	}
 
 	/**

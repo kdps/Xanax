@@ -4,14 +4,14 @@ namespace Xanax\Classes;
 
 class Tokenizer
 {
-	const OPERATOR = 1;
+	const OPERATOR     = 1;
 	const PARENTHESIES = 2;
-	const WORD = 3;
-	const COMMA = 4;
-	const DATATYPE = 5;
+	const WORD         = 3;
+	const COMMA        = 4;
+	const DATATYPE     = 5;
 
 	private $tokens = [];
-	private $token = '';
+	private $token  = '';
 
 	private $variableSpecialCharacter = ['-', '_'];
 
@@ -33,22 +33,22 @@ class Tokenizer
 		')' => self::PARENTHESIES
 	];
 	private $firstTokens = [
-		'string' => self::DATATYPE,
-		'integer' => self::DATATYPE,
-		'boolean' => self::DATATYPE,
-		'float' => self::DATATYPE,
-		'array' => self::DATATYPE,
-		'double' => self::DATATYPE,
-		'long' => self::DATATYPE,
+		'string'    => self::DATATYPE,
+		'integer'   => self::DATATYPE,
+		'boolean'   => self::DATATYPE,
+		'float'     => self::DATATYPE,
+		'array'     => self::DATATYPE,
+		'double'    => self::DATATYPE,
+		'long'      => self::DATATYPE,
 		'character' => self::DATATYPE,
-		'short' => self::DATATYPE
+		'short'     => self::DATATYPE
 	];
 
-	const STATE_DEFAULT = 0;
-	const STATE_STRING = 1;
-	const STATE_NUMBER = 2;
-	const STATE_COMMENT = 3;
-	const STATE_WORD = 4;
+	const STATE_DEFAULT  = 0;
+	const STATE_STRING   = 1;
+	const STATE_NUMBER   = 2;
+	const STATE_COMMENT  = 3;
+	const STATE_WORD     = 4;
 	const STATE_OPERATOR = 5;
 
 	public function generateToken($string)
@@ -84,7 +84,7 @@ class Tokenizer
 						$this->token .= $character;
 					} else {
 						$this->tokens[] = new TokenObject($this->token, $this->operatorTokens[$this->token]);
-						$this->token = '';
+						$this->token    = '';
 						$i--;
 
 						$state = self::STATE_DEFAULT;
@@ -94,7 +94,7 @@ class Tokenizer
 				case self::STATE_STRING:
 					if ($character == '"') {
 						$this->tokens[] = new TokenObject($this->token, self::STATE_STRING);
-						$this->token = '';
+						$this->token    = '';
 
 						$state = self::STATE_DEFAULT;
 					} else {

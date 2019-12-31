@@ -14,9 +14,9 @@ class BubbleSort
 
 			for ($index = 0; $index < $overload; $index++) {
 				if ($array[$index] > $array[$index + 1]) {
-					$isMerged = false;
-					$tmp = $array[$index];
-					$array[$index] = $array[$index + 1];
+					$isMerged          = false;
+					$tmp               = $array[$index];
+					$array[$index]     = $array[$index + 1];
 					$array[$index + 1] = $tmp;
 				}
 			}

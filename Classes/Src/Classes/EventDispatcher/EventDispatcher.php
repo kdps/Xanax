@@ -18,7 +18,7 @@ class EventDispatcher implements EventDispatcherInterface
 
 		if (!$eventName) {
 			$eventName = $event;
-			$event = new EventInstance();
+			$event     = new EventInstance();
 		}
 
 		$listeners = $this->getListeners($eventName);
@@ -68,6 +68,7 @@ class EventDispatcher implements EventDispatcherInterface
 	{
 		if ($eventName !== null) {
 			$listener = $this->getListeners($eventName);
+
 			return !empty($listener);
 		}
 

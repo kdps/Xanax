@@ -6,10 +6,10 @@ namespace Xanax\Classes;
 
 class SocketServerObject
 {
-	private $arrayAcceptedSocketInfo = [];
-	private $arrayAcceptedSocket = [];
+	private $arrayAcceptedSocketInfo  = [];
+	private $arrayAcceptedSocket      = [];
 	private $arrayAcceptedSocketCount = 0;
-	private $arrayClientSocket = [];
+	private $arrayClientSocket        = [];
 	private $clientBindHandler;
 	private $SocketHandlerClass;
 	private $SocketHandler;
@@ -31,7 +31,7 @@ class SocketServerObject
 
 		if (!$this->getAcceptedClientInArray()) {
 			$arrayAcceptedSocketInfo = [];
-			$arrayAcceptedSocket = [];
+			$arrayAcceptedSocket     = [];
 		}
 	}
 

@@ -27,7 +27,7 @@ class SocketHandler implements SocketHandlerInterface
 		if ($hasPeerInfo) {
 			return [
 				'IPAddress' => $address,
-				'Port' => $port
+				'Port'      => $port
 			];
 		}
 

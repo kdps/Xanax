@@ -10,7 +10,7 @@ class TokenObject
 
 	public function __construct($type, $string)
 	{
-		$this->type = $type;
+		$this->type   = $type;
 		$this->string = $string;
 	}
 }

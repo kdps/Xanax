@@ -13,10 +13,10 @@ class InsertableSort
 
 			for ($index = $iterator; $index > -1; $index--) {
 				if ($array[$index] < $array[$index + 1]) {
-					$tmp = $array[$index + 1];
+					$tmp               = $array[$index + 1];
 					$array[$index + 1] = $array[$index];
-					$array[$index] = $tmp;
-					$isSorted = false;
+					$array[$index]     = $tmp;
+					$isSorted          = false;
 				}
 			}
 		}
