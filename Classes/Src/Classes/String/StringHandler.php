@@ -32,12 +32,17 @@ class StringHandler
 		return str_repeat($string, $multiplier);
 	}
 
+	public static function isJson($string) 
+	{
+		return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
+	}
+	
 	public function filterVariable(mixed $string, $type)
 	{
 		switch ($type) {
 			case (preg_match('/^MaxLength\((.*\))$/', $type, $matches) ? true : false):
 				if (strlen($string) > $matches[1]) {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -49,13 +54,13 @@ class StringHandler
 						if (isset($matches[1])) {
 							$string = $matches[1];
 						} else {
-							$string = null;
+							$string = false;
 						}
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -64,10 +69,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -76,10 +81,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -88,10 +93,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -100,10 +105,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -113,13 +118,13 @@ class StringHandler
 						if (isset($matches[1])) {
 							$string = $matches[1];
 						} else {
-							$string = null;
+							$string = false;
 						}
 					} elseif (count($matches) > 1) {
 						$string = $matches;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -128,10 +133,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -140,15 +145,15 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
 			case 'deny':
-				$string = null;
+				$string = false;
 
 				break;
 			case 'doublequotation':
@@ -156,10 +161,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -168,10 +173,10 @@ class StringHandler
 					if (isset($matches[1])) {
 						$string = $matches[1];
 					} else {
-						$string = null;
+						$string = false;
 					}
 				} else {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -179,8 +184,8 @@ class StringHandler
 				$string = strip_tags($string);
 				break;
 			case 'json':
-				if (!$this::isJSON($string)) {
-					$string = null;
+				if ( !$this->isJson( $string ) {
+					$string = false;
 				}
 
 				break;
@@ -191,10 +196,10 @@ class StringHandler
 						if (isset($matches[1])) {
 							$string = $matches[1];
 						} else {
-							$string = 0;
+							$string = false;
 						}
 					} else {
-						$string = 0;
+						$string = false;
 					}
 				}
 
@@ -205,17 +210,17 @@ class StringHandler
 						if (isset($matches[1])) {
 							$string = $matches[1];
 						} else {
-							$string = 0;
+							$string = false;
 						}
 					} else {
-						$string = 0;
+						$string = false;
 					}
 				}
 
 				break;
 			case 'string':
 				if (!is_string($string)) {
-					$string = null;
+					$string = false;
 				}
 
 				break;
@@ -227,7 +232,7 @@ class StringHandler
 				$string = intval($string);
 				$string = (float)sprintf('% u', $string);
 				if ($string < 0) {
-					$string = 0;
+					$string = false;
 				}
 
 				break;
