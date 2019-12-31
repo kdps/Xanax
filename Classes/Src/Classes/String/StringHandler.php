@@ -9,6 +9,7 @@ class StringHandler
 	public function getMaxAllocationSize(string $string) :int
 	{
 		$memory_limit = ini_get('memory_limit');
+		
 		if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
 			if ($matches[2] == 'M') {
 				$memory_limit = $matches[1] * 1024 * 1024;
