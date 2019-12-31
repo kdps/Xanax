@@ -40,32 +40,26 @@ class FileHandler implements FileHandlerInterface
 	];
 
 	private static $lastError;
-	
+
 	private $strictMode = true;
-	
+
 	private $fileSystemHandler;
-	
+
 	private $directoryHandler;
 
 	public function __construct($useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, DirectoryHandlerInterface $directoryHandler = null)
 	{
 		$this->strictMode = $useStrictMode;
 
-		if ($fileSystemHandler) 
-		{
+		if ($fileSystemHandler) {
 			$this->fileSystemHandler = $fileSystemHandler;
-		} 
-		else 
-		{
+		} else {
 			$this->fileSystemHandler = new FileSystemHandler();
 		}
 
-		if ($directoryHandler) 
-		{
+		if ($directoryHandler) {
 			$this->directoryHandler = $directoryHandler;
-		}
-		else 
-		{
+		} else {
 			$this->directoryHandler = new DirectoryHandler($this);
 		}
 	}
@@ -81,31 +75,28 @@ class FileHandler implements FileHandlerInterface
 	 */
 	public function isEqual($firstPath, $secondPath, $chunkSize = 500)
 	{
-
 		// First check if file are not the same size as the fastest method
-		if (filesize($firstPath) !== filesize($secondPath))
-		{
+		if (filesize($firstPath) !== filesize($secondPath)) {
 			return false;
 		}
 
 		// Compare the first ${chunkSize} bytes
-		// This is fast and binary files will most likely be different 
-		$fp1 = fopen($firstPath, 'r');
-		$fp2 = fopen($secondPath, 'r');
+		// This is fast and binary files will most likely be different
+		$fp1            = fopen($firstPath, 'r');
+		$fp2            = fopen($secondPath, 'r');
 		$chunksAreEqual = fread($fp1, $chunkSize) == fread($fp2, $chunkSize);
 		fclose($fp1);
 		fclose($fp2);
 
-		if (!$chunksAreEqual)
-		{
+		if (!$chunksAreEqual) {
 			return false;
 		}
 
 		// Compare hashes
 		// SHA1 calculates a bit faster than MD5
-		$firstChecksum = sha1_file($firstPath);
+		$firstChecksum  = sha1_file($firstPath);
 		$secondChecksum = sha1_file($secondPath);
-		if($firstChecksum != $secondChecksum){
+		if ($firstChecksum != $secondChecksum) {
 			return false;
 		}
 
@@ -171,7 +162,7 @@ class FileHandler implements FileHandlerInterface
 
 		return ftell($fileHandler);
 	}
-	
+
 	/**
 	 * Create a cache file
 	 *
@@ -182,7 +173,7 @@ class FileHandler implements FileHandlerInterface
 	 */
 	public function createCache(string $filePath, string $destination)
 	{
-		$filePath = $this->convertToNomalizePath($filePath);
+		$filePath    = $this->convertToNomalizePath($filePath);
 		$destination = $this->convertToNomalizePath($destination);
 
 		if (!$this->isExists($filePath)) {
@@ -696,12 +687,12 @@ class FileHandler implements FileHandlerInterface
 			}
 
 			if ($bytes > 0) {
-				$sizes = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-				$measure = strlen($bytes >> 10);
-				$factor = $bytes < (1024 ** 6) ? ($measure > 1 ? floor((($measure - 1) / 3) + 1) : 1) : floor((strlen($bytes) - 1) / 3);
-				$capacity = $bytes / pow(1024, $factor);
+				$sizes            = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+				$measure          = strlen($bytes >> 10);
+				$factor           = $bytes < (1024 ** 6) ? ($measure > 1 ? floor((($measure - 1) / 3) + 1) : 1) : floor((strlen($bytes) - 1) / 3);
+				$capacity         = $bytes / pow(1024, $factor);
 				$multiBytesPrefix = ($capacity === intval($capacity) ?: 'ytes');
-				$bytes = sprintf('%s%s%s', $capacity, $sizes[$factor], $multiBytesPrefix);
+				$bytes            = sprintf('%s%s%s', $capacity, $sizes[$factor], $multiBytesPrefix);
 			}
 
 			return $bytes;
@@ -768,7 +759,7 @@ class FileHandler implements FileHandlerInterface
 	{
 		$size = filesize($filePath);
 		$size = $size > 100 ? 100 : $size;
-		
+
 		if ($size <= 4) {
 			return 'EMPTY';
 		}
@@ -779,7 +770,7 @@ class FileHandler implements FileHandlerInterface
 		} else {
 			return 'EMPTY';
 		}
-		
+
 		/* ISO 8859-1 */
 		$fileDescription = array_shift($bigEndianUnpack);
 
@@ -877,7 +868,7 @@ class FileHandler implements FileHandlerInterface
 			/* MZ */
 			'0x4D5A9000'
 		];
-		
+
 		$jpgFileHeader = [
 			'0xFFD8FFEE',
 			/* JPG, JFIF */
@@ -889,27 +880,27 @@ class FileHandler implements FileHandlerInterface
 			'0xFFD8FFE2',
 			'0xFFD8FFEC'
 		];
-		
+
 		$bmpFileHeader = [
 			'0x424D3653',
 			'0x424D569F',
 			'0x424D56FE',
 			'0x424D3616',
 		];
-		
+
 		$xp3FileHeader = [
 			'0x5850330D',
 			'0x424D0638',
 			'0x424D3404',
 			'0x424D365C',
 		];
-		
+
 		$swfFileHeader = [
 			'0x46575306',
 			'0x46575309',
 			'0x43575306'
 		];
-		
+
 		if (in_array($fileDescription, $exeFileHeader)) {
 			return 'EXE';
 		} elseif (in_array($fileDescription, $mp3FileHeader)) {
@@ -1021,6 +1012,7 @@ class FileHandler implements FileHandlerInterface
 		} else {
 			echo $fileDescription;
 			echo $filePath;
+
 			return 'UNKNOWN';
 		}
 	}
@@ -1037,10 +1029,11 @@ class FileHandler implements FileHandlerInterface
 	public function Read(string $filePath, int $length = -1, string $mode = 'r')
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
-		
+
 		$fileObject = new FileObject($filePath, false, $mode);
 		if (!$fileObject->isEnoughFreeSpace()) {
 			$this::$lastError = 'Disk space is not enough';
+
 			return false;
 		}
 
@@ -1254,7 +1247,7 @@ class FileHandler implements FileHandlerInterface
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
-		$fileLines = file($filePath);
+		$fileLines     = file($filePath);
 		$invertedLines = strrev(array_shift($fileLines));
 
 		return $this->Write($filePath, $invertedLines, 'w');
@@ -1301,8 +1294,8 @@ class FileHandler implements FileHandlerInterface
 		}
 
 		$fileHandler = fopen($filePath, 'r');
-		$fileSize = $this->getSize($filePath);
-		$return = fread($fileHandler, $fileSize);
+		$fileSize    = $this->getSize($filePath);
+		$return      = fread($fileHandler, $fileSize);
 		fclose($fileHandler);
 
 		return $return;
@@ -1415,13 +1408,11 @@ class FileHandler implements FileHandlerInterface
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
-		if (!$this->isExists($filePath)) 
-		{
+		if (!$this->isExists($filePath)) {
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if (!$this->isFile($filePath)) 
-		{
+		if (!$this->isFile($filePath)) {
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
@@ -1438,16 +1429,14 @@ class FileHandler implements FileHandlerInterface
 	 */
 	public function Move(string $source, string $destination) :bool
 	{
-		$filePath = $this->convertToNomalizePath($filePath);
+		$filePath    = $this->convertToNomalizePath($filePath);
 		$destination = $this->convertToNomalizePath($destination);
 
-		if (!$this->isExists($filePath)) 
-		{
+		if (!$this->isExists($filePath)) {
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if (!$this->isFile($source)) 
-		{
+		if (!$this->isFile($source)) {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 

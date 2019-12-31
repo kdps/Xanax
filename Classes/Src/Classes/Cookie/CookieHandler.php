@@ -52,8 +52,10 @@ class CookieHandler
 		}
 	}
 	
-	public static function unSet($args)
+	public static function unSet($name)
 	{
-		unset($_COOKIE[$name]);
+		if (isset($_COOKIE[$name])) {
+			unset($_COOKIE[$name]);
+		}
 	}
 }
