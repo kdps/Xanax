@@ -182,15 +182,19 @@ class MIME
 		}
 	}
 
-	public function getFileType()
+	public function getFileContentType($filePath)
 	{
-		return mime_content_type();
+		return mime_content_type($filePath);
 	}
 
 	public function getType($extension = '')
 	{
 		$mimeType = '';
 
+		if (!$extension && self::$extension) {
+			$extension = self::$extension;
+		}
+		
 		if (isset($this->mimeTypes[$extension])) {
 			$mimeType = $this->mimeTypes[$extension]['mimeType'];
 		}
