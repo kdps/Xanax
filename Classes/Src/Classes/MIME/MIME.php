@@ -8,6 +8,8 @@ class MIME
 {
 	private static $extension = '';
 
+	// http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
+	
 	private $mimeTypes = [
 		/* Text */
 
