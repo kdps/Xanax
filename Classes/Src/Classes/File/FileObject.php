@@ -99,7 +99,10 @@ class FileObject implements FileObjectInterface
 			$this->temporaryPath = sprintf('%s.%s.%s', $this->filePath, uniqid(rand(), true), $this->fileExtension);
 		} while ($this->fileHandlerClass->isFile($this->temporaryPath));
 
-		if ($this->mode === 'a' && $this->fileHandlerClass->isExists($this->filePath)) {
+		$isReadOnlyMode = $this->mode === 'a';
+		$isFileExists = $this->fileHandlerClass->isExists($this->filePath);
+		
+		if ($isReadOnlyMode && $isFileExists) {
 			$fileContent = file_get_contents($this->filePath, true);
 			file_put_contents($this->temporaryPath, $fileContent);
 		}
@@ -131,7 +134,9 @@ class FileObject implements FileObjectInterface
 		$invalidFileSize = $currentFileSize === -1 ? true : false;
 		$correctFileSize = ($currentFileSize === (int)$this->writeContentLength);
 
-		if ($this->recoveryMode && $this->fileHandlerClass->isFile($filePath)) {
+		$isFileExists = $this->fileHandlerClass->isFile($filePath);
+		
+		if ($this->recoveryMode && $isFileExists) {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
@@ -325,8 +330,8 @@ class FileObject implements FileObjectInterface
 
 		$capacity = (int)$this->writeContentLength;
 
-		$bool = $freeSpace < $freeSpace;
-		if ($this->mode === 'w' && !$bool) {
+		$isEnough = $capacity < $freeSpace;
+		if ($this->mode === 'w' && !$isEnough) {
 			return false;
 		}
 
