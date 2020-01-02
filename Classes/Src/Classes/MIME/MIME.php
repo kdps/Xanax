@@ -79,6 +79,21 @@ class MIME
 
 		/* Video */
 
+		'f4v' => [
+			'video/x-f4v'
+		],
+		'fli' => [
+			'video/x-fli'
+		],
+		'm4v' => [
+			'video/x-m4v'
+		],
+		'mng' => [
+			'video/x-mng'
+		],
+		'smv' => [
+			'video/x-smv'
+		],
 		'qt' => [
 			'video/quicktime'
 		],
