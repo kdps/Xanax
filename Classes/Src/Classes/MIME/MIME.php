@@ -11,6 +11,12 @@ class MIME
 	private $mimeTypes = [
 		/* Text */
 
+		'php' => [
+			'mimeType' => 'text/html'
+		],
+		'htm' => [
+			'mimeType' => 'text/html'
+		],
 		'html' => [
 			'mimeType' => 'text/html'
 		],
@@ -19,6 +25,9 @@ class MIME
 		],
 		'css' => [
 			'mimeType' => 'text/css'
+		],
+		'txt' => [
+			'mimeType' => 'text/plain'
 		],
 		'text' => [
 			'mimeType' => 'text/plain'
@@ -53,6 +62,9 @@ class MIME
 		'bmp' => [
 			'mimeType' => 'image/x-bmp'
 		],
+		'ico' => [
+			'mimeType' => 'image/vnd.microsoft.icon'
+		],
 		'djvu' => [
 			'mimeType' => 'image/vnd.djvu'
 		],
@@ -65,6 +77,15 @@ class MIME
 
 		/* Video */
 
+		'qt' => [
+			'video/quicktime'
+		],
+		'mov' => [
+			'video/quicktime'
+		],
+		'flv' => [
+			'mimeType' => 'video/x-flv'
+		],
 		'avi' => [
 			'mimeType' => 'video/x-msvideo'
 		],
@@ -101,6 +122,15 @@ class MIME
 
 		/* Compression */
 
+		'cab' => [
+			'mimeType' => 'application/vnd.ms-cab-compressed'
+		],
+		'exe' => [
+			'mimeType' => 'application/x-msdownload'
+		],
+		'msi' => [
+			'mimeType' => 'application/x-msdownload'
+		],
 		'tar' => [
 			'mimeType' => 'application/x-tar'
 		],
@@ -123,6 +153,39 @@ class MIME
 			'mimeType' => 'application/x-7z-compressed'
 		],
 
+		/* MS Office */
+		
+		'doc' => [
+			'mimeType' => 'application/msword'
+		],
+		'rtf' => [
+			'mimeType' => 'application/rtf'
+		],
+		'xls' => [
+			'mimeType' => 'application/vnd.ms-excel'
+		],
+		'ppt' => [
+			'mimeType' => 'application/vnd.ms-powerpoint'
+		],
+		
+		/* Adobe */
+		
+		'pdf' => [
+			'mimeType' => 'application/pdf'
+		],
+		'psd' => [
+			'mimeType' => 'image/vnd.adobe.photoshop'
+		],
+		'ai' => [
+			'mimeType' => 'application/postscript'
+		],
+		'eps' => [
+			'mimeType' => 'application/postscript'
+		],
+		'ps' => [
+			'mimeType' => 'application/postscript'
+		],
+		
 		/* Application */
 
 		'abw' => [
@@ -136,9 +199,6 @@ class MIME
 		],
 		'jar' => [
 			'mimeType' => 'application/java-archive'
-		],
-		'pdf' => [
-			'mimeType' => 'application/pdf'
 		],
 		'ttf' => [
 			'mimeType' => 'application/x-font-ttf'
