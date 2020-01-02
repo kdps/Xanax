@@ -167,6 +167,9 @@ class MIME
 		'ppt' => [
 			'mimeType' => 'application/vnd.ms-powerpoint'
 		],
+		'excel' => [
+			'mimeType' => 'application/vnd.ms-excel'
+		],
 		
 		/* Adobe */
 		
@@ -186,6 +189,21 @@ class MIME
 			'mimeType' => 'application/postscript'
 		],
 		
+		/* Open Office */
+		
+		'odt' => [
+			'mimeType' => 'application/vnd.oasis.opendocument.text'
+		],
+		'ods' => [
+			'mimeType' => 'application/vnd.oasis.opendocument.spreadsheet'
+		],
+		
+		/* Font */
+		
+		'ttf' => [
+			'mimeType' => 'application/x-font-ttf'
+		],
+		
 		/* Application */
 
 		'abw' => [
@@ -200,17 +218,8 @@ class MIME
 		'jar' => [
 			'mimeType' => 'application/java-archive'
 		],
-		'ttf' => [
-			'mimeType' => 'application/x-font-ttf'
-		],
 		'swf' => [
 			'mimeType' => 'application/x-shockwave-flash'
-		],
-		'odt' => [
-			'mimeType' => 'application/vnd.oasis.opendocument.text'
-		],
-		'excel' => [
-			'mimeType' => 'application/vnd.ms-excel'
 		],
 		'azw' => [
 			'mimeType' => 'application/vnd.amazon.ebook'
@@ -226,9 +235,6 @@ class MIME
 		],
 		'xhtml' => [
 			'mimeType' => 'application/xhtml+xml'
-		],
-		'ppt' => [
-			'mimeType' => 'application/vnd.ms-powerpoint'
 		],
 		'xml' => [
 			'mimeType' => 'application/xml'
