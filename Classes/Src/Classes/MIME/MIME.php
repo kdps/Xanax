@@ -40,6 +40,9 @@ class MIME
 
 		/* Image */
 
+		'pnm' => [
+			'mimeType' => 'image/x-portable-anymap'
+		],
 		'tif' => [
 			'mimeType' => 'image/tiff'
 		],
