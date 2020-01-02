@@ -761,14 +761,14 @@ class FileHandler implements FileHandlerInterface
 		$size = $size > 100 ? 100 : $size;
 
 		if ($size <= 4) {
-			return 'EMPTY';
+			return false;
 		}
 
 		$header = $this->Read($filePath, $size);
 		if ($header) {
 			$bigEndianUnpack = unpack('N', $header);
 		} else {
-			return 'EMPTY';
+			return false;
 		}
 
 		/* ISO 8859-1 */
@@ -1010,10 +1010,7 @@ class FileHandler implements FileHandlerInterface
 		} elseif ($fileDescription === 0x3C3F786D) {
 			return 'XML';
 		} else {
-			echo $fileDescription;
-			echo $filePath;
-
-			return 'UNKNOWN';
+			return false;
 		}
 	}
 
@@ -1044,7 +1041,7 @@ class FileHandler implements FileHandlerInterface
 		}
 
 		if (!$fileObject->hasReadedContent()) {
-			return '';
+			return false;
 		}
 
 		if ($length === -1) {
@@ -1123,7 +1120,7 @@ class FileHandler implements FileHandlerInterface
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if ($stream) {
+		if ($stream === true) {
 			file_put_contents($filePath, $content, FILE_APPEND | LOCK_EX);
 		} else {
 			$this->Write($filePath, $content, 'a');
