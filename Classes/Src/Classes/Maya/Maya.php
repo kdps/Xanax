@@ -112,6 +112,10 @@ class Maya
 		}
 	}
 
+	public function line_execute_match_callback()
+	{
+	}
+	
 	public function line_pass($start, $rule, $text, $passage = 0)
 	{
 		$self = self::getself();
