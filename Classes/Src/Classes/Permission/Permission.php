@@ -17,4 +17,29 @@ class Permission
     self::$mode = $mode;
   }
 
+  public function hasSetUidMode()
+  {
+    return ($this->hasDirectoryMode() && parent::$mode & 0x0800);
+  }
+  
+  public function hasSetGidMode()
+  {
+    return (parent::$mode & 0x0800);
+  }
+  
+  public function hasReadMode()
+  {
+    return (parent::$mode & 0x0100);
+  }
+  
+  public function hasWriteMode()
+  {
+    return (parent::$mode & 0x0020);
+  }
+  
+  public function hasDirectoryMode()
+  {
+    return (parent::$mode & 0x0040);
+  }
+  
 }
