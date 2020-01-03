@@ -310,16 +310,31 @@ class FileHandler implements FileHandlerInterface
 		fgetc($fileHandler, $length);
 	}
 
+	/**
+	 * Gets file permissions
+	 *
+	 * @return resource
+	 */
 	public function getPermissions($filePath) :int
 	{
 		return fileperms($filePath);
 	}
 
+	/**
+	 * Gets file owner
+	 *
+	 * @return resource
+	 */
 	public function getOwner($filePath) :int
 	{
 		return fileowner($filePath);
 	}
 
+	/**
+	 * Create a temporary file
+	 *
+	 * @return resource
+	 */
 	public function createTemporary() :resource
 	{
 		return tmpfile();
