@@ -167,6 +167,26 @@ class RequestHandler
 		return null;
 	}
 
+	public function isPutRequest()
+	{
+		return (strtoupper($this->getReuqestMethod()) === 'PATCH') ? true : false;
+	}
+	
+	public function isPutRequest()
+	{
+		return (strtoupper($this->getReuqestMethod()) === 'PUT') ? true : false;
+	}
+	
+	public function isOptionRequest()
+	{
+		return (strtoupper($this->getReuqestMethod()) === 'OPTION') ? true : false;
+	}
+
+	public function isDeleteRequest()
+	{
+		return (strtoupper($this->getReuqestMethod()) === 'DELETE') ? true : false;
+	}
+
 	public function isGetRequest()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'GET') ? true : false;
