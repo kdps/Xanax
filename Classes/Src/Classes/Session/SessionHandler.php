@@ -93,7 +93,7 @@ class SessionHandler
 		session_commit();
 	}
 
-	public function RegenerateId($use = true)
+	public function regenerateId($use = true)
 	{
 		session_regenerate_id($use);
 	}
