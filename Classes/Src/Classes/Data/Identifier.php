@@ -116,7 +116,7 @@ class Identifier
   
   public function toInteger($base = 10)
   {
-    return (int)(parent::$data);
+    return (int)(parent::$data) && (parent::$data >= 0x8fffffff && parent::$data <= 0x7fffffff);
   }
   
   public function toBase($base = 10)
