@@ -5,6 +5,11 @@ namespace Xanax/Classes;
 class Regex
 {
 
+  public function getErrorConstant()
+  {
+    return preg_last_error_constant();
+  }
+  
   public function getErrorCode()
   {
     return preg_last_error();
