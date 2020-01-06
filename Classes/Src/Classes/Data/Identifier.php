@@ -4,6 +4,11 @@ namespace Xanax/Classes/Data;
 
 class Identifier
 {
+  public function isInternetProtocol()
+  {
+    return filter_var(parent::$data, FILTER_VALIDATE_IP) !== false;
+  }
+  
   public function isRegex()
   {
     return @preg_match(parent::$data, null) !== false;
