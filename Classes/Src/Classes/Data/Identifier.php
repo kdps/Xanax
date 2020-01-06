@@ -4,54 +4,59 @@ namespace Xanax/Classes/Data;
 
 class Identifier
 {
+  public function isHexadecial()
+  {
+    return ctype_xdigit(parent::$data);
+  }
+  
   public function isCountable()
   {
-    return (is_countable(parent::$data));
+    return is_countable(parent::$data);
   }
   
   public function isCallable()
   {
-    return (is_callable(parent::$data));
+    return is_callable(parent::$data);
   }
   
   public function isResource()
   {
-    return (is_resource(parent::$data));
+    return is_resource(parent::$data);
   }
   
   public function isIterable()
   {
-    return (is_iterable(parent::$data));
+    return is_iterable(parent::$data);
   }
   
   public function isDouble()
   {
-    return (is_double(parent::$data));
+    return is_double(parent::$data);
   }
   
   public function isLong()
   {
-    return (is_long(parent::$data));
+    return is_long(parent::$data);
   }
   
   public function isNull()
   {
-    return (is_null(parent::$data));
+    return is_null(parent::$data);
   }
   
   public function isScalar()
   {
-    return (is_scalar(parent::$data));
+    return is_scalar(parent::$data);
   }
   
   public function isEmpty()
   {
-    return (empty(parent::$data));
+    return empty(parent::$data);
   }
   
   public function isFloat()
   {
-    return (is_float(parent::$data));
+    return is_float(parent::$data);
   }
  
   public function toFloat() 
@@ -61,7 +66,7 @@ class Identifier
   
   public function isInteger()
   {
-    return (is_int(parent::$data));
+    return is_int(parent::$data);
   }
   
   public function toInteger() 
@@ -71,7 +76,7 @@ class Identifier
   
   public function isObject()
   {
-    return (is_object(parent::$data));
+    return is_object(parent::$data);
   }
   
   public function toObject() 
@@ -81,7 +86,7 @@ class Identifier
   
   public function isArray()
   {
-    return (is_array(parent::$data));
+    return is_array(parent::$data);
   }
   
   public function toArray() 
@@ -91,7 +96,7 @@ class Identifier
   
   public function isString()
   {
-    return (is_string(parent::$data));
+    return is_string(parent::$data);
   }
   
   public function toString() 
@@ -101,7 +106,7 @@ class Identifier
   
   public function isBoolean()
   {
-    return (is_bool(parent::$data));
+    return is_bool(parent::$data);
   }
   
   public function toBoolean() 
@@ -111,12 +116,12 @@ class Identifier
   
   public function isNumberic()
   {
-    return (is_numeric(parent::$data));
+    return is_numeric(parent::$data);
   }
   
   public function toInteger($base = 10)
   {
-    return (int)(parent::$data) && (parent::$data >= 0x8fffffff && parent::$data <= 0x7fffffff);
+    return (int)parent::$data && (parent::$data >= 0x8fffffff && parent::$data <= 0x7fffffff);
   }
   
   public function toBase($base = 10)
@@ -126,7 +131,7 @@ class Identifier
   
   public function isDate()
   {
-    return (strtotime(parent::$data !== false);
+    return strtotime(parent::$data !== false;
   }
   
 }
