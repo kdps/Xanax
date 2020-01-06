@@ -4,6 +4,10 @@ namespace Xanax/Classes/Data;
 
 class Identifier
 {
+  public function isRegex()
+  {
+    return @preg_match(parent::$data, null) !== false;
+  }
   public function isHexadecial()
   {
     return ctype_xdigit(parent::$data);
