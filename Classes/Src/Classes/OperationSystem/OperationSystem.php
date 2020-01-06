@@ -38,7 +38,7 @@ class OperationSystem
 
 	public function is32BitOS()
 	{
-		if (PHP_INT_MAX == 0x7FFFFFFF) { // Maximum value of 32-bit sign integer
+		if (PHP_INT_SIZE == 4 || PHP_INT_MAX == 0x7FFFFFFF) { // Maximum value of 32-bit sign integer
 			return true;
 		}
 
@@ -47,7 +47,7 @@ class OperationSystem
 
 	public function is64BitOS()
 	{
-		if (PHP_INT_MAX == 0x7FFFFFFFFFFFFFFF) { // Maximum value of 64-bit sign integer
+		if (PHP_INT_SIZE == 8 || PHP_INT_MAX == 0x7FFFFFFFFFFFFFFF) { // Maximum value of 64-bit sign integer
 			return true;
 		}
 
