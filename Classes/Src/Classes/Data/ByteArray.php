@@ -4,7 +4,7 @@ class ByteArray
 {
   public function toString()
   {
-    return implode(array_map("chr", parent::$data));
+    return call_user_func_array("pack", array_merge(array("C*"), parent::$data)));
   }
   
   public function toByteArray()
