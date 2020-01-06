@@ -24,6 +24,11 @@ class Identifier
     return (is_iterable(parent::$data));
   }
   
+  public function isDouble()
+  {
+    return (is_double(parent::$data));
+  }
+  
   public function isLong()
   {
     return (is_long(parent::$data));
@@ -107,6 +112,11 @@ class Identifier
   public function isNumberic()
   {
     return (is_numeric(parent::$data));
+  }
+  
+  public function toInteger($base = 10)
+  {
+    return (intval(parent::$data), $base);
   }
   
   public function isDate()
