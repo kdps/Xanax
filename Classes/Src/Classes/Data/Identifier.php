@@ -2,6 +2,6 @@
 
 namespace Xanax/Classes/Data;
 
-class DataIdentifier
+class Identifier
 {
 }
