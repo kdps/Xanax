@@ -116,7 +116,12 @@ class Identifier
   
   public function toInteger($base = 10)
   {
-    return (intval(parent::$data), $base);
+    return (int)(parent::$data);
+  }
+  
+  public function toBase($base = 10)
+  {
+    return intval(parent::$data, $base);
   }
   
   public function isDate()
