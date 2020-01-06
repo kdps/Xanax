@@ -9,7 +9,7 @@ class ByteArray
   
   public function toByteArray()
   {
-    parent::$data = unpack('C*', parent::$data)
+    parent::$data = unpack('C*', parent::$data);
   }
   
 }
