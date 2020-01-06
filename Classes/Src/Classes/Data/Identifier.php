@@ -4,6 +4,41 @@ namespace Xanax/Classes/Data;
 
 class Identifier
 {
+  public function isCountable()
+  {
+    return (is_countable(parent::$data));
+  }
+  
+  public function isCallable()
+  {
+    return (is_callable(parent::$data));
+  }
+  
+  public function isResource()
+  {
+    return (is_resource(parent::$data));
+  }
+  
+  public function isIterable()
+  {
+    return (is_iterable(parent::$data));
+  }
+  
+  public function isLong()
+  {
+    return (is_long(parent::$data));
+  }
+  
+  public function isNull()
+  {
+    return (is_null(parent::$data));
+  }
+  
+  public function isScalar()
+  {
+    return (is_scalar(parent::$data));
+  }
+  
   public function isEmpty()
   {
     return (empty(parent::$data));
