@@ -1,5 +1,7 @@
 <?php
 
+namespace Xanax/Classes;
+
 class InternetProtocol
 {
   public function getByHostname($hostname)
