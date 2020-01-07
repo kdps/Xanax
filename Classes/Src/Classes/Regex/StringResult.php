@@ -8,7 +8,10 @@ class StringResult
 {
   public function __constructor(array $result)
   {
-    $this->result = $result;
+    $this->boolean = $result['Boolean'];
+    $this->pattern = $result['Pattern'];
+    $this->subject = $result['Subject'];
+    $this->matches = $result['Matches'];
   }
   
   public function getSingleton(array $result)
