@@ -21,7 +21,7 @@ class Regex
   {
     $result = Executor::Match($pattern, $subject, $matches);
     
-    return StringResult::getSingleton($result);
+    return ArrayResult::getSingleton($result);
   }
   
   public static function matchAll(string $pattern, string $subject)
