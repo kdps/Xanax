@@ -21,5 +21,6 @@ class StringResult
   
   public function Get()
   {
+    
   }
 }
