@@ -8,11 +8,20 @@ class ArrayResult
 {
   public function __constructor(array $result)
   {
-    $this->result = $result;
+    $this->boolean = $result['Boolean'];
+    $this->pattern = $result['Pattern'];
+    $this->subject = $result['Subject'];
+    $this->matches = $result['Matches'];
   }
   
   public function getSingleton(array $result)
   {
       return new static ($result);
   }
+  
+  public function getResult()
+  {
+    
+  }
+  
 }
