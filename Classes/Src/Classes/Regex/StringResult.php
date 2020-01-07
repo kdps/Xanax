@@ -11,8 +11,12 @@ class StringResult
     $this->result = $result;
   }
   
-  public function Result(array $result)
+  public function getSingleton(array $result)
   {
       return new static ($result);
+  }
+  
+  public function Get()
+  {
   }
 }
