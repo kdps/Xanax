@@ -19,6 +19,11 @@ class ArrayResult
       return new static ($result);
   }
   
+  public function hasResult()
+  {
+    return !empty($this->matches);
+  }
+  
   public function getByIndex(int $index = 0)
   {
     return $this->matches[$index] ?? "";
