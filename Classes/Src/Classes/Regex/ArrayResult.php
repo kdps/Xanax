@@ -19,7 +19,7 @@ class ArrayResult
       return new static ($result);
   }
   
-  public function getByIndex($index)
+  public function getByIndex(int $index = 0)
   {
     return $this->matches[$index] ?? "";
   }
