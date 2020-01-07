@@ -21,10 +21,10 @@ class ArrayResult
   
   public function getByIndex($index)
   {
-    return $this->matches($index) ?? "";
+    return $this->matches[$index] ?? "";
   }
   
-  public function getResult()
+  public function getResults()
   {
     return $this->matches;
   }
