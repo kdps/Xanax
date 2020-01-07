@@ -42,6 +42,7 @@ class ArrayResult
   public function getByIndex(int $index = 0)
   {
     $matches = $this->getMatches();
+    
     return $matches[$index] ?? "";
   }
   
