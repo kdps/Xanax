@@ -21,14 +21,14 @@ class Regex
   {
     $result = Executor::Match($pattern, $subject, $matches);
     
-    return StringResult::Result($result);
+    return StringResult::getSingleton($result);
   }
   
   public static function matchAll(string $pattern, string $subject)
   {
     $result = Executor::matchAll($pattern, $subject, $matches);
     
-    return ArrayResult::Result($result);
+    return ArrayResult::getSingleton($result);
   }
   
   public static function Split(string $pattern, $subject, int $limit = -1)
