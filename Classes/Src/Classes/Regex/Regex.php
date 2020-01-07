@@ -4,6 +4,7 @@ namespace Xanax/Classes;
 
 use Xanax/Classes/Regex/StringResult as StringResult;
 use Xanax/Classes/Regex/ArrayResult as ArrayResult;
+use Xanax/Classes/Regex/Executor as Executor;
 
 class Regex
 {
@@ -18,16 +19,16 @@ class Regex
   
   public static function Match(string $pattern, string $subject)
   {
-    $bool = @preg_match($pattern, $subject, $matches);
+    $result = Executor::Match($pattern, $subject, $matches);
     
-    return StringResult::Result($pattern, $subject, $matches, $bool);
+    return StringResult::Result($result);
   }
   
   public static function matchAll(string $pattern, string $subject)
   {
-    $bool = @preg_match_all($pattern, $subject, $matches);
+    $result = Executor::matchAll($pattern, $subject, $matches);
     
-    return ArrayResult::Result($pattern, $subject, $matches, $bool);
+    return ArrayResult::Result($result);
   }
   
   public static function Split(string $pattern, $subject, int $limit = -1)
