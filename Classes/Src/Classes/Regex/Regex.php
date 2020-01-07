@@ -17,14 +17,14 @@ class Regex
   {
   }
   
-  public static function Match(string $pattern, string $subject)
+  public static function Match(string $pattern, string $subject) :ArrayResult
   {
     $result = Executor::Match($pattern, $subject, $matches);
     
     return ArrayResult::getSingleton($result);
   }
   
-  public static function matchAll(string $pattern, string $subject)
+  public static function matchAll(string $pattern, string $subject) :ArrayResult
   {
     $result = Executor::matchAll($pattern, $subject, $matches);
     
