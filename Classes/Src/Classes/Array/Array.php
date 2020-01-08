@@ -2,6 +2,11 @@
 
 class Array
 {
+  public function getKeys(array $array)
+  {
+    return array_keys($array);
+  }
+  
   public function getKeyByValue(array $array, string $key)
   {
     return array_search($key, $array);
