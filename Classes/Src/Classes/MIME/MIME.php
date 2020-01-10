@@ -13,6 +13,12 @@ class MIME
 	private $mimeTypes = [
 		/* Text */
 
+		'markdown' => [
+			'mimeType' => 'text/markdown'
+		],
+		'rtf' => [
+			'mimeType' => 'text/rtf'
+		],
 		'php' => [
 			'mimeType' => 'text/html'
 		],
@@ -27,6 +33,9 @@ class MIME
 		],
 		'css' => [
 			'mimeType' => 'text/css'
+		],
+		'log' => [
+			'mimeType' => 'text/plain'
 		],
 		'txt' => [
 			'mimeType' => 'text/plain'
@@ -145,6 +154,9 @@ class MIME
 		'cab' => [
 			'mimeType' => 'application/vnd.ms-cab-compressed'
 		],
+		'gtar' => [
+			'mimeType' => 'application/x-gtar'
+		],
 		'exe' => [
 			'mimeType' => 'application/x-msdownload'
 		],
@@ -152,6 +164,9 @@ class MIME
 			'mimeType' => 'application/x-msdownload'
 		],
 		'tar' => [
+			'mimeType' => 'application/x-tar'
+		],
+		'tgz' => [
 			'mimeType' => 'application/x-tar'
 		],
 		'bz2' => [
@@ -173,6 +188,21 @@ class MIME
 			'mimeType' => 'application/x-7z-compressed'
 		],
 
+		/* Document */
+		
+		'docx' => [
+			'mimeType' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+		],
+		'dotx' => [
+			'mimeType' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+		],
+		'xlsx' => [
+			'mimeType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		],
+		'pptx' => [
+			'mimeType' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+		],
+		
 		/* MS Office */
 		
 		'doc' => [
