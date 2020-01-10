@@ -92,25 +92,25 @@ class MIME
 		/* Video */
 
 		'f4v' => [
-			'video/x-f4v'
+			'mimeType' => 'video/x-f4v'
 		],
 		'fli' => [
-			'video/x-fli'
+			'mimeType' => 'video/x-fli'
 		],
 		'm4v' => [
-			'video/x-m4v'
+			'mimeType' => 'video/x-m4v'
 		],
 		'mng' => [
-			'video/x-mng'
+			'mimeType' => 'video/x-mng'
 		],
 		'smv' => [
-			'video/x-smv'
+			'mimeType' => 'video/x-smv'
 		],
 		'qt' => [
-			'video/quicktime'
+			'mimeType' => 'video/quicktime'
 		],
 		'mov' => [
-			'video/quicktime'
+			'mimeType' => 'video/quicktime'
 		],
 		'flv' => [
 			'mimeType' => 'video/x-flv'
