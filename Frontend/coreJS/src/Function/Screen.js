@@ -5,6 +5,13 @@
 
 	var A = core.Screen = {
 		
+		getResolution: function () {
+		},
+		
+		getDepth: function () {
+		},
+		
+		
 		/**
 		 * Cancel Full Screen
 		 * @param {element}         : element
