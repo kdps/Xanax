@@ -5,7 +5,7 @@
 
 	var A = core.gamePad = {
 		
-		registry: function (callback) {
+		Registry: function (callback) {
 			var gamepads = this.Get();
 			
 			for (var i = 0; i < gamepads.length; i++) {
@@ -117,7 +117,7 @@
 			}
 		},
 		
-		destroy: function (gamepad) {
+		Destroy: function (gamepad) {
 			delete gamePadControllers[gamepad.index]; //Remove Array
 		},
 		
