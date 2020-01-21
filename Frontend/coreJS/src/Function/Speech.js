@@ -36,7 +36,7 @@
 			Microsoft Heami Desktop - Korean
 			Microsoft Zira Desktop - English (United States)
 		*/
-		speech: function (word, speecher, pitch, rate) {
+		Speech: function (word, speecher, pitch, rate) {
 			var i;
 			var synth = this.Get();
 			
