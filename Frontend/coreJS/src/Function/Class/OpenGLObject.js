@@ -117,14 +117,14 @@ export default class OpenGLObject {
 	}
 	
 	/**
-     * Set a scissor box
+     	 * Set a scissor box
 	 */
 	setColorMask(red, green, blue, alpha = true) {
 		this.gl.colorMask(red, green, blue, alpha);
 	}
 	
 	/**
-     * Set the viewport(Graphics Actual rendering area)
+     	 * Set the viewport(Graphics Actual rendering area)
 	 *
 	 * @param x      : GLint (32bit long)
 	 * @param y      : GLint (32bit long)
@@ -153,7 +153,7 @@ export default class OpenGLObject {
 	}
 	
 	/**
-	 * set Clear Color of OpenGL
+	 * Set Clear Color of OpenGL
 	 *
 	 * opacity (max 1.0) : set Opacity
 	 */
