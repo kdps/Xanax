@@ -743,12 +743,18 @@
 			return true;
 		},
 		
-		findForm: function (object) {
+		findObjectFromNodeName: function (object, name) {
 			for (var obj = object; obj; obj = obj.parentNode) {
-				if ("FORM" == obj.nodeName) {
+				if (name == obj.nodeName) {
 					return obj;
 				}
 			}
+			
+			return null;
+		},
+		
+		findForm: function (object) {
+			return this->findObjectFromNodeName(object, 'form');
 		},
 		
 		trimAllTags: function (form) {
@@ -878,11 +884,12 @@
 		},
 		
 		getMatchesSelector: function (elem) {
-			return elem.prototype.matchesSelector || 
-				   elem.prototype.mozMatchesSelector || 
-				   elem.prototype.msMatchesSelector || 
-				   elem.prototype.oMatchesSelector || 
-				   elem.prototype.webkitMatchesSelector;
+			return 
+				elem.prototype.matchesSelector || 
+				elem.prototype.mozMatchesSelector || 
+				elem.prototype.msMatchesSelector || 
+				elem.prototype.oMatchesSelector || 
+				elem.prototype.webkitMatchesSelector;
 		},
 		
 		setAllCheckboxToggle: function (elem, target) {
