@@ -359,8 +359,8 @@
 					}
 				}
 				
-				//context.shadowBlur = 20;
-				//context.shadowColor = "black";
+				context.shadowBlur = 20;
+				context.shadowColor = "black";
 				context.globalAlpha = 0.9;
 				context.fillStyle = '#ffffff';
 				context.fillRect(i * 2, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
