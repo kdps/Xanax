@@ -200,7 +200,21 @@ class ImageHandler implements ImageHandlerInterface {
 		
 		return array($alpha, $r, $g, $b);
 	}
-	
+		
+	/**
+	 * Draw text to image resource
+	 *
+	 * @param resource $imageResource
+	 * @param int      $fontSize
+	 * @param int      $x
+	 * @param int      $y
+	 * @param string   $text
+	 * @param int      $reg
+	 * @param int      $green
+	 * @param int      $blue
+	 *
+	 * @return mixed
+	 */
 	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue ) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -212,6 +226,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return $imageResource;
 	}
 	
+	/**
+	 * Get a exif data of image file
+	 *
+	 * @param string $filePath
+	 *
+	 * @return mixed
+	 */
 	public function getExifData ( $filePath ) {
 		if (function_exists('exif_read_data')) {
 			return exif_read_data($filePath, 0, true);
@@ -220,6 +241,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return new stdClass();
 	}
 	
+	/**
+	 * Get type of image file
+	 *
+	 * @param string $filePath
+	 *
+	 * @return mixed
+	 */
 	public function getType ( $filePath ) {
 		$finfo = getimagesize($filePath);
 		if ($finfo === false) {
@@ -230,6 +258,15 @@ class ImageHandler implements ImageHandlerInterface {
 		return $format;
 	}
 	
+	/**
+	 * Create a image to path
+	 *
+	 * @param resource $imageResource
+	 * @param string   $outputPath
+	 * @param int      $quality
+	 *
+	 * @return boolean
+	 */
 	public function Create ( $imageResource, $outputPath, $quality = 100 ) {
 		$format = $this->getType( $imageResource );
 		
@@ -265,6 +302,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return true;
 	}
 	
+	/**
+	 * Flip a image resource
+	 *
+	 * @param resource $imageResource
+	 *
+	 * @return resource
+	 */
 	public function Flip ( $imageResource ) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -285,6 +329,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return $imageResource;
 	}
 	
+	/**
+	 * Get width of image resource
+	 *
+	 * @param resource $imageResource
+	 *
+	 * @return int
+	 */
 	public function getWidth ( $imageResource ) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -302,6 +353,13 @@ class ImageHandler implements ImageHandlerInterface {
 		}
 	}
 	
+	/**
+	 * Get height of image resource
+	 *
+	 * @param resource $imageResource
+	 *
+	 * @return int
+	 */
 	public function getHeight ( $imageResource ) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -319,6 +377,13 @@ class ImageHandler implements ImageHandlerInterface {
 		}
 	}
 	
+	/**
+	 * Check that resource is valid
+	 *
+	 * @param resource $imageResource
+	 *
+	 * @return boolean
+	 */
 	public function isResource ( $imageResource ) {
 		if ( gettype($createObject) === 'resource') {
 			return true;
@@ -327,6 +392,14 @@ class ImageHandler implements ImageHandlerInterface {
 		return false;
 	}
 	
+	/**
+	 * Rotate a image resource
+	 *
+	 * @param resource $imageResource
+	 * @param int $degrees
+	 *
+	 * @return resource
+	 */
 	public function Rotate ( $imageResource, $degrees ) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -336,7 +409,14 @@ class ImageHandler implements ImageHandlerInterface {
 		
 		return $this->getInstance($image);
 	}
-	
+
+	/**
+	 * Get a resource of file
+	 *
+	 * @param string $filePath
+	 *
+	 * @return resource
+	 */
 	public function getimageResource ( $filePath ) {
 		$format = $this->getType( $filePath );
 		$createObject = null;
@@ -375,6 +455,17 @@ class ImageHandler implements ImageHandlerInterface {
 		return $createObject;
 	}
 	
+	/**
+	 * Get a resource of blank image
+	 *
+	 * @param int $width
+	 * @param int $height
+	 * @param int $red
+	 * @param int $blue
+	 * @param int $green
+	 *
+	 * @return resource
+	 */
 	public function getBlank ( $width, $height, $red, $blue, $green ) {
 		$image = imagecreatetruecolor($width, $height);
 		$background_color = imagecolorallocate($image, $red, $green, $blue);
