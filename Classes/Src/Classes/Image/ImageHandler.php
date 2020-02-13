@@ -48,6 +48,20 @@ class ImageHandler implements ImageHandlerInterface {
 		imagefilledrectangle($imageResource, 0, 0, $width, $height, IMG_COLOR_TILED);
 	}
 	
+	/**
+	 * Draw eclipse to image resource
+	 *
+	 * @param resource $imageResource
+	 * @param int      $width
+	 * @param int      $height
+	 * @param int      $x
+	 * @param int      $y
+	 * @param int      $reg
+	 * @param int      $green
+	 * @param int      $blue
+	 *
+	 * @return resource
+	 */
 	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
