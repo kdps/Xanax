@@ -39,12 +39,16 @@ class FileHandler implements FileHandlerInterface
 		'fileperms'
 	];
 
+	// Last catched error
 	private static $lastError;
 
+	// Use strict mode of file
 	private $strictMode = true;
 
+	// Handler of file system
 	private $fileSystemHandler;
 
+	// Handler of directory system
 	private $directoryHandler;
 
 	public function __construct($useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, DirectoryHandlerInterface $directoryHandler = null)
@@ -292,6 +296,13 @@ class FileHandler implements FileHandlerInterface
 		return false;
 	}
 
+	/**
+	 * Get a line in file data
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function getLine(string $fileHandler, int $length) :string
 	{
 		if (!$this->isValidHandler($fileHandler)) {
@@ -301,6 +312,13 @@ class FileHandler implements FileHandlerInterface
 		fgets($fileHandler, $length);
 	}
 
+	/**
+	 * Get a character in file data
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
 	public function getCharacter(string $fileHandler, int $length) :string
 	{
 		if (!$this->isValidHandler($fileHandler)) {
@@ -340,11 +358,21 @@ class FileHandler implements FileHandlerInterface
 		return tmpfile();
 	}
 
+	/**
+	 * Create a unique temporary file
+	 *
+	 * @return resource
+	 */
 	public function createUniqueTemporary($directory, $prefix)
 	{
 		return $tmpfname = tempnam($directory, $prefix);
 	}
 
+	/**
+	 * Modify access and modification time of file
+	 *
+	 * @return resource
+	 */
 	public function setAccessAndModificatinTime($filePath, $time, $atime)
 	{
 		touch($filePath, $time, $atime);
