@@ -4,6 +4,24 @@ export default class AudioContextObject {
 		this.audioContext = AudioContextObject;
 	}
 	
+	setBus() {
+	}
+	
+	get getBusLists() {
+	}
+	
+	setEventDispatcher() {
+	}
+	
+	get getEventDispatcherListners() {
+	}
+	
+	setSubscriber() {
+	}
+	
+	get getSubscriber() {
+	}
+	
 	get getObject () {
 		return this.audioContext;
 	}
