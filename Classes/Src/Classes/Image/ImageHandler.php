@@ -388,6 +388,15 @@ class ImageHandler implements ImageHandlerInterface {
 		
 	}
 	
+	/**
+	 * Merge of two image to palette
+	 *
+	 * @param resource $sourceCreateObject
+	 * @param resource $mergeCreateObject
+	 * @param int      $transparent
+	 *
+	 * @return resource
+	 */
 	public function Merge ( $sourceCreateObject, $mergeCreateObject, $transparent ) {
 		if ( !$this->isResource($sourceCreateObject) ) {
 			$sourceCreateObject = $this->getInstance( $sourceCreateObject );
@@ -400,6 +409,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return imagecopymerge($mergeCreateObject, $sourceCreateObject, 0, 0, 0, 0, imagesx($sourceCreateObject), imagesy($sourceCreateObject), $transparent);
 	}
 	
+	/**
+	 * Get a singletone of image file
+	 *
+	 * @param string $filePath
+	 *
+	 * @return resource
+	 */
 	public function getInstance ( $filePath ) {
 		if ( @is_array(getimagesize( $filePath )) ) {
 			return $this->getimageResource($filePath);
@@ -415,6 +431,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return new stdClass();
 	}
 	
+	/**
+	 * Convert hex to rgb
+	 *
+	 * @param string $hex
+	 *
+	 * @return array
+	 */
 	public function hexToRgb ($hex) {
 		$rgb = substr($hex, 2, strlen($hex)-1);
 		
