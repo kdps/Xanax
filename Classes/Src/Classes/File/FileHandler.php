@@ -770,6 +770,13 @@ class FileHandler implements FileHandlerInterface
 		return umask($mask);
 	}
 
+	/**
+	 * Get a header type of file by big endian data
+	 *
+	 * @param string $filePath
+	 *
+	 * @return void
+	 */
 	public function getHeaderType(string $filePath) :string
 	{
 		$size = filesize($filePath);
@@ -1348,6 +1355,13 @@ class FileHandler implements FileHandlerInterface
 		fclose($file);
 	}
 
+	/**
+	 * Check that inode of file is valid
+	 *
+	 * @param string $filePath
+	 *
+	 * @return boolean
+	 */
 	public function isCorrectInode($filePath) :bool
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
@@ -1367,6 +1381,13 @@ class FileHandler implements FileHandlerInterface
 		return false;
 	}
 
+	/**
+	 * Get a inode of file
+	 *
+	 * @param string $filePath
+	 *
+	 * @return mixed
+	 */
 	public function getInode(string $filePath)
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
@@ -1416,6 +1437,13 @@ class FileHandler implements FileHandlerInterface
 		return $return;
 	}
 
+	/**
+	 * Require once a php file 
+	 *
+	 * @param string $filePath
+	 *
+	 * @return void
+	 */
 	public function requireOnce(string $filePath) :void
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
