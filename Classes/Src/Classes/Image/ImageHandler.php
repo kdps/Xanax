@@ -74,6 +74,15 @@ class ImageHandler implements ImageHandlerInterface {
 		return $paletteImage;
 	}
 	
+	/**
+	 * Ratio resize to specific size
+	 *
+	 * @param resource $imageResource
+	 * @param int      $resizeWidth
+	 * @param int      $resizeHeight
+	 *
+	 * @return resource
+	 */
 	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -103,6 +112,19 @@ class ImageHandler implements ImageHandlerInterface {
 		return $outputImage;
 	}
 	
+	/**
+	 * Apply specific filter to image resource
+	 *
+	 * @param resource $imageResource
+	 * @param resource $type
+	 * @param resource $args1
+	 * @param resource $args2
+	 * @param resource $args3
+	 *
+	 * @return output stream
+	 */
+	
+	// TODO get a args by array data
 	public function FIlter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') {
 		
 		$type = strtolower($type);
@@ -141,6 +163,13 @@ class ImageHandler implements ImageHandlerInterface {
 		return $imageResource;
 	}
 	
+	/**
+	 * Draw a picture to output
+	 *
+	 * @param resource $imageResource
+	 *
+	 * @return output stream
+	 */
 	public function Draw ( $imageResource ) {
 		$format = $this->getType( $imageResource );
 		
@@ -186,6 +215,16 @@ class ImageHandler implements ImageHandlerInterface {
 		}
 	}
 	
+	
+	/**
+	 * Pick a color of specific position
+	 *
+	 * @param resource $imageResource
+	 * @param int      $x
+	 * @param int      $y
+	 *
+	 * @return array($alpha, $r, $g, $b)
+	 */
 	public function pickColor ( $imageResource, $x, $y ) :array {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
