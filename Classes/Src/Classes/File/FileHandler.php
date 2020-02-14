@@ -107,6 +107,22 @@ class FileHandler implements FileHandlerInterface
 		return true;
 	}
 
+	public function closeProcess($processResource) {
+		if (getType($fileHandler) !== 'resource') {
+			//throw new 
+		}
+		
+		$return = pclose($processResource);
+		
+		return $return;
+	}
+	
+	public function openProcess($processPath) :resource {
+		$handle = popen($processPath);
+		
+		return $handle;
+	}
+	
 	/**
 	 * Delete the state of the file.
 	 *
