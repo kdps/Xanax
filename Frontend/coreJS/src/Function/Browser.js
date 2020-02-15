@@ -1007,6 +1007,16 @@
 			return Browser;
 		},
 		
+		getAndroidVersion: function () {
+		    var UserAgent = _cNavi.userAgent;
+		    if (UserAgent.indexOf("Android") > 0) {
+			var version = parseFloat(UserAgent.slice(UserAgent.indexOf("Android") + 8));
+			return parseInt(version);
+		    } else {
+			return -1;
+		    }
+		}
+		
 		/**
 		 * Get Browser User Agent Type
 		 **/
