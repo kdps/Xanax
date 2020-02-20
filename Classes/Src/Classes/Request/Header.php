@@ -48,9 +48,49 @@ class Header
 		$this->responseWithKey('P3P', 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 	}
 	
-	public function responseControlCache($value)
+	
+	public function responseCacheControlMinFresh($value)
+	{
+		$key = "min-fresh";
+		$data = "$key=$value";
+		
+		$this->responseCacheControl($data);
+	}
+	
+	public function responseCacheControlMaxStale($value)
+	{
+		$key = "max-stale";
+		$data = "$key=[=$value]";
+		
+		$this->responseCacheControl($data);
+	}
+	
+	public function responseCacheControlMaxAge($value)
+	{
+		$key = "max-age";
+		$data = "$key=$value";
+		
+		$this->responseCacheControl($data);
+	}
+	
+	public function responseCacheControl($value)
 	{
 		$this->responseWithKey('Cache-Control', $value);
+	}
+	
+	public function responseConnection($value)
+	{
+		$this->responseWithKey('Connection', $value);
+	}
+	
+	public function responseContentEncoding($value)
+	{
+		$this->responseWithKey('Content-Encoding', $value);
+	}
+	
+	public function responseContentLength($value)
+	{
+		$this->responseWithKey('Content-Length', $value);
 	}
 	
 	public function responseRedirectLocation($value)
@@ -60,7 +100,7 @@ class Header
 	
 	public function responseDisableCache()
 	{
-		$this->responseControlCache('no-cache');
+		$this->responseCacheControl('no-cache');
 	}
 	
 	public function responseStatus($responseCode = '200', $responseMessage = 'OK', $protocol = 'HTTP', $protocolVersion = '1.0')
