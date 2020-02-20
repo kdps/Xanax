@@ -98,7 +98,22 @@ class Header
 		$this->responseWithKey('Location', $value);
 	}
 	
-	public function responseDisableCache()
+	public function responseCacheControlOnlyIfCached()
+	{
+		$this->responseCacheControl('only-if-cached');
+	}
+	
+	public function responseCacheControlNoStore()
+	{
+		$this->responseCacheControl('no-store');
+	}
+	
+	public function responseCacheControlNoTransform()
+	{
+		$this->responseCacheControl('no-transform');
+	}
+	
+	public function responseCacheControlNoCache()
 	{
 		$this->responseCacheControl('no-cache');
 	}
