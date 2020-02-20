@@ -8,53 +8,67 @@ namespace Xanax\Classes;
 class File extends Header 
 {
 	
-	public static function fileZip()
+	public function Response($value)
 	{
-		header('Content-Type: application/zip; charset=UTF-8');
+		$parent->Response('Content-Type', $value);
+	}
+	
+	public function responseWithCharset($application, $charSet)
+	{
+		$charSet = Array("charset"=>$charSet);
+		$parent->responseWithKeyAndArray($application, $charSet);
+	}
+	
+	public function responseWithOption($application, $charSet) {
+		if ($charSet) {
+			$this->responseWithCharset($application, $charSet);
+		} else {
+			$this->Response('application/zip; charset=UTF-8');
+		}
+	}
+	
+	public static function fileZip($charSet = 'UTF-8')
+	{
+		$this->responseWithOption("application/zip", $charSet);
 	}
 
-	public static function fileXml()
+	public static function fileXml($charSet = 'UTF-8')
 	{
-		header('Content-Type: text/xml; charset=UTF-8');
+		$this->responseWithOption("text/xml", $charSet);
 	}
 
-	public static function fileJson()
+	public static function fileJson($charSet = 'UTF-8')
 	{
-		header('Content-Type: application/json');
+		$this->responseWithOption("application/json", $charSet);
 	}
 
-	public static function filePdf()
+	public static function filePdf($charSet = 'UTF-8'
 	{
-		header('Content-Type: application/pdf');
+		$this->responseWithOption("application/pdf", $charSet);
 	}
 
-	public static function fileGif()
+	public static function fileGif($charSet = 'UTF-8')
 	{
-		header('Content-Type: image/gif');
+		$this->responseWithOption("image/gif", $charSet);
 	}
 
-	public static function fileJpeg()
+	public static function fileJpeg($charSet = 'UTF-8')
 	{
-		header('Content-type: image/jpeg');
+		$this->responseWithOption("image/jpeg", $charSet);
 	}
 
-	public static function fileJpg()
+	public static function fileJpg($charSet = 'UTF-8')
 	{
-		header('Content-type: image/jpg');
+		$this->responseWithOption("image/jpg", $charSet);
 	}
 
-	public static function filePng()
+	public static function filePng($charSet = 'UTF-8')
 	{
-		header('Content-type: image/png');
+		$this->responseWithOption("image/png", $charSet);
 	}
-
-	public static function fileHtml()
+				       
+	public static function fileJavascript($charSet = 'UTF-8')
 	{
-		header('Content-Type: text/html; charset=UTF-8');
-	}
-
-	public static function fileJavascript()
-	{
-		header('Content-Type: text/javascript; charset=UTF-8');
+		$this->responseWithOption("text/javascript", $charSet);
 	}
 }
