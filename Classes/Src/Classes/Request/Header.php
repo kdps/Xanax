@@ -11,6 +11,15 @@ class Header
 		header($data);
 	}
 	
+	public function responseWithKeyAndArray($key:String, $pair: Array)
+	{
+		array_walk($pair, create_function('&$i,$k','$i=" $k=$i;";'));
+		
+		$responseData = implode($pair, "");
+		
+		$this->Response($key + $responseData);
+	}
+	
 	public function responseWithArray($pair: Array)
 	{
 		array_walk($pair, create_function('&$i,$k','$i=" $k=$i;";'));
