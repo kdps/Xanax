@@ -13,7 +13,7 @@ class CacheControl extends Header
 		$parent->responseWithKey('Cache-Control', $value);
 	}
 	
-	public function responseMinFresh($value)
+	public function minFresh($value)
 	{
 		$key = "min-fresh";
 		$data = "$key=$value";
@@ -21,7 +21,7 @@ class CacheControl extends Header
 		$this->response($data);
 	}
 	
-	public function responseMaxStale($value)
+	public function maxStale($value)
 	{
 		$key = "max-stale";
 		$data = "$key=[=$value]";
@@ -29,7 +29,7 @@ class CacheControl extends Header
 		$this->response($data);
 	}
 	
-	public function responseMaxAge($value)
+	public function maxAge($value)
 	{
 		$key = "max-age";
 		$data = "$key=$value";
@@ -37,22 +37,22 @@ class CacheControl extends Header
 		$this->response($data);
 	}
 	
-	public function responseOnlyIfCached()
+	public function onlyIfCached()
 	{
 		$this->response('only-if-cached');
 	}
 	
-	public function responseNoStore()
+	public function noStore()
 	{
 		$this->response('no-store');
 	}
 	
-	public function responseNoTransform()
+	public function noTransform()
 	{
 		$this->response('no-transform');
 	}
 	
-	public function responseNoCache()
+	public function noCache()
 	{
 		$this->response('no-cache');
 	}
