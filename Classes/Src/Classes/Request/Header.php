@@ -48,36 +48,6 @@ class Header
 		$this->responseWithKey('P3P', 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 	}
 	
-	
-	public function responseCacheControlMinFresh($value)
-	{
-		$key = "min-fresh";
-		$data = "$key=$value";
-		
-		$this->responseCacheControl($data);
-	}
-	
-	public function responseCacheControlMaxStale($value)
-	{
-		$key = "max-stale";
-		$data = "$key=[=$value]";
-		
-		$this->responseCacheControl($data);
-	}
-	
-	public function responseCacheControlMaxAge($value)
-	{
-		$key = "max-age";
-		$data = "$key=$value";
-		
-		$this->responseCacheControl($data);
-	}
-	
-	public function responseCacheControl($value)
-	{
-		$this->responseWithKey('Cache-Control', $value);
-	}
-	
 	public function responseConnection($value)
 	{
 		$this->responseWithKey('Connection', $value);
@@ -96,26 +66,6 @@ class Header
 	public function responseRedirectLocation($value)
 	{
 		$this->responseWithKey('Location', $value);
-	}
-	
-	public function responseCacheControlOnlyIfCached()
-	{
-		$this->responseCacheControl('only-if-cached');
-	}
-	
-	public function responseCacheControlNoStore()
-	{
-		$this->responseCacheControl('no-store');
-	}
-	
-	public function responseCacheControlNoTransform()
-	{
-		$this->responseCacheControl('no-transform');
-	}
-	
-	public function responseCacheControlNoCache()
-	{
-		$this->responseCacheControl('no-cache');
 	}
 	
 	public function responseStatus($responseCode = '200', $responseMessage = 'OK', $protocol = 'HTTP', $protocolVersion = '1.0')
