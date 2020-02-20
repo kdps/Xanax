@@ -13,7 +13,7 @@ class Header
 	
 	public function responseWithArray($pair: Array)
 	{
-		array_walk($pair, create_function('&$i,$k','$i=" $k=\"$i\"";'));
+		array_walk($pair, create_function('&$i,$k','$i=" $k=$i;";'));
 		
 		$responseData = implode($pair, "");
 		
