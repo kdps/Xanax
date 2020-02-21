@@ -1,8 +1,10 @@
 <?php
 
+use Xanax/Classes/Data as Data;
+
 namespace Xanax/Classes/Data;
 
-class Identifier
+class Identifier extends Data
 {
   public function isInternetProtocol()
   {
