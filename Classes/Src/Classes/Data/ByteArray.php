@@ -1,6 +1,8 @@
 <?php
 
-class ByteArray
+use Xanax/Classes/Data as Data;
+
+class ByteArray extends Data
 {
   public function toString()
   {
