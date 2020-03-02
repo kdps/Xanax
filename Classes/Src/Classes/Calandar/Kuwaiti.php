@@ -2,6 +2,6 @@
 
 // Tabular Islamic calendar
 
-class KuwaitiAlgorithm {
+class Kuwaiti {
 
 }
