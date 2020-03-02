@@ -9,6 +9,7 @@ class StringHandler
 	public function removeByteOrderMark($text, $encoding = 'utf-8')
 	{
 		$byteOrderMark = "EFBBBF";
+		$result = "";
 		
 		switch($encoding) {
 			case "utf-8":
@@ -30,10 +31,22 @@ class StringHandler
 				break;
 		}
 		
-		$find = pack('H*', $byteOrderMark);
-		$result = preg_replace("/^$find/", '', $text);
+		$hexString = $this->Substring($this->binaryToHex($text), 0, 6);
+		
+		if ($hexString === $byteOrderMark) {
+			$find = pack('H*', $byteOrderMark);
+			$result = preg_replace("/^$find/", '', $text);
+		}
 		
 		return $result;
+	}
+	
+	public function Substring($binaryText, $start, $length) {
+		return substr($binaryText, $start, $length);
+	}
+	
+	public function binaryToHex($binaryText) {
+		return bin2hex($binaryText);
 	}
 	
 	public function getMaxAllocationSize(string $string) :int
