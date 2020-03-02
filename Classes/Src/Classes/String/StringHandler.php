@@ -6,6 +6,36 @@ use Xanax\Exception\MemoryAllocatedException;
 
 class StringHandler
 {
+	public function removeByteOrderMark($text, $encoding = 'utf-8')
+	{
+		$byteOrderMark = "EFBBBF";
+		
+		switch($encoding) {
+			case "utf-8":
+				$byteOrderMark = "EFBBBF";
+				break;
+			case "utf-16 big endian":
+				$byteOrderMark = "FEFF";
+				break;
+			case "utf-16 little endian":
+				$byteOrderMark = "FFFE";
+				break;
+			case "utf-32 big endian":
+				$byteOrderMark = "0000FEFF";
+				break;
+			case "utf-32 little endian":
+				$byteOrderMark = "FFFE0000";
+				break;
+			default:
+				break;
+		}
+		
+		$find = pack('H*', $byteOrderMark);
+		$result = preg_replace("/^$find/", '', $text);
+		
+		return $result;
+	}
+	
 	public function getMaxAllocationSize(string $string) :int
 	{
 		$memory_limit = ini_get('memory_limit');
