@@ -1,5 +1,7 @@
 <?php
 
+namespace Xanax\Classes\String;
+
 class Unicode {
 
 	public function isValid($text) {
