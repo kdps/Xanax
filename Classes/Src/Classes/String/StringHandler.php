@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Xanax\Classes\String;
+
 use Xanax\Exception\MemoryAllocatedException;
 
 class StringHandler
