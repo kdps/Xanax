@@ -20,4 +20,20 @@ class PHPProtocol {
 		return "php://filter";
 	}
 	
+	public function getTemporary() {
+		return "php://temp";
+	}
+	
+	public function getMemory() {
+		return "php://memory";
+	}
+	
+	public function getInput() {
+		return "php://input";
+	}
+	
+	public function getOutput() {
+		return "php://output";
+	}
+	
 }
