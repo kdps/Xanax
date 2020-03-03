@@ -43,6 +43,128 @@ class StringHandler
 		return $result;
 	}
 	
+	public function unhtmlSpecialChars($string) 
+	{
+		$entity = array('&quot;', '&#039;', '&#39;', '&lt;', '&gt;', '&amp;');
+		$symbol = array('"', "'", "'", '<', '>', '&');
+		return str_replace($entity, $symbol, $string);
+	}
+	
+	public function entityToTag($string, $names) 
+	{
+		$attr = ' ([a-z]+)=&quot;([\w!#$%()*+,\-.\/:;=?@~\[\] ]|&amp|&#039|&#39)+&quot;';
+		$name_list = explode(',', $names);
+		foreach ($name_list as $name) {
+			$string = preg_replace_callback("{&lt;($name)(($attr)*)&gt;(.*?)&lt;/$name&gt;}is", array('Utility', 'replace'), $string);
+		}
+		
+		return $string;
+	}
+	
+	public function stripTags($string, $tags='') 
+	{
+		if ($tags === '') {
+			return strip_tags($string);
+		}
+		
+		$tags = str_replace(',', '><', $tags);
+		$tags = "<$tags>";
+		return strip_tags($string, $tags);
+	}
+	
+	
+	public static function getUrlParameter($args) {
+		$parameter = null;
+		$rewriteParams = new stdClass;
+		$func_num = func_num_args();
+		$func_get = func_get_args();
+		
+		if ($func_get[0] == NULL) {
+			$i=1;
+			
+			while ($i<$func_num) {
+				if ($parameter) {
+					if (isset($func_get[$i+1])) {
+						$parameter .= '&'.$func_get[$i].'='.$func_get[$i+1];
+					}
+				} else {
+					$parameter .= '?';
+					$parameter .= $func_get[$i].'='.$func_get[$i+1];
+				}
+				
+				$i = $i+2;
+			}
+		} else {
+			$i=0;
+			$get_tmp = $_GET;
+			
+			while ($i < $func_num) {
+				if ($func_get[$i+1]=='') {
+					unset($get_tmp[$func_get[$i]]);
+				} else if (isset($func_get[$i+1])) {
+					$get_tmp[$func_get[$i]] = $func_get[$i+1];
+				}
+				
+				$i = $i+2;
+			}
+			
+			foreach ($get_tmp as $key=>$val) {
+				if ($parameter) {
+					$parameter .= '&'.$key.'='.$val;
+				} else {
+					$parameter .= '?';
+					$parameter .= $key.'='.$val;
+				}
+			}
+		}
+		
+		$parameter = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'].$parameter : $parameter;
+		
+		return $return_url;
+	}
+	
+	public function nlTrim($input) 
+	{
+		$input = preg_replace('/[\r\n]/', '', $input);
+		$input = preg_replace('/\t+/', ' ', $input);
+		return $input;
+	}
+	
+	public function nlslim($input, $max = 2) 
+	{
+		$input = mb_ereg_replace('[\t 　]+(?=[\r\n])', '', $input);
+		$replace = str_repeat('$1', $max);
+		++$max;
+		$regexp = '/(\r\n?|\n) {' . $max . ',}/';
+		$input = preg_replace($regexp, $replace, $input);
+		$input = str_replace("\t", '    ', $input);
+		return $input;
+	}
+	
+	public function nlToBr($string) 
+	{
+		return preg_replace('/\r\n?|\n/', '<br />', $string);
+	}
+	
+	public function brToNl($string) 
+	{
+		return str_replace('<br />', "\r\n", $string);
+	}
+	
+	public static function removeNullByte($input) 
+	{
+		$clean = str_replace("\x00", '', $input); 
+		$clean = str_replace("\0", '', $input); 
+		$clean = str_replace(chr(0), '', $input);
+		
+		return $clean;
+	}
+	
+	public static function removeDot($basename) 
+	{
+		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", "$1-$2-$3$4-$5", $basename);
+	}
+	
 	public function Substring($binaryText, $start, $length) {
 		return substr($binaryText, $start, $length);
 	}
@@ -67,7 +189,7 @@ class StringHandler
 		return (int)($maxAllocationSize / strlen($string));
 	}
 
-	public function Repeat(string $string, int $multiplier)
+	public function Repeat(string $string, int $multiplier) 
 	{
 		if ($this->getMaxAllocationSize($string) > $multiplier) {
 			// Memory allocated error
