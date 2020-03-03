@@ -79,6 +79,8 @@ class FileHandler implements FileHandlerInterface
 	 */
 	public function isEqual($firstPath, $secondPath, $chunkSize = 500)
 	{
+		// https://stackoverflow.com/questions/30107521/check-if-same-image-has-already-been-uploaded-by-comparing-base64
+		
 		// First check if file are not the same size as the fastest method
 		if (filesize($firstPath) !== filesize($secondPath)) {
 			return false;
