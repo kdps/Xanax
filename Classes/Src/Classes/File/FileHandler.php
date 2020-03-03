@@ -88,8 +88,8 @@ class FileHandler implements FileHandlerInterface
 
 		// Compare the first ${chunkSize} bytes
 		// This is fast and binary files will most likely be different
-		$fp1            = fopen($firstPath, 'r');
-		$fp2            = fopen($secondPath, 'r');
+		$fp1            = $this->Open($firstPath, 'r');
+		$fp2            = $this->Open($secondPath, 'r');
 		$chunksAreEqual = fread($fp1, $chunkSize) == fread($fp2, $chunkSize);
 		fclose($fp1);
 		fclose($fp2);
@@ -109,6 +109,12 @@ class FileHandler implements FileHandlerInterface
 		return true;
 	}
 
+	public function Open($filePath, $mode) : resource {
+		$handler = fopen($filePath, $mode);
+		
+		return $handler;
+	}
+	
 	public function closeProcess($processResource) {
 		if (getType($fileHandler) !== 'resource') {
 			//throw new 
@@ -206,7 +212,7 @@ class FileHandler implements FileHandlerInterface
 			return false;
 		}
 
-		$cached = fopen($filePath, 'w');
+		$cached = $this->Open($filePath, 'w');
 		fwrite($destination, ob_get_contents());
 		fclose($destination);
 		ob_end_flush();
@@ -304,7 +310,7 @@ class FileHandler implements FileHandlerInterface
 		}
 
 		if (!$this->isValidHandler($filePath)) {
-			$filePath = fopen($filePath, 'r+');
+			$filePath = $this->Open($filePath, 'r+');
 		}
 
 		if (!flock($filePath, LOCK_EX)) {
@@ -1358,7 +1364,7 @@ class FileHandler implements FileHandlerInterface
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		$fileHandler = fopen($filePath, 'r');
+		$fileHandler = $this->Open($filePath, 'r');
 		$fileSize    = $this->getSize($filePath);
 		$return      = fread($fileHandler, $fileSize);
 		fclose($fileHandler);
@@ -1385,7 +1391,7 @@ class FileHandler implements FileHandlerInterface
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		$fileHandler = @fopen($filePath, 'rb');
+		$fileHandler = $this->Open($filePath, 'rb');
 		if ($fileHandler === false) {
 			return false;
 		}
