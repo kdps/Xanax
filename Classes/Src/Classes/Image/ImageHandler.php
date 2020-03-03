@@ -502,8 +502,7 @@ class ImageHandler implements ImageHandlerInterface {
 				default:
 					return false;
 			}
-		} catch(Exception $e) {
-		}
+		} catch(Exception $e) { }
 		
 		return $createObject;
 	}
