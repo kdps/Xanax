@@ -258,7 +258,7 @@ class StringHandler
 				}
 
 				break;
-			case 'strnum':
+			case 'StringNumber':
 				if (preg_match('/^[A-Za-z0-9]+$/i', $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -270,7 +270,7 @@ class StringHandler
 				}
 
 				break;
-			case 'phonenumber':
+			case 'PhoneNumber':
 				if (preg_match('/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/g', $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -282,7 +282,7 @@ class StringHandler
 				}
 
 				break;
-			case 'url':
+			case 'URL':
 				if (preg_match("/^(http\:\/\/)*[.a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -294,7 +294,7 @@ class StringHandler
 				}
 
 				break;
-			case 'email':
+			case 'Email':
 				if (preg_match("/^[^@]+@[._a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -306,7 +306,7 @@ class StringHandler
 				}
 
 				break;
-			case 'urlparam':
+			case 'URLParameter':
 				if (preg_match('/([^=&?]+)=([^&#]*)/g', $string, $matches)) {
 					if (count($matches) === 1) {
 						if (isset($matches[1])) {
@@ -322,7 +322,7 @@ class StringHandler
 				}
 
 				break;
-			case 'label':
+			case 'Label':
 				if (preg_match("/\[([a-zA-Z0-9\s_-]+)\]/i", $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -334,7 +334,7 @@ class StringHandler
 				}
 
 				break;
-			case 'functionname':
+			case 'FunctionName':
 				if (preg_match_all("/(\[?[a-zA-Z0-9\s_-]+\]?)/", $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -346,11 +346,11 @@ class StringHandler
 				}
 
 				break;
-			case 'deny':
+			case 'Deny':
 				$string = false;
 
 				break;
-			case 'doublequotation':
+			case 'DoubleQuotation':
 				if (preg_match('/^"(.*)"$/', $key, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -362,7 +362,7 @@ class StringHandler
 				}
 
 				break;
-			case 'siniglequotation':
+			case 'SinigleQuotation':
 				if (preg_match('/^\'(.*)\'$/', $string, $matches)) {
 					if (isset($matches[1])) {
 						$string = $matches[1];
@@ -374,17 +374,16 @@ class StringHandler
 				}
 
 				break;
-			case 'withouthtml':
+			case 'WithOutHTML':
 				$string = strip_tags($string);
 				break;
-			case 'json':
+			case 'JSON':
 				if ( !$this->isJson( $string ) {
 					$string = false;
 				}
 
 				break;
-			case 'numbers':
-				//not include negative numbers
+			case 'Numbers':
 				if (!is_numeric($string) || !is_int($string)) {
 					if (preg_match('/^(\d[\d\.]+)$/', $key, $matches)) {
 						if (isset($matches[1])) {
@@ -398,7 +397,7 @@ class StringHandler
 				}
 
 				break;
-			case 'number':
+			case 'Number':
 				if (!is_numeric($string) || !is_int($string)) {
 					if (preg_match('/^(\d+)$/', $string, $matches)) {
 						if (isset($matches[1])) {
@@ -412,17 +411,17 @@ class StringHandler
 				}
 
 				break;
-			case 'string':
+			case 'String':
 				if (!is_string($string)) {
 					$string = false;
 				}
 
 				break;
-			case 'int':
+			case 'Integer':
 				$string = intval($string);
 
 				break;
-			case 'float':
+			case 'Float':
 				$string = intval($string);
 				$string = (float)sprintf('% u', $string);
 				if ($string < 0) {
@@ -430,7 +429,7 @@ class StringHandler
 				}
 
 				break;
-			case 'bool':
+			case 'Boolean':
 				$string = ($string === true) ? true : (($string === false) ? false : false);
 
 				break;
