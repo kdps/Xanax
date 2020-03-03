@@ -6,8 +6,9 @@ namespace Xanax\Classes\String;
 
 use Xanax\Exception\MemoryAllocatedException;
 
-class StringHandler
+class StringHandler 
 {
+	
 	public function removeByteOrderMark($text, $encoding = 'utf-8')
 	{
 		$byteOrderMark = "EFBBBF";
@@ -41,6 +42,28 @@ class StringHandler
 		}
 		
 		return $result;
+	}
+	
+	public function integerToBytes($integer) 
+	{
+		$integer = $integer;
+		$length = length($integer);
+		
+		for ($i = $length - 1; $i >= 0; $i--) {
+			$result .= chr(floor($integer / pow(256, $i)));
+		}
+		
+		return $result;
+	}
+	
+	public static function toUpper($text) 
+	{
+		return strtoupper($text);
+	}
+	
+	public static function toLower($text) 
+	{
+		return strtolower($text);
 	}
 	
 	public function unhtmlSpecialChars($string) 
@@ -160,9 +183,9 @@ class StringHandler
 		return $clean;
 	}
 	
-	public static function removeDot($basename) 
+	public static function removeDot($text) 
 	{
-		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", "$1-$2-$3$4-$5", $basename);
+		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", "$1-$2-$3$4-$5", $text);
 	}
 	
 	public function Substring($binaryText, $start, $length) {
