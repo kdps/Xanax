@@ -68,6 +68,48 @@ class FileHandler implements FileHandlerInterface
 		}
 	}
 
+	public function getStandardOutput($mode = 'r') {
+		$handler = $this->Open('php://stdout ', $mode);
+		
+		return $handler;
+	}
+	
+	public function getStandardInput($mode = 'r') {
+		$handler = $this->Open('php://stdin ', $mode);
+		
+		return $handler;
+	}
+	
+	public function getFilterStream($mode = 'rb') {
+		$handler = $this->Open('php://filter ', $mode);
+		
+		return $handler;
+	}
+	
+	public function getTemporaryStream($mode = 'rb') {
+		$handler = $this->Open('php://temp ', $mode);
+		
+		return $handler;
+	}
+	
+	public function getMemoryStream($mode = 'rb') {
+		$handler = $this->Open('php://memory', $mode);
+		
+		return $handler;
+	}
+	
+	public function getInputStream($mode = 'rb') {
+		$handler = $this->Open('php://input', $mode);
+		
+		return $handler;
+	}
+	
+	public function getOutputStream($mode = 'w') {
+		$handler = $this->Open('php://output', $mode);
+		
+		return $handler;
+	}
+	
 	/**
 	 * Check if two files are identical
 	 *
