@@ -19,4 +19,5 @@ class PHPProtocol {
 	public function getFilter() {
 		return "php://filter";
 	}
+	
 }
