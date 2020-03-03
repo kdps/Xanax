@@ -2,13 +2,17 @@
 
 namespace Xanax/Classes;
 
-class XMLHandler
+class SimpleXML
 {
 	
 	private $data;
 	
 	public function Parse($text) {
 		$this->data = simplexml_load_string($text);
+	}
+	
+	public function fromFile($filePath) {
+		$this->data = simplexml_load_file($filePath);
 	}
 	
 	public function isValid() {
