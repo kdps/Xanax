@@ -55,17 +55,8 @@ class FileHandler implements FileHandlerInterface
 	{
 		$this->strictMode = $useStrictMode;
 
-		if ($fileSystemHandler) {
-			$this->fileSystemHandler = $fileSystemHandler;
-		} else {
-			$this->fileSystemHandler = new FileSystemHandler();
-		}
-
-		if ($directoryHandler) {
-			$this->directoryHandler = $directoryHandler;
-		} else {
-			$this->directoryHandler = new DirectoryHandler($this);
-		}
+		$this->fileSystemHandler = isset($fileSystemHandler) ? $fileSystemHandler : new FileSystemHandler();
+		$this->directoryHandler = isset($directoryHandler) ? $directoryHandler : new DirectoryHandler($this);
 	}
 
 	public function getStandardErrorStream($mode = 'r') {
