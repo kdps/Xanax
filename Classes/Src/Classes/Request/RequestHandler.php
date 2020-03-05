@@ -84,8 +84,64 @@ class RequestHandler
 		return $_SERVER['REQUEST_URI'];
 	}
 	
-	public function getAbsolutePathOfDocumentRoot() {
-		return $_SERVER['DOCUMENT_ROOT'];
+	/**
+	 * The physical path of the temporary IIS application pool configuration.
+	 *
+	 * @return String
+	 */
+	public function getTemporaryIISApplicationPhysicalPathOfPoolConfiguration() {
+		return $_SERVER['APP_POOL_CONFIG'];
+	}
+	
+	/**
+	 * The metabase path of the application.
+	 *
+	 * @return String
+	 */
+	public function getIISApplicationMetabasePath() {
+		return $_SERVER['APPL_MD_PATH'];
+	}
+	
+	/**
+	 * The authentication method that the server uses to validate users.
+	 * It does not mean that the user was authenticated if AUTH_TYPE contains a value and the authentication scheme is not Basic or integrated Windows authentication. 
+	 * The server allows authentication schemes it does not natively support because an ISAPI filter may be able to handle that particular scheme.
+	 *
+	 * @return String
+	 */
+	public function getIISAuthenticateType() {
+		return $_SERVER['AUTH_TYPE'];
+	}
+	
+	/**
+	 * The password provided by the client to authenticate using Basic Authentication.
+	 *
+	 * @return String
+	 */
+	public function getIISAuthenticatePassword() {
+		return $_SERVER['AUTH_PASSWORD'];
+	}
+	
+	/**
+	 * The name of the application pool that is running the IIS worker process handling the request.
+	 *
+	 * @return String
+	 */
+	public function getIISApplicationPoolID() {
+		return $_SERVER['APP_POOL_ID'];
+	}
+	
+	/**
+	 * The physical path of the application.
+	 *
+	 * @return String
+	 */
+	public function getIISApplicationPhysicalPath() {
+		return $_SERVER['APPL_PHYSICAL_PATH'];
+	}
+	
+	public function getServierSoftwareName() {
+		return $_SERVER['SERVER_SOFTWARE'];
 	}
 	
 	public function getAbsolutePathOfDocumentRoot() {
