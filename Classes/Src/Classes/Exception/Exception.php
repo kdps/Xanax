@@ -8,6 +8,8 @@ class Exception {
 				if ($callback instanceof callable) {
 					$callback($errorRaised, $errorMessage, $fileName, $lineNumber, $context);
 				}
+			} else {
+				return false;
 			}
 		});
 	}
