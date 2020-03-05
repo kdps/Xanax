@@ -70,6 +70,14 @@ class RequestHandler
 		return empty($_SERVER['HTTPS']) ? false : $_SERVER['HTTPS'] === 'on' ? true : false;
 	}
 
+	public function getServerTime() {
+		$_SERVER['REQUEST_TIME'];
+	}
+	
+	public function getServerFloatTime() {
+		$_SERVER['REQUEST_TIME_FLOAT'];
+	}
+	
 	public function getProtocol() :string
 	{
 		return substr(strtolower($_SERVER['SERVER_PROTOCOL']), 0, strpos(strtolower($_SERVER['SERVER_PROTOCOL']), '/'));
@@ -248,37 +256,37 @@ class RequestHandler
 		return null;
 	}
 
-	public function isHeadRequest()
+	public function isHead()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'HEAD') ? true : false;
 	}
 	
-	public function isPutRequest()
+	public function isPut()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'PATCH') ? true : false;
 	}
 	
-	public function isPutRequest()
+	public function isPut()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'PUT') ? true : false;
 	}
 	
-	public function isOptionsRequest()
+	public function isOptions()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'OPTIONS') ? true : false;
 	}
 
-	public function isDeleteRequest()
+	public function isDelete()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'DELETE') ? true : false;
 	}
 
-	public function isGetRequest()
+	public function isGet()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'GET') ? true : false;
 	}
 
-	public function isPostRequest()
+	public function isPost()
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'POST') ? true : false;
 	}
