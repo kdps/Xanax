@@ -75,6 +75,31 @@ class RequestHandler
 		return substr(strtolower($_SERVER['SERVER_PROTOCOL']), 0, strpos(strtolower($_SERVER['SERVER_PROTOCOL']), '/'));
 	}
 
+	/**
+	 * Get Request Uniform Resource Identifier
+	 *
+	 * @return String
+	 */
+	public function getRequestURI() {
+		return $_SERVER['REQUEST_URI'];
+	}
+	
+	public function getAbsolutePathOfDocumentRoot() {
+		return $_SERVER['DOCUMENT_ROOT'];
+	}
+	
+	public function getAbsolutePathOfDocumentRoot() {
+		return $_SERVER['DOCUMENT_ROOT'];
+	}
+	
+	public function getIISIsapiRewriteURL() {
+		return $_SERVER['HTTP_X_REWRITE_URL'];
+	}
+	
+	public function getIISIsapiRewriteURL() {
+		return $_SERVER['HTTP_X_REWRITE_URL'];
+	}
+	
 	public function getHTTPConnection() :string
 	{
 		return $_SERVER['HTTP_CONNECTION'];
