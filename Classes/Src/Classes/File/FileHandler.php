@@ -63,6 +63,12 @@ class FileHandler implements FileHandlerInterface
 		$this->directoryHandler = isset($directoryHandler) ? $directoryHandler : new DirectoryHandler($this);
 	}
 
+	public function generateHashByContents($algorithm = 'md5', $filePath, $rawContents) : String {
+		$return = hash_file($algorithm, $filePath, $rawContents);
+		
+		return $return;
+	}
+	
 	public function getStandardErrorStream($mode = 'r') {
 		$handler = $this->Open('php://stderr', $mode);
 		
