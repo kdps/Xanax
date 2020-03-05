@@ -7,13 +7,17 @@ namespace Xanax\Classes;
 use Xanax\Classes\FileObject as FileObject;
 use Xanax\Classes\FileSystemHandler as FileSystemHandler;
 use Xanax\Classes\DirectoryHandler as DirectoryHandler;
+
 use Xanax\Exception\Stupid\StupidIdeaException as StupidIdeaException;
 use Xanax\Exception\FileHandler\FileIsNotExistsException as FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException as TargetIsNotFileException;
 use Xanax\Exception\FileHandler\InvalidFileHandler as InvalidFileHandler;
+
 use Xanax\Implement\FileHandlerInterface as FileHandlerInterface;
 use Xanax\Implement\DirectoryHandlerInterface as DirectoryHandlerInterface;
+
 use Xanax\Validation\FileValidation as FileValidation;
+
 use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
 class FileHandler implements FileHandlerInterface
