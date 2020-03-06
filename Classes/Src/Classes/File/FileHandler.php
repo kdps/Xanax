@@ -4,21 +4,36 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
+// Classes
+
 use Xanax\Classes\FileObject as FileObject;
 use Xanax\Classes\FileSystemHandler as FileSystemHandler;
 use Xanax\Classes\DirectoryHandler as DirectoryHandler;
 
+// Exception
+
 use Xanax\Exception\Stupid\StupidIdeaException as StupidIdeaException;
+
 use Xanax\Exception\FileHandler\FileIsNotExistsException as FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException as TargetIsNotFileException;
 use Xanax\Exception\FileHandler\InvalidFileHandler as InvalidFileHandler;
 
+use Xanax\Exception\Function\FunctionIsNotExistsException as FunctionIsNotExistsException;
+
+// Implements
+
 use Xanax\Implement\FileHandlerInterface as FileHandlerInterface;
 use Xanax\Implement\DirectoryHandlerInterface as DirectoryHandlerInterface;
 
+// Validation
+
 use Xanax\Validation\FileValidation as FileValidation;
 
+// Message
+
 use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
+
+use Xanax\Message\Function\FunctionMessage as FunctionMessage;
 
 class FileHandler implements FileHandlerInterface
 {
@@ -320,8 +335,12 @@ class FileHandler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function getMIMEType($filePath)
+	public function getMIMEContentTypeFromMagicMIME($filePath)
 	{
+		if (!function_exists("mime_content_type")) {
+			throw new FunctionIsNotExistsException(FunctionMessage::getFunctionIsNotFileMessage());
+		}
+		
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -335,6 +354,25 @@ class FileHandler implements FileHandlerInterface
 		return mime_content_type($filePath);
 	}
 
+	public function getMIMEContentTypeFromAlaMimetypeExtension($filePath) 
+	{
+		if (!(function_exists("finfo_open") || function_exists("finfo_file"))) {
+			throw new FunctionIsNotExistsException(FunctionMessage::getFunctionIsNotFileMessage());
+		}
+		
+		$filePath = $this->convertToNomalizePath($filePath);
+		
+		$fileinfoResource = finfo_open(FILEINFO_MIME_TYPE);
+
+        	$result = finfo_file($fileinfoResource, $filePath);
+		
+		return $result;
+	}
+	
+	public function getMIMEContentType() {
+		
+	}
+	
 	/**
 	 * Gets whether the file is locked.
 	 *
