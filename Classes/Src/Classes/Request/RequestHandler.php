@@ -203,17 +203,17 @@ class RequestHandler
 		return $_SERVER['CONTENT_TYPE'];
 	}
 
-	public static function getSignature()
+	public function getSignature()
 	{
 		return $_SERVER['SERVER_SIGNATURE'];
 	}
 
-	public static function getUserAgent()
+	public function getUserAgent()
 	{
 		return $_SERVER['HTTP_USER_AGENT'];
 	}
 
-	public static function getDocumentRoot()
+	public function getDocumentRoot()
 	{
 		return $_SERVER['DOCUMENT_ROOT'];
 	}
