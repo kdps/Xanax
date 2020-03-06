@@ -88,7 +88,7 @@ class RequestHandler
 	 *
 	 * @return String
 	 */
-	public function getRequestURI() {
+	public function getURI() {
 		return $_SERVER['REQUEST_URI'];
 	}
 	
