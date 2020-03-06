@@ -71,11 +71,15 @@ class RequestHandler
 	}
 
 	public function getServerTime() {
-		$_SERVER['REQUEST_TIME'];
+		return $_SERVER['REQUEST_TIME'];
 	}
 	
 	public function getServerFloatTime() {
-		$_SERVER['REQUEST_TIME_FLOAT'];
+		return $_SERVER['REQUEST_TIME_FLOAT'];
+	}
+	
+	public function getScheme() {
+		return $_SERVER['REQUEST_SCHEME'];
 	}
 	
 	public function getProtocol() :string
