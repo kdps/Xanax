@@ -33,7 +33,7 @@ use Xanax\Validation\FileValidation as FileValidation;
 
 use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
-use Xanax\Message\Function\FunctionMessage as FunctionMessage;
+use Xanax\Message\Functions\FunctionMessage as FunctionMessage;
 
 class FileHandler implements FileHandlerInterface
 {
