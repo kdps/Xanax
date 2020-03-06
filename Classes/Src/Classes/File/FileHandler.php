@@ -381,7 +381,7 @@ class FileHandler implements FileHandlerInterface
 		
 		if (function_exists("mime_content_type")) {
 			$result = getMIMEContentTypeFromMagicMIME($filePath);
-		} else if (function_exists("finfo_open") && function_exists("finfo_file") {
+		} else if (function_exists("finfo_open") && function_exists("finfo_file")) {
 			$result = getMIMEContentTypeFromAlaMimetypeExtension($filePath);
 		}
 	}
