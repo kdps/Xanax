@@ -1,8 +1,8 @@
 <?php
 
-namespace Xanax\Message\FileHandler;
+namespace Xanax\Message\Function;
 
-class FileHandlerMessage
+class FunctionMessage
 {
 	
 	public static function getFunctionIsNotFileMessage()
