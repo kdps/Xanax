@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class UploadFile
+class Upload
 {
+	
 	public function Get($name, $key = 'name')
 	{
 		if (preg_match('/^([A-Za-z0-9-_]{1,})\[[A-Za-z0-9-_]{1,}\]$/', $name, $match)) {
@@ -19,6 +20,14 @@ class UploadFile
 		}
 	}
 
+	public function Move($name, $filePath) {
+		$temporaryName = $this->getTemporaryName($name);
+
+		$result = move_uploaded_file($temporaryName,  $filePath);
+		
+		return $result;
+	}
+	
 	public function getErrorMessageFromCode($error)
 	{
 		switch ($error) {
@@ -101,4 +110,5 @@ class UploadFile
 
 		return true;
 	}
+	
 }
