@@ -329,11 +329,11 @@ class FileHandler implements FileHandlerInterface
 	}
 
 	/**
-	 * Gets the MIME of the file.
+	 * Get content-type of file from magic.mime
 	 *
 	 * @param string $filePath
 	 *
-	 * @return bool
+	 * @return string
 	 */
 	public function getMIMEContentTypeFromMagicMIME($filePath)
 	{
@@ -354,6 +354,13 @@ class FileHandler implements FileHandlerInterface
 		return mime_content_type($filePath);
 	}
 
+	/**
+	 * Get content-type of file to use Ala Mime-type extension
+	 *
+	 * @param string $filePath
+	 *
+	 * @return string
+	 */
 	public function getMIMEContentTypeFromAlaMimetypeExtension($filePath) 
 	{
 		if (!(function_exists("finfo_open") || function_exists("finfo_file"))) {
@@ -369,8 +376,14 @@ class FileHandler implements FileHandlerInterface
 		return $result;
 	}
 	
-	public function getMIMEContentType() {
+	public function getMIMEContentType($filePath) {
+		$result = null;
 		
+		if (function_exists("mime_content_type")) {
+			$result = getMIMEContentTypeFromMagicMIME($filePath);
+		} else if (function_exists("finfo_open") && function_exists("finfo_file") {
+			$result = getMIMEContentTypeFromAlaMimetypeExtension($filePath);
+		}
 	}
 	
 	/**
