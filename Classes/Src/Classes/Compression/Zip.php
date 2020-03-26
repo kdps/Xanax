@@ -40,7 +40,7 @@ class Zip
 		}
 	}
 
-	public function unCompress($filePath)
+	public function Uncompress($filePath)
 	{
 		$zip = zip_open($filePath);
 
