@@ -256,6 +256,12 @@ class MIME
 		
 		/* Application */
 
+		'yaml' => [
+			'mimeType' => 'application/x-yaml,text/yaml'
+		],
+		'rss' => [
+			'mimeType' => 'application/rss+xml'
+		],
 		'abw' => [
 			'mimeType' => 'application/x-abiword'
 		],
