@@ -2,7 +2,7 @@
 
 namespace Xanax/Classes/Protocol;
 
-class Protocol {
+class PHP {
 
 	public const _STANDARD_ERROR_ = "php://stderr";
 	
