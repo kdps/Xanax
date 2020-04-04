@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax/Classes/Protocol/PHP;
+namespace Xanax/Classes/Protocol;
 
 class Protocol {
 
