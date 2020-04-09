@@ -215,6 +215,10 @@ class MultiPurposeInternetMailExtensions
 
 		/* Document */
 		
+		'word' => [
+			'type' => 'application/msword',
+			'array' => array('application/msword', 'application/octet-stream')
+		],
 		'docx' => [
 			'type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 		],
