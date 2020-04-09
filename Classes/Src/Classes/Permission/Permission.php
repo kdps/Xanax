@@ -17,29 +17,39 @@ class Permission
     self::$mode = $mode;
   }
 
-  public function hasSetUidMode()
-  {
-    return ($this->hasDirectoryMode() && parent::$mode & 0x0800);
-  }
-  
-  public function hasSetGidMode()
-  {
-    return (parent::$mode & 0x0800);
-  }
-  
-  public function hasReadMode()
+  public function isFirstInFirstOutPipe()
   {
     return (parent::$mode & 0x0100);
   }
   
-  public function hasWriteMode()
+  public function isSpecialCharacters()
   {
     return (parent::$mode & 0x0020);
   }
   
-  public function hasDirectoryMode()
+  public function isDirectory()
   {
     return (parent::$mode & 0x0040);
+  }
+  
+  public function isBlockSpecial()
+  {
+    return (parent::$mode & 0x6000);
+  }
+  
+  public function isRegular()
+  {
+    return (parent::$mode & 0x0800);
+  }
+  
+  public function isSymbolicLink()
+  {
+    return (parent::$mode & 0xA000);
+  }
+  
+  public function isSocket()
+  {
+    return (parent::$mode & 0xC000);
   }
   
 }
