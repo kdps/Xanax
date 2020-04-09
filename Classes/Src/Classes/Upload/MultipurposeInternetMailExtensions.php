@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class MIME
+class MultipurposeInternetMailExtensions
 {
 	private static $extension = '';
 
