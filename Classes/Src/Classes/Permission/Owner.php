@@ -22,4 +22,10 @@ class Owner extends Permission
     return (self::$mode & 0x0080);
   }
   
+  public function getExecutableUsers()
+  {
+    return ((self::$mode & 0x0008) ?
+      ((self::$mode & 0x0400) ? 's' : 'x')  :
+      ((self::$mode & 0x0400) ? 'S' : '-'));;
+  }
 }
