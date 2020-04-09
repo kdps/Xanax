@@ -24,8 +24,8 @@ class Group extends Permission
   
   public function getExecutableUsers()
   {
-    return ((self::$mode & 0x0040) ?
-      ((self::$mode & 0x0800) ? 's' : 'x')  :
-      ((self::$mode & 0x0800) ? 'S' : '-'));;
+    return ((self::$mode & 0x0008) ?
+      ((self::$mode & 0x0400) ? 's' : 'x')  :
+      ((self::$mode & 0x0400) ? 'S' : '-'));;
   }
 }
