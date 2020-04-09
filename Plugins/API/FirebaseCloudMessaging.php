@@ -1,5 +1,9 @@
 <?php
 
+include './../../../vendor/autoload.php';
+
+use Xanax\Classes\ClientURL;
+
 class FirebaseCloudMessaging {
 
 	public function sendMessage($registrationIds, $data, $title, $body) {
@@ -22,13 +26,16 @@ class FirebaseCloudMessaging {
 
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+		$cURL = new ClientURL();
+		$cURL->Option->setURL('https://fcm.googleapis.com/fcm/send');
+		
+		/*curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 		$result = curl_exec($ch);
-		curl_close($c);
+		curl_close($c);*/
 
 		return $result;
 	}
@@ -49,7 +56,10 @@ class FirebaseCloudMessaging {
 			'Content-Type: application/json'
 		);
 
-		$ch = curl_init();
+		$cURL = new ClientURL();
+		$cURL->Option->setURL('https://fcm.googleapis.com/fcm/send');
+		
+		/*$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -57,7 +67,7 @@ class FirebaseCloudMessaging {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
 		$result = curl_exec($ch);
-		curl_close($c);
+		curl_close($c);*/
 
 		return $result;
 	}
