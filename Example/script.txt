@@ -1,7 +1,0 @@
-String A = "ABCD"
-String B = "CCCC"
-String C = "CCCC"
-String D = A ?? D
-GetData(1, 2, 3, 4)
-GetData(1*4*56,234)
-GetData(1>>4*56,234)
