@@ -21,35 +21,35 @@ class PHP {
 	public const _OUTPUT_ = "php://output";
 	
 	public function getStandardError() {
-		return "php://stderr";
+		return _STANDARD_ERROR_;
 	}
 	
 	public function getStandardOutput() {
-		return "php://stdout";
+		return _STANDARD_OUTPUT_;
 	}
 	
 	public function getStandardInput() {
-		return "php://stdin";
+		return _STANDARD_INPUT_;
 	}
 	
 	public function getFilter() {
-		return "php://filter";
+		return _FILTER_;
 	}
 	
 	public function getTemporary() {
-		return "php://temp";
+		return _TEMPORARY_;
 	}
 	
 	public function getMemory() {
-		return "php://memory";
+		return _MEMORY_;
 	}
 	
 	public function getInput() {
-		return "php://input";
+		return _INPUT_;
 	}
 	
 	public function getOutput() {
-		return "php://output";
+		return _OUTPUT_;
 	}
 	
 }
