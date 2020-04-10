@@ -48,7 +48,7 @@ interface FileHandlerInterface
 
 	public function getContent(string $filePath) :string;
 
-	public function getHeaderType(string $filePath) :string;
+	public function getHeaderType(string $filePath);
 
 	public function getInterpretedContent(string $filePath) :string;
 
