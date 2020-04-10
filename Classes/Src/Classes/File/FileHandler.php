@@ -946,7 +946,7 @@ class FileHandler implements FileHandlerInterface
 	 *
 	 * @return void
 	 */
-	public function getHeaderType(string $filePath) :string
+	public function getHeaderType(string $filePath)
 	{
 		$size = filesize($filePath);
 		$size = $size > 100 ? 100 : $size;
