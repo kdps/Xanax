@@ -9,6 +9,7 @@ namespace Xanax\Classes;
 use Xanax\Classes\FileObject as FileObject;
 use Xanax\Classes\FileSystemHandler as FileSystemHandler;
 use Xanax\Classes\DirectoryHandler as DirectoryHandler;
+use Xanax\Classes\Protocol\PHP as PHPProtocol;
 
 // Exception
 
@@ -85,49 +86,65 @@ class FileHandler implements FileHandlerInterface
 	}
 	
 	public function getStandardErrorStream($mode = 'r') {
-		$handler = $this->Open('php://stderr', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getStandardError(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getStandardOutputStream($mode = 'r') {
-		$handler = $this->Open('php://stdout', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getStandardOutput(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getStandardInputStream($mode = 'r') {
-		$handler = $this->Open('php://stdin', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getStandardInput(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getFilterStream($mode = 'rb') {
-		$handler = $this->Open('php://filter', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getFilter(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getTemporaryStream($mode = 'rb') {
-		$handler = $this->Open('php://temp', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getTemporary(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getMemoryStream($mode = 'rb') {
-		$handler = $this->Open('php://memory', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getMemory(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getInputStream($mode = 'rb') {
-		$handler = $this->Open('php://input', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getInput(), $mode);
 		
 		return $handler;
 	}
 	
 	public function getOutputStream($mode = 'w') {
-		$handler = $this->Open('php://output', $mode);
+		$phpProtocol = new PHPProtocol();
+		
+		$handler = $this->Open($phpProtocol->getOutput(), $mode);
 		
 		return $handler;
 	}
