@@ -6,7 +6,8 @@
   "license": "MIT",
   "require": {
     "php": ">=7.2.5",
-    "phpmailer/phpmailer": "^6.1"
+    "phpmailer/phpmailer": "^6.1",
+    "ezyang/htmlpurifier": ">=4.10.0"
   },
   "autoload": {
     "psr-4": {"Xanax\\": "Classes/Src/"},
