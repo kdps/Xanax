@@ -10,6 +10,12 @@ class SessionHandler
 	{
 	}
 
+	public function Start($options = []) {
+		if ($this->isExtensionLoaded()) {
+			session_start ($options);
+		}
+	}
+	
 	public function isExtensionLoaded()
 	{
 		if (!extension_loaded('session')) {
