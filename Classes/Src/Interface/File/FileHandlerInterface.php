@@ -42,7 +42,7 @@ interface FileHandlerInterface
 
 	public function getType(string $filePath) :string;
 
-	public function getExtention(string $filePath) :string;
+	public function getExtension(string $filePath) :string;
 
 	public function getBasename(string $fileName, $extension = null) :string;
 
