@@ -1445,6 +1445,17 @@ class FileHandler implements FileHandlerInterface
 	{
 		return basename($fileName, $extension) . PHP_EOL;
 	}
+	
+	public function getExtensionByFilePath(string $filePath) :string
+	{
+		$return = null;
+		
+		if (function_exists("pathinfo")) {
+			$return = pathinfo($filePath, PATHINFO_EXTENSION);
+		}
+		
+		return $return;
+	}
 
 	/**
 	 * Get the file's extension.
@@ -1453,12 +1464,21 @@ class FileHandler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getExtention(string $filePath) :string
+	public function getExtension(string $filePath) :string
 	{
+		$return = null;
+		
 		$filePath = $this->convertToNomalizePath($filePath);
 
-		$return = pathinfo($filePath, PATHINFO_EXTENSION);
-
+		if (function_exists("pathinfo")) {
+			$return = $this->getExtensionByFilePath($filePath);
+		} else {
+			$dotExists = strrchr($filePath, '.');
+			if ($dotExists !== false) {
+				$return = substr($dotExists, 1);
+			}
+		}
+		
 		return $return;
 	}
 
