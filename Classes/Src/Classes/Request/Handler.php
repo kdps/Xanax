@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Request;
 
-class RequestHandler
+class Handler
 {
 	public $RequestMessage = [
 		100 => 'Continue',
