@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\HTML;
 
-class HTMLHandler
+class Handler
 {
 	public static function generateParameter($attributes = [])
 	{
