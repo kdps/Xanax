@@ -7,7 +7,7 @@ namespace Xanax\Classes\File;
 // Classes
 
 use Xanax\Classes\File\Object as FileObject;
-use Xanax\Classes\FileSystemHandler as FileSystemHandler;
+use Xanax\Classes\FileSystem\Handler as FileSystemHandler;
 use Xanax\Classes\Directory\Handler as DirectoryHandler;
 use Xanax\Classes\Protocol\PHP as PHPProtocol;
 
