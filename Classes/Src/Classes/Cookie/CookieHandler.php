@@ -52,7 +52,7 @@ class Handler
 		}
 	}
 	
-	public static function unSet($name)
+	public static function Unset($name)
 	{
 		if (isset($_COOKIE[$name])) {
 			unset($_COOKIE[$name]);
