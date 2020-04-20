@@ -6,7 +6,7 @@ namespace Xanax\Classes;
 
 // Classes
 
-use Xanax\Classes\FileObject as FileObject;
+use Xanax\Classes\File\Object as FileObject;
 use Xanax\Classes\FileSystemHandler as FileSystemHandler;
 use Xanax\Classes\DirectoryHandler as DirectoryHandler;
 use Xanax\Classes\Protocol\PHP as PHPProtocol;
@@ -36,7 +36,7 @@ use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
 use Xanax\Message\Functions\FunctionMessage as FunctionMessage;
 
-class FileHandler implements FileHandlerInterface
+class Handler implements FileHandlerInterface
 {
 	protected $useStatFunction = [
 		'stat',
