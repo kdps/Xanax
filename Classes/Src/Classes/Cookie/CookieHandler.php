@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Cookie;
 
-class CookieHandler
+class Handler
 {
 	public function isSet($key) 
 	{
