@@ -9,7 +9,7 @@ use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
 use Xanax\Message\FileHandler\FileHandlerMessage;
 
-class FileObject implements FileObjectInterface
+class Object implements FileObjectInterface
 {
 	private $writeHandler;
 	private $fileHandler;
