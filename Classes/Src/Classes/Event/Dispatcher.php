@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Event;
 
 use Xanax\Implement\EventDispatcherInterface;
 
-class EventDispatcher implements EventDispatcherInterface
+class Dispatcher implements EventDispatcherInterface
 {
 	private $listeners = [];
 
