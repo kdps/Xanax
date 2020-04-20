@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\File;
 
 // Classes
 
 use Xanax\Classes\File\Object as FileObject;
 use Xanax\Classes\FileSystemHandler as FileSystemHandler;
-use Xanax\Classes\DirectoryHandler as DirectoryHandler;
+use Xanax\Classes\Directory\Handler as DirectoryHandler;
 use Xanax\Classes\Protocol\PHP as PHPProtocol;
 
 // Exception
