@@ -26,6 +26,13 @@ class Handler implements DirectoryHandlerInterface
 		$this->directoryDepth = -1;
 	}
 
+	/**
+	 * Get free space of root directory
+	 *
+	 * @param string $prefix
+	 *
+	 * @return int
+	 */
 	public function getFreeSpace($prefix = '/')
 	{
 		$diskFreeSpaces = -1;
@@ -51,6 +58,13 @@ class Handler implements DirectoryHandlerInterface
 		return getcwd();
 	}
 
+	/**
+	 * Check that path is directory
+	 *
+	 * @param string $directoryPath
+	 *
+	 * @return boolean
+	 */
 	public function isDirectory(string $directoryPath)
 	{
 		$return = is_dir($directoryPath);
@@ -58,13 +72,21 @@ class Handler implements DirectoryHandlerInterface
 		return $return;
 	}
 
+	/**
+	 * Make directory with permissions
+	 *
+	 * @param string $directoryPath
+	 * @param int    $permission
+	 *
+	 * @return boolean
+	 */
 	public function Make(string $directoryPath, int $permission = 644)
 	{
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
 
-		$this->Create($directoryPath);
+		return $this->Create($directoryPath);
 	}
 
 	public function Create(string $directoryPath, int $permission = 644)
@@ -78,6 +100,13 @@ class Handler implements DirectoryHandlerInterface
 		return $return;
 	}
 
+	/**
+	 * Get file counts of directory
+	 *
+	 * @param string $directoryPath
+	 *
+	 * @return int
+	 */
 	public function getFileCount(string $directoryPath) :int
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -90,6 +119,13 @@ class Handler implements DirectoryHandlerInterface
 		return $return;
 	}
 
+	/**
+	 * Check that directory is empty
+	 *
+	 * @param string $directoryPath
+	 *
+	 * @return boolean
+	 */
 	public function isEmpty(string $directoryPath) :bool
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -101,6 +137,13 @@ class Handler implements DirectoryHandlerInterface
 		return $return;
 	}
 
+	/**
+	 * Delete directory
+	 *
+	 * @param string $directoryPath
+	 *
+	 * @return boolean
+	 */
 	public function Delete(string $directoryPath)
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -129,6 +172,14 @@ class Handler implements DirectoryHandlerInterface
 		return true;
 	}
 
+	/**
+	 * Copy directory to specific path
+	 *
+	 * @param string $directoryPath
+	 * @param string $copyPath
+	 *
+	 * @return void
+	 */
 	public function Copy(string $directoryPath, string $copyPath)
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -147,6 +198,13 @@ class Handler implements DirectoryHandlerInterface
 		}
 	}
 
+	/**
+	 * Get file size of directory
+	 *
+	 * @param string $directoryPath
+	 *
+	 * @return int
+	 */
 	public function getSize(string $directoryPath)
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -154,20 +212,33 @@ class Handler implements DirectoryHandlerInterface
 		}
 
 		$size = 0;
-		foreach (new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS)
-		) as $file) {
+		
+		$skipDots = new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS);
+		
+		foreach (new RecursiveIteratorIterator($skipDots) as $file) {
 			$size += $file->getSize();
 		}
 
 		return $size;
 	}
 
+	/**
+	 * Get configure max depth of recursive
+	 *
+	 * @return int
+	 */
 	public function getMaxDepth()
 	{
 		return $this->directoryDepth;
 	}
 
+	/**
+	 * Set configure max depth of recursive
+	 *
+	 * @param string $directoryPath
+	 *
+	 * @return int
+	 */
 	public function setMaxDepth(int $depth)
 	{
 		if ($this->getMaxDepth() === $this->directoryDepth) {
@@ -179,6 +250,14 @@ class Handler implements DirectoryHandlerInterface
 		return true;
 	}
 
+	/**
+	 * Rename directory
+	 *
+	 * @param string $directoryPath
+	 * @param string $replacement
+	 *
+	 * @return boolean
+	 */
 	public function Rename(string $directoryPath, string $string, string $replacement)
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -214,6 +293,15 @@ class Handler implements DirectoryHandlerInterface
 		return true;
 	}
 
+	/**
+	 * Rename inner files
+	 *
+	 * @param string $directoryPath
+	 * @param string $replacement
+	 * @param string $string
+	 *
+	 * @return boolean
+	 */
 	public function RenameInnerFiles(string $directoryPath, $replacement, $string = null)
 	{
 		if (!$this->isDirectory($directoryPath)) {
@@ -260,6 +348,14 @@ class Handler implements DirectoryHandlerInterface
 		return true;
 	}
 
+	/**
+	 * Get file list of directory
+	 *
+	 * @param string  $directoryPath
+	 * @param boolean $sort
+	 *
+	 * @return array
+	 */
 	public function getFileList($directoryPath = './', $sort = false)
 	{
 		if (!$this->isDirectory($directoryPath)) {
