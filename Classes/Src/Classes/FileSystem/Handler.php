@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\FileSystem;
 
 use Xanax\Implement\FileSystemInterface as FileSystemInterface;
 
-class FileSystemHandler implements FileSystemInterface
+class Handler implements FileSystemInterface
 {
 	public function __construct()
 	{
