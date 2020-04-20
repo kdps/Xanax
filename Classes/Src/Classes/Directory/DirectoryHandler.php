@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Directory;
 
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -10,7 +10,7 @@ use Xanax\Implement\DirectoryHandlerInterface;
 use Xanax\Implement\FileHandlerInterface;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
 
-class DirectoryHandler implements DirectoryHandlerInterface
+class Handler implements DirectoryHandlerInterface
 {
 	private $fileHandler;
 	private $directoryDepth;
