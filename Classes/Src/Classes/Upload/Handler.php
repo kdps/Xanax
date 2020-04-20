@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Upload;
 
-class Upload
+class Handler
 {
 	
 	public function Get($name, $key = 'name')
