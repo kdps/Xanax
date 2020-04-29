@@ -1,5 +1,7 @@
 <?php
 
+namespace Xanax\Classes\Sort;
+
 class RangeSort
 {
 	public function Sort(array $array)
