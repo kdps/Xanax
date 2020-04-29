@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Sort;
 
 class InsertableSort
 {
