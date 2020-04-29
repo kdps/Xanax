@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Pagenation;
 
-class PagenationHandler
+class Handler
 {
 	public $current_page;
 	public $list_count;
