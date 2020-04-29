@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Socket;
 
 use Xanax\Implement\SocketHandlerInterface;
 
-class SocketHandler implements SocketHandlerInterface
+class Handler implements SocketHandlerInterface
 {
 	/*
 	 *
