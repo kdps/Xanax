@@ -11,7 +11,9 @@ class ClientObject
 
 	public function __construct($socketHandler)
 	{
-		$this->SocketHandlerClass = $socketHandler;
+		if ($socketHandler insteadof \Xanax\Classes\Socket\Handler) {
+			$this->SocketHandlerClass = $socketHandler;
+		}
 	}
 
 	public function sendPacket($string = '')
