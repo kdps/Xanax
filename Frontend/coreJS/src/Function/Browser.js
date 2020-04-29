@@ -70,18 +70,24 @@
 		},
 		
 		isChromeApp: function () {
-			return (window.chrome || 
-					window.chrome.storage);
+			return (
+				window.chrome || 
+				window.chrome.storage
+			);
 		},
 		
 		hasConsole: function () {
-			return (window.console || 
-					window.console.log);
+			return (
+				window.console || 
+				window.console.log
+			);
 		},
 		
 		hasReplaceState: function () {
-			return (window.history || 
-					window.history.replaceState);
+			return (
+				window.history || 
+				window.history.replaceState
+			);
 		},
 		
 		redirectToCompleteHost: function () {
@@ -109,9 +115,9 @@
 		
 		getPerform: function () {
 			return window.performance || 
-				   window.mozPerformance || 
-				   window.msPerformance || 
-				   window.webkitPerformance || {};
+				window.mozPerformance || 
+				window.msPerformance || 
+				window.webkitPerformance || {};
 		},
 		
 		getPerformMemorySize: function () { //Not available to workers
