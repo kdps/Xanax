@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Socket;
 
-class SocketServerObject
+class ServerObject
 {
 	private $arrayAcceptedSocketInfo  = [];
 	private $arrayAcceptedSocket      = [];
