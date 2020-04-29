@@ -106,55 +106,79 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		 * @return boolean
 		 **/
 		isCanPlay: function (element, type, codecs) {
-			var codecs = '';
+			let codecs = '';
+			let bool;
+			
 			switch (type) {
-			case "opus":
-				type = 'audio/opus';
-				codecs = 'opus';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "ogg":
-				type = 'audio/ogg';
-				codecs = 'theora, vorbis';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "oga":
-				type = 'audio/ogg';
-				codecs = 'vorbis';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "wav":
-				type = 'audio/wav';
-				codecs = '1';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "weba":
-				type = 'audio/weba';
-				codecs = 'vorbis';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "webm":
-				type = 'audio/weba';
-				codecs = 'vp8.0, vorbis';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "dolby":
-				type = 'audio/mp4';
-				codecs = 'ec-3';
-				return element.canPlayType(type + ';codecs="' + codecs + '"');
-			case "aiff":
-				return element.canPlayType("audio/x-aiff;");
-			case "flac":
-				return element.canPlayType("audio/x-flac;") || element.canPlayType("audio/flac;");
-			case "m4a":
-				return element.canPlayType("audio/x-m4a;") || element.canPlayType("audio/m4a;") || element.canPlayType("audio/aac;");
-			case "mp4":
-				return element.canPlayType('audio/x-mp4;codecs="avc1.42E01E, mp4a.40.2"') || element.canPlayType("audio/mp4;") || element.canPlayType("audio/aac;");
-			case "caf":
-				return element.canPlayType("audio/x-caf;");
-			case "aac":
-				return element.canPlayType("audio/aac;");
-			case "mpeg":
-				return element.canPlayType("audio/mpeg;");
-			case "mp3":
-				return element.canPlayType("audio/mp3;") || element.canPlayType("audio/mpeg;");
+				case "opus":
+					type = 'audio/opus';
+					codecs = 'opus';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "ogg":
+					type = 'audio/ogg';
+					codecs = 'theora, vorbis';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "oga":
+					type = 'audio/ogg';
+					codecs = 'vorbis';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "wav":
+					type = 'audio/wav';
+					codecs = '1';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "weba":
+					type = 'audio/weba';
+					codecs = 'vorbis';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "webm":
+					type = 'audio/weba';
+					codecs = 'vp8.0, vorbis';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "dolby":
+					type = 'audio/mp4';
+					codecs = 'ec-3';
+					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					break;
+				case "aiff":
+					bool = element.canPlayType("audio/x-aiff;");
+					break;
+				case "flac":
+					bool = element.canPlayType("audio/x-flac;") || 
+						element.canPlayType("audio/flac;");
+					break;
+				case "m4a":
+					bool = element.canPlayType("audio/x-m4a;") || 
+						element.canPlayType("audio/m4a;") || 
+						element.canPlayType("audio/aac;");
+					break;
+				case "mp4":
+					bool = element.canPlayType('audio/x-mp4;codecs="avc1.42E01E, mp4a.40.2"') || 
+						element.canPlayType("audio/mp4;") || 
+						element.canPlayType("audio/aac;");
+					break;
+				case "caf":
+					bool = element.canPlayType("audio/x-caf;");
+					break;
+				case "aac":
+					bool = element.canPlayType("audio/aac;");
+					break;
+				case "mpeg":
+					bool = element.canPlayType("audio/mpeg;");
+					break;
+				case "mp3":
+					bool = element.canPlayType("audio/mp3;") || element.canPlayType("audio/mpeg;");
+					break;
+				default:
+					
 			}
 			
-			return element.canPlayType(type + ';codecs="' + codecs + '"');
+			return bool;
 		},
 		
 		/**
@@ -179,7 +203,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 			var letObject = audioObject || this.StreamAudio;
 			
 			if ($.core.Validate.isObject(this.StreamAudio)) {
-				try{
+				try {
 					if (this.StreamAudio.currentTime > 0 && !this.StreamAudio.paused && !this.StreamAudio.ended && this.StreamAudio.readyState > 2) {
 						return true;
 					}
