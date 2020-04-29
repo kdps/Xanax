@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class SessionHandler
+class Handler
 {
 	public function __construct()
 	{
