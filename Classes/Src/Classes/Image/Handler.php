@@ -6,7 +6,7 @@ namespace Xanax\Classes\Image;
 
 use Xanax\Implement\ImageHandlerInterface;
 
-class ImageHandler implements ImageHandlerInterface {
+class Handler implements ImageHandlerInterface {
 	
 	//http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
 	public function isAnimated ($filename) {
