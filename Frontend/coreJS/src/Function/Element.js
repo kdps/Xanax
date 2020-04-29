@@ -592,23 +592,21 @@
 			return offset;
 		},
 		
-		getElementsByClassNameCompatible: function (cls) {
+		getElementsByClassNameCompatible: function (classes) {
 			if (document.getElementsByClassName) {
-				return document.getElementsByClassName(cls);
+				return document.getElementsByClassName(classes);
 			}
 			
 			var i;
 			var classArr = new Array();
-			var regex = new RegExp('^| ' + cls + ' |$');
+			var regex = new RegExp('^| ' + classes + ' |$');
 			var elem = document.body.getElementsByTagName("*");
 			var len = elem.length;
 			for (i=0; i < len; i++) {
-				var clsName = elem[i].className;
+				var className = elem[i].className;
 				
-				if (clsName) {
-					if (regEx.test(clsName)) {
-						classArr.push(elem[i]);
-					}
+				if (className && regEx.test(className)) {
+					classArr.push(elem[i]);
 				}
 			}
 			
@@ -815,7 +813,7 @@
 			return p;
 		},
 		
-		generateTooltip: function (elem, cls) {
+		generateTooltip: function (elem, class) {
 			var _tooltip = [];
 			
 			if (!$(elem).length) {
@@ -823,7 +821,7 @@
 			}
 			
 			$(elem).each(function (i, item) {
-				var _tooltipItem = $('<div class="' + cls + '" data-index="' + i + '"></div>').appendTo($body);
+				var _tooltipItem = $('<div class="' + class + '" data-index="' + i + '"></div>').appendTo($body);
 				$(item).attr('data-index', i);
 				_tooltip.push(_tooltipItem);
 			});
@@ -844,17 +842,17 @@
 			}
 		},
 		
-		getAttr: function (elem, prop) {
-			return elem.getAttribute(prop);
+		getAttr: function (element, properties) {
+			return element.getAttribute(properties);
 		},
 		
-		getStyleText: function (elem) {
+		getStyleText: function (element) {
 			var style = this.getAttr(elem, "style");
 			if (!style) {
-				style = elem.style;
+				style = element.style;
 			}
 			
-			if (typeof(style)=="object") {
+			if (typeof(style) === "object") {
 				return style;
 			}
 			
@@ -870,11 +868,11 @@
 			document.head.appendChild(style);
 		},
 		
-		getStyle: function (elem, prop) {
-			if (elem.currentStyle) {
-				return elem.currentStyle[prop];
+		getStyle: function (element, properties) {
+			if (element.currentStyle) {
+				return elem.currentStyle[properties];
 			} else if (_cWin.getComputedStyle) {
-				return document.defaultView.getComputedStyle(elem, null).getPropertyValue(prop);
+				return document.defaultView.getComputedStyle(elem, null).getPropertyValue(properties);
 			}
 		},
 		
@@ -947,7 +945,10 @@
 		},
 		
 		getDoc: function (elem) {
-			return (elem.contentWindow || elem.contentDocument).document;
+			return (
+				elem.contentWindow || 
+				elem.contentDocument
+			).document;
 		},
 		
 		isIncludedVideo: function (Id) {
@@ -966,6 +967,7 @@
 			if (style && head) {
 				var styles = this.create('style');
 				styles.setAttribute('type', 'text/css');
+				
 				if (styles.styleSheet) {
 					try {
 						styles.styleSheet.cssText = style;
@@ -1166,21 +1168,21 @@
 		},
 		
 		generateMultimediaCode: function (file, type) {
-			var src = "";
+			let src = "";
 			
 			switch (type) {
-			case "audio":
-				src = '<audio src="' + file + '" controls></audio>';
-				break;
-			case "img":
-				src = '<img src="' + file + '"></img>';
-				break;
-			case "embed":
-				src = '<embed src="' + file + '"></embed>';
-				break;
-			case "video":
-				src = '<video src="' + file + '" controls></video>';
-				break;
+				case "audio":
+					src = '<audio src="' + file + '" controls></audio>';
+					break;
+				case "img":
+					src = '<img src="' + file + '"></img>';
+					break;
+				case "embed":
+					src = '<embed src="' + file + '"></embed>';
+					break;
+				case "video":
+					src = '<video src="' + file + '" controls></video>';
+					break;
 			}
 			
 			return src;
@@ -1338,7 +1340,9 @@
 				dom = $.core.Element.getById(dom);
 			}
 			
-			if ($(dom).length > 0) {
+			let domSize = $(dom).length;
+			
+			if (domSize > 0) {
 				var append = this.create('div');
 				append.className = cls;
 				dom.appendChild(append);
@@ -1362,7 +1366,9 @@
 				dom = $.core.Element.getById(dom);
 			}
 			
-			if ($(dom).length > 0) {
+			let domSize = $(dom).length;
+			
+			if (domSize > 0) {
 				var append = this.create('div');
 				append.setAttribute("id", cls);
 				dom.appendChild(append);
@@ -1547,12 +1553,12 @@
 		},
 		
 		getOffset: function (element) {
-			var o;
-			
 			var offset = {
 				"left": element.offsetLeft,
 				"top": element.offsetTop
 			};
+			
+			var o;
 			
 			while (o = element.offsetParent) {
 				offset.left += o.offsetLeft;
@@ -1655,12 +1661,12 @@
 		},
 		
 		getByClass: function (elem, tagName, className) {
-			var cls = this.getByClasses(tagName);
-			this.length = cls.length;
+			var classObject = this.getByClasses(tagName);
+			this.length = classObject.length;
 			
 			for (var i = 0; i < this.length; i++) {
-				if ((new RegExp(className)).test(cls[i].className)) {
-					return cls[i];
+				if ((new RegExp(className)).test(classObject[i].className)) {
+					return classObject[i];
 				}
 			}
 			
