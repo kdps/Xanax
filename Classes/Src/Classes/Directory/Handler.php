@@ -9,6 +9,7 @@ use RecursiveDirectoryIterator;
 use Xanax\Implement\DirectoryHandlerInterface;
 use Xanax\Implement\FileHandlerInterface;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
+use Xanax\Classes\File\Handler as FileHandler;
 
 class Handler implements DirectoryHandlerInterface
 {
