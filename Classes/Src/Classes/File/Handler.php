@@ -1449,7 +1449,15 @@ class Handler implements FileHandlerInterface
 
 		return $this->Write($filePath, $invertedLines, 'w');
 	}
-
+	
+	/**
+	 * Get a basename of file
+	 *
+	 * @param string $fileName
+	 * @param string $extension
+	 *
+	 * @return string
+	 */
 	public function getBasename(string $fileName, $extension = null) :string
 	{
 		return basename($fileName, $extension) . PHP_EOL;
