@@ -190,7 +190,16 @@ class Handler implements FileHandlerInterface
 		return true;
 	}
 
-	public function Open($filePath, $mode) : resource {
+	/**
+	 * Return file pointer of specific file
+	 *
+	 * @param string  $filePath
+	 * @param string  $mode
+	 * @param boolean $use_include_path
+	 *
+	 * @return bool
+	 */
+	public function Open($filePath, $mode, $use_include_path = false) : resource {
 		$handler = fopen($filePath, $mode);
 		
 		return $handler;
