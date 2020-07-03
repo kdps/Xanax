@@ -724,8 +724,15 @@ class Handler implements FileHandlerInterface
 
 		return true;
 	}
-
-	public function getFileEncoding(string $filePath) 
+	
+	/**
+	 * Return the encoding of file
+	 *
+	 * @param string $filePath
+	 *
+	 * @return string
+	 */
+	public function getFileEncoding(string $filePath) :string
 	{
 		$executeResult = array();
 		exec('file -i ' . $filepath, $executeResult);
