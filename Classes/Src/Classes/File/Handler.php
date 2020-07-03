@@ -725,6 +725,19 @@ class Handler implements FileHandlerInterface
 		return true;
 	}
 
+	public function getFileEncoding(string $filePath) 
+	{
+		$executeResult = array();
+		exec('file -i ' . $filepath, $executeResult);
+		
+		if (isset($executeResult[0])) {
+			$charset = explode('charset=', $executeResult[0]);
+			return isset($charset[1]) ? $charset[1] : null;
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Check that the file is correct.
 	 *
