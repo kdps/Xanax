@@ -24,6 +24,22 @@
 			});
 		},
 		
+		MakePromise: function () {
+			let _resolve;
+			let _reject;
+			
+			let promise = new Promise(function(resolve, reject) {
+				_resolve = resolve;
+				_reject = reject;
+			});
+			
+			return [
+				'resolve': _resolve,
+				'reject': _reject,
+				'promise': promise
+			];
+		},
+		
 		RequestCall: function (obj, method, args) {
 			var request;
 			var p = new Promise(function (resolve, reject) {
