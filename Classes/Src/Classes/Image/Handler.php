@@ -36,6 +36,15 @@ class Handler implements ImageHandlerInterface {
 		return $count > 1;
 	}
 	
+	/**
+	 * Draw picture to pallete
+	 *
+	 * @param resource $imageResource
+	 * @param int $width
+	 * @param int $height
+	 *
+	 * return Resource
+	 */
 	public function drawRepeat ($imageResource, $width, $height) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
@@ -46,6 +55,8 @@ class Handler implements ImageHandlerInterface {
 		
 		imagesettile($imageResource, $image);
 		imagefilledrectangle($imageResource, 0, 0, $width, $height, IMG_COLOR_TILED);
+	
+		return $imageResource;
 	}
 	
 	/**
