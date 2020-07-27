@@ -11,7 +11,15 @@ class Builder
   public function validPHPVariableName() {
     return "[a-zA-Z_\x7f-\xff]";
   }
-
+  
+  public function unicodeCategory() {
+    return "\p{L}"
+  }
+  
+  public function branchResetGroup($regex) {
+    return "(?|${regex})";
+  }
+  
   public function getFileName() {
     return "([^.\/]+)\.?[^.\/]*$";
   }
