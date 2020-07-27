@@ -11,6 +11,10 @@ class Builder
     return "([^.\/]+)\.?[^.\/]*$";
   }
 
+  public function namedCapturingGroup($name, $regex) {
+    return "(?P<${name}>${regex})";
+  }
+  
   public function noneCapturingGroup($regex) {
     return "(?:${regex})";
   }
