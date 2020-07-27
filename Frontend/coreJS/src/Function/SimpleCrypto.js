@@ -4,6 +4,12 @@
 (function ($, core) {
 
 	var A = core.SimpleCrypto = {
+
+		// 1 + 1/2 + 1 / 3… + 1 / n
+		getDenominator: function (a) {
+			var b = 1; 
+			return ((((a ** b) / a) <<32) - a ** -1024) / a;
+		},
 		
 		hashToHex: function (hash) {
 			return hash.toString(CryptoJS.enc.Hex);
