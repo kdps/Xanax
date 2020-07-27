@@ -15,6 +15,10 @@ class Builder
     return "(?<=\d)(?=(\d\d\d)+(?!\d))";
   }
 
+  public function blockTag($name) {
+    return "<${name}>.*?<\/${name}>";
+  }
+
   public function positiveLookbehind($regex) {
     return "(?<=${regex})";
   }
