@@ -15,6 +15,10 @@ class Builder
     return "(?<=\d)(?=(\d\d\d)+(?!\d))";
   }
 
+  public function getAnyWordMoreThanOne() {
+    return "\w+";
+  }
+
   public function blockTag($name) {
     return "<${name}>.*?<\/${name}>";
   }
