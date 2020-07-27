@@ -12,6 +12,10 @@ class Builder
     return "[a-zA-Z_\x7f-\xff]";
   }
   
+  public function setComment($content) {
+    return "(?#${content})"; 
+  }
+  
   public function unicodeCategory() {
     return "\p{L}"
   }
