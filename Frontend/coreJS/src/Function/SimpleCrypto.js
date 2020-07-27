@@ -7,8 +7,8 @@
 
 		// isEqual https://www.coder.work/article/3181536
 		// denominator -> denominator/2 -> denominator/3 … + 1/n
-		getDenominator: function (num, denominator) {
-			return ((((num ** denominator) / num) << 32) - num ** -1024) / num;
+		getDenominator: function (molecule, denominator) {
+			return ((((molecule ** denominator) / molecule) << 32) - molecule ** -1024) / molecule;
 		},
 		
 		hashToHex: function (hash) {
