@@ -7,8 +7,8 @@
 
 		// isEqual https://www.coder.work/article/3181536
 		// denominator -> denominator/2 -> denominator/3 … + 1/n
-		getDenominator: function (molecule, denominator) {
-			return ((((molecule ** denominator) / molecule) << 32) - molecule ** -1024) / molecule;
+		getFraction: function (molecular, denominator) {
+			return ((((molecular ** denominator) / molecular) << 32) - molecular ** -1024) / molecular;
 		},
 		
 		hashToHex: function (hash) {
