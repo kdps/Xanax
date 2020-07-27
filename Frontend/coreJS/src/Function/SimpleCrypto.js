@@ -5,40 +5,79 @@
 
 	var A = core.SimpleCrypto = {
 
-		// isEqual https://www.coder.work/article/3181536
-		// denominator -> denominator/2 -> denominator/3 … + 1/n
+		/**
+		 * Get fraction
+		 *
+		 * @param int molecular
+		 * @param int denominator
+		 */
 		getFraction: function (molecular, denominator) {
 			return ((((molecular ** denominator) / molecular) << 32) - molecular ** -1024) / molecular;
 		},
 		
+		/**
+		 * Convert hash to hex
+		 *
+		 * @param String Hash
+		 */
 		hashToHex: function (hash) {
 			return hash.toString(CryptoJS.enc.Hex);
 		},
 		
+		/**
+		 * Convert hash to Latin1
+		 *
+		 * @param String hash
+		 */
 		hashToLatin1: function (hash) {
 			return hash.toString(CryptoJS.enc.Latin1);
 		},
 		
+		/**
+		 * Convert hash to Base64
+		 *
+		 * @param String hash
+		 */
 		hashToBase64: function (hash) {
 			return hash.toString(CryptoJS.enc.Base64);
 		},
 		
+		/**
+		 * Convert hash to Utf8
+		 *
+		 * @param String hash
+		 */
 		hashToUtf8: function (hash) {
 			return hash.toString(CryptoJS.enc.Utf8);
 		},
 		
+		/**
+		 * Convert hex to String
+		 *
+		 * @param String str
+		 */
 		fromHex: function (str) {
 			var decrypted = CryptoJS.enc.Hex.stringify(str);
 			
 			return decrypted;
 		},
 		
+		/**
+		 * Convert string to Hex
+		 *
+		 * @param String str
+		 */
 		toHex: function (str) {
 			var encrypted = CryptoJS.enc.Hex.parse(str);
 			
 			return encrypted;
 		},
 		
+		/**
+		 * Decode utf16 string
+		 *
+		 * @param String str
+		 */
 		fromUtf16: function (str) {
 			var decrypted = CryptoJS.enc.Utf16.stringify(str);
 			
