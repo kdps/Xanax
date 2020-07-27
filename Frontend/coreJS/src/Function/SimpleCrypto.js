@@ -7,9 +7,8 @@
 
 		// isEqual https://www.coder.work/article/3181536
 		// 1 + 1/2 + 1 / 3… + 1 / n
-		getDenominator: function (a) {
-			var b = 1; 
-			return ((((a ** b) / a) << 32) - a ** -1024) / a;
+		getDenominator: function (num, denominator) {
+			return ((((num ** denominator) / num) << 32) - num ** -1024) / num;
 		},
 		
 		hashToHex: function (hash) {
