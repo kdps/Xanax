@@ -7,6 +7,11 @@ use Xanax/Trait/Regex/Error;
 class Builder
 {
 
+  // http://vs-shop.cloudsite.ir/manual/kr/language.variables.basics.php
+  public function validPHPVariableName() {
+    return "[a-zA-Z_\x7f-\xff]";
+  }
+
   public function getFileName() {
     return "([^.\/]+)\.?[^.\/]*$";
   }
