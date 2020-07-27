@@ -150,7 +150,7 @@ class Handler implements ImageHandlerInterface {
 	 */
 	
 	// TODO get a args by array data
-	public function FIlter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') {
+	public function Filter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') {
 		
 		$type = strtolower($type);
 		
