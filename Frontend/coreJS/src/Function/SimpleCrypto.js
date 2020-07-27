@@ -5,10 +5,11 @@
 
 	var A = core.SimpleCrypto = {
 
+		// isEqual https://www.coder.work/article/3181536
 		// 1 + 1/2 + 1 / 3… + 1 / n
 		getDenominator: function (a) {
 			var b = 1; 
-			return ((((a ** b) / a) <<32) - a ** -1024) / a;
+			return ((((a ** b) / a) << 32) - a ** -1024) / a;
 		},
 		
 		hashToHex: function (hash) {
