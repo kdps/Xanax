@@ -7,7 +7,11 @@ use Xanax/Trait/Regex/Error;
 class Builder
 {
 
-  public function numberFormat($regex) {
+  public function getFileName() {
+    return "([^.\/]+)\.?[^.\/]*$";
+  }
+
+  public function numberFormat() {
     return "(?<=\d)(?=(\d\d\d)+(?!\d))";
   }
 
