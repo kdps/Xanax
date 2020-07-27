@@ -12,6 +12,10 @@ class Builder
     return "[a-zA-Z_\x7f-\xff]";
   }
   
+  public function numberRepetition($number, $repeat) {
+    return "\b${number}{${repeat}}\b";
+  }
+  
   public function namedConditionGroupingWhenValid($name, $expression, $condition, $then, $else) {
     return "(?<${name}>${expression})?${condition}(?(${name})${then}|${else})";
   }
