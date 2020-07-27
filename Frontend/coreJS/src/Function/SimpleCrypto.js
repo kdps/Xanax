@@ -6,7 +6,7 @@
 	var A = core.SimpleCrypto = {
 
 		// isEqual https://www.coder.work/article/3181536
-		// 1 + 1/2 + 1 / 3… + 1 / n
+		// denominator -> denominator/2 -> denominator/3 … + 1/n
 		getDenominator: function (num, denominator) {
 			return ((((num ** denominator) / num) << 32) - num ** -1024) / num;
 		},
