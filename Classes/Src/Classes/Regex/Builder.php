@@ -19,6 +19,10 @@ class Builder
     return "\w+";
   }
 
+  public function getAnyWordMoreThanOneWithoutBlank() {
+    return "\S+";
+  }
+  
   public function blockTag($name) {
     return "<${name}>.*?<\/${name}>";
   }
