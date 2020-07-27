@@ -11,6 +11,10 @@ class Builder
     return "([^.\/]+)\.?[^.\/]*$";
   }
 
+  public function noneCapturingGroup($regex) {
+    return "(?:${regex})";
+  }
+
   public function numberFormat() {
     return "(?<=\d)(?=(\d\d\d)+(?!\d))";
   }
