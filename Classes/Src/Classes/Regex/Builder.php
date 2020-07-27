@@ -12,6 +12,10 @@ class Builder
     return "[a-zA-Z_\x7f-\xff]";
   }
   
+  public function turnOnFreeSpacingMode() {
+    return "(?x)";  
+  }
+  
   public function numbericSubroutine() {
     return "(?1)";
   }
