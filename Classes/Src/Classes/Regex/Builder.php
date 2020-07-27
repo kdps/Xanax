@@ -12,6 +12,10 @@ class Builder
     return "[a-zA-Z_\x7f-\xff]";
   }
   
+  public function Condition($expression, $then, $else) {
+    return "(?(?=${expression})${then}|${else})";
+  }
+  
   public function turnOnFreeSpacingMode() {
     return "(?x)";  
   }
