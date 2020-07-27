@@ -3,11 +3,21 @@
  */
 (function () {
 
+	// Number
+
 	if (!Number.prototype.clamp) {
 		Number.prototype.clamp = function (min, max) {
 			return Math.min(Math.max(this, min), max);
 		};
 	}
+	
+	if (!Number.prototype.mod) {
+		Number.prototype.mod = function (n) {
+			return ((this % n) + n) % n;
+		};
+	}
+	
+	// String
 	
 	if (!String.prototype.trim) {
 		String.prototype.trim = function() {
@@ -20,23 +30,70 @@
 			return String(s).trim();
 		};
 	}
+	
+	// Date
+	
 	if (!Date.now) {
 		Date.now = function now() {
 			return new Date().getTime();
 		};
 	}
 
-	if (!Number.prototype.mod) {
-		Number.prototype.mod = function (n) {
-			return ((this % n) + n) % n;
+	// Element
+	
+	if (!Element.prototype.getHeight) {
+		Element.getHeight = function getHeight() {
+			$.core.Element.getHeight(this);
+		}
+	}
+	
+	if (!Element.prototype.setAttribute) {
+		Element.setAttribute = function setAttribute(attributes) {
+			$.core.Element.setAttribute(this, attributes);
+		}
+	}
+	
+	if (!Element.prototype.removeAttribute) {
+		Element.removeAttribute = function removeAttribute(attributes) {
+			$.core.Element.removeAttribute(this, attributes);
+		}
+	}
+	
+	if (!Element.prototype.getWidth) {
+		Element.getWidth = function getWidth() {
+			$.core.Element.getWidth(this);
+		}
+	}
+	
+	if (!Element.prototype.requestFullScreen) {
+		Element.requestFullScreen = function requestFullScreen() {
+			$.core.Screen.requestFullScreen(this);
+		}
+	}
+	
+	if (!Element.prototype.toggleFullScreen) {
+		Element.cancelFullScreen = function toggleFullScreen() {
+			$.core.Screen.toggleFullScreen(this);
+		}
+	}
+	
+	if (!Element.prototype.cancelFullScreen) {
+		Element.cancelFullScreen = function cancelFullScreen() {
+			$.core.Screen.cancelFullScreen(this);
+		}
+	}
+	
+	// Audio
+	
+	if (!Audio.prototype.Restart) {
+		Audio.prototype.Restart = function () {
+			this.pause();
+			this.currentTime = 0;
+			this.play();
 		};
 	}
 	
-	Audio.prototype.Restart = function () {
-		this.pause();
-		this.currentTime = 0;
-		this.play();
-	};
+	// EventEmitter
 	
 	function EventEmitter() {
 		this.listeners = {};
