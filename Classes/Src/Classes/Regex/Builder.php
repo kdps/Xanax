@@ -7,19 +7,19 @@ use Xanax/Trait/Regex/Error;
 class Builder
 {
   public function positiveLookbehind($regex) {
-    return "(?<=(${regex}))";
+    return "(?<=${regex})";
   }
   
   public function negativeLookbehind($regex) {
-    return "(?<!(${regex}))";
+    return "(?<!${regex})";
   }
   
   public function positiveLookahead($regex) {
-    return "(?=(${regex}))";
+    return "(?=${regex})";
   }
   
   public function negativeLookahead($regex) {
-    return "(?!(${regex}))";
+    return "(?!${regex})";
   }
 
 }
