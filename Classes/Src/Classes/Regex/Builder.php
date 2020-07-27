@@ -11,6 +11,10 @@ class Builder
     return "([^.\/]+)\.?[^.\/]*$";
   }
 
+  public function matchAnyCharacterset() {
+    return "[\S\s]";
+  }
+
   public function namedCapturingGroup($name, $regex) {
     return "(?P<${name}>${regex})";
   }
