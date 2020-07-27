@@ -16,20 +16,24 @@ class Builder
     return "\p{L}"
   }
   
-  public function branchResetGroup($regex) {
-    return "(?|${regex})";
+  public function branchResetGroup($subexpression) {
+    return "(?|${subexpression})";
   }
   
   public function getFileName() {
     return "([^.\/]+)\.?[^.\/]*$";
   }
-
-  public function namedCapturingGroup($name, $regex) {
-    return "(?P<${name}>${regex})";
+  
+  public function atomicGroup($name, $subexpression) {
+    return "(?>${subexpression})";
   }
   
-  public function noneCapturingGroup($regex) {
-    return "(?:${regex})";
+  public function namedCapturingGroup($name, $subexpression) {
+    return "(?P<${name}>${subexpression})";
+  }
+  
+  public function noneCapturingGroup($subexpression) {
+    return "(?:${subexpression})";
   }
 
   public function numberFormat() {
@@ -48,20 +52,20 @@ class Builder
     return "<${name}>.*?<\/${name}>";
   }
 
-  public function positiveLookbehind($regex) {
-    return "(?<=${regex})";
+  public function positiveLookbehind($subexpression) {
+    return "(?<=${subexpression})";
   }
   
-  public function negativeLookbehind($regex) {
-    return "(?<!${regex})";
+  public function negativeLookbehind($subexpression) {
+    return "(?<!${subexpression})";
   }
   
-  public function positiveLookahead($regex) {
-    return "(?=${regex})";
+  public function positiveLookahead($subexpression) {
+    return "(?=${subexpression})";
   }
   
-  public function negativeLookahead($regex) {
-    return "(?!${regex})";
+  public function negativeLookahead($subexpression) {
+    return "(?!${subexpression})";
   }
 
 }
