@@ -15,7 +15,7 @@ class File extends Header
 	
 	public function responseWithCharset($application, $charSet)
 	{
-		$charSet = Array("charset"=>$charSet);
+		$charSet = Array("charset" => $charSet);
 		$parent->responseWithKeyAndArray($application, $charSet);
 	}
 	
