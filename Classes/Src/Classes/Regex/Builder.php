@@ -31,11 +31,19 @@ class Builder
   }
   
   public function numericSubroutine($number) {
-    return "\g'${$number}'";
+    return "(?${$number})"; // isEqual \g'${$number}'
   }
   
-  public function numericSubroutine($number) {
-    return "(?${$number})";
+  public function numericPrecedingSubroutine($number) {
+    return "(?-${$number})";
+  }
+  
+  public function numericNextSubroutine($number) {
+    return "(?+${$number})";
+  }
+  
+  public function backreferenceNumericSubroutine($expression, $number) {
+    return "(${expression})\g<${number}>";
   }
   
   // Condition
@@ -56,6 +64,19 @@ class Builder
   
   public function turnOnFreeSpacingMode() {
     return "(?x)";  
+  }
+  
+  public function makeCaseInsensitive() {
+    return "(?i)";  
+  }
+  
+  public function makeCaseSensitive() {
+    return "(?c)";  
+  }
+
+  // Only supported by Tcl
+  public function turnOffFreeSpacingMode() {
+    return "(?t)";  
   }
   
   // String
