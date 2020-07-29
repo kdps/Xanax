@@ -30,7 +30,11 @@ class Builder
     return "(?P>${$name})";
   }
   
-  public function numbericSubroutine($number) {
+  public function numericSubroutine($number) {
+    return "\g'${$number}'";
+  }
+  
+  public function numericSubroutine($number) {
     return "(?${$number})";
   }
   
