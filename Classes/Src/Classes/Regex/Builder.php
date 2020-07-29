@@ -81,6 +81,10 @@ class Builder
   
   // String
   
+  public function keepOut() {
+    return "\K";
+  } 
+  
   public function unicodeCategory() {
     return "\p{L}"
   }
