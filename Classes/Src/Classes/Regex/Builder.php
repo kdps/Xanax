@@ -12,8 +12,32 @@ class Builder
     return "[a-zA-Z_\x7f-\xff]";
   }
   
-  public function numberRepetition($number, $repeat) {
-    return "\b${number}{${repeat}}\b";
+  public function Repetition($expression, $repeat) {
+    return "\b${expression}{${repeat}}\b";
+  }
+
+  public function setComment($content) {
+    return "(?#${content})"; 
+  }
+  
+  public function Recursion() {
+    return "(?R)";
+  }
+  
+  // Subroutine
+  
+  public function namedSubroutine($name) {
+    return "(?P>${$name})";
+  }
+  
+  public function numbericSubroutine($number) {
+    return "(?${$number})";
+  }
+  
+  // Condition
+  
+  public function Condition($expression, $then, $else) {
+    return "(?(?=${expression})${then}|${else})";
   }
   
   public function namedConditionGroupingWhenValid($name, $expression, $condition, $then, $else) {
@@ -24,36 +48,30 @@ class Builder
     return "(${expression})?${condition}(?(1)${then}|${else})";
   }
   
-  public function Condition($expression, $then, $else) {
-    return "(?(?=${expression})${then}|${else})";
-  }
+  // Mode
   
   public function turnOnFreeSpacingMode() {
     return "(?x)";  
   }
   
-  public function numbericSubroutine() {
-    return "(?1)";
-  }
-  
-  public function Recursion() {
-    return "(?R)";
-  }
-  
-  public function setComment($content) {
-    return "(?#${content})"; 
-  }
+  // String
   
   public function unicodeCategory() {
     return "\p{L}"
   }
+
+  public function getAnyWordMoreThanOne() {
+    return "\w+";
+  }
+
+  public function getAnyWordMoreThanOneWithoutBlank() {
+    return "\S+";
+  }
+  
+  // Groupping
   
   public function branchResetGroup($subexpression) {
     return "(?|${subexpression})";
-  }
-  
-  public function getFileName() {
-    return "([^.\/]+)\.?[^.\/]*$";
   }
   
   public function atomicGroup($name, $subexpression) {
@@ -68,22 +86,8 @@ class Builder
     return "(?:${subexpression})";
   }
 
-  public function numberFormat() {
-    return "(?<=\d)(?=(\d\d\d)+(?!\d))";
-  }
-
-  public function getAnyWordMoreThanOne() {
-    return "\w+";
-  }
-
-  public function getAnyWordMoreThanOneWithoutBlank() {
-    return "\S+";
-  }
+  // Expression
   
-  public function blockTag($name) {
-    return "<${name}>.*?<\/${name}>";
-  }
-
   public function positiveLookbehind($subexpression) {
     return "(?<=${subexpression})";
   }
@@ -98,6 +102,22 @@ class Builder
   
   public function negativeLookahead($subexpression) {
     return "(?!${subexpression})";
+  }
+  
+  // Block
+  
+  public function blockTag($name) {
+    return "<${name}>.*?<\/${name}>";
+  }
+
+  // Et greta
+  
+  public function getFileName() {
+    return "([^.\/]+)\.?[^.\/]*$";
+  }
+  
+  public function numberFormat() {
+    return "(?<=\d)(?=(\d\d\d)+(?!\d))";
   }
 
 }
