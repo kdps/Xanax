@@ -95,6 +95,10 @@ class Builder
   
   // Groupping
   
+  public function balancingGroup($captureSubtract, $expression) {
+    return "(?<${captureSubtract}>${expression})";
+  }
+  
   public function branchResetGroup($subexpression) {
     return "(?|${subexpression})";
   }
