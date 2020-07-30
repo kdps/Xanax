@@ -14,8 +14,7 @@
     "clusterize.js": "^0.17.1",
     "@gfx/zopfli": "^1.0.14",
     "babel": "^5.8.23",
-    "babel-core": "^7.10.5", // 5.26.3
-    "babel-core": "^7.10.5",
+    "babel-core": "^5.26.3",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.3.14",
     "babel-preset-env": "^1.7.0",
