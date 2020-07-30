@@ -472,6 +472,11 @@
 				}
 			};
 			
+			this.polskiChar = {
+				read: {
+				}
+			}
+			
 			this.indoChar = {
 				read: {
 					'अ': 'a',
