@@ -11,6 +11,11 @@
 		 * @param int molecular
 		 * @param int denominator
 		 */
+		/**
+		 * Gigabyte: getFraction(500,10)
+		 * Killobyte: getFraction(200,10)
+		 *
+		 **/
 		getFraction: function (molecular, denominator) {
 			return ((((molecular ** denominator) / molecular) << 32) - molecular ** -1024) / molecular;
 		},
