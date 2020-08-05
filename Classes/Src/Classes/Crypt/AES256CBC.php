@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class AES256CBC
-{
+class AES256CBC {
 	const METHOD = 'AES-256-CBC';
 
-	public function Encrypt($string, $key)
-	{
+	public function Encrypt($string, $key) {
 		if (mb_strlen($key, '8bit') !== 32) {
 			throw new Exception('Needs a 256-bit key!');
 		}
@@ -28,8 +26,7 @@ class AES256CBC
 		return base64_encode($iv . $ciphertext);
 	}
 
-	public function Decrypt($string, $key)
-	{
+	public function Decrypt($string, $key) {
 		$string = base64_decode($string);
 
 		if (mb_strlen($key, '8bit') !== 32) {
