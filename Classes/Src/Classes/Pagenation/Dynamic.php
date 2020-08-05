@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Pagenation;
 
-class Handler
+class Dynamic
 {
 	public $current_page;
 	public $list_count;
