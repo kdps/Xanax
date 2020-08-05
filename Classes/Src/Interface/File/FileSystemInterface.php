@@ -2,8 +2,8 @@
 
 namespace Xanax\Implement;
 
-interface FileSystemInterface
-{
+interface FileSystemInterface {
+	
 	public function getCurrentInode();
 
 	public function getStat($filePath) :array;
@@ -33,4 +33,5 @@ interface FileSystemInterface
 	public function getIOBlockSize($filePath);
 
 	public function get512ByteAllocatedBlocks($filePath);
+	
 }
