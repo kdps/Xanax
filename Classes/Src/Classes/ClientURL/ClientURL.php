@@ -8,12 +8,10 @@ use Xanax\Classes\ClientURLOption as ClientURLOption;
 use Xanax\Classes\ClientURLLastTransferInformation as ClientURLLastTransferInformation;
 use Xanax\Implement\ClientURLInterface;
 
-class ClientURL implements ClientURLInterface
-{
+class ClientURL implements ClientURLInterface {
 	private static $session;
 
-	public function getSession()
-	{
+	public function getSession() {
 		if (self::$session == null) {
 			self::$session = $this->Initialize();
 		}
@@ -21,28 +19,23 @@ class ClientURL implements ClientURLInterface
 		return self::$session;
 	}
 
-	public function getLastErrorMessage() :string
-	{
+	public function getLastErrorMessage() :string {
 		return curl_error(self::$session);
 	}
 
-	public function getLastErrorNumber() :int
-	{
+	public function getLastErrorNumber() :int {
 		return curl_errno(self::$session);
 	}
 
-	public function Initialize($instance = '')
-	{
+	public function Initialize($instance = '') {
 		return curl_init($instance);
 	}
 
-	public function Reset()
-	{
+	public function Reset() {
 		curl_reset(self::$session);
 	}
 
-	public function Option()
-	{
+	public function Option() {
 		if (!$this->Option) {
 			$this->Option = new ClientURLOption(self::$session);
 		}
@@ -50,8 +43,7 @@ class ClientURL implements ClientURLInterface
 		return $this->Option;
 	}
 
-	public function Information()
-	{
+	public function Information() {
 		if (!$this->Information) {
 			$this->Information = new ClientURLLastTransferInformation(self::$session);
 		}
@@ -59,8 +51,7 @@ class ClientURL implements ClientURLInterface
 		return $this->Information;
 	}
 
-	public function __construct(bool $useLocalMethod = true, string $url = '')
-	{
+	public function __construct(bool $useLocalMethod = true, string $url = '') {
 		self::$session = $this->getSession();
 
 		if ($useLocalMethod) {
@@ -69,18 +60,15 @@ class ClientURL implements ClientURLInterface
 		}
 	}
 
-	public function setOption(int $option, $value)
-	{
+	public function setOption(int $option, $value) {
 		curl_setopt(self::$session, $option, $value);
 	}
 
-	public function Close() :void
-	{
+	public function Close() :void {
 		curl_close(self::$session);
 	}
 
-	public function Execute()
-	{
+	public function Execute() {
 		return curl_exec(self::$session);
 	}
 }
