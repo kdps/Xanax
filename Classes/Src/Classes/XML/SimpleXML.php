@@ -2,8 +2,7 @@
 
 namespace Xanax/Classes/XML;
 
-class SimpleXML
-{
+class SimpleXML {
 	
 	private $data;
 	
