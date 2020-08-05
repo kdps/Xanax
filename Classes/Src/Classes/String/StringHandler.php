@@ -8,6 +8,12 @@ use Xanax\Exception\MemoryAllocatedException;
 
 class StringHandler 
 
+	public function isContains($text, $searchString) {
+		$findedIndex = strpos($text, $searchString);
+	
+		return $findedIndex > -1;
+	}
+	
 	public function indexBehindOf($text, $start, $searchString, $behindString) {
 		$aheadIndex = strpos($text, $behindString);
 	
