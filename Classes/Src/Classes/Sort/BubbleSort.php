@@ -2,10 +2,9 @@
 
 namespace Xanax\Classes\Sort;
 
-class BubbleSort
-{
-	public function Sort(array $array)
-	{
+class BubbleSort {
+	
+	public function Sort(array $array) {
 		$count = count($array);
 
 		for ($iterator = 1; $iterator < $count; $iterator++) {
@@ -28,4 +27,5 @@ class BubbleSort
 
 		return $array;
 	}
+	
 }
