@@ -2,8 +2,8 @@
 
 namespace Xanax\Implement;
 
-interface ClientURLOptionInterface
-{
+interface ClientURLOptionInterface {
+	
 	public function setURL(string $url);
 	
 	public function setSSLVerifypeer(bool $bool = true);
@@ -69,4 +69,5 @@ interface ClientURLOptionInterface
 	public function setReturnTransfer(bool $hasResponse = true);
 	
 	public function setReturnHeader(bool $hasResponse = true);
+	
 }
