@@ -2,8 +2,8 @@
 
 namespace Xanax\Implement;
 
-interface ClientURLLastTransferInformation
-{
+interface ClientURLLastTransferInformation {
+	
 	public function getContentType();
 	
 	public function getHeaderSize();
@@ -57,4 +57,5 @@ interface ClientURLLastTransferInformation
 	public function getConnectCode();
 	
 	public function getLastConnectFailureErrorNumber();
+	
 }
