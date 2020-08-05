@@ -7,10 +7,24 @@ namespace Xanax\Classes\String;
 use Xanax\Exception\MemoryAllocatedException;
 
 class StringHandler 
-{
+
+	public function indexBehindOf($text, $start, $searchString, $behindString) {
+		$aheadIndex = strpos($text, $behindString);
 	
-	public function removeByteOrderMark($text, $encoding = 'utf-8')
-	{
+		$findedIndex = strpos($text, $searchString);
+	
+		return ($findedIndex < $aheadIndex) ? -1 : $findedIndex;
+	}
+	
+	public function indexHeadOf($text, $start, $searchString, $behindString) {
+		$aheadIndex = strpos($text, $behindString);
+	
+		$findedIndex = strpos($text, $searchString);
+	
+		return ($findedIndex > $aheadIndex) ? -1 : $findedIndex;
+	}
+	
+	public function removeByteOrderMark($text, $encoding = 'utf-8') {
 		$byteOrderMark = "EFBBBF";
 		$result = "";
 		
@@ -44,8 +58,7 @@ class StringHandler
 		return $result;
 	}
 	
-	public function integerToBytes($integer) 
-	{
+	public function integerToBytes($integer) {
 		$integer = $integer;
 		$length = length($integer);
 		
@@ -56,25 +69,21 @@ class StringHandler
 		return $result;
 	}
 	
-	public static function toUpper($text) 
-	{
+	public static function toUpper($text) {
 		return strtoupper($text);
 	}
 	
-	public static function toLower($text) 
-	{
+	public static function toLower($text) {
 		return strtolower($text);
 	}
 	
-	public function unhtmlSpecialChars($string) 
-	{
+	public function unhtmlSpecialChars($string) {
 		$entity = array('&quot;', '&#039;', '&#39;', '&lt;', '&gt;', '&amp;');
 		$symbol = array('"', "'", "'", '<', '>', '&');
 		return str_replace($entity, $symbol, $string);
 	}
 	
-	public function entityToTag($string, $names) 
-	{
+	public function entityToTag($string, $names) {
 		$attr = ' ([a-z]+)=&quot;([\w!#$%()*+,\-.\/:;=?@~\[\] ]|&amp|&#039|&#39)+&quot;';
 		$name_list = explode(',', $names);
 		foreach ($name_list as $name) {
@@ -84,8 +93,7 @@ class StringHandler
 		return $string;
 	}
 	
-	public function stripTags($string, $tags='') 
-	{
+	public function stripTags($string, $tags='') {
 		if ($tags === '') {
 			return strip_tags($string);
 		}
@@ -146,15 +154,13 @@ class StringHandler
 		return $return_url;
 	}
 	
-	public function nlTrim($input) 
-	{
+	public function nlTrim($input) {
 		$input = preg_replace('/[\r\n]/', '', $input);
 		$input = preg_replace('/\t+/', ' ', $input);
 		return $input;
 	}
 	
-	public function nlslim($input, $max = 2) 
-	{
+	public function nlslim($input, $max = 2) {
 		$input = mb_ereg_replace('[\t 　]+(?=[\r\n])', '', $input);
 		$replace = str_repeat('$1', $max);
 		++$max;
@@ -164,18 +170,15 @@ class StringHandler
 		return $input;
 	}
 	
-	public function nlToBr($string) 
-	{
+	public function nlToBr($string) {
 		return preg_replace('/\r\n?|\n/', '<br />', $string);
 	}
 	
-	public function brToNl($string) 
-	{
+	public function brToNl($string) {
 		return str_replace('<br />', "\r\n", $string);
 	}
 	
-	public static function removeNullByte($input) 
-	{
+	public static function removeNullByte($input) {
 		$clean = str_replace("\x00", '', $input); 
 		$clean = str_replace("\0", '', $input); 
 		$clean = str_replace(chr(0), '', $input);
@@ -183,8 +186,7 @@ class StringHandler
 		return $clean;
 	}
 	
-	public static function removeDot($text) 
-	{
+	public static function removeDot($text) {
 		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", "$1-$2-$3$4-$5", $text);
 	}
 	
@@ -196,8 +198,7 @@ class StringHandler
 		return bin2hex($binaryText);
 	}
 	
-	public function getMaxAllocationSize(string $string) :int
-	{
+	public function getMaxAllocationSize(string $string) :int{
 		$memory_limit = ini_get('memory_limit');
 		
 		if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
@@ -212,8 +213,7 @@ class StringHandler
 		return (int)($maxAllocationSize / strlen($string));
 	}
 
-	public function Repeat(string $string, int $multiplier) 
-	{
+	public function Repeat(string $string, int $multiplier) {
 		if ($this->getMaxAllocationSize($string) > $multiplier) {
 			// Memory allocated error
 			throw new MemoryAllocatedException("Memory Allocated");
@@ -222,13 +222,11 @@ class StringHandler
 		return str_repeat($string, $multiplier);
 	}
 
-	public static function isJson($string) 
-	{
+	public static function isJson($string) {
 		return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
 	}
 	
-	public function filterVariable(mixed $string, $type)
-	{
+	public function filterVariable(mixed $string, $type){
 		switch ($type) {
 			case (preg_match('/^MaxLength\((.*\))$/', $type, $matches) ? true : false):
 				if (strlen($string) > $matches[1]) {
@@ -440,8 +438,7 @@ class StringHandler
 		return $string;
 	}
 
-	public function getRandomString($length = 1)
-	{
+	public function getRandomString($length = 1) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
 		$randomString = '';
@@ -453,38 +450,32 @@ class StringHandler
 		return $randomString;
 	}
 
-	public function escapeSlash($string)
-	{
+	public function escapeSlash($string) {
 		return stripslashes($string);
 	}
 
-	public function isNumber($string)
-	{
+	public function isNumber($string) {
 		return is_numeric($string);
 	}
 
-	public function removeUtf8Bom($string)
-	{
+	public function removeUtf8Bom($string) {
 		$source = preg_replace('/^\xEF\xBB\xBF/', '', $string);
 
 		return $source;
 	}
 
-	public function getMD5String($string, $length = 32)
-	{
+	public function getMD5String($string, $length = 32) {
 		return $string == '' ? '' : substr(md5($string), -$length);
 	}
 
-	public function getMd5Uniqid($length = 20)
-	{
+	public function getMd5Uniqid($length = 20) {
 		$id = md5(uniqid(mt_rand(), true));
 		$id = substr($id, -$length);
 
 		return $id;
 	}
 
-	public function stripTags($string, $tags = '')
-	{
+	public function stripTags($string, $tags = '') {
 		if ($tags === '') {
 			return strip_tags($string);
 		}
@@ -494,8 +485,7 @@ class StringHandler
 		return strip_tags($string, $tags);
 	}
 
-	public function replaceToHtmlSource($match)
-	{
+	public function replaceToHtmlSource($match) {
 		list($target, $name, $attr) = $match;
 		$name = strToLower($name);
 		$value = end($match);
@@ -524,23 +514,19 @@ class StringHandler
 		return "<$name$attr>$value</$name>";
 	}
 
-	public function brToNl(string $string)
-	{
+	public function brToNl(string $string) {
 		return str_replace('<br />', "\r\n", $string);
 	}
 
-	public function nlToBr(string $string)
-	{
+	public function nlToBr(string $string) {
 		return preg_replace('/\r\n?|\n/', '<br />', $string);
 	}
 
-	public function nTrim(string $string)
-	{
+	public function nTrim(string $string) {
 		return str_replace("\x00", '', $string);
 	}
 
-	public function intergerToBytes(string $string)
-	{
+	public function intergerToBytes(string $string) {
 		$length = strlen($string);
 		$result = '';
 		for ($i = $length - 1; $i >= 0; $i--) {
@@ -550,8 +536,7 @@ class StringHandler
 		return $result;
 	}
 
-	public function hexToBinary(string $string)
-	{
+	public function hexToBinary(string $string) {
 		$result = '';
 		for ($i = 0; $i < strlen($string); $i += 2) {
 			$result .= chr(hexdec(substr($string, $i, 2)));
@@ -560,18 +545,15 @@ class StringHandler
 		return $result;
 	}
 
-	public function removeDot(string $string)
-	{
+	public function removeDot(string $string) {
 		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", '$1-$2-$3$4-$5', $string);
 	}
 
-	public function toUpper(string $string)
-	{
+	public function toUpper(string $string) {
 		return strtoupper($string);
 	}
 
-	public function removeNullBytes(string $string)
-	{
+	public function removeNullBytes(string $string) {
 		$clean = str_replace("\x00", '', $string);
 		$clean = str_replace("\0", '', $string);
 		$clean = str_replace(chr(0), '', $string);
@@ -579,20 +561,17 @@ class StringHandler
 		return $clean;
 	}
 
-	public function toLower(string $string)
-	{
+	public function toLower(string $string) {
 		return strtolower($string);
 	}
 
-	public function getRandomHex(int $length = 32)
-	{
+	public function getRandomHex(int $length = 32) {
 		$output = $this->getRandomBytes($length);
 
 		return bin2hex($output);
 	}
 
-	public function getRandomBytes(int $length = 32)
-	{
+	public function getRandomBytes(int $length = 32) {
 		$bytes = min(32, $length);
 
 		$isWindows = $operationSystem->isWindows();
