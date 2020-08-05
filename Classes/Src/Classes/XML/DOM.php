@@ -5,22 +5,18 @@ namespace Xanax/Classes/XML;
 class DOM
 {
   
-  private $dom;
-  
+	private $dom;
+
 	public function __constructor() {
-    $this->dom = new DOMDocument;
+		$this->dom = new DOMDocument;
 	}
-	
-  public function Parse($xmlString) {
-    $this->dom->loadXML($xmlString);
-  }
-  
-  public function isValid() {
-    if (!$this->dom) {
-      return false;
-    }
-    
-    return true;
-  }
-  
+
+	public function Parse($xmlString) {
+		$this->dom->loadXML($xmlString);
+	}
+
+	public function isValid() {
+		return $this->dom;
+	}
+
 }
