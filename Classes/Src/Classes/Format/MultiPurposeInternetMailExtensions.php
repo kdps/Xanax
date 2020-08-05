@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Format;
 
-class MultiPurposeInternetMailExtensions
-{
+class MultiPurposeInternetMailExtensions {
+	
 	private static $extension = '';
 
 	// http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -331,20 +331,17 @@ class MultiPurposeInternetMailExtensions
 		]
 	];
 
-	public function __construct($extension = '')
-	{
+	public function __construct($extension = '') {
 		if ($extension) {
 			self::$extension = $extension;
 		}
 	}
 
-	public function getFileContentType($filePath)
-	{
+	public function getFileContentType($filePath) {
 		return mime_content_type($filePath);
 	}
 
-	public function getType($extension = '')
-	{
+	public function getType($extension = '') {
 		$type = '';
 
 		if (!$extension && self::$extension) {
@@ -357,4 +354,5 @@ class MultiPurposeInternetMailExtensions
 
 		return $type;
 	}
+	
 }
