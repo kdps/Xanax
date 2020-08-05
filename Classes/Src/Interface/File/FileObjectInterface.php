@@ -2,8 +2,8 @@
 
 namespace Xanax\Implement;
 
-interface FileObjectInterface
-{
+interface FileObjectInterface {
+	
 	public function getAcceptExtension(array $extension);
 
 	public function setAcceptExtension(array $extension);
@@ -53,4 +53,5 @@ interface FileObjectInterface
 	public function startHandle();
 
 	public function successToStartHandle() :bool;
+	
 }
