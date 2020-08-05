@@ -16,6 +16,7 @@ class ClientObject
 		}
 	}
 
+	// Send packet to socket of server
 	public function sendPacket($string = '')
 	{
 		$result = $this->SocketHandlerClass->writeSocket($this->SocketHandler, $string, strlen($string));
@@ -27,11 +28,13 @@ class ClientObject
 		return true;
 	}
 
+	// Close socket
 	public function Close()
 	{
 		$this->SocketHandlerClass->Close();
 	}
 
+	// Connect socket
 	public function Connect($address, $port, $domain = AF_INET, $type = SOCK_STREAM, $protocol = SOL_TCP) :bool
 	{
 		$this->SocketHandler = $this->SocketHandlerClass->Create($domain, $type, $protocol);
