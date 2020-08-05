@@ -57,7 +57,7 @@ class Dynamic
 	}
 
 	/**
-	 * get a last page.
+	 * Get a last page.
 	 *
 	 * @return int
 	 */
@@ -67,7 +67,7 @@ class Dynamic
 	}
 
 	/**
-	 * get a link of last page.
+	 * Get a link of last page.
 	 *
 	 * @return String
 	 */
@@ -77,7 +77,7 @@ class Dynamic
 	}
 
 	/**
-	 * get a comment link of last page.
+	 * Get a comment link of last page.
 	 *
 	 * @return String
 	 */
@@ -87,7 +87,7 @@ class Dynamic
 	}
 
 	/**
-	 * get a page link.
+	 * Get a page link.
 	 *
 	 * @return String
 	 */
@@ -97,7 +97,7 @@ class Dynamic
 	}
 
 	/**
-	 * make sure this page is the same as the current page.
+	 * Make sure this page is the same as the current page.
 	 *
 	 * @return boolean
 	 */
@@ -107,7 +107,7 @@ class Dynamic
 	}
 
 	/**
-	 * make sure this comment page is the same as the current page.
+	 * Make sure this comment page is the same as the current page.
 	 *
 	 * @return boolean
 	 */
@@ -117,7 +117,7 @@ class Dynamic
 	}
 
 	/**
-	 * make sure has next page.
+	 * Make sure has next page.
 	 *
 	 * @return boolean
 	 */
@@ -135,7 +135,7 @@ class Dynamic
 	}
 
 	/**
-	 * get a current page.
+	 * Get a current page.
 	 *
 	 * @return int
 	 */
