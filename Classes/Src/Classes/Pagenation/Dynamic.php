@@ -6,13 +6,13 @@ namespace Xanax\Classes\Pagenation;
 
 class Dynamic
 {
-	public $current_page;
-	public $list_count;
-	public $page_count;
-	public $point;           // goted page count
-	public $page_margin = 0; // page margin for center align
-	public $first_page  = 0;  // first page number
-	public $last_page;       // number of total items
+	private $current_page;
+	private $list_count;
+	private $page_count;
+	private $point;           // goted page count
+	private $page_margin = 0; // page margin for center align
+	private $first_page  = 0;  // first page number
+	private $last_page;       // number of total items
 
 	/**
 	 * Constructor
