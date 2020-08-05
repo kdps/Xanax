@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Session;
 
-class Handler
-{
-	public function __construct()
-	{
+class Handler {
+	
+	public function __construct(){
 	}
 
 	public function Start($options = []) {
@@ -16,8 +15,7 @@ class Handler
 		}
 	}
 	
-	public function isExtensionLoaded()
-	{
+	public function isExtensionLoaded() {
 		if (!extension_loaded('session')) {
 			return false;
 		}
@@ -25,22 +23,19 @@ class Handler
 		return true;
 	}
 
-	public function getStatus()
-	{
+	public function getStatus() {
 		$status = session_status();
 
 		return $status;
 	}
 
-	public function getSessionId()
-	{
+	public function getSessionId() {
 		$sessionId = session_id();
 
 		return $sessionId;
 	}
 
-	public function hasSessionId()
-	{
+	public function hasSessionId() {
 		if ($this->getSessionId() == '') {
 			return false;
 		}
@@ -48,8 +43,7 @@ class Handler
 		return true;
 	}
 
-	public function isOneExists()
-	{
+	public function isOneExists() {
 		if ($this->getStatus() == PHP_SESSION_ACTIVE) {
 			return false;
 		}
@@ -57,8 +51,7 @@ class Handler
 		return true;
 	}
 
-	public function isExists()
-	{
+	public function isExists() {
 		if ($this->getStatus() == PHP_SESSION_NONE) {
 			return false;
 		}
@@ -66,8 +59,7 @@ class Handler
 		return true;
 	}
 
-	public function isDisabled()
-	{
+	public function isDisabled() {
 		if ($this->getStatus() == PHP_SESSION_DISABLED) {
 			return false;
 		}
@@ -75,8 +67,7 @@ class Handler
 		return true;
 	}
 
-	public function isStated()
-	{
+	public function isStated() {
 		if (!$this->isExists() && empty($_SESSION)) {
 			return false;
 		}
@@ -84,28 +75,23 @@ class Handler
 		return true;
 	}
 
-	public function getSavePath()
-	{
+	public function getSavePath() {
 		return session_save_path();
 	}
 
-	public function setSavePath($path = '')
-	{
+	public function setSavePath($path = '') {
 		return session_save_path($path);
 	}
 
-	public function Commit()
-	{
+	public function Commit() {
 		session_commit();
 	}
 
-	public function regenerateId($use = true)
-	{
+	public function regenerateId($use = true) {
 		session_regenerate_id($use);
 	}
 
-	public function useCookies()
-	{
+	public function useCookies() {
 		if (ini_get('session.use_cookies')) {
 			return true;
 		}
@@ -113,13 +99,11 @@ class Handler
 		return false;
 	}
 
-	public function Destroy()
-	{
+	public function Destroy() {
 		session_destroy();
 	}
 
-	public function Set($key, $value, $overwrite = true, $valid = false)
-	{
+	public function Set($key, $value, $overwrite = true, $valid = false) {
 		$setSessionVar = function ($key, $value) {
 			$_SESSION[$key] = $value;
 		};
@@ -141,13 +125,12 @@ class Handler
 		return true;
 	}
 
-	public function Get($key)
-	{
+	public function Get($key) {
 		return $_SESSION[$key] ? $_SESSION[$key] : null;
 	}
 
-	public function Unset() :bool
-	{
+	public function Unset() :bool {
 		return session_unset();
 	}
+	
 }
