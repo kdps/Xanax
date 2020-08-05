@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Request;
 
-class Handler
-{
+class Handler {
+	
 	public $RequestMessage = [
 		100 => 'Continue',
 		101 => 'Switching Protocols',
@@ -55,8 +55,7 @@ class Handler
 		509 => 'Bandwidth Limit Exceeded'
 	];
 
-	public function getBrowserInfo() :array
-	{
+	public function getBrowserInfo() :array {
 		$browserInfo = [];
 		if (!empty(ini_get('browscap'))) {
 			$browserInfo = print_r(get_browser(null, true));
@@ -65,8 +64,7 @@ class Handler
 		return $browserInfo;
 	}
 
-	public function isHttpsProtocol() :bool
-	{
+	public function isHttpsProtocol() :bool {
 		return empty($_SERVER['HTTPS']) ? false : $_SERVER['HTTPS'] === 'on' ? true : false;
 	}
 
@@ -82,8 +80,7 @@ class Handler
 		return $_SERVER['REQUEST_SCHEME'];
 	}
 	
-	public function getProtocol() :string
-	{
+	public function getProtocol() :string {
 		return substr(strtolower($_SERVER['SERVER_PROTOCOL']), 0, strpos(strtolower($_SERVER['SERVER_PROTOCOL']), '/'));
 	}
 
@@ -168,18 +165,15 @@ class Handler
 		return $_SERVER['HTTP_X_REWRITE_URL'];
 	}
 	
-	public function getHTTPConnection() :string
-	{
+	public function getHTTPConnection() :string {
 		return $_SERVER['HTTP_CONNECTION'];
 	}
 
-	public function getPort() :string
-	{
+	public function getPort() :string {
 		return $_SERVER['SERVER_PORT'];
 	}
 
-	public function getReferer()
-	{
+	public function getReferer() {
 		if ($this->hasReferer()) {
 			return $_SERVER['HTTP_REFERER'];
 		}
@@ -187,63 +181,51 @@ class Handler
 		return null;
 	}
 
-	public function getHTTPAccept()
-	{
+	public function getHTTPAccept() {
 		return $_SERVER['HTTP_ACCEPT'];
 	}
 
-	public function getContentType()
-	{
+	public function getContentType() {
 		return $_SERVER['HTTP_CONTENT_TYPE'];
 	}
 
-	public function getServerProtocol()
-	{
+	public function getServerProtocol() {
 		return $_SERVER['SERVER_PROTOCOL'];
 	}
 
-	public function getContentType()
-	{
+	public function getContentType() {
 		return $_SERVER['CONTENT_TYPE'];
 	}
 
-	public function getSignature()
-	{
+	public function getSignature() {
 		return $_SERVER['SERVER_SIGNATURE'];
 	}
 
-	public function getUserAgent()
-	{
+	public function getUserAgent() {
 		return $_SERVER['HTTP_USER_AGENT'];
 	}
 
-	public function getDocumentRoot()
-	{
+	public function getDocumentRoot() {
 		return $_SERVER['DOCUMENT_ROOT'];
 	}
 
-	public function getReuqestMethod()
-	{
+	public function getReuqestMethod() {
 		return $_SERVER['REQUEST_METHOD'];
 	}
 
-	public function getAcceptEncoding()
-	{
+	public function getAcceptEncoding() {
 		return $_SERVER['HTTP_ACCEPT_ENCODING'];
 	}
 
-	public function isXmlHttpRequest()
-	{
+	public function isXmlHttpRequest() {
 		return (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 	}
 
-	public function isAjax()
-	{
+	public function isAjax() {
 		return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $this->isXmlHttpRequest()) ? true : false;
 	}
 
-	public function getRemoteIP()
-	{
+	public function getRemoteIP() {
 		if (isset($_SERVER['REMOTE_ADDR'])) {
 			return $_SERVER['REMOTE_ADDR'];
 		}
@@ -251,8 +233,7 @@ class Handler
 		return null;
 	}
 
-	public function getAcceptLanguage()
-	{
+	public function getAcceptLanguage() {
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 			return $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		}
@@ -260,43 +241,35 @@ class Handler
 		return null;
 	}
 
-	public function isHead()
-	{
+	public function isHead() {
 		return (strtoupper($this->getReuqestMethod()) === 'HEAD') ? true : false;
 	}
 	
-	public function isPut()
-	{
+	public function isPut() {
 		return (strtoupper($this->getReuqestMethod()) === 'PATCH') ? true : false;
 	}
 	
-	public function isPut()
-	{
+	public function isPut() {
 		return (strtoupper($this->getReuqestMethod()) === 'PUT') ? true : false;
 	}
 	
-	public function isOptions()
-	{
+	public function isOptions() {
 		return (strtoupper($this->getReuqestMethod()) === 'OPTIONS') ? true : false;
 	}
 
-	public function isDelete()
-	{
+	public function isDelete() {
 		return (strtoupper($this->getReuqestMethod()) === 'DELETE') ? true : false;
 	}
 
-	public function isGet()
-	{
+	public function isGet() {
 		return (strtoupper($this->getReuqestMethod()) === 'GET') ? true : false;
 	}
 
-	public function isPost()
-	{
+	public function isPost() {
 		return (strtoupper($this->getReuqestMethod()) === 'POST') ? true : false;
 	}
 
-	public function getPostParamter($parameter)
-	{
+	public function getPostParamter($parameter) {
 		$string = null;
 
 		if ($this->isPostRequest()) {
@@ -306,8 +279,7 @@ class Handler
 		return $string;
 	}
 
-	public function getGetParamter($parameter)
-	{
+	public function getGetParamter($parameter) {
 		$string = null;
 
 		if ($this->isGetRequest()) {
@@ -317,16 +289,14 @@ class Handler
 		return $string;
 	}
 
-	public function getHost()
-	{
+	public function getHost() {
 		$port = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
 		$host = sprintf('%s%s%s', $port, $_SERVER['HTTP_HOST'], dirname($_SERVER['DOCUMENT_URI']));
 
 		return $host;
 	}
 
-	public function isMobile()
-	{
+	public function isMobile() {
 		$useragent = strtolower($this->getUserAgent());
 
 		$mobileRegex = '/(android|bb\d+|meego).+mobile|avantgo|pda;|htc(_|-)|bada\/|blackberry|brew|blazer|tablet|nexus|compal|teleca|minimo|lg;|wap;|elaine|eudoraweb|sonyericsson|samsung|webos\/|nintendo|nokia|fennec|hiptop|itouch|iemobile|palmos|ip(hone|od|ad)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i';
@@ -340,8 +310,7 @@ class Handler
 		return false;
 	}
 
-	public function isCrawler()
-	{
+	public function isCrawler() {
 		$useragent = strtolower($this->getUserAgent());
 
 		$crawlerRegex = "/bot|crawl|google|yahoo|slurp|spider|yeti|daum|teoma|fish|hanrss|facebook|yandex|infoseek|askjeeves|stackrambler|spyder|watchmouse|pingdom\.com|feedfetcher-google/";
@@ -353,15 +322,13 @@ class Handler
 		return false;
 	}
 
-	public function isConnectionKeepAlive()
-	{
+	public function isConnectionKeepAlive() {
 		$connection = strtolower($this->getHTTPConnection());
 
 		return $connection === 'keep-alive';
 	}
 
-	public function hasReferer()
-	{
+	public function hasReferer() {
 		if (isset($_SERVER['HTTP_REFERER']) && isset($_SERVER['SCRIPT_URL'])) {
 			$referer = $_SERVER['HTTP_REFERER'];
 			$url     = $_SERVER['SCRIPT_URL'];
@@ -371,4 +338,5 @@ class Handler
 
 		return false;
 	}
+	
 }
