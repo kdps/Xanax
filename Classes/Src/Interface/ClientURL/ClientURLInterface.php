@@ -2,8 +2,8 @@
 
 namespace Xanax\Implement;
 
-interface ClientURLInterface
-{
+interface ClientURLInterface {
+	
 	public function Reset();
 	
 	public function getLastErrorNumber();
