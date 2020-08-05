@@ -1,7 +1,7 @@
 <?php
 
-interface ImageHandlerInterface
-{
+interface ImageHandlerInterface {
+	
 	public function isAnimated($filename);
 
 	public function drawRepeat($imageResource, $width, $height);
@@ -45,4 +45,5 @@ interface ImageHandlerInterface
 	public function getInstance($filePath);
 
 	public function hexToRgb($hex);
+	
 }
