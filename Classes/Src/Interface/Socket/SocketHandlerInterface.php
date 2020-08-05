@@ -1,7 +1,7 @@
 <?php
 
-interface SocketHandlerInterface
-{
+interface SocketHandlerInterface {
+	
 	public function Create($domain = AF_INET, $type = SOCK_STREAM, $protocol = SOL_TCP) :resource;
 
 	public function getPeerName($socketHandler) :array;
@@ -23,4 +23,5 @@ interface SocketHandlerInterface
 	public function Connect($socketHandler, $address, $port) :bool;
 
 	public function getLastErrorMessage();
+	
 }
