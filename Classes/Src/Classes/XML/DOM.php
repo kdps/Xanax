@@ -16,7 +16,7 @@ class DOM
 	}
 
 	public function isValid() {
-		return $this->dom;
+		return isset($this->dom);
 	}
 
 }
