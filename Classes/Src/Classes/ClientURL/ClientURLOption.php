@@ -6,24 +6,21 @@ namespace Xanax\Classes;
 
 use Xanax\Implement\ClientURLOptionInterface;
 
-class ClientURLOption implements ClientURLOptionInterface
-{
+class ClientURLOption implements ClientURLOptionInterface {
+	
 	private static $session;
 
 	private static $headerArrayData = [];
 
-	public function __construct($session = '')
-	{
+	public function __construct($session = '') {
 		self::$session = $session;
 	}
 
-	public function returnContext()
-	{
+	public function returnContext() {
 		return $this;
 	}
 
-	public function disableCache(bool $bool)
-	{
+	public function disableCache(bool $bool) {
 		curl_setopt(self::$session, CURLOPT_FRESH_CONNECT, $bool);
 
 		return $this->returnContext();
@@ -34,8 +31,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setURL(string $url)
-	{
+	public function setURL(string $url) {
 		curl_setopt(self::$session, CURLOPT_URL, $url);
 
 		return $this->returnContext();
@@ -46,8 +42,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setSSLVerifypeer(bool $bool = true)
-	{
+	public function setSSLVerifypeer(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_SSL_VERIFYPEER, $bool);
 
 		return $this->returnContext();
@@ -58,8 +53,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setTimeout(bool $timeout = true)
-	{
+	public function setTimeout(bool $timeout = true) {
 		curl_setopt(self::$session, CURLOPT_TIMEOUT, $timeout);
 
 		return $this->returnContext();
@@ -70,8 +64,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPostField(int $fields = 0)
-	{
+	public function setPostField(int $fields = 0) {
 		curl_setopt(self::$session, CURLOPT_POSTFIELDS, $fields);
 
 		return $this->returnContext();
@@ -82,8 +75,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPostFieldSize(int $size = 0)
-	{
+	public function setPostFieldSize(int $size = 0) {
 		curl_setopt(self::$session, CURLOPT_POSTFIELDSIZE, $size);
 
 		return $this->returnContext();
@@ -94,8 +86,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setFollowLocationHeader(int $size = 0)
-	{
+	public function setFollowLocationHeader(int $size = 0) {
 		curl_setopt(self::$session, CURLOPT_FOLLOWLOCATION, $size);
 
 		return $this->returnContext();
@@ -106,15 +97,13 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setFTPUseEPSV(int $size = 0)
-	{
+	public function setFTPUseEPSV(int $size = 0) {
 		curl_setopt(self::$session, CURLOPT_FTP_USE_EPSV, $size);
 
 		return $this->returnContext();
 	}
 
-	public function setFileHandler($filePointer)
-	{
+	public function setFileHandler($filePointer) {
 		curl_setopt(self::$session, CURLOPT_FILE, $filePointer);
 
 		return $this->returnContext();
@@ -125,8 +114,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setDnsUseGlobalCache(bool $bool = true)
-	{
+	public function setDnsUseGlobalCache(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_DNS_USE_GLOBAL_CACHE, $bool);
 
 		return $this->returnContext();
@@ -137,15 +125,13 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setUserAgent($userAgent = '')
-	{
+	public function setUserAgent($userAgent = '') {
 		curl_setopt(self::$session, CURLOPT_USERAGENT, $userAgent);
 
 		return $this->returnContext();
 	}
 
-	public function setAcceptEncoding($encoding = '')
-	{
+	public function setAcceptEncoding($encoding = '') {
 		curl_setopt(self::$session, CURLOPT_ENCODING, $encoding);
 
 		return $this->returnContext();
@@ -156,8 +142,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setCookieHeader($cookieData = '')
-	{
+	public function setCookieHeader($cookieData = '') {
 		curl_setopt(self::$session, CURLOPT_COOKIE, $cookieData);
 
 		return $this->returnContext();
@@ -168,8 +153,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function useCookieSession(bool $bool = true)
-	{
+	public function useCookieSession(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_COOKIESESSION, $bool);
 
 		return $this->returnContext();
@@ -180,8 +164,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setMaximumConnectionCount(bool $maximumConnection = true)
-	{
+	public function setMaximumConnectionCount(bool $maximumConnection = true) {
 		curl_setopt(self::$session, CURLOPT_MAXCONNECTS, $maximumConnection);
 
 		return $this->returnContext();
@@ -192,8 +175,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setAutoReferer(bool $bool = true)
-	{
+	public function setAutoReferer(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_AUTOREFERER, $bool);
 
 		return $this->returnContext();
@@ -204,15 +186,13 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setBodyEmpty(bool $bool = true)
-	{
+	public function setBodyEmpty(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_NOBODY, $bool);
 
 		return $this->returnContext();
 	}
 
-	public function setConnectionTimeout(bool $timeout = true, bool $useMilliseconds = false)
-	{
+	public function setConnectionTimeout(bool $timeout = true, bool $useMilliseconds = false) {
 		if ($useMilliseconds) {
 			return $this->setConnectionTimeoutMilliseconds($timeout);
 		} else {
@@ -227,29 +207,25 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setConnectionTimeoutMilliseconds(bool $timeout = true)
-	{
+	public function setConnectionTimeoutMilliseconds(bool $timeout = true) {
 		curl_setopt(self::$session, CURLOPT_CONNECTTIMEOUT_MS, $timeout);
 
 		return $this->returnContext();
 	}
 
-	public function setNobody(bool $bool = true)
-	{
+	public function setNobody(bool $bool = true) {
 		$this->setBodyEmpty($bool);
 
 		return $this->returnContext();
 	}
 
-	public function setBinaryTransfer(bool $bool = true)
-	{
+	public function setBinaryTransfer(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_BINARYTRANSFER, $bool);
 
 		return $this->returnContext();
 	}
 
-	public function setMaximumUploadSpeed(int $bytePerSeconds = 1000)
-	{
+	public function setMaximumUploadSpeed(int $bytePerSeconds = 1000) {
 		$this->setMaximumSendSpeed($bytePerSeconds);
 
 		return $this->returnContext();
@@ -260,15 +236,13 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setMaximumSendSpeed(int $bytePerSeconds = 1000)
-	{
+	public function setMaximumSendSpeed(int $bytePerSeconds = 1000) {
 		curl_setopt(self::$session, CURLOPT_MAX_SEND_SPEED_LARGE, $bytePerSeconds);
 
 		return $this->returnContext();
 	}
 
-	public function setMaximumDownloadSpeed(int $bytePerSeconds = 1000)
-	{
+	public function setMaximumDownloadSpeed(int $bytePerSeconds = 1000) {
 		$this->setMaximumReceiveSpeed($bytePerSeconds);
 
 		return $this->returnContext();
@@ -279,15 +253,13 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setMaximumReceiveSpeed(int $bytePerSeconds = 1000)
-	{
+	public function setMaximumReceiveSpeed(int $bytePerSeconds = 1000) {
 		curl_setopt(self::$session, CURLOPT_MAX_RECV_SPEED_LARGE, $bytePerSeconds);
 
 		return $this->returnContext();
 	}
 
-	public function setHeader(string $key, string $value, bool $overwrite = false)
-	{
+	public function setHeader(string $key, string $value, bool $overwrite = false) {
 		$headerData = [$key, $value];
 
 		if (!$overwrite) {
@@ -301,8 +273,7 @@ class ClientURLOption implements ClientURLOptionInterface
 		return $this->returnContext();
 	}
 
-	public function setContentType(string $applicationType)
-	{
+	public function setContentType(string $applicationType) {
 		$value = '';
 
 		// https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types
@@ -312,13 +283,11 @@ class ClientURLOption implements ClientURLOptionInterface
 		return $this->setHeader('Content-Type', $mimeType);
 	}
 
-	public function setXmlContentType()
-	{
+	public function setXmlContentType() {
 		return $this->setAcceptContentType('xml');
 	}
 
-	public function setJsonContentType()
-	{
+	public function setJsonContentType() {
 		return $this->setAcceptContentType('json');
 	}
 
@@ -327,8 +296,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setHeaders($headers = [])
-	{
+	public function setHeaders($headers = []) {
 		curl_setopt(self::$session, CURLOPT_HTTPHEADER, $headers);
 
 		return $this->returnContext();
@@ -339,8 +307,7 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPort(bool $port = true)
-	{
+	public function setPort(bool $port = true) {
 		curl_setopt(self::$session, CURLOPT_PORT, $port);
 
 		return $this->returnContext();
@@ -351,15 +318,13 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setPostMethod(bool $bool = true)
-	{
+	public function setPostMethod(bool $bool = true) {
 		curl_setopt(self::$session, CURLOPT_POST, $bool);
 
 		return $this->returnContext();
 	}
 
-	public function setReturnTransfer(bool $hasResponse = true)
-	{
+	public function setReturnTransfer(bool $hasResponse = true) {
 		curl_setopt(self::$session, CURLOPT_RETURNTRANSFER, $hasResponse);
 
 		return $this->returnContext();
@@ -370,10 +335,10 @@ class ClientURLOption implements ClientURLOptionInterface
 	 *
 	 * @return void
 	 */
-	public function setReturnHeader(bool $hasResponse = true)
-	{
+	public function setReturnHeader(bool $hasResponse = true) {
 		curl_setopt(self::$session, CURLOPT_HEADER, $hasResponse);
 
 		return $this->returnContext();
 	}
+	
 }
