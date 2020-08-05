@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-class OperationSystem
-{
-	public function isCommandLineInterface()
-	{
+class OperationSystem {
+	
+	public function isCommandLineInterface() {
 		return (php_sapi_name() === 'cli');
 	}
 
@@ -21,8 +20,7 @@ class OperationSystem
 		return PHP_INT_MAX;
 	}
 	
-	public function is4BitOSBitOS()
-	{
+	public function is4BitOSBitOS() {
 		if (PHP_INT_MAX == 0x7) { // Maximum value of 4-bit sign integer
 			return true;
 		}
@@ -30,8 +28,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function is8BitOSBitOS()
-	{
+	public function is8BitOSBitOS() {
 		if (PHP_INT_MAX == 0x7F) { // Maximum value of 8-bit sign integer
 			return true;
 		}
@@ -39,8 +36,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function is16BitOS()
-	{
+	public function is16BitOS() {
 		if ($this->getIntergerSize() == 2 || $this->getMaximumIntergerSize() == 0x7FFF) { // Maximum value of 16-bit sign integer
 			return true;
 		}
@@ -48,8 +44,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function is32BitOS()
-	{
+	public function is32BitOS() {
 		if ($this->getIntergerSize() == 4 || $this->getMaximumIntergerSize() == 0x7FFFFFFF) { // Maximum value of 32-bit sign integer
 			return true;
 		}
@@ -57,8 +52,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function is64BitOS()
-	{
+	public function is64BitOS() {
 		if ($this->getIntergerSize() == 8 || $this->getMaximumIntergerSize() == 0x7FFFFFFFFFFFFFFF) { // Maximum value of 64-bit sign integer
 			return true;
 		}
@@ -66,8 +60,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function is128BitOS()
-	{
+	public function is128BitOS() {
 		if ($this->getMaximumIntergerSize() == 0x80000000000000000000000000000000) { // Maximum value of 128-bit sign integer
 			return true;
 		}
@@ -75,8 +68,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function is256BitOS()
-	{
+	public function is256BitOS() {
 		if ($this->getMaximumIntergerSize() == 0x8000000000000000000000000000000000000000000000000000000000000000) { // Maximum value of 256-bit sign integer
 			return true;
 		}
@@ -84,8 +76,7 @@ class OperationSystem
 		return false;
 	}
 
-	public function isIIS()
-	{
+	public function isIIS() {
 		return (strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false);
 	}
 
@@ -93,8 +84,8 @@ class OperationSystem
 		return strtoupper(substr($this->getBuiltOperationSystemString(), 0, 3));
 	}
 	
-	public function isWindows()
-	{
+	public function isWindows() {
 		return ($this->getShortOperationSystemString() === 'WIN');
 	}
+	
 }
