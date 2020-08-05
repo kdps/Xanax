@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Xanax\Classes;
 
-class ClientURLLastTransferInformation
-{
+class ClientURLLastTransferInformation {
+	
 	private static $session;
 
-	public function __construct($session = '')
-	{
+	public function __construct($session = '') {
 		self::$session = $session;
 	}
 
@@ -18,8 +17,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getContentType()
-	{
+	public function getContentType() {
 		return curl_getinfo(self::$session, CURLINFO_CONTENT_TYPE);
 	}
 
@@ -28,8 +26,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getHeaderSize()
-	{
+	public function getHeaderSize() {
 		return curl_getinfo(self::$session, CURLINFO_HEADER_SIZE);
 	}
 
@@ -38,8 +35,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getUploadedSize()
-	{
+	public function getUploadedSize() {
 		return curl_getinfo(self::$session, CURLINFO_SIZE_UPLOAD);
 	}
 
@@ -48,8 +44,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getDownloadedSize()
-	{
+	public function getDownloadedSize() {
 		return curl_getinfo(self::$session, CURLINFO_SIZE_DOWNLOAD);
 	}
 
@@ -58,8 +53,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getAverageUploadSpeed()
-	{
+	public function getAverageUploadSpeed() {
 		return curl_getinfo(self::$session, CURLINFO_SPEED_UPLOAD);
 	}
 
@@ -68,8 +62,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getAverageDownloadSpeed()
-	{
+	public function getAverageDownloadSpeed() {
 		return curl_getinfo(self::$session, CURLINFO_SPEED_DOWNLOAD);
 	}
 
@@ -78,8 +71,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getUploadContentLength()
-	{
+	public function getUploadContentLength() {
 		return curl_getinfo(self::$session, CURLINFO_CONTENT_LENGTH_UPLOAD);
 	}
 
@@ -88,13 +80,11 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getDownloadContentLength()
-	{
+	public function getDownloadContentLength() {
 		return curl_getinfo(self::$session, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 	}
 
-	public function getHeaderOutput()
-	{
+	public function getHeaderOutput() {
 		return curl_getinfo(self::$session, CURLINFO_HEADER_OUT);
 	}
 
@@ -103,8 +93,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getEffectiveURL()
-	{
+	public function getEffectiveURL() {
 		return curl_getinfo(self::$session, CURLINFO_EFFECTIVE_URL);
 	}
 
@@ -113,13 +102,11 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getRemoteTime()
-	{
+	public function getRemoteTime() {
 		return curl_getinfo(self::$session, CURLINFO_FILETIME);
 	}
 
-	public function getStatusCode()
-	{
+	public function getStatusCode() {
 		return curl_getinfo(self::$session, CURLINFO_HTTP_CODE);
 	}
 
@@ -128,8 +115,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getConnectionTime()
-	{
+	public function getConnectionTime() {
 		return curl_getinfo(self::$session, CURLINFO_CONNECT_TIME);
 	}
 
@@ -138,8 +124,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getPreTransferTime()
-	{
+	public function getPreTransferTime() {
 		return curl_getinfo(self::$session, CURLINFO_PRETRANSFER_TIME);
 	}
 
@@ -148,8 +133,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getStartTransferTime()
-	{
+	public function getStartTransferTime() {
 		return curl_getinfo(self::$session, CURLINFO_STARTTRANSFER_TIME);
 	}
 
@@ -158,8 +142,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getRedirectCount()
-	{
+	public function getRedirectCount() {
 		return curl_getinfo(self::$session, CURLINFO_REDIRECT_COUNT);
 	}
 
@@ -168,8 +151,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getLastConnectionIPAddress()
-	{
+	public function getLastConnectionIPAddress() {
 		return curl_getinfo(self::$session, CURLINFO_PRIMARY_IP);
 	}
 
@@ -178,8 +160,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getLastConnectionPortNumber()
-	{
+	public function getLastConnectionPortNumber() {
 		return curl_getinfo(self::$session, CURLINFO_PRIMARY_IP);
 	}
 
@@ -188,8 +169,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getLookupNameTime()
-	{
+	public function getLookupNameTime() {
 		return curl_getinfo(self::$session, CURLINFO_NAMELOOKUP_TIME);
 	}
 
@@ -198,8 +178,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getResponseCode()
-	{
+	public function getResponseCode() {
 		return curl_getinfo(self::$session, CURLINFO_RESPONSE_CODE);
 	}
 
@@ -208,8 +187,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getTotalTransferTime()
-	{
+	public function getTotalTransferTime() {
 		return curl_getinfo(self::$session, CURLINFO_TOTAL_TIME);
 	}
 
@@ -218,8 +196,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getCreatedConnectionCount()
-	{
+	public function getCreatedConnectionCount() {
 		return curl_getinfo(self::$session, CURLINFO_NUM_CONNECTS);
 	}
 
@@ -228,8 +205,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getRecentReceivedCSeq()
-	{
+	public function getRecentReceivedCSeq() {
 		return curl_getinfo(self::$session, CURLINFO_RTSP_CSEQ_RECV);
 	}
 
@@ -238,8 +214,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getNextRTSPClientCSeq()
-	{
+	public function getNextRTSPClientCSeq() {
 		return curl_getinfo(self::$session, CURLINFO_RTSP_CLIENT_CSEQ);
 	}
 
@@ -248,8 +223,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getAllKnownCookies()
-	{
+	public function getAllKnownCookies() {
 		return curl_getinfo(self::$session, CURLINFO_COOKIELIST);
 	}
 
@@ -258,8 +232,7 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getConnectCode()
-	{
+	public function getConnectCode() {
 		return curl_getinfo(self::$session, CURLINFO_HTTP_CONNECTCODE);
 	}
 
@@ -268,8 +241,8 @@ class ClientURLLastTransferInformation
 	 *
 	 * @return mixed
 	 */
-	public function getLastConnectFailureErrorNumber()
-	{
+	public function getLastConnectFailureErrorNumber() {
 		return curl_getinfo(self::$session, CURLINFO_OS_ERRNO);
 	}
+	
 }
