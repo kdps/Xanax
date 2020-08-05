@@ -2,8 +2,8 @@
 
 namespace Xanax\Classes;
 
-class Tokenizer
-{
+class Tokenizer {
+	
 	const OPERATOR     = 1;
 	const PARENTHESIES = 2;
 	const WORD         = 3;
@@ -51,8 +51,7 @@ class Tokenizer
 	const STATE_WORD     = 4;
 	const STATE_OPERATOR = 5;
 
-	public function generateToken($string)
-	{
+	public function generateToken($string) {
 		$count = strlen($string);
 
 		$state = self::STATE_DEFAULT;
