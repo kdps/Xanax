@@ -1,7 +1,6 @@
 <?php
 
-class Maya
-{
+class Maya {
 	private static $self   = null;
 	private $addon_text    = null;
 	private $global_static = 0;
@@ -12,12 +11,10 @@ class Maya
 	public $self_position = 0;
 	public $text_len      = 0;
 
-	public function __construct()
-	{
+	public function __construct() {
 	}
 
-	public static function &getself()
-	{
+	public static function &getself() {
 		static $obj = null;
 		if (!$obj) {
 			$obj = new maya();
@@ -26,8 +23,7 @@ class Maya
 		return $obj;
 	}
 
-	public function line_execute_match_left($start, $rule, $text, $mode)
-	{
+	public function line_execute_match_left($start, $rule, $text, $mode) {
 		$self = self::getself();
 
 		$check_rule = strpos($rule, '||');
@@ -57,8 +53,7 @@ class Maya
 		}
 	}
 
-	public function line_execute_match_right($start, $rule, $text, $mode)
-	{
+	public function line_execute_match_right($start, $rule, $text, $mode) {
 		$self                = self::getself();
 		$self->global_static = false;
 
@@ -67,24 +62,29 @@ class Maya
 		if ($check_rule_split !== false) {
 			$check_rule = explode('||', $rule);
 			foreach ($check_rule as $val) {
-				if ($mode == 'like') {
-					$check_arr = ($this->addon_text == null) ?
+				switch($mode) {
+					case "like":
+						$check_arr = ($this->addon_text == null) ?
 						strpos(substr($text, $self->text_i), $val) :
 						strpos(substr($text, $self->text_i), $self->addon_text . $val);
 
-					if ($check_arr !== false) {
-						return $start + 1;
-					}
-				} elseif ($mode == 'equal') {
-					$rep_a = ($this->addon_text == null) ?
+						if ($check_arr !== false) {
+							return $start + 1;
+						}
+						break;
+					case "equal":
+						$rep_a = ($this->addon_text == null) ?
 						substr(substr($text, $self->text_i), strlen(substr($text, $self->text_i)) - strlen($val), strlen($val)) :
 						substr(substr($text, $self->text_i), (strlen(substr($text, $self->text_i)) - strlen($val)) - strlen($this->addon_text), strlen($val) + strlen($this->addon_text));
 
-					$rep_b = ($this->addon_text == null) ? $val : $this->addon_text . $val;
+						$rep_b = ($this->addon_text == null) ? $val : $this->addon_text . $val;
 
-					if ($rep_a == $rep_b) {
-						return $start + 1;
-					}
+						if ($rep_a == $rep_b) {
+							return $start + 1;
+						}
+						break;
+					default:
+						break;
 				}
 			}
 
@@ -112,12 +112,10 @@ class Maya
 		}
 	}
 
-	public function line_execute_match_callback()
-	{
+	public function line_execute_match_callback() {
 	}
 	
-	public function line_pass($start, $rule, $text, $passage = 0)
-	{
+	public function line_pass($start, $rule, $text, $passage = 0) {
 		$self = self::getself();
 
 		$check_rule = strpos($rule, '||');
@@ -148,15 +146,13 @@ class Maya
 		}
 	}
 
-	public function line_add($start, $rule)
-	{
+	public function line_add($start, $rule) {
 		$this->addon_text = $rule;
 
 		return $start + 1;
 	}
 
-	public function line_execute($start, $rule, $pattern, $text)
-	{
+	public function line_execute($start, $rule, $pattern, $text) {
 		$self        = self::getself();
 		$pattern_pos = strpos($rule, $pattern);
 		$escape_pos  = substr($rule, $pattern_pos + 1, 1);
@@ -189,8 +185,7 @@ class Maya
 		}
 	}
 
-	public static function execute($rule, $text, $type, $debug = false)
-	{
+	public static function execute($rule, $text, $type, $debug = false) {
 		$self = self::getself();
 
 		$self->debug  = $debug;
@@ -204,6 +199,7 @@ class Maya
 		if ($rule_len == 0) {
 			return;
 		}
+		
 		if ($text_len == 0) {
 			return;
 		}
@@ -222,4 +218,5 @@ class Maya
 
 		return true;
 	}
+	
 }
