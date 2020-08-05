@@ -2,8 +2,8 @@
 
 namespace Xanax\Implement;
 
-interface FileHandlerInterface
-{
+interface FileHandlerInterface {
+	
 	public function isFile(string $filePath, string $containDirectory = null) :bool;
 
 	public function isEmpty(string $filePath) :bool;
@@ -73,4 +73,5 @@ interface FileHandlerInterface
 	public function requireOnce(string $filePath);
 
 	public function Move(string $source, string $destination) :bool;
+	
 }
