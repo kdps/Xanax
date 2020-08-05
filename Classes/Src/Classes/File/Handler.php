@@ -36,8 +36,7 @@ use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
 use Xanax\Message\Functions\FunctionMessage as FunctionMessage;
 
-class Handler implements FileHandlerInterface
-{
+class Handler implements FileHandlerInterface {
 	protected $useStatFunction = [
 		'stat',
 		'lstat',
@@ -71,8 +70,7 @@ class Handler implements FileHandlerInterface
 	// Handler of directory system
 	private $directoryHandler;
 
-	public function __construct($useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, DirectoryHandlerInterface $directoryHandler = null)
-	{
+	public function __construct($useStrictMode = true, FileHandlerInterface $fileSystemHandler = null, DirectoryHandlerInterface $directoryHandler = null) {
 		$this->strictMode = $useStrictMode;
 
 		$this->fileSystemHandler = isset($fileSystemHandler) ? $fileSystemHandler : new FileSystemHandler();
@@ -158,8 +156,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isEqual($firstPath, $secondPath, $chunkSize = 500)
-	{
+	public function isEqual($firstPath, $secondPath, $chunkSize = 500) {
 		// https://stackoverflow.com/questions/30107521/check-if-same-image-has-already-been-uploaded-by-comparing-base64
 		
 		// First check if file are not the same size as the fastest method
@@ -228,8 +225,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function clearStatatusCache($filePath) :void
-	{
+	public function clearStatatusCache($filePath) :void {
 		clearstatcache(true, $filePath);
 	}
 
@@ -240,8 +236,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	protected function convertToNomalizePath($filePath)
-	{
+	protected function convertToNomalizePath($filePath) {
 		return rtrim($filePath, DIRECTORY_SEPARATOR); // Remove last Directory separator
 	}
 
@@ -252,8 +247,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isValidHandler($fileHandler)
-	{
+	public function isValidHandler($fileHandler) {
 		if (getType($fileHandler) !== 'resource') {
 			return false;
 		}
@@ -272,8 +266,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function getPointerLocation($fileHandler)
-	{
+	public function getPointerLocation($fileHandler) {
 		if (!$this->isValidHandler($fileHandler)) {
 			throw new InvalidFileHandler(FileHandlerMessage::getInvalidFileHandler());
 		}
@@ -289,8 +282,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function createCache(string $filePath, string $destination)
-	{
+	public function createCache(string $filePath, string $destination) {
 		$filePath    = $this->convertToNomalizePath($filePath);
 		$destination = $this->convertToNomalizePath($destination);
 
@@ -315,8 +307,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isReadable(string $filePath) :bool
-	{
+	public function isReadable(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -339,8 +330,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function parseINI($filePath)
-	{
+	public function parseINI($filePath) {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -361,8 +351,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getMIMEContentTypeFromMagicMIME($filePath)
-	{
+	public function getMIMEContentTypeFromMagicMIME($filePath) {
 		if (!function_exists("mime_content_type")) {
 			throw new FunctionIsNotExistsException(FunctionMessage::getFunctionIsNotFileMessage());
 		}
@@ -387,8 +376,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getMIMEContentTypeFromAlaMimetypeExtension($filePath) 
-	{
+	public function getMIMEContentTypeFromAlaMimetypeExtension($filePath) {
 		if (!(function_exists("finfo_open") || function_exists("finfo_file"))) {
 			throw new FunctionIsNotExistsException(FunctionMessage::getFunctionIsNotFileMessage());
 		}
@@ -419,8 +407,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isLocked($filePath) :bool
-	{
+	public function isLocked($filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -453,8 +440,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function getLine(string $fileHandler, int $length) :string
-	{
+	public function getLine(string $fileHandler, int $length) :string {
 		if (!$this->isValidHandler($fileHandler)) {
 			throw new InvalidFileHandler(FileHandlerMessage::getInvalidFileHandler());
 		}
@@ -469,8 +455,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function getCharacter(string $fileHandler, int $length) :string
-	{
+	public function getCharacter(string $fileHandler, int $length) :string {
 		if (!$this->isValidHandler($fileHandler)) {
 			throw new InvalidFileHandler(FileHandlerMessage::getInvalidFileHandler());
 		}
@@ -483,8 +468,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function getPermissions($filePath) :int
-	{
+	public function getPermissions($filePath) :int {
 		return fileperms($filePath);
 	}
 
@@ -493,8 +477,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function getOwner($filePath) :int
-	{
+	public function getOwner($filePath) :int {
 		return fileowner($filePath);
 	}
 
@@ -503,8 +486,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function createTemporary() :resource
-	{
+	public function createTemporary() :resource {
 		return tmpfile();
 	}
 
@@ -513,8 +495,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function createUniqueTemporary($directory, $prefix)
-	{
+	public function createUniqueTemporary($directory, $prefix) {
 		return $tmpfname = tempnam($directory, $prefix);
 	}
 
@@ -523,8 +504,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function setAccessAndModificatinTime($filePath, $time, $atime)
-	{
+	public function setAccessAndModificatinTime($filePath, $time, $atime) {
 		touch($filePath, $time, $atime);
 	}
 
@@ -535,8 +515,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Unlock($fileHandler)
-	{
+	public function Unlock($fileHandler) {
 		if (!$this->isValidHandler($fileHandler)) {
 			throw new InvalidFileHandler(FileHandlerMessage::getInvalidFileHandler());
 		}
@@ -552,8 +531,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function changeMode(string $filePath, int $mode) :bool
-	{
+	public function changeMode(string $filePath, int $mode) :bool {
 		if (!$this->isFile($filePath)) {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
@@ -569,8 +547,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function changeGroup(string $filePath, string $group) :bool
-	{
+	public function changeGroup(string $filePath, string $group) :bool {
 		if (!$this->isFile($filePath)) {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
@@ -585,8 +562,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Lock($fileHandler, $mode = 'r')
-	{
+	public function Lock($fileHandler, $mode = 'r') {
 		if (!$this->isValidHandler($fileHandler)) {
 			throw new InvalidFileHandler(FileHandlerMessage::getInvalidFileHandler());
 		}
@@ -610,8 +586,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isEmpty(string $filePath) :bool
-	{
+	public function isEmpty(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isFile($filePath)) {
@@ -630,8 +605,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isExists(string $filePath) :bool
-	{
+	public function isExists(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$return = file_exists($filePath);
@@ -646,8 +620,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isUnknownFile(string $filePath) :bool
-	{
+	public function isUnknownFile(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if ($this->getType($filePath) === 'unknown') {
@@ -664,8 +637,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function getSymbolicLink(string $symbolicLink)
-	{
+	public function getSymbolicLink(string $symbolicLink) {
 		if (!$this->isSymbolicLink($symbolicLink)) {
 		}
 
@@ -674,8 +646,7 @@ class Handler implements FileHandlerInterface
 		return $return;
 	}
 
-	public function isSymbolicLink(string $filePath) :bool
-	{
+	public function isSymbolicLink(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (is_link($filePath) && $this->getType($filePath) === 'link') {
@@ -692,8 +663,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isRegularFile(string $filePath) :bool
-	{
+	public function isRegularFile(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if ($this->getType($filePath) === 'file') {
@@ -711,8 +681,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isContainFolder(string $basePath, string $filePath) :bool
-	{
+	public function isContainFolder(string $basePath, string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$realBasePath = realpath($basePath);
@@ -732,8 +701,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getFileEncoding(string $filePath) :string
-	{
+	public function getFileEncoding(string $filePath) :string {
 		$executeResult = array();
 		exec('file -i ' . $filepath, $executeResult);
 		
@@ -753,8 +721,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isFile(string $filePath, string $containDirectory = null) :bool
-	{
+	public function isFile(string $filePath, string $containDirectory = null) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (FileValidation::isReadable($filePath)) {
@@ -785,8 +752,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isEqualByLine(string $filePath, string $string = null) :bool
-	{
+	public function isEqualByLine(string $filePath, string $string = null) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$fileObject = new FileObject($filePath, false, 'r');
@@ -804,8 +770,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isExecutable($filePath)
-	{
+	public function isExecutable($filePath) {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -829,8 +794,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function isWritable(string $filePath) :bool
-	{
+	public function isWritable(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -854,8 +818,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Delete(string $filePath) :bool
-	{
+	public function Delete(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -878,8 +841,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return int
 	 */
-	public function getSize(string $filePath, bool $humanReadable = false) :int
-	{
+	public function getSize(string $filePath, bool $humanReadable = false) :int {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -924,8 +886,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Copy(string $filePath, string $destination) :bool
-	{
+	public function Copy(string $filePath, string $destination) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -949,8 +910,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Merge(string $filePath, string $mergeFile) :bool
-	{
+	public function Merge(string $filePath, string $mergeFile) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$fileObject = new FileObject($filePath, false, 'a');
@@ -963,8 +923,7 @@ class Handler implements FileHandlerInterface
 		return true;
 	}
 
-	public function changeUmask($mask) :int
-	{
+	public function changeUmask($mask) :int {
 		return umask($mask);
 	}
 
@@ -975,8 +934,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return void
 	 */
-	public function getHeaderType(string $filePath)
-	{
+	public function getHeaderType(string $filePath) {
 		$size = filesize($filePath);
 		$size = $size > 100 ? 100 : $size;
 
@@ -1243,8 +1201,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Read(string $filePath, int $length = -1, string $mode = 'r')
-	{
+	public function Read(string $filePath, int $length = -1, string $mode = 'r') {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$fileObject = new FileObject($filePath, false, $mode);
@@ -1286,8 +1243,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function readAllContent(string $filePath, string $writeMode = 'r')
-	{
+	public function readAllContent(string $filePath, string $writeMode = 'r') {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		return $this->Read($filePath, -1);
@@ -1302,8 +1258,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Write(string $filePath, string $content = null, string $mode = 'w') :bool
-	{
+	public function Write(string $filePath, string $content = null, string $mode = 'w') :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$fileObject = new FileObject($filePath, true, $mode);
@@ -1332,8 +1287,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function appendContent(string $filePath, string $content = null, bool $stream = false, bool $overwrite = true) :bool
-	{
+	public function appendContent(string $filePath, string $content = null, bool $stream = false, bool $overwrite = true) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$overwrite && $this->isFile($filePath)) {
@@ -1356,8 +1310,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getLastAccessDate($filePath)
-	{
+	public function getLastAccessDate($filePath) {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1381,8 +1334,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getCreatedDate($filePath)
-	{
+	public function getCreatedDate($filePath) {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1406,8 +1358,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getLastModifiedTime(string $filePath) :string
-	{
+	public function getLastModifiedTime(string $filePath) :string {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1431,8 +1382,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getType(string $filePath) :string
-	{
+	public function getType(string $filePath) :string {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1460,8 +1410,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function reverseContent(string $filePath) :bool
-	{
+	public function reverseContent(string $filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		$fileLines     = file($filePath);
@@ -1478,13 +1427,11 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getBasename(string $fileName, $extension = null) :string
-	{
+	public function getBasename(string $fileName, $extension = null) :string {
 		return basename($fileName, $extension) . PHP_EOL;
 	}
 	
-	public function getExtensionByFilePath(string $filePath) :string
-	{
+	public function getExtensionByFilePath(string $filePath) :string {
 		$return = null;
 		
 		if (function_exists("pathinfo")) {
@@ -1501,8 +1448,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getExtension(string $filePath) :string
-	{
+	public function getExtension(string $filePath) :string {
 		$return = null;
 		
 		$filePath = $this->convertToNomalizePath($filePath);
@@ -1526,8 +1472,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getContent(string $filePath) :string
-	{
+	public function getContent(string $filePath) :string {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1553,8 +1498,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function Download(string $filePath, int $bufferSize = 0) :bool
-	{
+	public function Download(string $filePath, int $bufferSize = 0) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1588,8 +1532,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function isCorrectInode($filePath) :bool
-	{
+	public function isCorrectInode($filePath) :bool {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1614,8 +1557,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	public function getInode(string $filePath)
-	{
+	public function getInode(string $filePath) {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1636,8 +1578,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getInterpretedContent(string $filePath) :string
-	{
+	public function getInterpretedContent(string $filePath) :string {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1670,8 +1611,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return void
 	 */
-	public function requireOnce(string $filePath) :void
-	{
+	public function requireOnce(string $filePath) :void {
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		if (!$this->isExists($filePath)) {
@@ -1693,8 +1633,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function Move(string $source, string $destination) :bool
-	{
+	public function Move(string $source, string $destination) :bool {
 		$filePath    = $this->convertToNomalizePath($filePath);
 		$destination = $this->convertToNomalizePath($destination);
 
@@ -1710,4 +1649,5 @@ class Handler implements FileHandlerInterface
 
 		return $return;
 	}
+	
 }
