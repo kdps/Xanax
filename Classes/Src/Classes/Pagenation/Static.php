@@ -31,8 +31,8 @@ class Static
 		$this->first_page = $this->page_start - ($this->page_start % $this->list_count);
 		
 		// Remove list count when last page
-		if ($this->page_start % 10 == 0) {
-			$this->first_page -= 10;
+		if ($this->page_start % $page_count == 0) {
+			$this->first_page -= $page_count;
 		}
 		
 		$this->last_page = ($this->document_count - $this->remainder_count) / $page_count;
