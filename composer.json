@@ -5,7 +5,7 @@
   "keywords": ["php framework", "php library"],
   "license": "MIT",
   "require": {
-    "php": ">=7.2.5",
+    "php": ">=7.0.0",
     "phpmailer/phpmailer": "^6.1",
     "ezyang/htmlpurifier": ">=4.10.0"
   },
