@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Upload;
 
+use Xanax\Classes\File\Handler as FileHandler;
+
 class Handler {
 	
 	public function Get($name, $key = 'name') {
@@ -24,6 +26,12 @@ class Handler {
 		$result = move_uploaded_file($temporaryName,  $filePath);
 		
 		return $result;
+	}
+	
+	public function isUploaded($name, $filePath) {
+		$temporaryName = $this->getTemporaryName($name);
+		
+		return file_exists(sprintf("%s/%s", $filePath, $temporaryName));
 	}
 	
 	public function getErrorMessageFromCode($error) {
