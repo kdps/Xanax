@@ -8,6 +8,10 @@ trait Error
 		return json_last_error();
 	}
 	
+	public function getLastErrorMessage() {
+		return json_last_error_msg();
+	}
+	
 	public function hasError() {
 		return $this->getLastError() !== JSON_ERROR_NONE;
 	}
