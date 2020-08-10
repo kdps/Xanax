@@ -1,7 +1,7 @@
 
 ![Alt text](https://github.com/kdps/Xanax/blob/master/Logo/logo.png)
 
-Xanax is a Object oriented web application Framework of PHP And Javascript.
+Xanax is an object-oriented web application PHP, Javascript framework created with the idea that all possible code should be readable, concise and clear.
 
 Quick Start
 ------------
