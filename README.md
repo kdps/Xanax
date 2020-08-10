@@ -3,9 +3,6 @@
 
 Xanax is a web application framework. 
 
-![License MIT](https://karlos1113.github.io/img/slide/mitslide.png)
-
-
 Requirements
 ------------
 - PHP 7.2 or higher.
