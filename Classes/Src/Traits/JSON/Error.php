@@ -1,7 +1,7 @@
 <?php
 
 namespace Xanax/Trait/Json;
-trait Result
+trait Error
 {
 
 	public function getLastError() {
