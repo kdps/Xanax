@@ -1,7 +1,7 @@
 
 ![Alt text](https://github.com/kdps/Xanax/blob/master/Logo/logo.png)
 
-Xanax is a Model-View-Controller web application PHP, Javascript Framework.
+Xanax is a Model-View-Controller web application Framework of PHP And Javascript.
 
 Quick Start
 ------------
