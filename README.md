@@ -5,11 +5,18 @@ Xanax is an object-oriented web application PHP, Javascript framework created wi
 
 Quick Start
 ------------
+PHP
+
 1. Extract compressed file to specify folder
 2. Open Command (Windows) or Terminal (MacOS)
 3. Go to extracted folder
 4. Install Composer (https://getcomposer.org/)
 5. Type "composer install"
+
+Webpack
+
+1. Install Nodejs (https://nodejs.org/)
+1. Go to Frontend/coreJS Folder
 
 Compatible
 ------------
