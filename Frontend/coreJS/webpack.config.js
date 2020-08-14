@@ -2,39 +2,21 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-//const BrotliPlugin = require('brotli-webpack-plugin');
-/*,
-	new BrotliPlugin({
-		threshold: 10240,
-		minRatio: 0.8
-	})*/
-
-const terserPlugin = new TerserPlugin({
-				cache: true,
-				sourceMap: true
-			});
-
-const uglifyJsPlugin = new UglifyJsPlugin({
-				include: /\.js$/,
-				uglifyOptions: {
-					parallel: true,
-					mangle: true,
-					minimize: true,
-					compress: true,
-					toplevel: true,
-                    			screw_ie8: true
-				}
-			});
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 module.exports = {
 	plugins: [
 		new CompressionPlugin({
 			cache: true
+		}),
+		new BrotliPlugin({
+			threshold: 10240,
+			minRatio: 0.8
 		})
 	],
 	mode: "production",
 	entry: [
-		'babel-polyfill', './index.js'
+		'./index.js'
 	],
 	output: {
 		filename: './coreJS.js',
@@ -45,8 +27,21 @@ module.exports = {
 	optimization: {
 		minimize: true,
 		minimizer: [
-			terserPlugin, 
-			uglifyJsPlugin,
+			new TerserPlugin({
+				cache: true,
+				sourceMap: true
+			}), 
+			new UglifyJsPlugin({
+				include: /\.js$/,
+				uglifyOptions: {
+					parallel: true,
+					mangle: true,
+					minimize: true,
+					compress: true,
+					toplevel: true,
+                    screw_ie8: true
+				}
+			}),
 		],
 		nodeEnv: 'production',
 		namedModules: false,
