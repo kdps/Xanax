@@ -813,7 +813,7 @@
 			return p;
 		},
 		
-		generateTooltip: function (elem, class) {
+		generateTooltip: function (elem, _class) {
 			var _tooltip = [];
 			
 			if (!$(elem).length) {
@@ -821,7 +821,7 @@
 			}
 			
 			$(elem).each(function (i, item) {
-				var _tooltipItem = $('<div class="' + class + '" data-index="' + i + '"></div>').appendTo($body);
+				var _tooltipItem = $('<div class="' + _class + '" data-index="' + i + '"></div>').appendTo($body);
 				$(item).attr('data-index', i);
 				_tooltip.push(_tooltipItem);
 			});
