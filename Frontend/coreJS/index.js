@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import $ from './jquery-3.3.1.min.js'
 import jQuery from './jquery-3.3.1.min.js'
 require.context('./src/', false, /\.js$/);
