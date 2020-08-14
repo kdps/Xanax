@@ -14,6 +14,7 @@ Quick Start
 Compatible
 ------------
 
+
 Requirements
 ------------
 - PHP 7.4 or higher.
