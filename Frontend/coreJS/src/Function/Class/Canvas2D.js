@@ -22,7 +22,11 @@ export default class OPenGLObject {
 	}
 	
 	setFontStyle () {
-		this.context.font = this.fontSize + "pt " + this.fontFamily;
+		let fontSize = '';
+		if (typeof this.fontSize !== 'undefined') {
+			fontSize = this.fontSize + "pt ";
+		}
+		this.context.font = fontSize + this.fontFamily;
 	}
 	
 	setFontSize (fontsize) {
