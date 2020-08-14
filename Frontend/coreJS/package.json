@@ -1,7 +1,7 @@
 {
   "name": "coreJS",
   "version": "1.0.0",
-  "description": "",
+  "description": "Xanax Javascript",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
@@ -31,5 +31,9 @@
     "@babel/cli": "^7.10.5",
     "@babel/polyfill": "^7.6.0",
     "core-js": "^3.6.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/kdps/Xanax"
   }
 }
