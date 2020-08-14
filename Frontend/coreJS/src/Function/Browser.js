@@ -1021,7 +1021,7 @@
 		    } else {
 			return -1;
 		    }
-		}
+		},
 		
 		/**
 		 * Get Browser User Agent Type
