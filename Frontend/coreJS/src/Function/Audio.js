@@ -7,7 +7,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 	var A = core.Audio = {
 		
 		constructor: function () {
-			this.bitRate = [
+			/*this.bitRate = [
 				[
 					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 					{0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0xFFFF},
@@ -40,7 +40,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{0, 0, 0, 0},
 				{22050, 24000, 16000, 0},
 				{44100, 48000, 32000, 0}
-			];
+			];*/
 			
 			this.musicGenre = ["Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies", "Other", "Pop", "R&B", "Rap", "Reggae", "Rock", "Techno", "Industrial", "Alternative", "Ska", "Death Metal", "Pranks", "Soundtrack", "Euro-Techno", "Ambient", "Trip-Hop", "Vocal", "Jazz+Funk", "Fusion", "Trance", "Classical", "Instrumental", "Acid", "House", "Game", "Sound Clip", "Gospel", "Noise", "AlternRock", "Bass", "Soul", "Punk", "Space", "Meditative", "Instrumental Pop", "Instrumental Rock", "Ethnic", "Gothic", "Darkwave", "Techno-Industrial", "Electronic", "Pop-Folk", "Eurodance", "Dream", "Southern Rock", "Comedy", "Cult", "Gangsta Rap", "Top 40", "Christian Rap", "Pop / Funk", "Jungle", "Native American", "Cabaret", "New Wave", "Psychedelic", "Rave", "Showtunes", "Trailer", "Lo-Fi", "Tribal", "Acid Punk", "Acid Jazz", "Polka", "Retro", "Musical", "Rock & Roll", "Hard Rock", "Folk", "Folk-Rock", "National Folk", "Swing", "Fast  Fusion", "Bebob", "Latin", "Revival", "Celtic", "Bluegrass", "Avantgarde", "Gothic Rock", "Progressive Rock", "Psychedelic Rock", "Symphonic Rock", "Slow Rock", "Big Band", "Chorus", "Easy Listening", "Acoustic", "Humour", "Speech", "Chanson", "Opera", "Chamber Music", "Sonata", "Symphony", "Booty Bass", "Primus", "Porn Groove", "Satire", "Slow Jam", "Club", "Tango", "Samba", "Folklore", "Ballad", "Power Ballad", "Rhythmic Soul", "Freestyle", "Duet", "Punk Rock", "Drum Solo", "A Cappella", "Euro-House", "Dance Hall", "Goa", "Drum & Bass", "Club-House", "Hardcore", "Terror", "Indie", "BritPop", "Negerpunk", "Polsk Punk", "Beat", "Christian Gangsta Rap", "Heavy Metal", "Black Metal", "Crossover", "Contemporary Christian", "Christian Rock", "Merengue", "Salsa", "Thrash Metal", "Anime", "JPop", "Synthpop", "Rock/Pop"];
 			
@@ -140,45 +140,45 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		 *
 		 * @return boolean
 		 **/
-		isCanPlay: function (element, type, codecs) {
-			let codecs = '';
+		isCanPlay: function (element, type, _codecs) {
+			let _codecs = '';
 			let bool;
 			
 			switch (type) {
 				case "opus":
 					type = 'audio/opus';
-					codecs = 'opus';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = 'opus';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "ogg":
 					type = 'audio/ogg';
-					codecs = 'theora, vorbis';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = 'theora, vorbis';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "oga":
 					type = 'audio/ogg';
-					codecs = 'vorbis';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = 'vorbis';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "wav":
 					type = 'audio/wav';
-					codecs = '1';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = '1';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "weba":
 					type = 'audio/weba';
-					codecs = 'vorbis';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = 'vorbis';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "webm":
 					type = 'audio/weba';
-					codecs = 'vp8.0, vorbis';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = 'vp8.0, vorbis';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "dolby":
 					type = 'audio/mp4';
-					codecs = 'ec-3';
-					bool = element.canPlayType(type + ';codecs="' + codecs + '"');
+					_codecs = 'ec-3';
+					bool = element.canPlayType(type + ';codecs="' + _codecs + '"');
 					break;
 				case "aiff":
 					bool = element.canPlayType("audio/x-aiff;");
