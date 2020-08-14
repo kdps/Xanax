@@ -33,11 +33,11 @@
 				_reject = reject;
 			});
 			
-			return [
+			return {
 				'resolve': _resolve,
 				'reject': _reject,
 				'promise': promise
-			];
+			};
 		},
 		
 		RequestCall: function (obj, method, args) {
