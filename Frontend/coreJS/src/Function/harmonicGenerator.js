@@ -221,9 +221,9 @@
 
 			this.passingDiminished = {
 				// F#dim7 G7
-				"F#dim7": {
-					"root": "6"
-					"related": "G7"
+				"F#dim7": {,=
+					"root": "6",
+					"related": "G7",
 					"scale": "",
 					"romename": "#IVdim7",
 					"symbols": "F#dim7",
@@ -231,8 +231,8 @@
 				},
 				// G#dim7 Am7
 				"G#dim7": {
-					"root": "8"
-					"related": "Am7"
+					"root": "8",
+					"related": "Am7",
 					"scale": "",
 					"romename": "#Vdim7",
 					"symbols": "G#dim7",
@@ -240,8 +240,8 @@
 				},
 				// C#dim7 Dm7
 				"C#dim7": {
-					"root": "1"
-					"related": "Dm7"
+					"root": "1",
+					"related": "Dm7",
 					"scale": "",
 					"romename": "#Idim7",
 					"symbols": "C#dim7",
@@ -249,8 +249,8 @@
 				},
 				// D#dim7 Em7
 				"D#dim7": {
-					"root": "3"
-					"related": "Em7"
+					"root": "3",
+					"related": "Em7",
 					"scale": "",
 					"romename": "#IIdim7",
 					"symbols": "D#dim7",
@@ -261,8 +261,8 @@
 			this.substituteDominant = {
 				// Ab7 G7
 				"Ab7": {
-					"root": "8"
-					"related": "G7"
+					"root": "8",
+					"related": "G7",
 					"scale": "",
 					"romename": "II7",
 					"symbols": "D7",
@@ -270,8 +270,8 @@
 				},
 				// Bb7 Am7
 				"Bb7": {
-					"root": "10"
-					"related": "Bb7"
+					"root": "10",
+					"related": "Bb7",
 					"scale": "",
 					"romename": "bVII7",
 					"symbols": "Bb7",
@@ -279,8 +279,8 @@
 				},
 				// Eb7 Dm7
 				"Eb7": {
-					"root": "3"
-					"related": "Eb7"
+					"root": "3",
+					"related": "Eb7",
 					"scale": "",
 					"romename": "bIII7",
 					"symbols": "Eb7",
@@ -291,8 +291,8 @@
 			this.secondaryDominant = {
 				// D7 G7
 				"D7": {
-					"root": "2"
-					"related": "G7"
+					"root": "2",
+					"related": "G7",
 					"scale": "",
 					"romename": "II7",
 					"symbols": "D7",
@@ -300,8 +300,8 @@
 				},
 				// E7 Am7
 				"E7": {
-					"root": "4"
-					"related": "Am7"
+					"root": "4",
+					"related": "Am7",
 					"scale": "",
 					"romename": "III7",
 					"symbols": "E7",
@@ -309,8 +309,8 @@
 				},
 				// A7 Dm7
 				"A7": {
-					"root": "9"
-					"related": "A7"
+					"root": "9",
+					"related": "A7",
 					"scale": "",
 					"romename": "VI7",
 					"symbols": "A7",
@@ -318,8 +318,8 @@
 				},
 				// B7 Em7
 				"B7": {
-					"root": "11"
-					"related": "B7"
+					"root": "11",
+					"related": "B7",
 					"scale": "",
 					"romename": "VII7",
 					"symbols": "B7",
