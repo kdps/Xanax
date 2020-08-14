@@ -65,23 +65,31 @@ class Handler {
 	}
 
 	public function isHttpsProtocol() :bool {
-		return empty($_SERVER['HTTPS']) ? false : $_SERVER['HTTPS'] === 'on' ? true : false;
+		return empty($_SERVER['HTTPS']) ? false : $this->getServerArguments('HTTPS') === 'on' ? true : false;
 	}
 
+	public function getServerArguments($argument) {
+		if (isset($_SERVER[$argument])) {
+			return $_SERVER[$argument];
+		}
+		
+		return null;
+	}
+	
 	public function getServerTime() {
-		return $_SERVER['REQUEST_TIME'];
+		return $this->getServerArguments('REQUEST_TIME');
 	}
 	
 	public function getServerFloatTime() {
-		return $_SERVER['REQUEST_TIME_FLOAT'];
+		return $this->getServerArguments('REQUEST_TIME_FLOAT');
 	}
 	
 	public function getScheme() {
-		return $_SERVER['REQUEST_SCHEME'];
+		return $this->getServerArguments('REQUEST_SCHEME');
 	}
 	
 	public function getProtocol() :string {
-		return substr(strtolower($_SERVER['SERVER_PROTOCOL']), 0, strpos(strtolower($_SERVER['SERVER_PROTOCOL']), '/'));
+		return substr(strtolower($this->getServerArguments('SERVER_PROTOCOL')), 0, strpos(strtolower($this->getServerArguments('SERVER_PROTOCOL')), '/'));
 	}
 
 	/**
@@ -90,7 +98,7 @@ class Handler {
 	 * @return String
 	 */
 	public function getURI() {
-		return $_SERVER['REQUEST_URI'];
+		return $this->getServerArguments('REQUEST_URI');
 	}
 	
 	/**
@@ -99,7 +107,7 @@ class Handler {
 	 * @return String
 	 */
 	public function getTemporaryIISApplicationPhysicalPathOfPoolConfiguration() {
-		return $_SERVER['APP_POOL_CONFIG'];
+		return $this->getServerArguments('APP_POOL_CONFIG');
 	}
 	
 	/**
@@ -108,7 +116,7 @@ class Handler {
 	 * @return String
 	 */
 	public function getIISApplicationMetabasePath() {
-		return $_SERVER['APPL_MD_PATH'];
+		return $this->getServerArguments('APPL_MD_PATH');
 	}
 	
 	/**
@@ -119,7 +127,7 @@ class Handler {
 	 * @return String
 	 */
 	public function getIISAuthenticateType() {
-		return $_SERVER['AUTH_TYPE'];
+		return $this->getServerArguments('AUTH_TYPE');
 	}
 	
 	/**
@@ -128,7 +136,7 @@ class Handler {
 	 * @return String
 	 */
 	public function getIISAuthenticatePassword() {
-		return $_SERVER['AUTH_PASSWORD'];
+		return $this->getServerArguments('AUTH_PASSWORD');
 	}
 	
 	/**
@@ -137,7 +145,7 @@ class Handler {
 	 * @return String
 	 */
 	public function getIISApplicationPoolID() {
-		return $_SERVER['APP_POOL_ID'];
+		return $this->getServerArguments('APP_POOL_ID');
 	}
 	
 	/**
@@ -146,83 +154,83 @@ class Handler {
 	 * @return String
 	 */
 	public function getIISApplicationPhysicalPath() {
-		return $_SERVER['APPL_PHYSICAL_PATH'];
+		return $this->getServerArguments('APPL_PHYSICAL_PATH');
 	}
 	
 	public function getServierSoftwareName() {
-		return $_SERVER['SERVER_SOFTWARE'];
+		return $this->getServerArguments('SERVER_SOFTWARE');
 	}
 	
 	public function getAbsolutePathOfDocumentRoot() {
-		return $_SERVER['DOCUMENT_ROOT'];
+		return $this->getServerArguments('DOCUMENT_ROOT');
 	}
 	
 	public function getIISIsapiRewriteURL() {
-		return $_SERVER['HTTP_X_REWRITE_URL'];
+		return $this->getServerArguments('HTTP_X_REWRITE_URL');
 	}
 	
 	public function getIISIsapiRewriteURL() {
-		return $_SERVER['HTTP_X_REWRITE_URL'];
+		return $this->getServerArguments('HTTP_X_REWRITE_URL');
 	}
 	
 	public function getHTTPConnection() :string {
-		return $_SERVER['HTTP_CONNECTION'];
+		return $this->getServerArguments('HTTP_CONNECTION');
 	}
 
 	public function getPort() :string {
-		return $_SERVER['SERVER_PORT'];
+		return $this->getServerArguments('SERVER_PORT');
 	}
 
 	public function getReferer() {
 		if ($this->hasReferer()) {
-			return $_SERVER['HTTP_REFERER'];
+			return $this->getServerArguments('HTTP_REFERER');
 		}
 
 		return null;
 	}
 
 	public function getHTTPAccept() {
-		return $_SERVER['HTTP_ACCEPT'];
+		return $this->getServerArguments('HTTP_ACCEPT');
 	}
 
 	public function getContentType() {
-		return $_SERVER['HTTP_CONTENT_TYPE'];
+		return $this->getServerArguments('HTTP_CONTENT_TYPE');
 	}
 
 	public function getServerProtocol() {
-		return $_SERVER['SERVER_PROTOCOL'];
+		return $this->getServerArguments('SERVER_PROTOCOL');
 	}
 
 	public function getContentType() {
-		return $_SERVER['CONTENT_TYPE'];
+		return $this->getServerArguments('CONTENT_TYPE');
 	}
 
 	public function getSignature() {
-		return $_SERVER['SERVER_SIGNATURE'];
+		return $this->getServerArguments('SERVER_SIGNATURE');
 	}
 
 	public function getUserAgent() {
-		return $_SERVER['HTTP_USER_AGENT'];
+		return $this->getServerArguments('HTTP_USER_AGENT');
 	}
 
 	public function getDocumentRoot() {
-		return $_SERVER['DOCUMENT_ROOT'];
+		return $this->getServerArguments('DOCUMENT_ROOT');
 	}
 
 	public function getReuqestMethod() {
-		return $_SERVER['REQUEST_METHOD'];
+		return $this->getServerArguments('REQUEST_METHOD');
 	}
 
 	public function getAcceptEncoding() {
-		return $_SERVER['HTTP_ACCEPT_ENCODING'];
+		return $this->getServerArguments('HTTP_ACCEPT_ENCODING');
 	}
 
 	public function isXmlHttpRequest() {
-		return (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+		return (strtolower($this->getServerArguments('HTTP_X_REQUESTED_WITH')) == 'xmlhttprequest');
 	}
 
 	public function isAjax() {
-		return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $this->isXmlHttpRequest()) ? true : false;
+		return (!empty($this->getServerArguments('HTTP_X_REQUESTED_WITH')) && $this->isXmlHttpRequest()) ? true : false;
 	}
 
 	public function getRemoteIP() {
