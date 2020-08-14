@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Socket;
 
-class ServerObject
-{
+class ServerObject {
+	
 	private $arrayAcceptedSocketInfo  = [];
 	private $arrayAcceptedSocket      = [];
 	private $arrayAcceptedSocketCount = 0;
@@ -14,13 +14,11 @@ class ServerObject
 	private $SocketHandlerClass;
 	private $SocketHandler;
 
-	public function __construct($socketHandler)
-	{
+	public function __construct($socketHandler) {
 		$this->SocketHandlerClass = $socketHandler;
 	}
 
-	public function exceptSocketInArray($arrayClientSocket, $arrayAcceptedSocketInfo, $AcceptedSocketInArray)
-	{
+	public function exceptSocketInArray($arrayClientSocket, $arrayAcceptedSocketInfo, $AcceptedSocketInArray) {
 		if (isset($arrayClientSocket[$AcceptedSocketInArray])) {
 			unset($arrayClientSocket[$AcceptedSocketInArray]);
 		}
@@ -35,8 +33,7 @@ class ServerObject
 		}
 	}
 
-	public function getAcceptedClientInArray()
-	{
+	public function getAcceptedClientInArray() {
 		if (count($arrayAcceptedSocketInfo) === 0) {
 			return false;
 		}
@@ -44,13 +41,11 @@ class ServerObject
 		return true;
 	}
 
-	public function getAcceptedClientInArray()
-	{
+	public function getAcceptedClientInArray() {
 		return $this->arrayAcceptedSocketCount;
 	}
 
-	public function hasAcceptedClientInArray()
-	{
+	public function hasAcceptedClientInArray() {
 		if ($this->getAcceptedarrayClient() > 0) {
 			return true;
 		}
@@ -58,23 +53,19 @@ class ServerObject
 		return false;
 	}
 
-	public function selectArrayClient($timeout = 10, $write = null, $except = null) :void
-	{
+	public function selectArrayClient($timeout = 10, $write = null, $except = null) :void {
 		$this->arrayAcceptedSocketCount = $this->SocketHandlerClass->Select($this->arrayAcceptedSocket, $timeout, $write, $except);
 	}
 
-	public function setArrayClient()
-	{
+	public function setArrayClient() {
 		$this->arrayAcceptedSocket = array_merge([$this->SocketHandler], $this->arrayClientSocket);
 	}
 
-	public function Close()
-	{
+	public function Close() {
 		$this->SocketHandlerClass->Close();
 	}
 
-	public function Connect($address, $port, $domain = AF_INET, $type = SOCK_STREAM, $protocol = SOL_TCP)
-	{
+	public function Connect($address, $port, $domain = AF_INET, $type = SOCK_STREAM, $protocol = SOL_TCP) {
 		$this->SocketHandler = $this->SocketHandlerClass->Create($domain, $type, $protocol);
 
 		if (!$this->SocketHandler) {
@@ -94,8 +85,7 @@ class ServerObject
 		return true;
 	}
 
-	public function AcceptClient()
-	{
+	public function AcceptClient() {
 		$bind = $this->SocketHandlerClass->AcceptConnect($this->SocketHandler);
 
 		if ($bind) {
@@ -106,4 +96,5 @@ class ServerObject
 
 		return false;
 	}
+	
 }
