@@ -221,7 +221,7 @@
 
 			this.passingDiminished = {
 				// F#dim7 G7
-				"F#dim7": {,=
+				"F#dim7": {
 					"root": "6",
 					"related": "G7",
 					"scale": "",
