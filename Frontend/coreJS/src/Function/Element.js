@@ -752,7 +752,7 @@
 		},
 		
 		findForm: function (object) {
-			return this->findObjectFromNodeName(object, 'form');
+			return this.findObjectFromNodeName(object, 'form');
 		},
 		
 		trimAllTags: function (form) {
