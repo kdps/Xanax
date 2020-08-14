@@ -20,7 +20,7 @@ class Handler implements FileSystemInterface
 	public function getStatFromIndex($filePath, $index) {
 		$stat = $this->getStat($filePath);
 		
-		if (count($stat) > $index) {
+		if (count($stat) >= $index) {
 			return $stat[$index];
 		}
 		
