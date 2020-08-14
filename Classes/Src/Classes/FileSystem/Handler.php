@@ -24,7 +24,7 @@ class Handler implements FileSystemInterface
 			return $stat[$index];
 		}
 		
-		return "";
+		return false;
 	}
 	
 	public function getStat($filePath) :array {
