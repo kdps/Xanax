@@ -11,13 +11,11 @@ use Xanax\Implement\FileHandlerInterface;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
 use Xanax\Classes\File\Handler as FileHandler;
 
-class Handler implements DirectoryHandlerInterface
-{
+class Handler implements DirectoryHandlerInterface {
 	private $fileHandler;
 	private $directoryDepth;
 
-	public function __construct(FileHandlerInterface $fileHandler = null)
-	{
+	public function __construct(FileHandlerInterface $fileHandler = null) {
 		if ($fileHandler instanceof FileHandlerInterface) {
 			$this->fileHandler = $fileHandler;
 		} else {
@@ -34,8 +32,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return int
 	 */
-	public function getFreeSpace($prefix = '/')
-	{
+	public function getFreeSpace($prefix = '/') {
 		$diskFreeSpaces = -1;
 
 		if (function_exists('disk_free_space')) {
@@ -45,17 +42,11 @@ class Handler implements DirectoryHandlerInterface
 		return $diskFreeSpaces;
 	}
 
-	public function hasCurrentWorkingLocation()
-	{
-		if (!$this->getCurrentWorkingLocation()) {
-			return false;
-		}
-
-		return true;
+	public function hasCurrentWorkingLocation() {
+		return $this->getCurrentWorkingLocation();
 	}
 
-	public function getCurrentWorkingLocation()
-	{
+	public function getCurrentWorkingLocation() {
 		return getcwd();
 	}
 
@@ -66,8 +57,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function isDirectory(string $directoryPath)
-	{
+	public function isDirectory(string $directoryPath) {
 		$return = is_dir($directoryPath);
 
 		return $return;
@@ -81,8 +71,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function Make(string $directoryPath, int $permission = 644)
-	{
+	public function Make(string $directoryPath, int $permission = 644) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -90,8 +79,7 @@ class Handler implements DirectoryHandlerInterface
 		return $this->Create($directoryPath);
 	}
 
-	public function Create(string $directoryPath, int $permission = 644)
-	{
+	public function Create(string $directoryPath, int $permission = 644) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -108,8 +96,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return int
 	 */
-	public function getFileCount(string $directoryPath) :int
-	{
+	public function getFileCount(string $directoryPath) :int {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -127,15 +114,12 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function isEmpty(string $directoryPath) :bool
-	{
+	public function isEmpty(string $directoryPath) :bool {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
 
-		$return = ($this->getFileCount($directoryPath) === 0) ? true : false;
-
-		return $return;
+		return ($this->getFileCount($directoryPath) === 0);
 	}
 
 	/**
@@ -145,8 +129,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function Delete(string $directoryPath)
-	{
+	public function Delete(string $directoryPath) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -181,8 +164,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return void
 	 */
-	public function Copy(string $directoryPath, string $copyPath)
-	{
+	public function Copy(string $directoryPath, string $copyPath) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -206,8 +188,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return int
 	 */
-	public function getSize(string $directoryPath)
-	{
+	public function getSize(string $directoryPath) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -228,8 +209,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return int
 	 */
-	public function getMaxDepth()
-	{
+	public function getMaxDepth() {
 		return $this->directoryDepth;
 	}
 
@@ -240,8 +220,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return int
 	 */
-	public function setMaxDepth(int $depth)
-	{
+	public function setMaxDepth(int $depth) {
 		if ($this->getMaxDepth() === $this->directoryDepth) {
 			return false;
 		}
@@ -259,8 +238,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function Rename(string $directoryPath, string $string, string $replacement)
-	{
+	public function Rename(string $directoryPath, string $string, string $replacement) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -303,8 +281,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function RenameInnerFiles(string $directoryPath, $replacement, $string = null)
-	{
+	public function RenameInnerFiles(string $directoryPath, $replacement, $string = null) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -357,8 +334,7 @@ class Handler implements DirectoryHandlerInterface
 	 *
 	 * @return array
 	 */
-	public function getFileList($directoryPath = './', $sort = false)
-	{
+	public function getFileList($directoryPath = './', $sort = false) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -387,8 +363,7 @@ class Handler implements DirectoryHandlerInterface
 		return $fileList;
 	}
 
-	public function Empty(string $directoryPath)
-	{
+	public function Empty(string $directoryPath) {
 		if (!$this->isDirectory($directoryPath)) {
 			throw new DirectoryIsNotExistsException();
 		}
@@ -412,4 +387,5 @@ class Handler implements DirectoryHandlerInterface
 
 		return true;
 	}
+	
 }
