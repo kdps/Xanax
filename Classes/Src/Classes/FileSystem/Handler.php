@@ -17,101 +17,71 @@ class Handler implements FileSystemInterface
 		return getmyinode();
 	}
 
-	public function getStat($filePath) :array
-	{
+	public function getStatFromIndex($filePath, $index) {
+		$stat = $this->getStat($filePath);
+		
+		if (count($stat) > $index) {
+			return $stat[$index];
+		}
+		
+		return "";
+	}
+	
+	public function getStat($filePath) :array {
 		$return = stat($filePath);
 
 		return $return;
 	}
 
-	public function getDeviceNumber($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[0];
+	public function getDeviceNumber($filePath) {
+		return $this->getStatFromIndex($filePath, 0);
 	}
 
-	public function getInodeNumber($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[1];
+	public function getInodeNumber($filePath) {
+		return $this->getStatFromIndex($filePath, 1);
 	}
 
-	public function getProtectionNumber($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[2];
+	public function getProtectionNumber($filePath) {
+		return $this->getStatFromIndex($filePath, 2);
 	}
 
-	public function getLinkNumber($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[3];
+	public function getLinkNumber($filePath) {
+		return $this->getStatFromIndex($filePath, 3);
 	}
 
-	public function getOwnerUserID($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[4];
+	public function getOwnerUserID($filePath) {
+		return $this->getStatFromIndex($filePath, 4);
 	}
 
-	public function getOwnerGroupID($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[5];
+	public function getOwnerGroupID($filePath) {
+		return $this->getStatFromIndex($filePath, 5);
 	}
 
-	public function getDeviceType($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[6];
+	public function getDeviceType($filePath) {
+		return $this->getStatFromIndex($filePath, 6);
 	}
 
-	public function getSizeOfByte($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[7];
+	public function getSizeOfByte($filePath) {
+		return $this->getStatFromIndex($filePath, 7);
 	}
 
-	public function getLastAccessTime($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[8];
+	public function getLastAccessTime($filePath) {
+		return $this->getStatFromIndex($filePath, 8);
 	}
 
-	public function getLastModifiedTime($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[9];
+	public function getLastModifiedTime($filePath) {
+		return $this->getStatFromIndex($filePath, 9);
 	}
 
-	public function getLastInodeModifiedTime($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[10];
+	public function getLastInodeModifiedTime($filePath) {
+		return $this->getStatFromIndex($filePath, 10);
 	}
 
-	public function getIOBlockSize($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[11];
+	public function getIOBlockSize($filePath) {
+		return $this->getStatFromIndex($filePath, 11);
 	}
 
-	public function get512ByteAllocatedBlocks($filePath)
-	{
-		$stat = $this->getStat($filePath);
-
-		return $stat[12];
+	public function get512ByteAllocatedBlocks($filePath) {
+		return $this->getStatFromIndex($filePath, 12);
 	}
 }
