@@ -9,8 +9,7 @@ use Xanax\Exception\FileHandler\FileIsNotExistsException;
 use Xanax\Exception\FileHandler\TargetIsNotFileException;
 use Xanax\Message\FileHandler\FileHandlerMessage;
 
-class Object implements FileObjectInterface
-{
+class Object implements FileObjectInterface {
 	private $writeHandler;
 	private $fileHandler;
 
@@ -62,8 +61,7 @@ class Object implements FileObjectInterface
 	// If the length does not match the contents written, it is returned to the original file
 	private $recoveryMode = false;
 
-	public function __construct(string $filePath, bool $recoveryMode = false, string $mode = 'w')
-	{
+	public function __construct(string $filePath, bool $recoveryMode = false, string $mode = 'w') {
 		$this->fileHandlerClass = new FileHandler();
 		$this->directoryHandler = new DirectoryHandler($this->fileHandlerClass);
 
@@ -78,23 +76,19 @@ class Object implements FileObjectInterface
 		}
 	}
 
-	public function __destruct()
-	{
+	public function __destruct() {
 		$this->removeTemporary();
 	}
 
-	public function getAcceptExtension(array $extension)
-	{
+	public function getAcceptExtension(array $extension) {
 		return $acceptExtension;
 	}
 
-	public function setAcceptExtension($extension)
-	{
+	public function setAcceptExtension($extension) {
 		$acceptExtension = is_array($extension) ? $extension : [$extension];
 	}
 
-	private function setRecoveryFile()
-	{
+	private function setRecoveryFile() {
 		do {
 			$this->temporaryPath = sprintf('%s.%s.%s', $this->filePath, uniqid(rand(), true), $this->fileExtension);
 		} while ($this->fileHandlerClass->isFile($this->temporaryPath));
@@ -108,8 +102,7 @@ class Object implements FileObjectInterface
 		}
 	}
 
-	public function hasWriteContentLength() :bool
-	{
+	public function hasWriteContentLength() :bool {
 		if ($this->writeContentLength === -1) {
 			return false;
 		}
@@ -117,8 +110,7 @@ class Object implements FileObjectInterface
 		return true;
 	}
 
-	public function closeFileHandle() :bool
-	{
+	public function closeFileHandle() :bool {
 		fclose($this->fileHandler);
 
 		if (!$this->recoveryMode) {
@@ -154,8 +146,7 @@ class Object implements FileObjectInterface
 		return true;
 	}
 
-	public function Seek(int $offset) :bool
-	{
+	public function Seek(int $offset) :bool {
 		$seek = fseek($this->fileHandler, $offset, SEEK_SET);
 
 		if ($seek === 0) {
@@ -167,8 +158,7 @@ class Object implements FileObjectInterface
 		return false;
 	}
 
-	public function hasMode($readMode = null) :bool
-	{
+	public function hasMode($readMode = null) :bool {
 		if (in_array(($readMode || $this->mode), $this->createIfModeEmpty)) {
 			return true;
 		}
@@ -176,8 +166,7 @@ class Object implements FileObjectInterface
 		return false;
 	}
 
-	public function isReadable($readMode = null) :bool
-	{
+	public function isReadable($readMode = null) :bool {
 		if (in_array(($readMode || $this->mode), $this->readModeList)) {
 			return true;
 		}
@@ -185,8 +174,7 @@ class Object implements FileObjectInterface
 		return false;
 	}
 
-	public function appendContent($filePath) :void
-	{
+	public function appendContent($filePath) :void {
 		$fileHandler = fopen($filePath, 'r');
 
 		$line = fgets($fileHandler);
@@ -199,8 +187,7 @@ class Object implements FileObjectInterface
 		fclose($fileHandler);
 	}
 
-	public function isEqualByLine(string $string) :bool
-	{
+	public function isEqualByLine(string $string) :bool {
 		if (!$this->fileHandlerClass->isExists($this->getFilePath())) {
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
@@ -218,29 +205,25 @@ class Object implements FileObjectInterface
 		return $bool;
 	}
 
-	public function injectFileIsNotExistsException() :void
-	{
+	public function injectFileIsNotExistsException() :void {
 		if ($this->recoveryMode && $this->fileHandlerClass->isFile($this->filePath)) {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 	}
 
-	public function isLocked() :bool
-	{
+	public function isLocked() :bool {
 		$this->injectFileIsNotExistsException();
 
 		return $this->fileHandlerClass->isLocked($this->filePath);
 	}
 
-	public function isWritable() :bool
-	{
+	public function isWritable() :bool {
 		$this->injectFileIsNotExistsException();
 
 		return $this->fileHandlerClass->isWritable($this->filePath);
 	}
 
-	public function removeTemporary()
-	{
+	public function removeTemporary() {
 		if ($this->recoveryMode) {
 			if ($this->fileHandlerClass->isExists($this->temporaryPath)) {
 				$this->fileHandlerClass->Delete($this->temporaryPath);
@@ -248,8 +231,7 @@ class Object implements FileObjectInterface
 		}
 	}
 
-	public function writeContent(string $content, $isLarge = false, int $bufferSize) :bool
-	{
+	public function writeContent(string $content, $isLarge = false, int $bufferSize) :bool {
 		if (!$this->isWritable() || $this->isLocked()) {
 			$this->removeTemporary();
 			return false;
@@ -276,44 +258,37 @@ class Object implements FileObjectInterface
 		return true;
 	}
 
-	public function getCurrentSize() :int
-	{
+	public function getCurrentSize() :int {
 		$filePath = $this->getFilePath();
 		$currentFileSize = $this->fileHandlerClass->getSize($filePath);
 
 		return $currentFileSize;
 	}
 
-	public function getReadedContent() :string
-	{
+	public function getReadedContent() :string {
 		return (!$this->isReadedContentValid()) ? '' : $this->readedContent;
 	}
 
-	public function isReadedContentValid() :bool
-	{
+	public function isReadedContentValid() :bool {
 		return !($this->readedContent === false);
 	}
 
-	public function hasReadedContent()
-	{
-		return $this->getCurrentSize() > 0 ? true : false;
+	public function hasReadedContent() {
+		return $this->getCurrentSize() > 0;
 	}
 
-	public function readAllContent()
-	{
+	public function readAllContent() {
 		if (!$this->hasReadedContent()) {
 		}
 
 		$this->readContent($this->getCurrentSize());
 	}
 
-	public function readContent(int $fileSize = 0) :void
-	{
+	public function readContent(int $fileSize = 0) :void {
 		$this->readedContent = fread($this->fileHandler, $fileSize);
 	}
 
-	public function printFileData(int $mbSize = 8) :void
-	{
+	public function printFileData(int $mbSize = 8) :void {
 		while (!feof($this->fileHandler)) {
 			print(@fread($this->fileHandler, (1024 * $mbSize)));
 			ob_flush();
@@ -321,8 +296,7 @@ class Object implements FileObjectInterface
 		}
 	}
 
-	public function isEnoughFreeSpace() :bool
-	{
+	public function isEnoughFreeSpace() :bool {
 		$freeSpace = $this->directoryHandler->getFreeSpace();
 		if ($freeSpace === -1) {
 			return true;
@@ -344,8 +318,7 @@ class Object implements FileObjectInterface
 		return true;
 	}
 
-	public function successToWriteContent() :bool
-	{
+	public function successToWriteContent() :bool {
 		if (!getType($this->writeHandler) === 'integer') {
 			return false;
 		}
@@ -365,8 +338,7 @@ class Object implements FileObjectInterface
 		return true;
 	}
 
-	public function getFilePath() :string
-	{
+	public function getFilePath() :string {
 		if ($this->recoveryMode) {
 			$filePath = $this->temporaryPath;
 		} else {
@@ -376,8 +348,7 @@ class Object implements FileObjectInterface
 		return $filePath;
 	}
 
-	public function startHandle() :void
-	{
+	public function startHandle() :void {
 		$fileIsNotExists = (!$this->hasMode() && !$this->fileHandlerClass->isExists($this->getFilePath()));
 
 		if ($fileIsNotExists) {
@@ -387,8 +358,7 @@ class Object implements FileObjectInterface
 		$this->fileHandler = fopen($this->getFilePath(), $this->mode);
 	}
 
-	public function successToStartHandle() :bool
-	{
+	public function successToStartHandle() :bool {
 		if (($this->fileHandler) === false) {
 			return false;
 		}
@@ -403,4 +373,5 @@ class Object implements FileObjectInterface
 
 		return true;
 	}
+	
 }
