@@ -225,7 +225,7 @@ class Handler implements FileHandlerInterface {
 	 *
 	 * @return bool
 	 */
-	public function clearStatatusCache($filePath) :void {
+	public function clearStatusCache($filePath) :void {
 		clearstatcache(true, $filePath);
 	}
 
@@ -781,7 +781,7 @@ class Handler implements FileHandlerInterface {
 			return false;
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
 		$return = is_executable($filePath);
 
 		return $return;
@@ -805,7 +805,7 @@ class Handler implements FileHandlerInterface {
 			return true;
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
 		$return = is_writable($filePath);
 
 		return $return;
@@ -852,7 +852,7 @@ class Handler implements FileHandlerInterface {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
 
 		if ($humanReadable) {
 			if (file_exists($file)) {
@@ -1321,7 +1321,7 @@ class Handler implements FileHandlerInterface {
 			return false;
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
 		$return = fileatime($filePath);
 
 		return $return;
@@ -1345,7 +1345,7 @@ class Handler implements FileHandlerInterface {
 			return false;
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
 		$return = filectime($filePath);
 
 		return $return;
@@ -1369,7 +1369,7 @@ class Handler implements FileHandlerInterface {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
 		$return = filemtime($filePath);
 
 		return $return;
@@ -1397,7 +1397,8 @@ class Handler implements FileHandlerInterface {
 			throw new StupidIdeaException(FileHandlerMessage::getDoNotUsePharProtocolMessage());
 		}
 
-		$this->clearStatatusCache($filePath);
+		$this->clearStatusCache($filePath);
+		
 		$return = filetype($filePath);
 
 		return $return;
