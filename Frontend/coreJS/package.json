@@ -11,22 +11,25 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "clusterize.js": "^0.17.1",
+    "@babel/core": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "@gfx/zopfli": "^1.0.14",
-    "babel": "^5.8.23",
-    "babel-core": "^5.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-polyfill": "^6.3.14",
-    "babel-preset-env": "^1.7.0",
+    "babel-loader": "^8.0.0",
+    "brotli-webpack-plugin": "^1.1.0",
+    "clusterize.js": "^0.17.1",
     "compression-webpack-plugin": "^3.0.0",
+    "debounce": "^1.0.0",
+    "inherits": "^2.0.3",
+    "terser-webpack-plugin": "^4.1.0",
     "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony-v2.8.22",
     "uglifyjs-webpack-plugin": "0.4.3",
     "webpack": "^4.8.1",
-    "webpack-cli": "^3.3.9",
-    "debounce": "^1.0.0",
-    "inherits": "^2.0.3"
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.6.0"
+    "@babel/cli": "^7.10.5",
+    "@babel/polyfill": "^7.6.0",
+    "core-js": "^3.6.5"
   }
 }
