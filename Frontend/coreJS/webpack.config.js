@@ -8,7 +8,24 @@ const CompressionPlugin = require('compression-webpack-plugin');
 		threshold: 10240,
 		minRatio: 0.8
 	})*/
-		
+
+const terserPlugin = new TerserPlugin({
+				cache: true,
+				sourceMap: true
+			});
+
+const uglifyJsPlugin = new UglifyJsPlugin({
+				include: /\.js$/,
+				uglifyOptions: {
+					parallel: true,
+					mangle: true,
+					minimize: true,
+					compress: true,
+					toplevel: true,
+                    			screw_ie8: true
+				}
+			});
+
 module.exports = {
 	plugins: [
 		new CompressionPlugin({
@@ -28,21 +45,8 @@ module.exports = {
 	optimization: {
 		minimize: true,
 		minimizer: [
-			new TerserPlugin({
-				cache: true,
-				sourceMap: true
-			}), 
-			new UglifyJsPlugin({
-				include: /\.js$/,
-				uglifyOptions: {
-					parallel: true,
-					mangle: true,
-					minimize: true,
-					compress: true,
-					toplevel: true,
-                    screw_ie8: true
-				}
-			}),
+			terserPlugin, 
+			uglifyJsPlugin,
 		],
 		nodeEnv: 'production',
 		namedModules: false,
