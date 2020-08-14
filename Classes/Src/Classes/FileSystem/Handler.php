@@ -6,14 +6,12 @@ namespace Xanax\Classes\FileSystem;
 
 use Xanax\Implement\FileSystemInterface as FileSystemInterface;
 
-class Handler implements FileSystemInterface
-{
-	public function __construct()
-	{
+class Handler implements FileSystemInterface {
+	
+	public function __construct() {
 	}
 
-	public function getCurrentInode()
-	{
+	public function getCurrentInode() {
 		return getmyinode();
 	}
 
@@ -84,4 +82,5 @@ class Handler implements FileSystemInterface
 	public function get512ByteAllocatedBlocks($filePath) {
 		return $this->getStatFromIndex($filePath, 12);
 	}
+	
 }
