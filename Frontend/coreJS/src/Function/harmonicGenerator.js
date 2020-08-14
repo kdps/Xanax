@@ -41,6 +41,7 @@
 			this.augmentedChord = [0, 4, 8], // +, C, E, G#
 			this.suspendedChord = [0, 5, 7], // sus4, C, F, G
 			this.diminishedChord = [0, 3, 6], // dim, C, Eb, Gb
+			this.minorMajorSeventhChord = [0, 3, 7, 11], // mM7, C, Eb, G, B
 			this.majorSeventhChord = [0, 4, 7, 11], // M7, C, E, G, B
 			this.minorSixthChord = [0, 3, 7, 9], // m7, C, Eb, G, A
 			this.minorSeventhChord = [0, 3, 7, 10], // m7, C, Eb, G, Bb
@@ -73,7 +74,8 @@
 				"frenchAugmentedSixthChord": this.frenchAugmentedSixthChord, 
 				"italianAugmentedSixthChord": this.italianAugmentedSixthChord,
 				"minorSixthChord": this.minorSixthChord,
-				"SixthNinthChord": this.SixthNinthChord
+				"SixthNinthChord": this.SixthNinthChord,
+				"minorMajorSeventhChord": this.minorMajorSeventhChord,
 			},
 
 			this.aeolianChord = {
@@ -488,7 +490,6 @@
 				"C-": 11,
 				"B+": 12
 			},
-
 
 			// Scale
 			this.majorScale = [0, 2, 4, 5, 7, 9, 11],
