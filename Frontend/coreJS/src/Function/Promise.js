@@ -40,6 +40,11 @@
 			};
 		},
 		
+		Promisify: function () {
+			return function () {
+			};
+		},
+		
 		RequestCall: function (obj, method, args) {
 			var request;
 			var p = new Promise(function (resolve, reject) {
