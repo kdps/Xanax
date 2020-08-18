@@ -62,10 +62,8 @@ import AudioContextObject from './Class/AudioContextObject.js';
 			}
 		},
 		
-		setOnRequestMIDIAccessEvent: function (callback) {
-			if (typeof callback === 'function') {
-				navigator.requestMIDIAccess().then(callback(access));
-			}
+		setOnRequestMIDIAccessEvent: function (callback) :Promise {
+			return navigator.requestMIDIAccess();
 		},
 		
 		setResume: function (audioContext) {
@@ -77,8 +75,10 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		},
 		
 		// type = sine, square, sawtooth, triangle
-		setOscillatorType: function (oscillator, type) {
-			oscillator.type = type;
+		setOscillatorType: function (audioContext, type) {
+			audioContext.type = type;
+			
+			return audioContext;
 		},
 		
 		createOscillatorContext: function () {
@@ -96,8 +96,14 @@ import AudioContextObject from './Class/AudioContextObject.js';
 			return freq;
 		},
 		
-		setOscillatorFrequency: function (oscillator, target, startTime, timeConstant = 0) {
-			oscillator.frequency.setTargetAtTime(target, startTime, timeConstant);
+		setMidiFrequency: function (audioContext, midiNote) {
+			const frequency = Math.pow(2, (midiNote - 69) / 12) * 440;
+			
+			this.setOscillatorFrequency(audioContext, frequency, audioContext.currentTime);
+		},
+		
+		setOscillatorFrequency: function (audioContext, target, startTime, timeConstant = 0) {
+			audioContext.frequency.setTargetAtTime(target, startTime, timeConstant);
 		},
 		
 		hasMediaCapabilities: function () {
