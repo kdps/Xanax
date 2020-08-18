@@ -62,7 +62,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 			}
 		},
 		
-		setOnRequestMIDIAccessEvent: function (callback) :Promise {
+		setOnRequestMIDIAccessEvent: function () :Promise {
 			return navigator.requestMIDIAccess();
 		},
 		
