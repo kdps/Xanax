@@ -43,7 +43,9 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{44100, 48000, 32000, 0}
 			];*/
 			
+			// http://fmslogo.sourceforge.net/manual/midi-instrument.html
 			this.const midiInstruments = [
+				// Piano
 				{"Instrument" : "Acoustic Grand Piano", "Class" : "Piano"},
 				{"Instrument" : "Bright Acoustic Piano", "Class" : "Piano"},
 				{"Instrument" : "Electric Grand Piano", "Class" : "Piano"},
@@ -52,6 +54,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Chorused Piano", "Class" : "Piano"},
 				{"Instrument" : "Harpsichord", "Class" : "Piano"},
 				{"Instrument" : "Clavinet", "Class" : "Piano"},
+				// Chromatic Percussion
 				{"Instrument" : "Celesta", "Class" : "Chromatic Percussion"},
 				{"Instrument" : "Glockenspiel", "Class" : "Chromatic Percussion"},
 				{"Instrument" : "Music box", "Class" : "Chromatic Percussion"},
@@ -60,6 +63,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Xylophone", "Class" : "Chromatic Percussion"},
 				{"Instrument" : "Tubular Bells", "Class" : "Chromatic Percussion"},
 				{"Instrument" : "Dulcimer", "Class" : "Chromatic Percussion"},
+				// Organ
 				{"Instrument" : "Hammond Organ", "Class" : "Organ"},
 				{"Instrument" : "Percussive Organ", "Class" : "Organ"},
 				{"Instrument" : "Rock Organ", "Class" : "Organ"},
@@ -68,6 +72,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Accordion", "Class" : "Organ"},
 				{"Instrument" : "Harmonica", "Class" : "Organ"},
 				{"Instrument" : "Tango Accordion", "Class" : "Organ"},
+				// Guitar
 				{"Instrument" : "Acoustic Guitar (nylon)", "Class" : "Guitar"},
 				{"Instrument" : "Acoustic Guitar (steel)", "Class" : "Guitar"},
 				{"Instrument" : "Electric Guitar (jazz)", "Class" : "Guitar"},
@@ -76,6 +81,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Overdriven Guitar", "Class" : "Guitar"},
 				{"Instrument" : "Distortion Guitar", "Class" : "Guitar"},
 				{"Instrument" : "Guitar Harmonics", "Class" : "Guitar"},
+				// Bass
 				{"Instrument" : "Acoustic Bass", "Class" : "Bass"},
 				{"Instrument" : "Electric Bass (finger)", "Class" : "Bass"},
 				{"Instrument" : "Electric Bass (pick)", "Class" : "Bass"},
@@ -84,6 +90,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Slap Bass 2", "Class" : "Bass"},
 				{"Instrument" : "Synth Bass 1", "Class" : "Bass"},
 				{"Instrument" : "Synth Bass 2", "Class" : "Bass"},
+				// Strings
 				{"Instrument" : "Violin", "Class" : "Strings"},
 				{"Instrument" : "Viola", "Class" : "Strings"},
 				{"Instrument" : "Cello", "Class" : "Strings"},
@@ -91,6 +98,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Tremolo Strings", "Class" : "Strings"},
 				{"Instrument" : "Pizzicato Strings", "Class" : "Strings"},
 				{"Instrument" : "Orchestral Harp", "Class" : "Strings"},
+				// Ensemble
 				{"Instrument" : "String Ensemble 1", "Class" : "Ensemble"},
 				{"Instrument" : "String Ensemble 2", "Class" : "Ensemble"},
 				{"Instrument" : "Synth Strings 1", "Class" : "Ensemble"},
@@ -100,6 +108,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Synth Voice", "Class" : "Ensemble"},
 				{"Instrument" : "Orchestra Hit", "Class" : "Ensemble"},
 				{"Instrument" : "Timpani", "Class" : "Ensemble"},
+				// Brass
 				{"Instrument" : "Trumpet", "Class" : "Brass"},
 				{"Instrument" : "Trombone", "Class" : "Brass"},
 				{"Instrument" : "Tuba", "Class" : "Brass"},
@@ -108,6 +117,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "Brass Section", "Class" : "Brass"},
 				{"Instrument" : "Synth Brass 1", "Class" : "Brass"},
 				{"Instrument" : "Synth Brass 2", "Class" : "Brass"},
+				// Reed
 				{"Instrument" : "Soprano Sax", "Class" : "Reed"},
 				{"Instrument" : "Alto Sax", "Class" : "Reed"},
 				{"Instrument" : "Tenor Sax", "Class" : "Reed"},
@@ -116,6 +126,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				{"Instrument" : "English Horn", "Class" : "Reed"},
 				{"Instrument" : "Bassoon", "Class" : "Reed"},
 				{"Instrument" : "Clarinet", "Class" : "Reed"},
+				// Pipe
 				{"Instrument" : "Piccolo", "Class" : "Pipe"},
 				{"Instrument" : "Flute", "Class" : "Pipe"},
 				{"Instrument" : "Recorder", "Class" : "Pipe"},
