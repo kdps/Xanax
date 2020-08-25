@@ -3,9 +3,9 @@ import $ from './jquery-3.3.1.min.js'
 import jQuery from './jquery-3.3.1.min.js'
 require.context('./src/', false, /\.js$/);
 
-import mat4 from './src/Ext/gl-matrix-min.js'
+import mat4 from './src/Extention/gl-matrix-min.js'
 
-import core from './src/Ext/Initialization.js'
+import core from './src/Extention/Initialization.js'
 import Application from './src/Function/Application.js'
 import Array from './src/Function/Array.js'
 import Audio from './src/Function/Audio.js'
