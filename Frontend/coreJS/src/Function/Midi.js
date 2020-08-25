@@ -103,7 +103,91 @@
 			];
 		},
 		
-		isSupport: function () {
+		parseMessage: function (message) {
+			let parsedMessage = "";
+			
+			switch (message) {
+				case 128:
+					parsedMessage = "Note Off";
+					break;
+				case 144:
+					parsedMessage = "Note On";
+					break;
+				case 160:
+					parsedMessage = "Poly Pressure";
+					break;
+				case 192:
+					parsedMessage = "Program Change";
+					break;
+				case 208:
+					parsedMessage = "Channel Pressure";
+					break;
+				case 224:
+					parsedMessage = "Pitch Wheel";
+					break;
+				case 240:
+					parsedMessage = "System Exclusive";
+					break;
+				case 242:
+					parsedMessage = "Song Position";
+					break;
+				case 243:
+					parsedMessage = "Song Select";
+					break;
+				case 246:
+					parsedMessage = "Tune Request";
+					break;
+				case 247:
+					parsedMessage = "End of Exclusive";
+					break;
+				case 248:
+					parsedMessage = "Timing Clock";
+					break;
+				case 250:
+					parsedMessage = "Start";
+					break;
+				case 251:
+					parsedMessage = "Continue";
+					break;
+				case 252:
+					parsedMessage = "Stop";
+					break;
+				case 254:
+					parsedMessage = "Active Sensing";
+					break;
+				case 255:
+					parsedMessage = "System Reset";
+					break;
+				case 255:
+					parsedMessage = "System Reset";
+					break;
+				default:
+					break;
+			}
+			
+			return parsedMessage;
+		},
+		
+		setOnAccessRequestEvent: function () :Promise {
+			return navigator.requestMIDIAccess();
+		},
+		
+		isPressed: function (command) {
+			if (command === 145) {
+				return true;
+			} else if(command === 129) {
+				return false;
+			}
+		},
+		
+		setOnMessageEvent: function (callback) {
+			if (typeof callback === 'function') {
+				// command, key, velocity
+				device.onmidimessage = callback;
+			}
+		},
+		
+		isSupported: function () {
 			if (navigator.requestMIDIAccess) {
 				return true;
 			}
