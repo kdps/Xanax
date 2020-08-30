@@ -5,6 +5,10 @@
 
 	var A = core.Str = {
 		
+		getUndefined: function () {
+			return [[]][{}];
+		},
+		
 		isSmallThenValue: function (i, z) {
 			var res = i << z % i >> z;
 			if (res == a) {
