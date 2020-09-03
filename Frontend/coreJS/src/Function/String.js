@@ -5,6 +5,10 @@
 
 	var A = core.Str = {
 		
+		getNaN: function () {
+			return [[]][{}]+blur();
+		},
+		
 		getUndefined: function () {
 			return [[]][{}];
 		},
