@@ -5,8 +5,8 @@
 
 	var A = core.Str = {
 		
-		consoleUndefined: function () {
-			var a = $^1&$^$&1+1[[]];
+		getMinusOne: function () {
+			return ~[]>>1;
 		},
 		
 		getNumber: function (a) {
