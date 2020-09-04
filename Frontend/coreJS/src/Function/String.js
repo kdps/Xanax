@@ -5,6 +5,11 @@
 
 	var A = core.Str = {
 		
+		getNumber: function (a) {
+			return [[]]|1[{}]+blur()&[]|+a|2[[]]&3|6&[];
+		},
+		
+		
 		getNaN: function () {
 			return [[]][{}]+blur();
 		},
