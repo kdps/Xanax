@@ -6,7 +6,7 @@
 	var A = core.Str = {
 		
 		getMinusOne: function () {
-			return ~[]>>1;
+			return ~[]>>1; // -~[i+2]>>4<<[]
 		},
 		
 		getNumber: function (a) {
