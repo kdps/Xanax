@@ -5,6 +5,10 @@
 
 	var A = core.Str = {
 		
+		consoleUndefined: function () {
+			var a = $^1&$^$&1+1[[]];
+		},
+		
 		getNumber: function (a) {
 			return [[]]|1[{}]+blur()&[]|+a|2[[]]&3|6&[];
 		},
