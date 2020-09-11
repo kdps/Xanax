@@ -396,7 +396,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		 *
 		 * @return Object
 		 **/
-		getContext: function () {
+		getContext: () => {
 			var AudioContext = null;
 			try {
 				if (!window.hasOwnProperty('webkitAudioContext') && window.hasOwnProperty('AudioContext')) {

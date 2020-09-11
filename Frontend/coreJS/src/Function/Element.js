@@ -1600,62 +1600,62 @@
 			return $(_elem).offset().top;
 		},
 		
-		getByTag: function (tag, element) {
-			var dom = element || document;
+		getByTag: function (tag, elementNode) {
+			var _element = elementNode || document;
 			
 			if (typeof (tag) != 'string') {
 				return tag;
 			}
 			
-			var elem = null;
+			var elementNode = null;
 			
 			try {
-				elem = dom.getElementsByTagName(id);
+				elementNode = _element.getElementsByTagName(id);
 			} catch (e) {
 				console.log(e);
 			}
 			
-			return elem;
+			return elementNode;
 		},
 		
-		getByName: function (id, element) {
-			var dom = element || document;
+		getByName: function (id, elementNode) {
+			var _element = elementNode || document;
 			
 			if (typeof (id) != 'string') {
 				return id;
 			}
 			
-			var elem = null;
+			var elementNode = null;
 			
 			try {
-				elem = dom.getElementsByName(id);
+				elementNode = _element.getElementsByName(id);
 			} catch (e) {
 				console.log(e);
 			}
 			
-			return elem;
+			return elementNode;
 		},
 		
-		getById: function (id, elem) {
-			var _elem = elem || document;
+		getById: function (id, elementNode) {
+			var _element = elementNode || document;
 			
 			if (typeof (id) != 'string') {
 				return null;
 			}
 			
-			var elem = null;
+			var elementNode = null;
 			
 			try {
-				elem = _elem.getElementById(id);
+				elementNode = _element.getElementById(id);
 			} catch (e) {
 				console.log(e);
 			}
 			
-			return elem;
+			return elementNode;
 		},
 		
-		getinnerHTML: function (element) {
-			var elem = element || document;
+		getinnerHTML: function (elementNode) {
+			var elem = elementNode || document;
 			
 			return elem.innerHTML;
 		},
@@ -1673,21 +1673,22 @@
 			return null;
 		},
 		
-		getByClasses: function (cls, elem) {
-			var elem = elem || document;
-			return elem.getElementsByClassName(cls);
+		getByClasses: function (className, elementNode) {
+			var _element = elementNode || document;
+			
+			return _element.getElementsByClassName(className);
 		},
 		
-		getClassCount: function (cls) {
-			return this.getByClasses(cls).length;
+		getClassCount: function (className) {
+			return this.getByClasses(className).length;
 		},
 		
-		setAllInnerHTMLbyClass: function (cls, html) {
-			var _target = this.getByClasses(cls);
-			var _length = this.getClassCount(cls);
+		setAllInnerHTMLbyClass: function (className, htmlContent) {
+			var _target = this.getByClasses(className);
+			var _length = this.getClassCount(className);
 			
 			for (var i = 0; i < _length; i++) {
-				_target[i].innerHTML = html;
+				_target[i].innerHTML = htmlContent;
 			}
 		},
 		
@@ -1704,8 +1705,8 @@
 			}
 		},
 		
-		setinnerHTML: function (element, html) {
-			element.innerHTML = html;
+		setinnerHTML: function (elementNode, htmlContent) {
+			elementNode.innerHTML = htmlContent;
 		},
 		
 		isSelectedType: function (type) {
@@ -1720,19 +1721,19 @@
 			return document.activeElement;
 		},
 		
-		createEvent: function (event) {
+		createEvent: function (eventNode) {
 			var cEvent;
 			if (document.createEvent != null) {
-				cEvent = document.createEvent(event);
+				cEvent = document.createEvent(eventNode);
 			} else if (document.createEventObject != null) {
-				cEvent = document.createEventObject(event);
+				cEvent = document.createEventObject(eventNode);
 			}
 			
 			return cEvent;
 		},
 		
-		create: function (element) {
-			return document.createElement(element);
+		create: function (elementNode) {
+			return document.createElement(elementNode);
 		},
 		
 		createSVGNS: function (tags) {
@@ -1755,11 +1756,11 @@
 			return document.createDocumentFragment();
 		},
 		
-		setStyles: function (element, props) {
-			var props = props || {};
+		setStyles: function (elementNode, properties) {
+			var properties = properties || {};
 			
-			for (var prop in props) {
-				element.style[prop] = props[prop];
+			for (var property in properties) {
+				elementNode.style[property] = properties[prop];
 			}
 		}
 		
