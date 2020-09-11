@@ -168,7 +168,7 @@
 			return parsedMessage;
 		},
 		
-		setOnAccessRequestEvent: function () :Promise {
+		setOnAccessRequestEvent: function () {
 			return navigator.requestMIDIAccess();
 		},
 		
