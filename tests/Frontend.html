@@ -20,7 +20,7 @@
 var isStarted = false;
 function playSound() {
 	let [oscillatorContext, audioContext] = $.core.Audio.createOscillatorContext();
-	$.core.Audio.setMidiFrequency(oscillatorContext, audioContext, 70);
+	$.core.Audio.setMidiFrequency(oscillatorContext, audioContext.currentTime, 60);
 	
 	if (!isStarted) {
 		oscillatorContext.start(0);

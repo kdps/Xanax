@@ -77,10 +77,10 @@ import AudioContextObject from './Class/AudioContextObject.js';
 			return freq;
 		},
 		
-		setMidiFrequency: function (oscillatorContext, audioContext, midiNote, timeConstant = 0) {
+		setMidiFrequency: function (oscillatorContext, currentTime, midiNote, timeConstant = 0) {
 			const frequency = Math.pow(2, (midiNote - 69) / 12) * 440;
 			
-			this.setOscillatorFrequency(oscillatorContext, frequency, audioContext.currentTime, timeConstant);
+			this.setOscillatorFrequency(oscillatorContext, frequency, currentTime, timeConstant);
 		},
 		
 		setOscillatorFrequency: function (oscillatorContext, frequency, currentTime, timeConstant = 0) {
