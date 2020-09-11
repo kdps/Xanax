@@ -675,7 +675,9 @@
 					var binaryArr = new Array(i);
 					var uInt8Array = new Uint8Array(this.response);
 					var i = uInt8Array.length;
-					while (i--) binaryArr[i] = String.fromCharCode(uInt8Array[i]);
+					while (i--) {
+						binaryArr[i] = String.fromCharCode(uInt8Array[i]);
+					}
 					var data = binaryArr.join('');
 					var base64 = _cWin.btoa(data);
 					return callback(base64);
@@ -764,6 +766,7 @@
 			} else if (_cWin.ActiveXObject) {
 				var xhr = this.getXMLHttp();
 			}
+			
 			if ($.core.Validate.isObject(xhr)) {
 				return xhr;
 			} else {
@@ -823,11 +826,12 @@
 		
 		/**
 		 * XMLHttpRequest Call
-		 * @param {type}	  : Bookmark URL
-		 * @param {url}	  : Bookmark URL
-		 * @param {title} : Bookmark Title
+		 * @param {type}
+		 * @param {url}
+		 * @param {parameter}
+		 * @param {asynchronous}
 		 **/
-		xhr: function (type = 'GET', url, params, async = true) {
+		xhr: function (type = 'GET', url, parameter, asynchronous = true) {
 			try {
 				var xhr = this.createXhrObject();
 				
@@ -835,18 +839,18 @@
 				
 				if (type == "POST") {
 					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-					xhr.setRequestHeader("Content-length", params.length);
+					xhr.setRequestHeader("Content-length", parameter.length);
 					xhr.setRequestHeader("Access-Control-Allow-Origin", "*.*");
 				}
 				
-				if (!async) {
-					async = true;
+				if (!asynchronous) {
+					asynchronous = true;
 				}
 				
-				xhr.open(type, url, async);
-				xhr.send(params);
+				xhr.open(type, url, asynchronous);
+				xhr.send(parameter);
 				
-				var isOnloadSupportedBrowser = ($.core.Browser.isOpera() || $.core.Browser.isSafari() || $.core.Browser.isGecko());
+				let isOnloadSupportedBrowser = ($.core.Browser.isOpera() || $.core.Browser.isSafari() || $.core.Browser.isGecko());
 				
 				if (isOnloadSupportedBrowser) {
 					xhr.onload = function () {
@@ -869,8 +873,6 @@
 						}
 					};
 				}
-				
-				
 			} catch (e) {
 				console.log(e)
 			}
@@ -994,24 +996,26 @@
 		 * @param {callback} : Callback
 		 * @param {datatype} : Data Type
 		 **/
-		ajax: function (type, url, params, callback, datatype, message, userargs, contenttype) {
+		ajax: function (type, url, params, callback, dataType, message, userArguments, contentType) {
 			isAjaxProcessing = true; //global
 			
-			if (!datatype) {
-				datatype = "text";
+			if (!dataType) {
+				dataType = "text";
 			}
 		
-			if (!contenttype) {
-				if (datatype == 'json') {
-					contenttype = "application/json";
-				} else if (datatype == 'xml') {
-					contenttype = "text/plain";
-				} else {
-					contenttype = "application/x-www-form-urlencoded;charset=UTF-8";
+			if (!contentType) {
+				switch (dataType) {
+					case "json":
+						contentType = "application/json";
+						break;
+					case "text":
+						contentType = "text/plain";
+						break;
+					default:
+						contentType = "application/x-www-form-urlencoded;charset=UTF-8";
+						break;
 				}
 			}
-			
-			contenttype = "application/x-www-form-urlencoded;charset=UTF-8";
 			
 			try {
 				var $self = this;
@@ -1029,8 +1033,8 @@
 					 */
 					url: url,
 					async: true, //overlab
-					dataType: datatype,
-					contentType: contenttype,
+					dataType: dataType,
+					contentType: contentType,
 					data: params,
 					success: function (args, txtStatus, xhr) {
 						if (typeof callback == 'function') {
@@ -1047,10 +1051,11 @@
 							if ($.core.Promise.isSupport()) {
 								return new Promise(function (resolve, reject) {
 									args = (args === null) ? '' : args;
+									
 									if (args) {
 										args = $.core.JSON.autoDecode(args);
-										if (userargs) {
-											args['coreUserObj'] = userargs;
+										if (userArguments) {
+											args['coreUserObj'] = userArguments;
 										}
 										
 										try {
@@ -1062,10 +1067,11 @@
 								});
 							} else {
 								args = (args === null) ? '' : args;
+								
 								if (args) {
 									args = $.core.JSON.autoDecode(args);
-									if (userargs) {
-										args['coreUserObj'] = userargs;
+									if (userArguments) {
+										args['coreUserObj'] = userArguments;
 									}
 									
 									try {
@@ -1089,8 +1095,8 @@
 								args = (args === null) ? '' : args;
 								if (args) {
 									args = $.core.JSON.autoDecode(args);
-									if (userargs) {
-										args['coreUserObj'] = userargs;
+									if (userArguments) {
+										args['coreUserObj'] = userArguments;
 									}
 									
 									try {
@@ -1120,12 +1126,15 @@
 							}
 						}
 					},
-		
 					error: function (xhr) {
 						try {
 							if ($.core.Validate.isFunc(this.ajaxFailCallbacks[callback])) {
 								this.ajaxFailCallbacks[callback].call(this, args);
-								if (debug === true) $.log(this.ResponseCode[xhr.status]);
+								
+								if (debug === true) {
+									$.log(this.ResponseCode[xhr.status]);
+								}
+								
 								$self.destroyWaitForm(waitTimeout);
 							} else {
 								$self.destroyWaitForm(waitTimeout);
