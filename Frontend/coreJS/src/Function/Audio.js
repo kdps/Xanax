@@ -65,11 +65,10 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		
 		createOscillatorContext: function () {
 			let audioContext = this.getContext();
-			let Oscillator = this.createOscillator();
-			let destination = audioContext.destination;
-			Oscillator.connect(destination);
+			let Oscillator = this.createOscillator(audioContext);
+			Oscillator.connect(audioContext.destination);
 			
-			return audioContext;
+			return [Oscillator, audioContext];
 		},
 		
 		getFrequencyByNote: function (note) {
@@ -78,14 +77,14 @@ import AudioContextObject from './Class/AudioContextObject.js';
 			return freq;
 		},
 		
-		setMidiFrequency: function (audioContext, midiNote) {
+		setMidiFrequency: function (oscillatorContext, audioContext, midiNote, timeConstant = 0) {
 			const frequency = Math.pow(2, (midiNote - 69) / 12) * 440;
 			
-			this.setOscillatorFrequency(audioContext, frequency, audioContext.currentTime);
+			this.setOscillatorFrequency(oscillatorContext, frequency, audioContext.currentTime, timeConstant);
 		},
 		
-		setOscillatorFrequency: function (audioContext, target, startTime, timeConstant = 0) {
-			audioContext.frequency.setTargetAtTime(target, startTime, timeConstant);
+		setOscillatorFrequency: function (oscillatorContext, frequency, currentTime, timeConstant = 0) {
+			oscillatorContext.frequency.setTargetAtTime(frequency, currentTime, timeConstant);
 		},
 		
 		hasMediaCapabilities: function () {
@@ -405,8 +404,11 @@ import AudioContextObject from './Class/AudioContextObject.js';
 				} else {
 					var AudioContext = _cWin.webkitAudioContext || _cWin.mozAudioContext || _cWin.msAudioContext;
 				}
-				return new(AudioContext)();
-			} catch (e) {}
+				
+				return new (AudioContext)();
+			} catch (error) {
+				console.log(error);
+			}
 			
 			return AudioContext;
 		},
@@ -605,7 +607,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		},
 		
 		createOscillator: function (context) {
-			return context.createOscillator;
+			return context.createOscillator();
 		},
 		
 		createAnalyser: function (context) {
