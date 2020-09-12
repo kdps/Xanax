@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes\Session;
+namespace Xanax\Classes\HTTP;
 
-class Handler {
+class Session {
 	
 	public function __construct() {
 	}
