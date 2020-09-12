@@ -181,9 +181,12 @@
 		
 		removeFocusReadedLyrics: function () {
 			// If has temp timestamp
-			if (typeof A.config.dump.lyrics_temp_time !== 'undefined') {
-				$('.lyrics_display_expand [' + A.config.settings.timestamp + '="' + A.config.dump.lyrics_temp_time + '"]').removeClass('focus_lyrics');
-				$('.' + A.config.settings.lyrics_box + '[' + A.config.settings.timestamp + '="' + A.config.dump.lyrics_temp_time + '"]').css("display", "none");
+			const _lyricsTempTime = A.config.dump.lyrics_temp_time;
+			const _timeStamp = A.config.settings.timestamp;
+			
+			if (typeof lyricsTempTime !== 'undefined') {
+				$('.lyrics_display_expand [' + _timeStamp + '="' + _lyricsTempTime + '"]').removeClass('focus_lyrics');
+				$('.' + A.config.settings.lyrics_box + '[' + _timeStamp + '="' + _lyricsTempTime + '"]').css("display", "none");
 			}
 		},
 		
@@ -205,8 +208,10 @@
 					// Audio Seek to timestamp
 					A.config.dump.audioElement.currentTime = timestamp;
 					
+					const _timeStamp = A.config.settings.timestamp;
+			
 					// Add Focus Class to Clicked Item
-					$('.lyrics_display_expand [' + A.config.settings.timestamp + '="' + timestamp + '"]').addClass('focus_lyrics');
+					$('.lyrics_display_expand [' + _timeStamp + '="' + timestamp + '"]').addClass('focus_lyrics');
 					A.config.dump.lyrics_temp_time = timestamp;
 				}
 			});
