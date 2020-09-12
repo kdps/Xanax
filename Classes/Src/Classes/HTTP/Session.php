@@ -49,7 +49,7 @@ class Session {
 	 *
 	 * @return String
 	 */
-	public function getSessionId() {
+	public function getId() {
 		$sessionId = session_id();
 
 		return $sessionId;
@@ -60,7 +60,7 @@ class Session {
 	 *
 	 * @return boolean
 	 */
-	public function hasSessionId() {
+	public function hasId() {
 		if ($this->getSessionId() == '') {
 			return false;
 		}
@@ -162,6 +162,7 @@ class Session {
 	 * @return void
 	 */
 	public function Destroy() {
+		$_SESSION = [];
 		session_destroy();
 	}
 
@@ -203,7 +204,7 @@ class Session {
 	 * @return void
 	 */
 	public function Get($key) {
-		return $_SESSION[$key] ? $_SESSION[$key] : null;
+		return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
 	}
 
 	/**
