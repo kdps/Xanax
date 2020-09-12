@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\HTTML;
 
-class Response {
+class Request {
 	
-	public $statusMesssages = [
+	protected $statusCode = 200;
+	
+	protected $statusMesssages = [
 		100 => 'Continue',
 		101 => 'Switching Protocols',
 		102 => 'Processing',
@@ -57,6 +59,7 @@ class Response {
 		428 => 'Precondition Required',
 		429 => 'Too Many Requests',
 		431 => 'Request Header Fields Too Large',
+		444 => 'Connection Closed Without Response',
 		451 => 'Unavailable For Legal Reasons',
 		499 => 'Client Closed Request',
 		500 => 'Internal Server Error',
@@ -65,7 +68,9 @@ class Response {
 		503 => 'Service Unavailable',
 		504 => 'Gateway Timeout',
 		505 => 'HTTP Version Not Supported',
+		506 => 'Variant Also Negotiates',
 		507 => 'Insufficient Storage',
+		508 => 'Loop Detected',
 		509 => 'Bandwidth Limit Exceeded',
 		510 => 'Not Extended',
 		511 => 'Network Authentication Required',
