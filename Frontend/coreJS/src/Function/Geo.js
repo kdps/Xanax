@@ -18,15 +18,9 @@
 				maximumAge: 0
 			};
 			
-			_cNavi.geolocation.getCurrentPosition(geoSuccess, geoError, options);
-
-			function geoSuccess(pos) {
-				return pos.coords;
-			}
-
-			function geoError(err) {
-				return err;
-			}
+			return new Promise(function (resolve, reject) {
+				_cNavi.geolocation.getCurrentPosition(resolve, reject, options);
+			});
 		}
 		
 	};
