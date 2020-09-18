@@ -64,7 +64,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 	 *
 	 * @return void
 	 */
-	public function setPostField(int $fields = 0) {
+	public function setPostField($fields) {
 		curl_setopt(self::$session, CURLOPT_POSTFIELDS, $fields);
 
 		return $this->returnContext();
