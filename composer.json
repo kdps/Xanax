@@ -10,7 +10,7 @@
     "ezyang/htmlpurifier": ">=4.10.0"
   },
   "autoload": {
-    "psr-4": {"Xanax\\": "Classes/Src/"},
+    "psr-4": {"Xanax\\": "Classes/Src/", "Xanax\\": "Plugins/"},
     "classmap": [
       ""
     ]
