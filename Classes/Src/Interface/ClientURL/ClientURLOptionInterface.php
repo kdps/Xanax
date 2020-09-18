@@ -10,7 +10,7 @@ interface ClientURLOptionInterface {
 	
 	public function setTimeout(bool $timeout = true);
 	
-	public function setPostField(int $fields = 0);
+	public function setPostField($fields);
 	
 	public function setPostFieldSize(int $size = 0);
 	
