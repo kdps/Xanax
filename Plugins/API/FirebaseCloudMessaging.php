@@ -6,70 +6,86 @@ use Xanax\Classes\ClientURL;
 
 class FirebaseCloudMessaging {
 
-	public function sendMessage($registrationIds, $data, $title, $body) {
-		$fields = array(
-			'registration_ids'  => $registrationIds,
-			'data'              => $data,
-			'content_available' => true,
-			'priority'          => 'high',
-			'notification'      => array(
-				"title" => $title, 
-				"body" => $body, 
-				"sound" => "default"
-			)
-		);
-
+	private $ServerApiKey;
+	private $BadgeCount = 0;
+	private $Identify = 0;
+	private $RegistrationIds = [];
+	private $ResultData = [];
+	
+	public function setServerApiKey($key) {
+		$this->ServerApiKey = $key;
+	}
+	
+	public function addRegistrationId($identifier) {
+		$this->RegistrationIds [] = $identifier;
+	}
+	
+	public function getMulticastId() {
+		return array_key_exists("multicast_id", $this->ResultData) ? $this->ResultData['multicast_id'] : -1;
+	}
+	
+	public function isSuccess() {
+		return array_key_exists("success", $this->ResultData) ? $this->ResultData['success'] === 1 : 0;
+	}
+	
+	public function getResults() {
+		return array_key_exists("results", $this->ResultData) ? $this->ResultData['results'] : [];
+	}
+	
+	public function send($title, $body, $message) {
 		$headers = array(
-			'Authorization: key=',
+			sprintf("Authorization: key=%s", $this->ServerApiKey),
 			'Content-Type: application/json'
 		);
-
-		$ch = curl_init();
-
-		$cURL = new ClientURL();
-		$cURL->Option->setURL('https://fcm.googleapis.com/fcm/send');
 		
-		/*curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-		$result = curl_exec($ch);
-		curl_close($c);*/
+		$notificationContent = array(
+			"title"				=> $title,
+			"body" 				=> $body,
+			"sound"				=> "default",
+			'message'			=> $message,
+			'id'				=> $this->Identify,
+			'badge' 			=> $this->BadgeCount, 
+		);
 
-		return $result;
-	}
+		$dataContent = array(
+			"title"				=> $title,
+			"body" 				=> $body,
+			'click_action'		=> "",
+			"sound"				=> "default",
+			'mode'				=> "",
+			'message'			=> $message,
+			'id'				=> $this->Identify,
+			'badge' 			=> $this->BadgeCount, 
+		);
 
-	public function sendToChannel($token, $title, $body, $channelIdentify, $clickAction) {
 		$postData = array(
-			'to' => $token,
-			'notification' => array(
-				'title' => $title,
-				'body' => $body,
-				'android_channel_id' => $channelId,
-				'click_action' => $clickAction
+			'registration_ids'	=> $this->RegistrationIds,
+			'notification'		=> $notificationContent,
+			'data'				=> $dataContent,
+			"priority"			=> "high",
+			'content_available' => true,
+			'apns' => array(
+				'payload' => array(
+					'aps' => array(
+						'content-available' => 1
+					),
+				),
 			)
 		);
 
-		$headers = array(
-			'Authorization: key=',
-			'Content-Type: application/json'
-		);
-
 		$cURL = new ClientURL();
-		$cURL->Option->setURL('https://fcm.googleapis.com/fcm/send');
+		$cURL->Option->setURL('https://fcm.googleapis.com/fcm/send')
+					 ->setPostMethod(true)
+					 ->setHeaders($headers)
+					 ->setReturnTransfer(true)
+					 ->setPostField(json_encode($postData))
+					 ->setAutoReferer(true)
+					 ->setReturnHeader(false)
+					 ->disableCache(true);
+					 
+		$result = $cURL->Execute();
 		
-		/*$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-		$result = curl_exec($ch);
-		curl_close($c);*/
-
-		return $result;
+		$this->ResultData = json_decode($result);
 	}
-
+	
 }
