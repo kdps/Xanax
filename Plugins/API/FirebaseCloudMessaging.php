@@ -29,7 +29,7 @@ class FirebaseCloudMessaging {
 	}
 	
 	public function getResults() {
-		return $this->ResultData['results'];
+		return $this->ResultData->results;
 	}
 	
 	public function send($title, $body, $message) {
