@@ -1,6 +1,8 @@
 <?php
 
-use Xanax\Plugin;
+namespace Xanax\Plugin;
+
+use Xanax\Classes\ClientURL;
 
 class FirebaseCloudMessaging {
 
