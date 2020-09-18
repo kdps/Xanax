@@ -1,7 +1,5 @@
 <?php
 
-include './../../../vendor/autoload.php';
-
 use Xanax\Plugin;
 
 class FirebaseCloudMessaging {
