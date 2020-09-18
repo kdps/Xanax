@@ -2,7 +2,7 @@
 
 include './../../../vendor/autoload.php';
 
-use Xanax\Classes\ClientURL;
+use Xanax\Plugin;
 
 class FirebaseCloudMessaging {
 
