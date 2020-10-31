@@ -9,7 +9,7 @@ class Dynamic
 	private $current_page;
 	private $list_count;
 	private $page_count;
-	private $point;           // goted page count
+	private $point;           // gotten page count
 	private $page_margin = 0; // page margin for center align
 	private $first_page  = 0;  // first page number
 	private $last_page;       // number of total items
