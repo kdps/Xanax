@@ -138,6 +138,46 @@ class Handler implements ImageHandlerInterface {
 	}
 	
 	/**
+	 * Crop Image
+	 *
+	 * @param resource $imageResource
+	 * @param int      $width
+	 * @param int      $height
+	 * @param int      $left
+	 * @param int      $top
+	 */
+	public function Crop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0) {
+		if ( !$this->isResource($imageResource) ) {
+			$imageResource = $this->getInstance( $imageResource );
+		}
+		
+		$sourceWidth = $this->getWidth($imageResource);
+		$sourceHeight = $this->getHeight($imageResource);
+		
+		$trueColorImage = $this->createTrueColorImage($width, $height);
+		$this->setAlphaBlendMode($trueColorImage);
+		$this->saveAlphaChannel($trueColorImage, false);
+		
+		$this->Resample($imageResource, $trueColorImage, 0, 0, $sourceWidth, $sourceY, $resizeWidth, $resizeHeight, $sourceWidth, $sourceHeight);
+	}
+	
+	public function Resample ($destinationImage, $imageResource, $destinationX = 0, $destinationY = 0, $sourceX = 0, $sourceY = 0, $destinationWidth = 0, $destinationHeight = 0, $sourceWidth = 0, $sourceHeight = 0) {
+		imagecopyresampled ($destinationImage, $imageResource, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight ) 
+	}
+	
+	public function saveAlphaChannel($imageResource, $saveFlag = false) {
+		imageSaveAlpha($imageResource, $saveFlag)
+	}
+	
+	public function createTrueColorImage ($width, $height) {
+		return imagecreatetruecolor($width, $height);
+	}
+
+	public function setAlphaBlendMode ($imageResource, $useBlendMode = true) {
+		imagealphablending($imageResource, $useBlendMode);
+	}
+
+	/**
 	 * Apply specific filter to image resource
 	 *
 	 * @param resource $imageResource
