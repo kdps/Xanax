@@ -1635,14 +1635,14 @@ class Handler implements FileHandlerInterface {
 	 * @return string
 	 */
 	public function Move(string $source, string $destination) :bool {
-		$filePath    = $this->convertToNomalizePath($source);
+		$source    = $this->convertToNomalizePath($source);
 		$destination = $this->convertToNomalizePath($destination);
 
-		if (!$this->isExists($filePath)) {
+		if (!$this->isExists($source)) {
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if (!$this->isFile($source)) {
+		if (!$this->isFile($destination)) {
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
