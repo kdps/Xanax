@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\File;
 
 use Xanax\Implement\FileObjectInterface;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
