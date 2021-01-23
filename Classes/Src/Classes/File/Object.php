@@ -71,7 +71,7 @@ class FileObject implements FileObjectInterface {
 		$this->mode = $mode;
 		$this->seekOffset = 0;
 		$this->filePath = $filePath;
-		$this->fileExtension = $this->fileHandlerClass->getExtention($this->filePath);
+		$this->fileExtension = $this->fileHandlerClass->getExtension($this->filePath);
 
 		$this->recoveryMode = $recoveryMode;
 		if ($this->recoveryMode) {
