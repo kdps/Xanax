@@ -1079,8 +1079,14 @@ class Handler implements FileHandlerInterface {
 			'0x43575306'
 		];
 
+		$oggFileHeader = [
+			'4294676676'
+		];
+
 		if (in_array($fileDescription, $exeFileHeader)) {
 			return 'EXE';
+		} elseif (in_array($fileDescription, $oggFileHeader)) {
+			return 'OGG';
 		} elseif (in_array($fileDescription, $mp3FileHeader)) {
 			return 'MP3';
 		} elseif ($fileDescription === 0x4D546864 /* MThd */ || $fileDescription === 0xB7075) {
