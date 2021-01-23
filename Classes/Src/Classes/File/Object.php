@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xanax\Classes\File;
 
 use Xanax\Classes\File\Handler as FileHandler;
+use Xanax\Classes\Directory\Handler as DirectoryHandler;
 
 use Xanax\Implement\FileObjectInterface;
 use Xanax\Exception\FileHandler\FileIsNotExistsException;
