@@ -543,8 +543,9 @@ class StringHandler
 	}
 
 	public function hexToBinary(string $string) {
+		$length = strlen($string);
 		$result = '';
-		for ($i = 0; $i < strlen($string); $i += 2) {
+		for ($i = 0; $i < $length; $i += 2) {
 			$result .= chr(hexdec(substr($string, $i, 2)));
 		}
 
