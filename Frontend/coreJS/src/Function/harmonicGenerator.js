@@ -386,7 +386,6 @@
 				} // Bdim7
 			},
 
-	
 			// Music
 			this.OctaveTone = 12,
 			
@@ -510,6 +509,10 @@
 			this.locrianb7Mode = [0, 2, 4, 6, 8, 10, 11], // B
 			this.mixolydianMode = [0, 2, 4, 5, 8, 10, 11], // B
 
+			this.modalInterchangeChordList = {
+			
+			},
+				
 			// hypo Mode
 			this.hypoionianMode = this.mixolydianMode, // C
 			this.hypodorianMode = this.aeolianMode, // D
