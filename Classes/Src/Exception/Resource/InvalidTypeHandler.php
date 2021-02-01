@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax\Exception\FileHandler;
+namespace Xanax\Exception\ResourceHandler;
 
 class InvalidTypeHandler extends IOException {
 	
