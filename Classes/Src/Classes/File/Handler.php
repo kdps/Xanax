@@ -19,6 +19,8 @@ use Xanax\Exception\FileHandler\FileIsNotExistsException as FileIsNotExistsExcep
 use Xanax\Exception\FileHandler\TargetIsNotFileException as TargetIsNotFileException;
 use Xanax\Exception\FileHandler\InvalidFileHandler as InvalidFileHandler;
 
+use Xanax\Exception\ResourceHandler\InvalidTypeException as InvalidTypeException;
+
 use Xanax\Exception\Functions\FunctionIsNotExistsException as FunctionIsNotExistsException;
 
 // Implements
@@ -204,7 +206,7 @@ class Handler implements FileHandlerInterface {
 	
 	public function closeProcess($processResource) {
 		if (getType($fileHandler) !== 'resource') {
-			//throw new 
+			throw new InvalidTypeException("");
 		}
 		
 		$return = pclose($processResource);
