@@ -8,8 +8,16 @@ use Xanax\Exception\MemoryAllocatedException;
 
 class StringHandler 
 
-	public function isContains($text, $searchString) {
-		$findedIndex = strpos($text, $searchString);
+	/**
+	 * Check that contains string.
+	 *
+	 * @param string $text
+	 * @param string $search
+	 *
+	 * @return bool
+	 */
+	public function isContains($text, $search) {
+		$findedIndex = strpos($text, $search);
 	
 		return $findedIndex > -1;
 	}
