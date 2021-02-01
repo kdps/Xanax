@@ -407,7 +407,7 @@ var root = this,
     indexedDBStorage = null,
     HandlerWebSocket = null,
     waitForm = null,
-    isAjaxProcessing = false,
+    onRequestProcessing = false,
 
     deferred = $q.defer,
     n4 = (document.layers) ? true : false,
