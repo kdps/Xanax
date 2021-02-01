@@ -2,5 +2,5 @@
 
 namespace Xanax\Classes\Hash;
 
-class Base64 {
+class MD5 {
 }
