@@ -997,7 +997,7 @@
 		 * @param {datatype} : Data Type
 		 **/
 		ajax: function (type, url, params, callback, dataType, message, userArguments, contentType) {
-			isAjaxProcessing = true; //global
+			inProcessing = true; //global
 			
 			if (!dataType) {
 				dataType = "text";
@@ -1104,7 +1104,8 @@
 									} catch (e) {}
 								}
 								
-								var xhrStatus = xhr.status;
+								const xhrStatus = xhr.status;
+								
 								if (xhrStatus) {
 									if (debug === true) {
 										$.log(this.ResponseCode[xhrStatus]);
@@ -1116,12 +1117,12 @@
 								}
 								
 								$self.destroyWaitForm(waitTimeout);
-								if (isAjaxProcessing == true) {
-									isAjaxProcessing = false;
+								if (inProcessing == true) {
+									inProcessing = false;
 								}
 							} finally {
-								if (isAjaxProcessing == true) {
-									isAjaxProcessing = false;
+								if (inProcessing == true) {
+									inProcessing = false;
 								}
 							}
 						}
@@ -1141,8 +1142,8 @@
 								$(waitForm).html(this.ResponseCode[xhr.status]);
 							}
 						} finally {
-							if (isAjaxProcessing == true) {
-								isAjaxProcessing = false;
+							if (inProcessing == true) {
+								inProcessing = false;
 							}
 						}
 					}
@@ -1153,7 +1154,7 @@
 				request = null; 
 			}
 			
-			isAjaxProcessing = false;
+			inProcessing = false;
 		}
 		
 	};
@@ -1172,6 +1173,12 @@
 		} else {
 			return instance._request.getAllResponseHeaders();
 		}
+	}
+	
+	$.core.Request.HTTPObject.prototype.getRequestHeader = function () {
+	}
+	
+	$.core.Request.HTTPObject.prototype.setRequestHeader = function () {
 	}
 	
 	$.core.Request.HTTPObject.prototype.abort = function () {
