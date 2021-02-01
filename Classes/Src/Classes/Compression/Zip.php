@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes;
+namespace Xanax\Classes\Compression;
 
 class Zip
 {
