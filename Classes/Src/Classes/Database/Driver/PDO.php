@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-class PDODriver
+namespace Xanax\Classes\Database\Driver;
+
+class PDO
 {
 	private $connection;
 
