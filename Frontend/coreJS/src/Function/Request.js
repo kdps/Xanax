@@ -997,7 +997,7 @@
 		 * @param {datatype} : Data Type
 		 **/
 		ajax: function (type, url, params, callback, dataType, message, userArguments, contentType) {
-			inProcessing = true; //global
+			onRequestProcessing = true; //global
 			
 			if (!dataType) {
 				dataType = "text";
@@ -1117,12 +1117,12 @@
 								}
 								
 								$self.destroyWaitForm(waitTimeout);
-								if (inProcessing == true) {
-									inProcessing = false;
+								if (onRequestProcessing == true) {
+									onRequestProcessing = false;
 								}
 							} finally {
-								if (inProcessing == true) {
-									inProcessing = false;
+								if (onRequestProcessing == true) {
+									onRequestProcessing = false;
 								}
 							}
 						}
@@ -1142,8 +1142,8 @@
 								$(waitForm).html(this.ResponseCode[xhr.status]);
 							}
 						} finally {
-							if (inProcessing == true) {
-								inProcessing = false;
+							if (onRequestProcessing == true) {
+								onRequestProcessing = false;
 							}
 						}
 					}
@@ -1154,7 +1154,7 @@
 				request = null; 
 			}
 			
-			inProcessing = false;
+			onRequestProcessing = false;
 		}
 		
 	};
