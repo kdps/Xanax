@@ -32,6 +32,10 @@ class FirebaseCloudMessaging {
 		return $this->ResultData->results;
 	}
 	
+	public function setBadgeCount($count) {
+		$this->BadgeCount = $count;
+	}
+	
 	public function send($title, $body, $message) {
 		$headers = array(
 			sprintf("Authorization: key=%s", $this->ServerApiKey),
