@@ -9,9 +9,11 @@ class Zip
 	public function getCompressSize($filePath)
 	{
 		$zip = new ZipArchive();
-		if ($zip->open($filePath) === true) {
+		if ($zip->open($filePath) === true) 
+		{
 			$totalSize = 0;
-			for ($i = 0; $i < $zip->numFiles; $i++) {
+			for ($i = 0; $i < $zip->numFiles; $i++) 
+			{
 				$fileStats = $zip->statIndex($i);
 				$totalSize += $fileStats['size'];
 			}
@@ -26,9 +28,11 @@ class Zip
 	public function getRequireSize($filePath)
 	{
 		$zip = new ZipArchive();
-		if ($zip->open($filePath) === true) {
+		if ($zip->open($filePath) === true) 
+		{
 			$totalSize = 0;
-			for ($i = 0; $i < $zip->numFiles; $i++) {
+			for ($i = 0; $i < $zip->numFiles; $i++) 
+			{
 				$fileStats = $zip->statIndex($i);
 				$totalSize += $fileStats['size'];
 			}
@@ -44,18 +48,22 @@ class Zip
 	{
 		$zip = zip_open($filePath);
 
-		while ($zip_entry = zip_read($zip)) {
-			if (!zip_entry_open($zip, $zip_entry, 'r')) {
+		while ($zip_entry = zip_read($zip)) 
+		{
+			if (!zip_entry_open($zip, $zip_entry, 'r')) 
+			{
 				return false;
 			}
 
 			$zdir = dirname(zip_entry_name($zip_entry));
-			if (!is_dir($zdir)) {
+			if (!is_dir($zdir)) 
+			{
 				mkdir($zdir, 0777);
 			}
 
 			$zip_fs = zip_entry_filesize($zip_entry);
-			if (empty($zip_fs)) {
+			if (empty($zip_fs)) 
+			{
 				continue;
 			}
 
@@ -74,14 +82,19 @@ class Zip
 	{
 		$zipHandler = new ZipArchive();
 
-		if ($zip->open($filePath, ZipArchive::CREATE) !== true) {
+		if ($zip->open($filePath, ZipArchive::CREATE) !== true) 
+		{
 			return false;
 		}
 
-		foreach ($fileList as $key => $val) {
-			if (file_exists($val['filepath'])) {
+		foreach ($fileList as $key => $val) 
+		{
+			if (file_exists($val['filepath'])) 
+			{
 				$zipHandler->addFile($val['filepath'], $val['filename']);
-			} else {
+			}
+			else 
+			{
 				continue;
 			}
 		}
