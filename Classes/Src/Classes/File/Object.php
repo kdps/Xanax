@@ -129,11 +129,13 @@ class FileObject implements FileObjectInterface
 	{
 		fclose($this->fileHandler);
 
-		if (!$this->recoveryMode) {
+		if (!$this->recoveryMode) 
+		{
 			return true;
 		}
 
-		if ($this->recoveryMode && !$this->hasWriteContentLength()) {
+		if ($this->recoveryMode && !$this->hasWriteContentLength()) 
+		{
 			return true;
 		}
 
@@ -144,17 +146,21 @@ class FileObject implements FileObjectInterface
 
 		$isFileExists = $this->fileHandlerClass->isFile($filePath);
 		
-		if ($this->recoveryMode && $isFileExists) {
+		if ($this->recoveryMode && $isFileExists) 
+		{
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if ($this->recoveryMode && !$invalidFileSize && !$correctFileSize) {
+		if ($this->recoveryMode && !$invalidFileSize && !$correctFileSize) 
+		{
 			$this->fileHandlerClass->Delete($filePath);
 			return false;
 		}
 
-		if ($this->recoveryMode) {
-			if ($this->fileHandlerClass->Copy($filePath, $this->filePath)) {
+		if ($this->recoveryMode) 
+		{
+			if ($this->fileHandlerClass->Copy($filePath, $this->filePath)) 
+			{
 				$this->fileHandlerClass->Delete($filePath);
 			}
 		}
@@ -162,10 +168,12 @@ class FileObject implements FileObjectInterface
 		return true;
 	}
 
-	public function Seek(int $offset) :bool {
+	public function Seek(int $offset) :bool 
+	{
 		$seek = fseek($this->fileHandler, $offset, SEEK_SET);
 
-		if ($seek === 0) {
+		if ($seek === 0) 
+		{
 			$this->seekOffset = $offset;
 
 			return true;
@@ -233,8 +241,10 @@ class FileObject implements FileObjectInterface
 		return $bool;
 	}
 
-	public function injectFileIsNotExistsException() :void {
-		if ($this->recoveryMode && $this->fileHandlerClass->isFile($this->filePath)) {
+	public function injectFileIsNotExistsException() :void 
+	{
+		if ($this->recoveryMode && $this->fileHandlerClass->isFile($this->filePath)) 
+		{
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 	}
