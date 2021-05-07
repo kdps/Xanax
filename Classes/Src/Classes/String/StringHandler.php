@@ -7,7 +7,7 @@ namespace Xanax\Classes\String;
 use Xanax\Exception\MemoryAllocatedException;
 
 class StringHandler 
-
+{
 	/**
 	 * Check that contains string.
 	 *
@@ -16,13 +16,15 @@ class StringHandler
 	 *
 	 * @return bool
 	 */
-	public function isContains($text, $search) {
+	public function isContains($text, $search) 
+	{
 		$findedIndex = strpos($text, $search);
 	
 		return $findedIndex > -1;
 	}
 	
-	public function indexBehindOf($text, $start, $searchString, $behindString) {
+	public function indexBehindOf($text, $start, $searchString, $behindString) 
+	{
 		$aheadIndex = strpos($text, $behindString);
 	
 		$findedIndex = strpos($text, $searchString);
@@ -30,7 +32,8 @@ class StringHandler
 		return ($findedIndex < $aheadIndex) ? -1 : $findedIndex;
 	}
 	
-	public function indexHeadOf($text, $start, $searchString, $behindString) {
+	public function indexHeadOf($text, $start, $searchString, $behindString) 
+	{
 		$aheadIndex = strpos($text, $behindString);
 	
 		$findedIndex = strpos($text, $searchString);
@@ -38,11 +41,13 @@ class StringHandler
 		return ($findedIndex > $aheadIndex) ? -1 : $findedIndex;
 	}
 	
-	public function removeByteOrderMark($text, $encoding = 'utf-8') {
+	public function removeByteOrderMark($text, $encoding = 'utf-8') 
+	{
 		$byteOrderMark = "EFBBBF";
 		$result = "";
 		
-		switch($encoding) {
+		switch($encoding) 
+		{
 			case "utf-8":
 				$byteOrderMark = "EFBBBF";
 				break;
@@ -64,7 +69,8 @@ class StringHandler
 		
 		$hexString = $this->Substring($this->binaryToHex($text), 0, 6);
 		
-		if ($hexString === $byteOrderMark) {
+		if ($hexString === $byteOrderMark) 
+		{
 			$find = pack('H*', $byteOrderMark);
 			$result = preg_replace("/^$find/", '', $text);
 		}
@@ -72,91 +78,118 @@ class StringHandler
 		return $result;
 	}
 	
-	public function integerToBytes($integer) {
+	public function integerToBytes($integer) 
+	{
 		$integer = $integer;
 		$length = length($integer);
 		
-		for ($i = $length - 1; $i >= 0; $i--) {
+		for ($i = $length - 1; $i >= 0; $i--) 
+		{
 			$result .= chr(floor($integer / pow(256, $i)));
 		}
 		
 		return $result;
 	}
 	
-	public static function toUpper($text) {
+	public static function toUpper($text) 
+	{
 		return strtoupper($text);
 	}
 	
-	public static function toLower($text) {
+	public static function toLower($text) 
+	{
 		return strtolower($text);
 	}
 	
-	public function unhtmlSpecialChars($string) {
+	public function unhtmlSpecialChars($string) 
+	{
 		$entity = array('&quot;', '&#039;', '&#39;', '&lt;', '&gt;', '&amp;');
 		$symbol = array('"', "'", "'", '<', '>', '&');
 		return str_replace($entity, $symbol, $string);
 	}
 	
-	public function entityToTag($string, $names) {
+	public function entityToTag($string, $names) 
+	{
 		$attr = ' ([a-z]+)=&quot;([\w!#$%()*+,\-.\/:;=?@~\[\] ]|&amp|&#039|&#39)+&quot;';
 		$name_list = explode(',', $names);
-		foreach ($name_list as $name) {
+		foreach ($name_list as $name) 
+		{
 			$string = preg_replace_callback("{&lt;($name)(($attr)*)&gt;(.*?)&lt;/$name&gt;}is", array('Utility', 'replace'), $string);
 		}
 		
 		return $string;
 	}
 	
-	public function stripTags($string, $tags='') {
-		if ($tags === '') {
+	public function stripTags($string, $tags='') 
+	{
+		if ($tags === '') 
+		{
 			return strip_tags($string);
 		}
 		
 		$tags = str_replace(',', '><', $tags);
 		$tags = "<$tags>";
+		
 		return strip_tags($string, $tags);
 	}
 	
 	
-	public static function getUrlParameter($args) {
+	public static function getUrlParameter($args) 
+	{
 		$parameter = null;
 		$rewriteParams = new stdClass;
 		$func_num = func_num_args();
 		$func_get = func_get_args();
 		
-		if ($func_get[0] == NULL) {
+		if ($func_get[0] == NULL) 
+		{
 			$i=1;
 			
-			while ($i<$func_num) {
-				if ($parameter) {
-					if (isset($func_get[$i+1])) {
+			while ($i<$func_num) 
+			{
+				if ($parameter) 
+				{
+					if (isset($func_get[$i+1])) 
+					{
 						$parameter .= '&'.$func_get[$i].'='.$func_get[$i+1];
 					}
-				} else {
+				} 
+				else 
+				{
 					$parameter .= '?';
 					$parameter .= $func_get[$i].'='.$func_get[$i+1];
 				}
 				
 				$i = $i+2;
 			}
-		} else {
+		} 
+		else 
+		{
 			$i=0;
 			$get_tmp = $_GET;
 			
-			while ($i < $func_num) {
-				if ($func_get[$i+1]=='') {
+			while ($i < $func_num) 
+			{
+				if ($func_get[$i+1]=='') 
+				{
 					unset($get_tmp[$func_get[$i]]);
-				} else if (isset($func_get[$i+1])) {
+				} 
+				else if (isset($func_get[$i+1])) 
+				{
 					$get_tmp[$func_get[$i]] = $func_get[$i+1];
 				}
 				
 				$i = $i+2;
 			}
 			
-			foreach ($get_tmp as $key=>$val) {
-				if ($parameter) {
+			foreach ($get_tmp as $key=>$val) 
+			{
+				if ($parameter) 
+				{
 					$parameter .= '&'.$key.'='.$val;
-				} else {
+				} 
+				else 
+				{
 					$parameter .= '?';
 					$parameter .= $key.'='.$val;
 				}
@@ -168,13 +201,15 @@ class StringHandler
 		return $return_url;
 	}
 	
-	public function nlTrim($input) {
+	public function nlTrim($input) 
+	{
 		$input = preg_replace('/[\r\n]/', '', $input);
 		$input = preg_replace('/\t+/', ' ', $input);
 		return $input;
 	}
 	
-	public function nlslim($input, $max = 2) {
+	public function nlslim($input, $max = 2) 
+	{
 		$input = mb_ereg_replace('[\t 　]+(?=[\r\n])', '', $input);
 		$replace = str_repeat('$1', $max);
 		++$max;
@@ -184,15 +219,18 @@ class StringHandler
 		return $input;
 	}
 	
-	public function nlToBr($string) {
+	public function nlToBr($string) 
+	{
 		return preg_replace('/\r\n?|\n/', '<br />', $string);
 	}
 	
-	public function brToNl($string) {
+	public function brToNl($string) 
+	{
 		return str_replace('<br />', "\r\n", $string);
 	}
 	
-	public static function removeNullByte($input) {
+	public static function removeNullByte($input) 
+	{
 		$clean = str_replace("\x00", '', $input); 
 		$clean = str_replace("\0", '', $input); 
 		$clean = str_replace(chr(0), '', $input);
@@ -200,35 +238,46 @@ class StringHandler
 		return $clean;
 	}
 	
-	public static function removeDot($text) {
+	public static function removeDot($text) 
+	{
 		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", "$1-$2-$3$4-$5", $text);
 	}
 	
-	public function Substring($binaryText, $start, $length) {
+	public function Substring($binaryText, $start, $length) 
+	{
 		return substr($binaryText, $start, $length);
 	}
 	
-	public function binaryToHex($binaryText) {
+	public function binaryToHex($binaryText) 
+	{
 		return bin2hex($binaryText);
 	}
 	
-	public function getMaxAllocationSize(string $string) :int{
+	public function getMaxAllocationSize(string $string) :int
+	{
 		$memory_limit = ini_get('memory_limit');
 		
-		if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
-			if ($matches[2] == 'M') {
+		if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) 
+		{
+			if ($matches[2] == 'M') 
+			{
 				$memory_limit = $matches[1] * 1024 * 1024;
-			} elseif ($matches[2] == 'K') {
+			} 
+			else if ($matches[2] == 'K') 
+			{
 				$memory_limit = $matches[1] * 1024;
 			}
 		}
 
 		$maxAllocationSize = $memory_limit - 2097184;
+		
 		return (int)($maxAllocationSize / strlen($string));
 	}
-
-	public function Repeat(string $string, int $multiplier) {
-		if ($this->getMaxAllocationSize($string) > $multiplier) {
+	
+	public function Repeat(string $string, int $multiplier) 
+	{
+		if ($this->getMaxAllocationSize($string) > $multiplier) 
+		{
 			// Memory allocated error
 			throw new MemoryAllocatedException("Memory Allocated");
 		}
@@ -236,124 +285,183 @@ class StringHandler
 		return str_repeat($string, $multiplier);
 	}
 
-	public static function isJson($string) {
+	public static function isJson($string) 
+	{
 		return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
 	}
 	
-	public function filterVariable(mixed $string, $type){
-		switch ($type) {
+	public function filterVariable(mixed $string, $type)
+	{
+		switch ($type) 
+		{
 			case (preg_match('/^MaxLength\((.*\))$/', $type, $matches) ? true : false):
-				if (strlen($string) > $matches[1]) {
+				if (strlen($string) > $matches[1]) 
+				{
 					$string = false;
 				}
 
 				break;
 			case (preg_match('/^Bracket\((.*\))$/', $type, $matches) ? true : false):
-				if (isset($matches[1])) {
+				if (isset($matches[1])) 
+				{
 					$regex = $matches[1];
-					if (preg_match('/^[A-Za-z0-9]+$/i', $regex, $matches)) {
+					if (preg_match('/^[A-Za-z0-9]+$/i', $regex, $matches)) 
+					{
 						$string = $matches[1];
 						$regex = '/^<' . $string . '>([\s\S]*?)<\/' . $string . '>$/i';
 					}
 					
-					if ($regex && preg_match($regex, $string, $matches)) {
-						if (isset($matches[1])) {
+					if ($regex && preg_match($regex, $string, $matches)) 
+					{
+						if (isset($matches[1])) 
+						{
 							$string = $matches[1];
-						} else {
+						} 
+						else 
+						{
 							$string = false;
 						}
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'StringNumber':
-				if (preg_match('/^[A-Za-z0-9]+$/i', $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match('/^[A-Za-z0-9]+$/i', $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'PhoneNumber':
-				if (preg_match('/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/g', $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match('/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/g', $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'URL':
-				if (preg_match("/^(http\:\/\/)*[.a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match("/^(http\:\/\/)*[.a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'Email':
-				if (preg_match("/^[^@]+@[._a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match("/^[^@]+@[._a-zA-Z0-9-]+\.[a-zA-Z]+$/g", $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'URLParameter':
-				if (preg_match('/([^=&?]+)=([^&#]*)/g', $string, $matches)) {
-					if (count($matches) === 1) {
-						if (isset($matches[1])) {
+				if (preg_match('/([^=&?]+)=([^&#]*)/g', $string, $matches)) 
+				{
+					if (count($matches) === 1) 
+					{
+						if (isset($matches[1])) 
+						{
 							$string = $matches[1];
-						} else {
+						} 
+						else 
+						{
 							$string = false;
 						}
-					} elseif (count($matches) > 1) {
+					} 
+					else if (count($matches) > 1) 
+					{
 						$string = $matches;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'Label':
-				if (preg_match("/\[([a-zA-Z0-9\s_-]+)\]/i", $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match("/\[([a-zA-Z0-9\s_-]+)\]/i", $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'FunctionName':
-				if (preg_match_all("/(\[?[a-zA-Z0-9\s_-]+\]?)/", $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match_all("/(\[?[a-zA-Z0-9\s_-]+\]?)/", $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
@@ -363,25 +471,37 @@ class StringHandler
 
 				break;
 			case 'DoubleQuotation':
-				if (preg_match('/^"(.*)"$/', $key, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match('/^"(.*)"$/', $key, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
 				break;
 			case 'SinigleQuotation':
-				if (preg_match('/^\'(.*)\'$/', $string, $matches)) {
-					if (isset($matches[1])) {
+				if (preg_match('/^\'(.*)\'$/', $string, $matches)) 
+				{
+					if (isset($matches[1])) 
+					{
 						$string = $matches[1];
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
-				} else {
+				} 
+				else 
+				{
 					$string = false;
 				}
 
@@ -390,41 +510,57 @@ class StringHandler
 				$string = strip_tags($string);
 				break;
 			case 'JSON':
-				if ( !$this->isJson( $string ) {
+				if ( !$this->isJson( $string ) 
+			    	{
 					$string = false;
 				}
 
 				break;
 			case 'Numbers':
-				if (!is_numeric($string) || !is_int($string)) {
-					if (preg_match('/^(\d[\d\.]+)$/', $key, $matches)) {
-						if (isset($matches[1])) {
+				if (!is_numeric($string) || !is_int($string)) 
+			    	{
+					if (preg_match('/^(\d[\d\.]+)$/', $key, $matches)) 
+					{
+						if (isset($matches[1])) 
+						{
 							$string = $matches[1];
-						} else {
+						} 
+						else 
+						{
 							$string = false;
 						}
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
 				}
 
 				break;
 			case 'Number':
-				if (!is_numeric($string) || !is_int($string)) {
-					if (preg_match('/^(\d+)$/', $string, $matches)) {
-						if (isset($matches[1])) {
+				if (!is_numeric($string) || !is_int($string)) 
+			    	{
+					if (preg_match('/^(\d+)$/', $string, $matches)) 
+					{
+						if (isset($matches[1])) 
+						{
 							$string = $matches[1];
-						} else {
+						} 
+						else 
+						{
 							$string = false;
 						}
-					} else {
+					} 
+					else 
+					{
 						$string = false;
 					}
 				}
 
 				break;
 			case 'String':
-				if (!is_string($string)) {
+				if (!is_string($string)) 
+			    	{
 					$string = false;
 				}
 
@@ -436,7 +572,8 @@ class StringHandler
 			case 'Float':
 				$string = intval($string);
 				$string = (float)sprintf('% u', $string);
-				if ($string < 0) {
+				if ($string < 0) 
+		    		{
 					$string = false;
 				}
 
@@ -452,7 +589,8 @@ class StringHandler
 		return $string;
 	}
 
-	public function getRandomString($length = 1) {
+	public function getRandomString($length = 1) 
+    	{
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
 		$randomString = '';
@@ -464,56 +602,69 @@ class StringHandler
 		return $randomString;
 	}
 
-	public function escapeSlash($string) {
+	public function escapeSlash($string) 
+	{
 		return stripslashes($string);
 	}
 
-	public function isNumber($string) {
+	public function isNumber($string) 
+	{
 		return is_numeric($string);
 	}
 
-	public function removeUtf8Bom($string) {
+	public function removeUtf8Bom($string) 
+	{
 		$source = preg_replace('/^\xEF\xBB\xBF/', '', $string);
 
 		return $source;
 	}
 
-	public function getMD5String($string, $length = 32) {
+	public function getMD5String($string, $length = 32) 
+    	{
 		return $string == '' ? '' : substr(md5($string), -$length);
 	}
 
-	public function getMd5Uniqid($length = 20) {
+	public function getMd5Uniqid($length = 20) 
+    	{
 		$id = md5(uniqid(mt_rand(), true));
 		$id = substr($id, -$length);
 
 		return $id;
 	}
 
-	public function stripTags($string, $tags = '') {
-		if ($tags === '') {
+	public function stripTags($string, $tags = '') 
+    	{
+		if ($tags === '') 
+		{
 			return strip_tags($string);
 		}
 
 		$tags = str_replace(',', '><', $tags);
 		$tags = "<$tags>";
+		
 		return strip_tags($string, $tags);
 	}
 
-	public function replaceToHtmlSource($match) {
+	public function replaceToHtmlSource($match) 
+    	{
 		list($target, $name, $attr) = $match;
 		$name = strToLower($name);
 		$value = end($match);
 
-		if (strpos($value, '<') !== false) {
+		if (strpos($value, '<') !== false) 
+		{
 			return $target;
 		}
 
-		if (preg_match('/script|style|link|html|body|frame/', $name)) {
+		if (preg_match('/script|style|link|html|body|frame/', $name)) 
+		{
 			return $target;
 		}
 
-		if ($attr !== '') {
-			if (preg_match('/ on|about:|script:|@import|behaviou?r|binding|boundary|cookie|eval|expression|include-source|xmlhttp/i', $attr)) {
+		if ($attr !== '') 
+		{
+			if (preg_match('/ on|about:|script:|@import|behaviou?r|binding|boundary|cookie|eval|expression|include-source|xmlhttp/i', $attr)) 
+			{
 				return $target;
 			}
 
@@ -528,47 +679,57 @@ class StringHandler
 		return "<$name$attr>$value</$name>";
 	}
 
-	public function brToNl(string $string) {
+	public function brToNl(string $string) 
+    	{
 		return str_replace('<br />', "\r\n", $string);
 	}
 
-	public function nlToBr(string $string) {
+	public function nlToBr(string $string) 
+    	{
 		return preg_replace('/\r\n?|\n/', '<br />', $string);
 	}
 
-	public function nTrim(string $string) {
+	public function nTrim(string $string) 
+    	{
 		return str_replace("\x00", '', $string);
 	}
 
-	public function intergerToBytes(string $string) {
+	public function intergerToBytes(string $string) 
+    	{
 		$length = strlen($string);
 		$result = '';
-		for ($i = $length - 1; $i >= 0; $i--) {
+		for ($i = $length - 1; $i >= 0; $i--) 
+		{
 			$result .= chr(floor($string / pow(256, $i)));
 		}
 
 		return $result;
 	}
 
-	public function hexToBinary(string $string) {
+	public function hexToBinary(string $string) 
+    	{
 		$length = strlen($string);
 		$result = '';
-		for ($i = 0; $i < $length; $i += 2) {
+		for ($i = 0; $i < $length; $i += 2) 
+		{
 			$result .= chr(hexdec(substr($string, $i, 2)));
 		}
 
 		return $result;
 	}
 
-	public function removeDot(string $string) {
+	public function removeDot(string $string) 
+    	{
 		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", '$1-$2-$3$4-$5', $string);
 	}
 
-	public function toUpper(string $string) {
+	public function toUpper(string $string) 
+    	{
 		return strtoupper($string);
 	}
 
-	public function removeNullBytes(string $string) {
+	public function removeNullBytes(string $string) 
+    	{
 		$clean = str_replace("\x00", '', $string);
 		$clean = str_replace("\0", '', $string);
 		$clean = str_replace(chr(0), '', $string);
@@ -576,35 +737,48 @@ class StringHandler
 		return $clean;
 	}
 
-	public function toLower(string $string) {
+	public function toLower(string $string) 
+	{
 		return strtolower($string);
 	}
 
-	public function getRandomHex(int $length = 32) {
+	public function getRandomHex(int $length = 32) 
+	{
 		$output = $this->getRandomBytes($length);
 
 		return bin2hex($output);
 	}
 
-	public function getRandomBytes(int $length = 32) {
+	public function getRandomBytes(int $length = 32) 
+	{
 		$bytes = min(32, $length);
 
 		$isWindows = $operationSystem->isWindows();
 
-		if (function_exists('random_bytes')) {
-			try {
+		if (function_exists('random_bytes')) 
+		{
+			try 
+			{
 				$output = random_bytes($bytes);
-			} catch (\Exception $e) {
+			} 
+			catch (\Exception $e) 
+			{
 				$output = false;
 			}
 		}
 
-		if ($output === false) {
-			if (function_exists('mcrypt_create_iv') && !$isWindows) {
+		if ($output === false) 
+		{
+			if (function_exists('mcrypt_create_iv') && !$isWindows) 
+			{
 				$output = mcrypt_create_iv($length, \MCRYPT_DEV_URANDOM);
-			} elseif (function_exists('openssl_random_pseudo_bytes') && !$isWindows) {
+			} 
+			else if (function_exists('openssl_random_pseudo_bytes') && !$isWindows) 
+			{
 				$output = openssl_random_pseudo_bytes($length);
-			} elseif (function_exists('mcrypt_create_iv') && $isWindows) {
+			} 
+			else if (function_exists('mcrypt_create_iv') && $isWindows) 
+			{
 				$output = mcrypt_create_iv($bytes, \MCRYPT_RAND);
 			}
 		}
