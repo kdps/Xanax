@@ -8,7 +8,7 @@ class Cookie
 {
 	public function isSet($key) 
 	{
-		return isset( $_COOKIE[$key] ) ? true : false;
+		return isset( $_COOKIE[ $key ] ) ? true : false;
 	}
 	
 	public function setRaw( $key, $value = '', $expired ) 
@@ -29,7 +29,7 @@ class Cookie
 	{
 		if ( $this->isSet($key) ) 
 		{
-			return $_COOKIE[$key];
+			return $_COOKIE[ $key ];
 		}
 		
 		return '';
@@ -58,8 +58,9 @@ class Cookie
 	
 	public static function Unset($name)
 	{
-		if (isset($_COOKIE[$name])) {
-			unset($_COOKIE[$name]);
+		if (isset($_COOKIE[ $name ])) 
+		{
+			unset($_COOKIE[ $name ]);
 			
 			return true;
 		}
