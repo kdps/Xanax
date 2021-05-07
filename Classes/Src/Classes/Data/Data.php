@@ -6,15 +6,17 @@ use Xanax/Classes/Data/Identifier as Identifier;
 
 class Data
 {
-	  private static $data;
+	private static $data;
   
 	public function __constructor($data)
 	{
 		self::$data = $data;
 	}
 
-	public function typeCasting($type) {
-		switch($type) {
+	public function typeCasting($type) 
+	{
+		switch($type) 
+		{
 			case "string":
 				self::data = (string)self::data;
 				break;
