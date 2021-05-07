@@ -6,11 +6,14 @@ namespace Xanax\Classes\Image;
 
 use Xanax\Implement\ImageHandlerInterface;
 
-class Handler implements ImageHandlerInterface {
+class Handler implements ImageHandlerInterface 
+{
 	
 	//http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
-	public function isAnimated ($filename) {
-		if (!($fh = @fopen($filename, 'rb'))) {
+	public function isAnimated ($filename) 
+	{
+		if (!($fh = @fopen($filename, 'rb'))) 
+		{
 			return false;
 		}
 		
@@ -23,7 +26,8 @@ class Handler implements ImageHandlerInterface {
 
 		// We read through the file til we reach the end of the file, or we've found
 		// at least 2 frame headers
-		while (!feof($fh) && $count < 2) {
+		while (!feof($fh) && $count < 2) 
+		{
 			$chunk = fread($fh, 1024 * 100); //read 100kb at a time
 			$count += preg_match_all(
 				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s',
@@ -45,8 +49,10 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * return Resource
 	 */
-	public function drawRepeat ($imageResource, $width, $height) {
-		if ( !$this->isResource($imageResource) ) {
+	public function drawRepeat ($imageResource, $width, $height) 
+	{
+		if ( !$this->isResource($imageResource) ) 
+		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
@@ -73,8 +79,10 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return resource
 	 */
-	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue) {
-		if ( !$this->isResource($imageResource) ) {
+	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue) 
+	{
+		if ( !$this->isResource($imageResource) ) 
+		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
@@ -83,12 +91,15 @@ class Handler implements ImageHandlerInterface {
 		return $outputImage;
 	}
 	
-	public function Combine ( $paletteImage, $combineImage, $right = 0, $top = 0) {
-		if ( !$this->isResource($paletteImage) ) {
+	public function Combine ( $paletteImage, $combineImage, $right = 0, $top = 0) 
+	{
+		if ( !$this->isResource($paletteImage) ) 
+		{
 			$paletteImage = $this->getInstance( $paletteImage );
 		}
 		
-		if ( !$this->isResource($combineImage) ) {
+		if ( !$this->isResource($combineImage) ) 
+		{
 			$combineImage = $this->getInstance( $combineImage );
 		}
 		
@@ -108,8 +119,10 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return resource
 	 */
-	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight) {
-		if ( !$this->isResource($imageResource) ) {
+	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight) 
+	{
+		if ( !$this->isResource($imageResource) ) 
+		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
@@ -117,9 +130,12 @@ class Handler implements ImageHandlerInterface {
 		$ratio = $origin_width / $origin_height;
 		$resizeWidth = $resizeHeight = min($resizeWidth, max($origin_width, $origin_height));
 		
-		if ($ratio < 1) {
+		if ($ratio < 1) 
+		{
 			$resizeWidth = $thumbnail_height * $ratio;
-		} else {
+		} 
+		else 
+		{
 			$resizeHeight = $thumbnail_width / $ratio;
 		}
 		
@@ -146,8 +162,10 @@ class Handler implements ImageHandlerInterface {
 	 * @param int      $left
 	 * @param int      $top
 	 */
-	public function Crop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0) {
-		if ( !$this->isResource($imageResource) ) {
+	public function Crop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0) 
+	{
+		if ( !$this->isResource($imageResource) ) 
+		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
@@ -161,19 +179,23 @@ class Handler implements ImageHandlerInterface {
 		$this->Resample($imageResource, $trueColorImage, 0, 0, $sourceWidth, $sourceY, $resizeWidth, $resizeHeight, $sourceWidth, $sourceHeight);
 	}
 	
-	public function Resample ($destinationImage, $imageResource, $destinationX = 0, $destinationY = 0, $sourceX = 0, $sourceY = 0, $destinationWidth = 0, $destinationHeight = 0, $sourceWidth = 0, $sourceHeight = 0) {
+	public function Resample ($destinationImage, $imageResource, $destinationX = 0, $destinationY = 0, $sourceX = 0, $sourceY = 0, $destinationWidth = 0, $destinationHeight = 0, $sourceWidth = 0, $sourceHeight = 0) 
+	{
 		imagecopyresampled ($destinationImage, $imageResource, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight ) 
 	}
 	
-	public function saveAlphaChannel($imageResource, $saveFlag = false) {
+	public function saveAlphaChannel($imageResource, $saveFlag = false) 
+	{
 		imageSaveAlpha($imageResource, $saveFlag)
 	}
 	
-	public function createTrueColorImage ($width, $height) {
+	public function createTrueColorImage ($width, $height) 
+	{
 		return imagecreatetruecolor($width, $height);
 	}
 
-	public function setAlphaBlendMode ($imageResource, $useBlendMode = true) {
+	public function setAlphaBlendMode ($imageResource, $useBlendMode = true) 
+	{
 		imagealphablending($imageResource, $useBlendMode);
 	}
 
@@ -190,7 +212,8 @@ class Handler implements ImageHandlerInterface {
 	 */
 	
 	// TODO get a args by array data
-	public function Filter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') {
+	public function Filter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') 
+	{
 		
 		$type = strtolower($type);
 		
@@ -235,7 +258,8 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return output stream
 	 */
-	public function Draw ( $imageResource ) {
+	public function Draw ( $imageResource ) 
+	{
 		$format = $this->getType( $imageResource );
 		
 		switch($format) {
@@ -290,7 +314,8 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return array($alpha, $r, $g, $b)
 	 */
-	public function pickColor ( $imageResource, $x, $y ) :array {
+	public function pickColor ( $imageResource, $x, $y ) :array 
+	{
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
@@ -319,8 +344,10 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return mixed
 	 */
-	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue ) {
-		if ( !$this->isResource($imageResource) ) {
+	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue ) 
+	{
+		if ( !$this->isResource($imageResource) ) 
+		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
 		
@@ -337,8 +364,10 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return mixed
 	 */
-	public function getExifData ( $filePath ) {
-		if (function_exists('exif_read_data')) {
+	public function getExifData ( $filePath ) 
+	{
+		if (function_exists('exif_read_data')) 
+		{
 			return exif_read_data($filePath, 0, true);
 		}
 		
@@ -352,9 +381,11 @@ class Handler implements ImageHandlerInterface {
 	 *
 	 * @return mixed
 	 */
-	public function getType ( $filePath ) {
+	public function getType ( $filePath ) 
+	{
 		$finfo = getimagesize($filePath);
-		if ($finfo === false) {
+		if ($finfo === false) 
+		{
 			return false;
 		}
 		
