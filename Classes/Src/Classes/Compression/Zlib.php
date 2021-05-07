@@ -8,21 +8,26 @@ class Zlib
 {
 	public function Uncompress($filePath, $destination)
 	{
-		if (is_file($filePath) && file_exists($filePath) && filesize($filePath) > 0) {
+		if (is_file($filePath) && file_exists($filePath) && filesize($filePath) > 0) 
+		{
 			$fileHandler = fopen($filePath, 'rb');
 
-			if ($fileHandler) {
+			if ($fileHandler) 
+			{
 				$uncompresscontents = fread($fileHandler, filesize($filePath));
 				fclose($fileHandler);
 
 				$uncompressing = gzuncompress($uncompresscontents);
 
-				if ($uncompressing) {
+				if ($uncompressing) 
+				{
 					$fileHandler = fopen($destination, 'wb');
 					fwrite($fileHandler, $uncompressing);
 					fclose($fileHandler);
 				}
-			} else {
+			} 
+			else 
+			{
 				fclose($fileHandler);
 
 				return false;
@@ -38,7 +43,8 @@ class Zlib
 
 		$compressing = gzcompress($compresscontents);
 
-		if ($compressing) {
+		if ($compressing) 
+		{
 			$fp = fopen($destination, 'wb');
 			fwrite($fp, $compressing);
 			fclose($fp);
