@@ -1486,7 +1486,8 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function readAllContent(string $filePath, string $writeMode = 'r') {
+	public function readAllContent(string $filePath, string $writeMode = 'r') 
+	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
 		return $this->Read($filePath, -1);
@@ -1745,14 +1746,17 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getContent(string $filePath) :string {
+	public function getContent(string $filePath) :string 
+	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
-		if (!$this->isExists($filePath)) {
+		if (!$this->isExists($filePath)) 
+		{
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if (!$this->isFile($filePath)) {
+		if (!$this->isFile($filePath)) 
+		{
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
