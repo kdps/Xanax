@@ -11,14 +11,19 @@ use Xanax\Implement\FileHandlerInterface;
 use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
 use Xanax\Classes\File\Handler as FileHandler;
 
-class Handler implements DirectoryHandlerInterface {
+class Handler implements DirectoryHandlerInterface 
+{
 	private $fileHandler;
 	private $directoryDepth;
 
-	public function __construct(FileHandlerInterface $fileHandler = null) {
-		if ($fileHandler instanceof FileHandlerInterface) {
+	public function __construct(FileHandlerInterface $fileHandler = null) 
+	{
+		if ($fileHandler instanceof FileHandlerInterface) 
+		{
 			$this->fileHandler = $fileHandler;
-		} else {
+		} 
+		else 
+		{
 			$this->fileHandler = new FileHandler();
 		}
 
@@ -32,21 +37,25 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function getFreeSpace($prefix = '/') {
+	public function getFreeSpace($prefix = '/') 
+	{
 		$diskFreeSpaces = -1;
 
-		if (function_exists('disk_free_space')) {
+		if (function_exists('disk_free_space')) 
+		{
 			$diskFreeSpaces = disk_free_space($prefix);
 		}
 
 		return $diskFreeSpaces;
 	}
 
-	public function hasCurrentWorkingLocation() {
+	public function hasCurrentWorkingLocation() 
+	{
 		return $this->getCurrentWorkingLocation();
 	}
 
-	public function getCurrentWorkingLocation() {
+	public function getCurrentWorkingLocation() 
+	{
 		return getcwd();
 	}
 
@@ -57,7 +66,8 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return boolean
 	 */
-	public function isDirectory(string $directoryPath) {
+	public function isDirectory(string $directoryPath) 
+	{
 		$return = is_dir($directoryPath);
 
 		return $return;
@@ -71,16 +81,20 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return boolean
 	 */
-	public function Make(string $directoryPath, int $permission = 644) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function Make(string $directoryPath, int $permission = 644) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
 		return $this->Create($directoryPath);
 	}
 
-	public function Create(string $directoryPath, int $permission = 644) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function Create(string $directoryPath, int $permission = 644) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -96,8 +110,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function getFileCount(string $directoryPath) :int {
-		if (!$this->isDirectory($directoryPath)) {
+	public function getFileCount(string $directoryPath) :int 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -114,8 +130,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return boolean
 	 */
-	public function isEmpty(string $directoryPath) :bool {
-		if (!$this->isDirectory($directoryPath)) {
+	public function isEmpty(string $directoryPath) :bool 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -129,12 +147,15 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return boolean
 	 */
-	public function Delete(string $directoryPath) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function Delete(string $directoryPath) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
-		if ($this->isEmpty($directoryPath) || $this->Empty($directoryPath)) {
+		if ($this->isEmpty($directoryPath) || $this->Empty($directoryPath)) 
+		{
 			$iterator = new RecursiveIteratorIterator(
 				new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS),
 				RecursiveIteratorIterator::CHILD_FIRST
@@ -142,14 +163,19 @@ class Handler implements DirectoryHandlerInterface {
 
 			$iterator->setMaxDepth(-1); // Absolutely delete folders
 
-			foreach ($iterator as $fileInformation) {
-				if ($fileInformation->isDir()) {
-					if (delete($fileInformation->getRealPath()) === false) {
+			foreach ($iterator as $fileInformation) 
+			{
+				if ($fileInformation->isDir()) 
+				{
+					if (delete($fileInformation->getRealPath()) === false) 
+					{
 						return false;
 					}
 				}
 			}
-		} else {
+		} 
+		else 
+		{
 			return false;
 		}
 
@@ -164,18 +190,24 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return void
 	 */
-	public function Copy(string $directoryPath, string $copyPath) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function Copy(string $directoryPath, string $copyPath) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
 		$directoryIterator = new \RecursiveDirectoryIterator($directoryPath, \RecursiveDirectoryIterator::SKIP_DOTS);
 		$iterator          = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
 
-		foreach ($iterator as $item) {
-			if ($item->isDir()) {
+		foreach ($iterator as $item) 
+		{
+			if ($item->isDir()) 
+			{
 				$this->Create($copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
-			} else {
+			} 
+			else 
+			{
 				$this->fileHandler->Copy($item, $copyPath . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
 			}
 		}
@@ -188,8 +220,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function getSize(string $directoryPath) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function getSize(string $directoryPath) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -197,7 +231,8 @@ class Handler implements DirectoryHandlerInterface {
 		
 		$skipDots = new RecursiveDirectoryIterator($directoryPath, RecursiveDirectoryIterator::SKIP_DOTS);
 		
-		foreach (new RecursiveIteratorIterator($skipDots) as $file) {
+		foreach (new RecursiveIteratorIterator($skipDots) as $file) 
+		{
 			$size += $file->getSize();
 		}
 
@@ -209,7 +244,8 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function getMaxDepth() {
+	public function getMaxDepth() 
+	{
 		return $this->directoryDepth;
 	}
 
@@ -220,8 +256,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return int
 	 */
-	public function setMaxDepth(int $depth) {
-		if ($this->getMaxDepth() === $this->directoryDepth) {
+	public function setMaxDepth(int $depth) 
+	{
+		if ($this->getMaxDepth() === $this->directoryDepth) 
+		{
 			return false;
 		}
 
@@ -238,8 +276,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return boolean
 	 */
-	public function Rename(string $directoryPath, string $string, string $replacement) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function Rename(string $directoryPath, string $string, string $replacement) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -248,20 +288,25 @@ class Handler implements DirectoryHandlerInterface {
 			RecursiveIteratorIterator::SELF_FIRST
 		);
 
-		foreach ($iterator as $folderPath => $fileInformation) {
-			if ($fileInformation->isDir()) {
+		foreach ($iterator as $folderPath => $fileInformation) 
+		{
+			if ($fileInformation->isDir()) 
+			{
 				$folderPath       = $fileInformation->getPathName();
 				$newDirectoryName = preg_replace($replacement, $string, $folderPath);
 
-				if ($filePath === $newFileName) {
+				if ($filePath === $newFileName) 
+				{
 					continue;
 				}
 
-				if (!$this->isDirectory($folderPath)) {
+				if (!$this->isDirectory($folderPath)) 
+				{
 					return false;
 				}
 
-				if ($this->isDirectory($newDirectoryName)) {
+				if ($this->isDirectory($newDirectoryName)) 
+				{
 					return false;
 				}
 
@@ -281,8 +326,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return boolean
 	 */
-	public function RenameInnerFiles(string $directoryPath, $replacement, $string = null) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function RenameInnerFiles(string $directoryPath, $replacement, $string = null) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -291,30 +338,37 @@ class Handler implements DirectoryHandlerInterface {
 			RecursiveIteratorIterator::SELF_FIRST
 		);
 
-		foreach ($iterator as $path => $fileInformation) {
-			if ($fileInformation->isDir()) {
+		foreach ($iterator as $path => $fileInformation) 
+		{
+			if ($fileInformation->isDir()) 
+			{
 				$rootDirectory = $fileInformation->getPathName();
 
-				foreach (scandir($rootDirectory) as $targetFilename) {
+				foreach (scandir($rootDirectory) as $targetFilename) 
+				{
 					$filePath = sprintf('%s/%s', $rootDirectory, $targetFilename);
 
 					$newFileName = $targetFilename;
 
-					if (@preg_match($replacement, null) === true) {
+					if (@preg_match($replacement, null) === true) 
+					{
 						$newFileName = preg_replace($replacement, $string, $targetFilename);
 					}
 
 					$newFileName = sprintf('%s/%s', $rootDirectory, $newFileName);
 
-					if ($filePath === $newFileName) {
+					if ($filePath === $newFileName) 
+					{
 						continue;
 					}
 
-					if (!$this->fileHandler->isExists($filePath)) {
+					if (!$this->fileHandler->isExists($filePath)) 
+					{
 						return false;
 					}
 
-					if (!$this->fileHandler->isExists($newFileName)) {
+					if (!$this->fileHandler->isExists($newFileName)) 
+					{
 						return false;
 					}
 
@@ -334,8 +388,10 @@ class Handler implements DirectoryHandlerInterface {
 	 *
 	 * @return array
 	 */
-	public function getFileList($directoryPath = './', $sort = false) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function getFileList($directoryPath = './', $sort = false) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -346,12 +402,15 @@ class Handler implements DirectoryHandlerInterface {
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 
-		if ($this->getMaxDepth() !== -1) {
+		if ($this->getMaxDepth() !== -1) 
+		{
 			$iterator->setMaxDepth($this->getMaxDepth());
 		}
 
-		foreach ($iterator as $fileInformation) {
-			if ($fileInformation->isFile()) {
+		foreach ($iterator as $fileInformation) 
+		{
+			if ($fileInformation->isFile()) 
+			{
 				$fileList[] = $fileInformation->getRealPath();
 			}
 		}
@@ -363,8 +422,10 @@ class Handler implements DirectoryHandlerInterface {
 		return $fileList;
 	}
 
-	public function Empty(string $directoryPath) {
-		if (!$this->isDirectory($directoryPath)) {
+	public function Empty(string $directoryPath) 
+	{
+		if (!$this->isDirectory($directoryPath)) 
+		{
 			throw new DirectoryIsNotExistsException();
 		}
 
@@ -373,13 +434,17 @@ class Handler implements DirectoryHandlerInterface {
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 
-		if ($this->getMaxDepth() !== -1) {
+		if ($this->getMaxDepth() !== -1) 
+		{
 			$iterator->setMaxDepth($this->getMaxDepth());
 		}
 
-		foreach ($iterator as $fileInformation) {
-			if (!$fileInformation->isDir()) {
-				if (unlink($fileInformation->getRealPath()) === false) {
+		foreach ($iterator as $fileInformation) 
+		{
+			if (!$fileInformation->isDir()) 
+			{
+				if (unlink($fileInformation->getRealPath()) === false) 
+				{
 					return false;
 				}
 			}
