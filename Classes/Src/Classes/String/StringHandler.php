@@ -595,7 +595,8 @@ class StringHandler
 		$charactersLength = strlen($characters);
 		$randomString = '';
 
-		for ($i = 0; $i < $length; $i++) {
+		for ($i = 0; $i < $length; $i++) 
+		{
 			$randomString .= $characters[rand(0, $charactersLength - 1)];
 		}
 
@@ -698,6 +699,7 @@ class StringHandler
     	{
 		$length = strlen($string);
 		$result = '';
+		
 		for ($i = $length - 1; $i >= 0; $i--) 
 		{
 			$result .= chr(floor($string / pow(256, $i)));
@@ -710,6 +712,7 @@ class StringHandler
     	{
 		$length = strlen($string);
 		$result = '';
+		
 		for ($i = 0; $i < $length; $i += 2) 
 		{
 			$result .= chr(hexdec(substr($string, $i, 2)));
