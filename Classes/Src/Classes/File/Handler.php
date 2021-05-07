@@ -1301,13 +1301,16 @@ class Handler implements FileHandlerInterface
 		elseif ($fileDescription === 0x2D2D2D2D) 
 		{
 			return 'CAP';
-		} elseif ($fileDescription === 0x4D534654) 
+		} 
+		elseif ($fileDescription === 0x4D534654) 
 		{
 			return 'TLB';
-		} elseif ($fileDescription === 0xA050101) 
+		} 
+		elseif ($fileDescription === 0xA050101) 
 		{
 			return 'PCX';
-		} elseif ($fileDescription === 0x64343A69) 
+		} 
+		elseif ($fileDescription === 0x64343A69) 
 		{
 			return 'TORRENTDATA';
 		} 
@@ -1362,13 +1365,16 @@ class Handler implements FileHandlerInterface
 		elseif (in_array($fileDescription, $swfFileHeader)) 
 		{
 			return 'SWF';
-		} elseif ($fileDescription === 0x1A45DFA3) 
+		} 
+		elseif ($fileDescription === 0x1A45DFA3) 
 		{
 			return 'WEBM';
-		} elseif ($fileDescription === 20 || $fileDescription === 32 /* MP4 (ftypisom isomiso2avc1mp41) */) 
+		} 
+		elseif ($fileDescription === 20 || $fileDescription === 32 /* MP4 (ftypisom isomiso2avc1mp41) */) 
 		{
 			return 'MP4';
-		} elseif ($fileDescription === 0x25504446 /* PDF*/) 
+		} 
+		elseif ($fileDescription === 0x25504446 /* PDF*/) 
 		{
 			return 'PDF';
 		} 
