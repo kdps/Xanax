@@ -6,21 +6,30 @@ namespace Xanax\Classes\Upload;
 
 use Xanax\Classes\File\Handler as FileHandler;
 
-class Handler {
+class Handler 
+{
 	
-	public function Get($name, $key = 'name') {
-		if (preg_match('/^([A-Za-z0-9-_]{1,})\[[A-Za-z0-9-_]{1,}\]$/', $name, $match)) {
+	public function Get($name, $key = 'name') 
+	{
+		if (preg_match('/^([A-Za-z0-9-_]{1,})\[[A-Za-z0-9-_]{1,}\]$/', $name, $match)) 
+		{
 			return isset($_FILES[$match[1]][$key][$match[2]]) ? $_FILES[$match[1]]['name'][$match[2]] : null;
-		} else {
-			if ($key === 'name') {
+		} 
+		else 
+		{
+			if ($key === 'name') 
+			{
 				return isset($_FILES[$name]) ? $_FILES[$name] : null;
-			} else {
+			} 
+			else 
+			{
 				return isset($_FILES[$name][$key]) ? $_FILES[$name][$key] : null;
 			}
 		}
 	}
 
-	public function Move($name, $filePath) {
+	public function Move($name, $filePath) 
+	{
 		$temporaryName = $this->getTemporaryName($name);
 
 		$result = move_uploaded_file($temporaryName,  $filePath);
@@ -28,14 +37,17 @@ class Handler {
 		return $result;
 	}
 	
-	public function isUploaded($name, $filePath) {
+	public function isUploaded($name, $filePath) 
+	{
 		$temporaryName = $this->getTemporaryName($name);
 		
 		return file_exists(sprintf("%s/%s", $filePath, $temporaryName));
 	}
 	
-	public function getErrorMessageFromCode($error) {
-		switch ($error) {
+	public function getErrorMessageFromCode($error) 
+	{
+		switch ($error) 
+		{
 			case UPLOAD_ERR_OK:
 				$response = 'There is no error, the file uploaded with success.';
 				break;
@@ -68,39 +80,48 @@ class Handler {
 		return $response;
 	}
 
-	public function hasError($name) {
-		if ($this->getFileError($name) !== UPLOAD_ERR_OK) {
+	public function hasError($name) 
+	{
+		if ($this->getFileError($name) !== UPLOAD_ERR_OK) 
+		{
 			return false;
 		}
 
 		return true;
 	}
 
-	public function hasItem() {
+	public function hasItem() 
+	{
 		return (count($_FILES) > 0);
 	}
 
-	public function getTemporaryName($name) {
+	public function getTemporaryName($name) 
+	{
 		return $this->Get($name, 'tmp_name');
 	}
 
-	public function getFileType($name) {
+	public function getFileType($name) 
+	{
 		return $this->Get($name, 'type');
 	}
 
-	public function getFileName($name) {
+	public function getFileName($name) 
+	{
 		return $this->Get($name, 'name');
 	}
 
-	public function getFileSize($name) {
+	public function getFileSize($name) 
+	{
 		return $this->Get($name, 'size');
 	}
 
-	public function getFileError($name) {
+	public function getFileError($name) 
+	{
 		return $this->Get($name, 'error');
 	}
 
-	public function isExists($name = 'tmp_file') {
+	public function isExists($name = 'tmp_file') 
+	{
 		if ($this->Get($name) === null) {
 			return false;
 		}
