@@ -21,6 +21,8 @@ class Cookie
 		{
 			setrawcookie( $key, $value );
 		}
+		
+		return true;
 	}
 	
 	public function Get($key) 
@@ -50,12 +52,18 @@ class Cookie
 		{
 			$this->setRaw($key, $value, $expired)
 		}
+		
+		return true;
 	}
 	
 	public static function Unset($name)
 	{
 		if (isset($_COOKIE[$name])) {
 			unset($_COOKIE[$name]);
+			
+			return true;
 		}
+		
+		return false;
 	}
 }
