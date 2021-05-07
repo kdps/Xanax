@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\HTTP;
 
-class Session {
+class Session 
+{
 	
-	public function __construct() {
+	public function __construct() 
+	{
 	}
 
 	/**
@@ -14,8 +16,10 @@ class Session {
 	 *
 	 * @return void
 	 */
-	public function Start($options = []) {
-		if ($this->isExtensionLoaded()) {
+	public function Start($options = []) 
+	{
+		if ($this->isExtensionLoaded()) 
+		{
 			session_start ($options);
 		}
 	}
@@ -25,8 +29,10 @@ class Session {
 	 *
 	 * @return boolean
 	 */
-	public function isExtensionLoaded() {
-		if (!extension_loaded('session')) {
+	public function isExtensionLoaded() 
+	{
+		if (!extension_loaded('session')) 
+		{
 			return false;
 		}
 
@@ -38,7 +44,8 @@ class Session {
 	 *
 	 * @return String
 	 */
-	public function getStatus() {
+	public function getStatus() 
+	{
 		$status = session_status();
 
 		return $status;
@@ -49,7 +56,8 @@ class Session {
 	 *
 	 * @return String
 	 */
-	public function getId() {
+	public function getId() 
+	{
 		$sessionId = session_id();
 
 		return $sessionId;
@@ -60,16 +68,20 @@ class Session {
 	 *
 	 * @return boolean
 	 */
-	public function hasId() {
-		if ($this->getSessionId() == '') {
+	public function hasId() 
+	{
+		if ($this->getSessionId() == '') 
+		{
 			return false;
 		}
 
 		return true;
 	}
 
-	public function isOneExists() {
-		if ($this->getStatus() == PHP_SESSION_ACTIVE) {
+	public function isOneExists() 
+	{
+		if ($this->getStatus() == PHP_SESSION_ACTIVE) 
+		{
 			return false;
 		}
 
@@ -82,7 +94,8 @@ class Session {
 	 * @return boolean
 	 */
 	public function isExists() :bool {
-		if ($this->getStatus() == PHP_SESSION_NONE) {
+		if ($this->getStatus() == PHP_SESSION_NONE) 
+		{
 			return false;
 		}
 
@@ -94,8 +107,10 @@ class Session {
 	 *
 	 * @return boolean
 	 */
-	public function isDisabled() :bool {
-		if ($this->getStatus() == PHP_SESSION_DISABLED) {
+	public function isDisabled() :bool 
+	{
+		if ($this->getStatus() == PHP_SESSION_DISABLED) 
+		{
 			return false;
 		}
 
@@ -107,8 +122,10 @@ class Session {
 	 *
 	 * @return void
 	 */
-	public function isStated() {
-		if (!$this->isExists() && empty($_SESSION)) {
+	public function isStated() 
+	{
+		if (!$this->isExists() && empty($_SESSION)) 
+		{
 			return false;
 		}
 
@@ -120,7 +137,8 @@ class Session {
 	 *
 	 * @return void
 	 */
-	public function getSavePath() {
+	public function getSavePath() 
+	{
 		return session_save_path();
 	}
 
@@ -131,15 +149,18 @@ class Session {
 	 *
 	 * @return void
 	 */
-	public function setSavePath($path = '') {
+	public function setSavePath($path = '') 
+	{
 		return session_save_path($path);
 	}
 
-	public function Commit() {
+	public function Commit() 
+	{
 		session_commit();
 	}
 
-	public function regenerateId($use = true) {
+	public function regenerateId($use = true) 
+	{
 		session_regenerate_id($use);
 	}
 
@@ -148,8 +169,10 @@ class Session {
 	 *
 	 * @return boolean
 	 */
-	public function useCookies() {
-		if (ini_get('session.use_cookies')) {
+	public function useCookies() 
+	{
+		if (ini_get('session.use_cookies')) 
+		{
 			return true;
 		}
 
@@ -161,7 +184,8 @@ class Session {
 	 *
 	 * @return void
 	 */
-	public function Destroy() {
+	public function Destroy() 
+	{
 		$_SESSION = [];
 		session_destroy();
 	}
@@ -176,22 +200,31 @@ class Session {
 	 *
 	 * @return Boolean
 	 */
-	public function Set($key, $value, $overwrite = true, $valid = false) :bool {
-		$setSessionVar = function ($key, $value) {
+	public function Set($key, $value, $overwrite = true, $valid = false) :bool 
+	{
+		$setSessionVar = function ($key, $value) 
+		{
 			$_SESSION[$key] = $value;
 		};
 
-		if (isset($_SESSION[$key])) {
-			if ($overwrite === true) {
+		if (isset($_SESSION[$key])) 
+		{
+			if ($overwrite === true) 
+			{
 				$setSessionVar($key, $value);
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
-		} else {
+		} 
+		else 
+		{
 			$setSessionVar($key, $value);
 		}
 
-		if ($valid === true && $_SESSION[$key] !== $value) {
+		if ($valid === true && $_SESSION[$key] !== $value) 
+		{
 			return false;
 		}
 
@@ -203,7 +236,8 @@ class Session {
 	 *
 	 * @return void
 	 */
-	public function Get($key) {
+	public function Get($key) 
+	{
 		return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
 	}
 
@@ -212,7 +246,8 @@ class Session {
 	 *
 	 * @return boolean
 	 */
-	public function Unset() :bool {
+	public function Unset() :bool 
+	{
 		return session_unset();
 	}
 	
