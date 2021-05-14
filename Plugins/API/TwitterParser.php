@@ -45,6 +45,7 @@ class TwitterParser {
       ->disableCache(true);
 
     $result = $cURL->Execute();
+    return json_decode($result)->data->user->result;
   }
   
 }
