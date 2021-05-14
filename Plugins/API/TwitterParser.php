@@ -20,8 +20,7 @@ class TwitterParser {
       ->setHeaders($headers)
       ->setReturnTransfer(true)
       ->setAutoReferer(true)
-      ->setReturnHeader(false)
-      ->disableCache(true);
+      ->setReturnHeader(false);
 
       $result = $cURL->Execute();
       $guestToken = json_decode($result)->guest_token;
@@ -41,8 +40,7 @@ class TwitterParser {
       ->setHeaders($headers)
       ->setReturnTransfer(true)
       ->setAutoReferer(true)
-      ->setReturnHeader(false)
-      ->disableCache(true);
+      ->setReturnHeader(false);
 
     $result = $cURL->Execute();
     return json_decode($result)->data->user->result;
