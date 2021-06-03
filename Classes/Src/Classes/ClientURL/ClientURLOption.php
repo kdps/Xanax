@@ -69,7 +69,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 		return $this->returnContext();
 	}
-
+	
 	/**
 	 * Size of POST data pointed to
 	 *
@@ -314,7 +314,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 	}
 
 	/**
-	 * Request an HTTP POST
+	 * Request an HTTP POST Method
 	 *
 	 * @return void
 	 */
@@ -324,6 +324,18 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->returnContext();
 	}
 
+	/**
+	 * Request an HTTP GET Method
+	 *
+	 * @return void
+	 */
+	public function setGetMethod(bool $bool = true) {
+		$this->setPostMethod(!$bool);
+		
+		return$this->returnContext();
+	}
+	
+	
 	public function setReturnTransfer(bool $hasResponse = true) {
 		curl_setopt(self::$session, CURLOPT_RETURNTRANSFER, $hasResponse);
 
