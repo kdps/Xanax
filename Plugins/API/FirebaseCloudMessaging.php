@@ -11,6 +11,11 @@ class FirebaseCloudMessaging {
 	private $Identify = 0;
 	private $RegistrationIds = [];
 	private $ResultData = [];
+	private $RequestUrl = "";
+	
+	public function __construct() {
+		$this->RequestUrl = "https://fcm.googleapis.com/fcm/send";
+	}
 	
 	public function setServerApiKey($key) {
 		$this->ServerApiKey = $key;
@@ -78,7 +83,7 @@ class FirebaseCloudMessaging {
 		);
 
 		$cURL = new ClientURL();
-		$cURL->Option->setURL('https://fcm.googleapis.com/fcm/send')
+		$cURL->Option->setURL($this->RequestUrl)
 					 ->setPostMethod(true)
 					 ->setHeaders($headers)
 					 ->setReturnTransfer(true)
