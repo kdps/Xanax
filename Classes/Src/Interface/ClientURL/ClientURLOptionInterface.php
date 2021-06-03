@@ -66,6 +66,8 @@ interface ClientURLOptionInterface {
 	
 	public function setPostMethod(bool $bool = true);
 	
+	public function setGetMethod(bool $bool = true);
+	
 	public function setReturnTransfer(bool $hasResponse = true);
 	
 	public function setReturnHeader(bool $hasResponse = true);
