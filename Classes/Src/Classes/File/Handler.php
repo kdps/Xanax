@@ -38,6 +38,17 @@ use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
 use Xanax\Message\Functions\FunctionMessage as FunctionMessage;
 
+use function clearstatcache;
+use function fileatime;
+use function filetype;
+use function getType;
+use function sha1_file;
+use function parse_ini_file;
+use function strrchr;
+use function ob_get_clean;
+use function ob_flush;
+use function rename;
+
 class Handler implements FileHandlerInterface 
 {
 	protected $useStatFunction = [
