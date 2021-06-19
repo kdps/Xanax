@@ -2,7 +2,7 @@
 
 namespace Xanax/Trait/Regex;
 
-trait Error {
+trait RegexError {
 	
 	public function getErrorConstant() {
 		return preg_last_error_constant();
