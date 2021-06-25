@@ -1,5 +1,7 @@
 <?php
 
+namespace Xanax\Implement;
+
 interface ImageHandlerInterface {
 	
 	public function isAnimated($filename);
