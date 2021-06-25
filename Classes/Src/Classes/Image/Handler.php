@@ -416,7 +416,7 @@ class Handler implements ImageHandlerInterface
 		$format = "unknown";
 
 		if ($this->isResource($filePath)) {
-			$format = mime_content_type($filePath);
+			$format = getimagesizefromstring($filePath);
 		} else {
             $finfo = getimagesize($filePath);
             if ($finfo === false) {
@@ -437,8 +437,8 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function Create ( $imageResource, $outputPath, $quality = 100 ) {
-		$format = $this->getType( $imageResource );
+	public function Create ($filePath, $imageResource, $outputPath, $quality = 100 ) {
+		$format = $this->getType( $filePath );
 
 		switch ($format) {
 			case 'image/jpeg':
@@ -619,7 +619,7 @@ class Handler implements ImageHandlerInterface
 				default:
 					return false;
 			}
-		} catch(Exception $e) { }
+		} catch(\Exception $e) { }
 
 		return $createObject;
 	}
