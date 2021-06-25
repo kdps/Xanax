@@ -178,7 +178,7 @@ class Handler implements ImageHandlerInterface
 		return $trueColorImage;
 	}
 
-	public function centerCrop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0)
+	public function centerCrop ($imageResource, $resizeWidth, $resizeHeight)
 	{
 		if ( !$this->isResource($imageResource) )
 		{
@@ -188,11 +188,23 @@ class Handler implements ImageHandlerInterface
 		$sourceWidth = $this->getWidth($imageResource);
 		$sourceHeight = $this->getHeight($imageResource);
 
+		$centreX = round($sourceWidth / 2);
+		$centreY = round($sourceHeight / 2);
+
+		$cropWidthHalf  = round($resizeWidth / 2);
+		$cropHeightHalf = round($resizeHeight / 2);
+
+		$x1 = max(0, $centreX - $cropWidthHalf);
+		$y1 = max(0, $centreY - $cropHeightHalf);
+
+		$x2 = min($sourceWidth, $centreX + $cropWidthHalf);
+		$y2 = min($sourceHeight, $centreY + $cropHeightHalf);
+
 		$trueColorImage = $this->createTrueColorImage($resizeWidth, $resizeHeight);
 		$this->setAlphaBlendMode($trueColorImage);
 		$this->saveAlphaChannel($trueColorImage, false);
 
-		$this->Resample($trueColorImage, $imageResource, 0, 0, $sourceX, $sourceY, $resizeWidth, $resizeHeight, $resizeWidth - $sourceX, $resizeHeight - $sourceY);
+		$this->Resample($trueColorImage, $imageResource, 0,0,(int)$x1,(int)$y1, $resizeWidth, $resizeHeight, $resizeWidth, $resizeHeight);
 
 		return $trueColorImage;
 	}
