@@ -609,8 +609,24 @@ class Handler implements ImageHandlerInterface
 		return $this->getInstance($image);
 	}
 	
-	public function Resize ( $sourceImageCreate ) {
+	public function Resize ( $sourceImageCreate, $resizeWidth, $resizeHeight ) {
+		if ( !$this->isResource($imageResource) ) 
+		{
+			$imageResource = $this->getInstance( $imageResource );
+		}
+
+		$outputImage = imagecreatetruecolor($resizeWidth, $resizeHeight);
 		
+		$width = $this->getWidth($imageResource);
+		$height = $this->getHeight($imageResource);
+		
+		//make image alpha
+		imageAlphaBlending($outputImage, false);
+		imageSaveAlpha($outputImage, false);
+
+		imagecopyresampled($outputImage, $imageResource, 0, 0, 0, 0, $resizeWidth, $resizeHeight, $width, $height);
+		
+		return $outputImage;
 	}
 	
 	/**
