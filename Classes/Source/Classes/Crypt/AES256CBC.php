@@ -9,7 +9,7 @@ class AES256CBC {
 
 	public function Encrypt($string, $key) {
 		if (mb_strlen($key, '8bit') !== 32) {
-			throw new Exception('Needs a 256-bit key!');
+			throw new \Exception('Needs a 256-bit key!');
 		}
 
 		$ivsize = openssl_cipher_iv_length(self::METHOD);
@@ -30,7 +30,7 @@ class AES256CBC {
 		$string = base64_decode($string);
 
 		if (mb_strlen($key, '8bit') !== 32) {
-			throw new Exception('Needs a 256-bit key!');
+			throw new \Exception('Needs a 256-bit key!');
 		}
 
 		$ivsize     = openssl_cipher_iv_length(self::METHOD);

@@ -7,7 +7,7 @@ namespace Xanax\Classes;
 use Xanax\Implement\ClientURLOptionInterface;
 
 class ClientURLOption implements ClientURLOptionInterface {
-	
+
 	private static $session;
 
 	private static $headerArrayData = [];
@@ -69,7 +69,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 		return $this->returnContext();
 	}
-	
+
 	/**
 	 * Size of POST data pointed to
 	 *
@@ -283,6 +283,10 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->setHeader('Content-Type', $mimeType);
 	}
 
+	public function setAcceptContentType($contentType) {
+		return $this->setHeader('Accept', $contentType);
+	}
+
 	public function setXmlContentType() {
 		return $this->setAcceptContentType('xml');
 	}
@@ -331,11 +335,11 @@ class ClientURLOption implements ClientURLOptionInterface {
 	 */
 	public function setGetMethod(bool $bool = true) {
 		$this->setPostMethod(!$bool);
-		
+
 		return$this->returnContext();
 	}
-	
-	
+
+
 	public function setReturnTransfer(bool $hasResponse = true) {
 		curl_setopt(self::$session, CURLOPT_RETURNTRANSFER, $hasResponse);
 
@@ -352,5 +356,5 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 		return $this->returnContext();
 	}
-	
+
 }
