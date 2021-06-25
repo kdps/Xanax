@@ -181,7 +181,7 @@ class Handler implements ImageHandlerInterface
 	
 	public function Resample ($destinationImage, $imageResource, $destinationX = 0, $destinationY = 0, $sourceX = 0, $sourceY = 0, $destinationWidth = 0, $destinationHeight = 0, $sourceWidth = 0, $sourceHeight = 0) 
 	{
-		imagecopyresampled ($destinationImage, $imageResource, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight ) 
+		imagecopyresampled ($destinationImage, $imageResource, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight ); 
 	}
 	
 	public function saveAlphaChannel($imageResource, $saveFlag = false) 
