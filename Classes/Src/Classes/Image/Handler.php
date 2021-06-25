@@ -368,7 +368,7 @@ class Handler implements ImageHandlerInterface
 	{
 		if (function_exists('exif_read_data')) 
 		{
-			return exif_read_data($filePath, 0, true);
+			return exif_read_data($filePath); //, 0, true
 		}
 		
 		return new stdClass();
@@ -477,7 +477,7 @@ class Handler implements ImageHandlerInterface
 		}
 	
 		if (function_exists('exif_read_data')) {
-			$exifData = exif_read_data($imageResource, 0, true);
+			$exifData = exif_read_data($imageResource); //, 0, true
 			
 			if (isset($exifData['COMPUTED'])) {
 				$tmp = $exifData['COMPUTED'];
@@ -501,7 +501,7 @@ class Handler implements ImageHandlerInterface
 		}
 		
 		if (function_exists('exif_read_data')) {
-			$exif = exif_read_data($imageResource, 0, true);
+			$exif = exif_read_data($imageResource); //, 0, true
 			
 			if (isset($exif['COMPUTED'])) {
 				$tmp = $exif['COMPUTED'];
