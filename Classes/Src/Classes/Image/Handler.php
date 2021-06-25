@@ -6,17 +6,17 @@ namespace Xanax\Classes\Image;
 
 use Xanax\Implement\ImageHandlerInterface;
 
-class Handler implements ImageHandlerInterface 
+class Handler implements ImageHandlerInterface
 {
-	
+
 	//http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
-	public function isAnimated ($filename) 
+	public function isAnimated ($filename)
 	{
-		if (!($fh = @fopen($filename, 'rb'))) 
+		if (!($fh = @fopen($filename, 'rb')))
 		{
 			return false;
 		}
-		
+
 		$count = 0;
 		// an animated gif contains multiple "frames", with each frame having a
 		// header made up of:
@@ -26,7 +26,7 @@ class Handler implements ImageHandlerInterface
 
 		// We read through the file til we reach the end of the file, or we've found
 		// at least 2 frame headers
-		while (!feof($fh) && $count < 2) 
+		while (!feof($fh) && $count < 2)
 		{
 			$chunk = fread($fh, 1024 * 100); //read 100kb at a time
 			$count += preg_match_all(
@@ -39,7 +39,7 @@ class Handler implements ImageHandlerInterface
 		fclose($fh);
 		return $count > 1;
 	}
-	
+
 	/**
 	 * Draw picture to pallete
 	 *
@@ -49,22 +49,22 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * return Resource
 	 */
-	public function drawRepeat ($imageResource, $width, $height) 
+	public function drawRepeat ($imageResource, $width, $height)
 	{
-		if ( !$this->isResource($imageResource) ) 
+		if ( !$this->isResource($imageResource) )
 		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		$width = $width || $this->getWidth($imageResource);
 		$height = $height || $this->getHeight($imageResource);
-		
+
 		imagesettile($imageResource, $image);
 		imagefilledrectangle($imageResource, 0, 0, $width, $height, IMG_COLOR_TILED);
-	
+
 		return $imageResource;
 	}
-	
+
 	/**
 	 * Draw eclipse to image resource
 	 *
@@ -79,37 +79,37 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue) 
+	public function drawEclipse ($imageResource, $width, $height, $x, $y, $red, $green, $blue)
 	{
-		if ( !$this->isResource($imageResource) ) 
+		if ( !$this->isResource($imageResource) )
 		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		$backgroundColor = imagecolorallocate($imageResource, $red, $green, $blue);
 		$outputImage = imagefilledellipse($imageResource, $x, $y, $width, $height, $backgroundColor);
 		return $outputImage;
 	}
-	
-	public function Combine ( $paletteImage, $combineImage, $right = 0, $top = 0) 
+
+	public function Combine ( $paletteImage, $combineImage, $right = 0, $top = 0)
 	{
-		if ( !$this->isResource($paletteImage) ) 
+		if ( !$this->isResource($paletteImage) )
 		{
 			$paletteImage = $this->getInstance( $paletteImage );
 		}
-		
-		if ( !$this->isResource($combineImage) ) 
+
+		if ( !$this->isResource($combineImage) )
 		{
 			$combineImage = $this->getInstance( $combineImage );
 		}
-		
+
 		$x = imagesx($paletteImage) - imagesx($combineImage) - $right;
 		$y = imagesy($paletteImage) - imagesy($combineImage) - $top;
 		imagecopy($paletteImage, $combineImage, $x, $y, 0, 0, imagesx($combineImage), imagesy($combineImage));
 
 		return $paletteImage;
 	}
-	
+
 	/**
 	 * Ratio resize to specific size
 	 *
@@ -119,40 +119,40 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight) 
+	public function ratioResize ($imageResource, $resizeWidth, $resizeHeight)
 	{
-		if ( !$this->isResource($imageResource) ) 
+		if ( !$this->isResource($imageResource) )
 		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		list($origin_width, $origin_height) = getimagesize($src);
 		$ratio = $origin_width / $origin_height;
 		$resizeWidth = $resizeHeight = min($resizeWidth, max($origin_width, $origin_height));
-		
-		if ($ratio < 1) 
+
+		if ($ratio < 1)
 		{
 			$resizeWidth = $thumbnail_height * $ratio;
-		} 
-		else 
+		}
+		else
 		{
 			$resizeHeight = $thumbnail_width / $ratio;
 		}
-		
+
 		$outputImage = imagecreatetruecolor($resizeWidth, $resizeHeight);
-		
+
 		$width = $this->getWidth($imageResource);
 		$height = $this->getHeight($imageResource);
-		
+
 		//make image alpha
 		imageAlphaBlending($outputImage, false);
 		imageSaveAlpha($outputImage, false);
 
 		imagecopyresampled($outputImage, $imageResource, 0, 0, 0, 0, $resizeWidth, $resizeHeight, $width, $height);
-		
+
 		return $outputImage;
 	}
-	
+
 	/**
 	 * Crop Image
 	 *
@@ -162,39 +162,57 @@ class Handler implements ImageHandlerInterface
 	 * @param int      $left
 	 * @param int      $top
 	 */
-	public function Crop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0) 
+	public function Crop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0)
 	{
-		if ( !$this->isResource($imageResource) ) 
+		if ( !$this->isResource($imageResource) )
 		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
-		$sourceWidth = $this->getWidth($imageResource);
-		$sourceHeight = $this->getHeight($imageResource);
-		
-		$trueColorImage = $this->createTrueColorImage($width, $height);
+
+		$trueColorImage = $this->createTrueColorImage($resizeWidth, $resizeHeight);
 		$this->setAlphaBlendMode($trueColorImage);
 		$this->saveAlphaChannel($trueColorImage, false);
-		
-		$this->Resample($imageResource, $trueColorImage, 0, 0, $sourceWidth, $sourceY, $resizeWidth, $resizeHeight, $sourceWidth, $sourceHeight);
+
+		$this->Resample($trueColorImage, $imageResource, 0, 0, $sourceX, $sourceY, $resizeWidth, $resizeHeight, $resizeWidth - $sourceX, $resizeHeight - $sourceY);
+
+		return $trueColorImage;
 	}
-	
-	public function Resample ($destinationImage, $imageResource, $destinationX = 0, $destinationY = 0, $sourceX = 0, $sourceY = 0, $destinationWidth = 0, $destinationHeight = 0, $sourceWidth = 0, $sourceHeight = 0) 
+
+	public function centerCrop ($imageResource, $resizeWidth, $resizeHeight, $sourceX = 0, $sourceY = 0)
 	{
-		imagecopyresampled ($destinationImage, $imageResource, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight ); 
+		if ( !$this->isResource($imageResource) )
+		{
+			$imageResource = $this->getInstance( $imageResource );
+		}
+
+		$sourceWidth = $this->getWidth($imageResource);
+		$sourceHeight = $this->getHeight($imageResource);
+
+		$trueColorImage = $this->createTrueColorImage($resizeWidth, $resizeHeight);
+		$this->setAlphaBlendMode($trueColorImage);
+		$this->saveAlphaChannel($trueColorImage, false);
+
+		$this->Resample($trueColorImage, $imageResource, 0, 0, $sourceX, $sourceY, $resizeWidth, $resizeHeight, $resizeWidth - $sourceX, $resizeHeight - $sourceY);
+
+		return $trueColorImage;
 	}
-	
-	public function saveAlphaChannel($imageResource, $saveFlag = false) 
+
+	public function Resample ($destinationImage, $imageResource, $destinationX = 0, $destinationY = 0, $sourceX = 0, $sourceY = 0, $destinationWidth = 0, $destinationHeight = 0, $sourceWidth = 0, $sourceHeight = 0)
+	{
+		imagecopyresampled ($destinationImage, $imageResource, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight );
+	}
+
+	public function saveAlphaChannel($imageResource, $saveFlag = false)
 	{
 		imageSaveAlpha($imageResource, $saveFlag);
 	}
-	
-	public function createTrueColorImage ($width, $height) 
+
+	public function createTrueColorImage ($width, $height)
 	{
 		return imagecreatetruecolor($width, $height);
 	}
 
-	public function setAlphaBlendMode ($imageResource, $useBlendMode = true) 
+	public function setAlphaBlendMode ($imageResource, $useBlendMode = true)
 	{
 		imagealphablending($imageResource, $useBlendMode);
 	}
@@ -210,13 +228,13 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return output stream
 	 */
-	
+
 	// TODO get a args by array data
-	public function Filter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '') 
+	public function Filter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '')
 	{
-		
+
 		$type = strtolower($type);
-		
+
 		if ($type=='reverse') {
 			imagefilter($imageResource, IMG_FILTER_NEGATE);
 		} else if ($type=='gray') {
@@ -247,10 +265,10 @@ class Handler implements ImageHandlerInterface
 			//arg1, arg2 & arg3 = red, blue, green / arg4 = alpha channel
 			imagefilter($imageResource, IMG_FILTER_COLORIZE, $args1, $args2, $args3);
 		}
-		
+
 		return $imageResource;
 	}
-	
+
 	/**
 	 * Draw a picture to output
 	 *
@@ -258,10 +276,10 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return output stream
 	 */
-	public function Draw ( $imageResource ) 
+	public function Draw ( $imageResource )
 	{
 		$format = $this->getType( $imageResource );
-		
+
 		switch($format) {
 			case 'image/jpeg':
 				header("Content-Type: image/jpeg");
@@ -303,8 +321,8 @@ class Handler implements ImageHandlerInterface
 				break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Pick a color of specific position
 	 *
@@ -314,22 +332,22 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return array($alpha, $r, $g, $b)
 	 */
-	public function pickColor ( $imageResource, $x, $y ) :array 
+	public function pickColor ( $imageResource, $x, $y ) :array
 	{
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		//  0xAARRGGBB => 00000001(alpha) 00000010(red) 00000011(green) 00000100(blue)
 		$rgb = imagecolorat($imageResource, $x, $y);
 		$alpha = ($rgb >> 24) & 0xFF;
 		$r = ($rgb >> 16) & 0xFF;
 		$g = ($rgb >> 8) & 0xFF;
 		$b = $rgb & 0xFF;
-		
+
 		return array($alpha, $r, $g, $b);
 	}
-		
+
 	/**
 	 * Draw text to image resource
 	 *
@@ -344,19 +362,19 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue ) 
+	public function drawText ( $imageResource, $fontSize, $x, $y, $text, $red, $green, $blue )
 	{
-		if ( !$this->isResource($imageResource) ) 
+		if ( !$this->isResource($imageResource) )
 		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		$textcolor = imagecolorallocate($imageResource, $red, $green, $blue);
 		imagestring($imageResource, $fontSize, $x, $y, $text, $textcolor);
-		
+
 		return $imageResource;
 	}
-	
+
 	/**
 	 * Get a exif data of image file
 	 *
@@ -364,16 +382,16 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	public function getExifData ( $filePath ) 
+	public function getExifData ( $filePath )
 	{
-		if (function_exists('exif_read_data')) 
+		if (function_exists('exif_read_data'))
 		{
-			return exif_read_data($filePath); //, 0, true
+			return exif_read_data($filePath, 0, true);
 		}
-		
-		return new stdClass();
+
+		return new \stdClass();
 	}
-	
+
 	/**
 	 * Get type of image file
 	 *
@@ -381,18 +399,23 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	public function getType ( $filePath ) 
+	public function getType ( $filePath )
 	{
-		$finfo = getimagesize($filePath);
-		if ($finfo === false) 
-		{
-			return false;
-		}
-		
-		$format = $finfo['mime'];
+		$format = "unknown";
+
+		if ($this->isResource($filePath)) {
+			$format = mime_content_type($filePath);
+		} else {
+            $finfo = getimagesize($filePath);
+            if ($finfo === false) {
+                return false;
+            }
+
+            $format = $finfo['mime'];
+        }
 		return $format;
 	}
-	
+
 	/**
 	 * Create a image to path
 	 *
@@ -404,7 +427,7 @@ class Handler implements ImageHandlerInterface
 	 */
 	public function Create ( $imageResource, $outputPath, $quality = 100 ) {
 		$format = $this->getType( $imageResource );
-		
+
 		switch ($format) {
 			case 'image/jpeg':
 				imagejpeg($imageResource, $outputPath, $quality);
@@ -433,10 +456,10 @@ class Handler implements ImageHandlerInterface
 			default:
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Flip a image resource
 	 *
@@ -448,7 +471,7 @@ class Handler implements ImageHandlerInterface
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		switch($type) {
 			case 'vertical':
 				imageflip($imageResource, IMG_FLIP_VERTICAL);
@@ -460,10 +483,10 @@ class Handler implements ImageHandlerInterface
 				imageflip($imageResource, IMG_FLIP_BOTH);
 				break;
 		}
-		
+
 		return $imageResource;
 	}
-	
+
 	/**
 	 * Get width of image resource
 	 *
@@ -475,10 +498,10 @@ class Handler implements ImageHandlerInterface
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
-	
-		if (function_exists('exif_read_data')) {
-			$exifData = exif_read_data($imageResource); //, 0, true
-			
+
+		if (function_exists('exif_read_data') && false) {
+			$exifData = exif_read_data($imageResource, '', true, false);
+
 			if (isset($exifData['COMPUTED'])) {
 				$tmp = $exifData['COMPUTED'];
 				return $tmp['Width'];
@@ -487,7 +510,7 @@ class Handler implements ImageHandlerInterface
 			return imagesx($imageResource);
 		}
 	}
-	
+
 	/**
 	 * Get height of image resource
 	 *
@@ -499,10 +522,10 @@ class Handler implements ImageHandlerInterface
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
-		if (function_exists('exif_read_data')) {
-			$exif = exif_read_data($imageResource); //, 0, true
-			
+
+		if (function_exists('exif_read_data') && false) {
+			$exif = exif_read_data($imageResource, null, true, false);
+
 			if (isset($exif['COMPUTED'])) {
 				$tmp = $exif['COMPUTED'];
 				return $tmp['Height'];
@@ -511,7 +534,7 @@ class Handler implements ImageHandlerInterface
 			return imagesy($imageResource);
 		}
 	}
-	
+
 	/**
 	 * Check that resource is valid
 	 *
@@ -523,10 +546,10 @@ class Handler implements ImageHandlerInterface
 		if ( gettype($imageResource) === 'resource') {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Rotate a image resource
 	 *
@@ -539,9 +562,9 @@ class Handler implements ImageHandlerInterface
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
-		
+
 		$image = imagerotate($imageResource, $degrees, 0);
-		
+
 		return $this->getInstance($image);
 	}
 
@@ -555,7 +578,7 @@ class Handler implements ImageHandlerInterface
 	public function getimageResource ( $filePath ) {
 		$format = $this->getType( $filePath );
 		$createObject = null;
-		
+
 		try {
 			switch ($format) {
 				case 'image/jpeg':
@@ -585,10 +608,10 @@ class Handler implements ImageHandlerInterface
 					return false;
 			}
 		} catch(Exception $e) { }
-		
+
 		return $createObject;
 	}
-	
+
 	/**
 	 * Get a resource of blank image
 	 *
@@ -605,30 +628,30 @@ class Handler implements ImageHandlerInterface
 		$background_color = imagecolorallocate($image, $red, $green, $blue);
 		imagefilledrectangle($image,0,0,$width,$height,$background_color);
 		imagecolortransparent($image, $background_color);
-		
+
 		return $this->getInstance($image);
 	}
-	
-	public function Resize ( $sourceImageCreate, $resizeWidth, $resizeHeight ) {
-		if ( !$this->isResource($imageResource) ) 
+
+	public function Resize ( $imageResource, $resizeWidth, $resizeHeight ) {
+		if ( !$this->isResource($imageResource) )
 		{
 			$imageResource = $this->getInstance( $imageResource );
 		}
 
-		$outputImage = imagecreatetruecolor($resizeWidth, $resizeHeight);
-		
+		$outputImage = $this->createTrueColorImage($resizeWidth, $resizeHeight);
+
 		$width = $this->getWidth($imageResource);
 		$height = $this->getHeight($imageResource);
-		
+
 		//make image alpha
 		imageAlphaBlending($outputImage, false);
 		imageSaveAlpha($outputImage, false);
 
 		imagecopyresampled($outputImage, $imageResource, 0, 0, 0, 0, $resizeWidth, $resizeHeight, $width, $height);
-		
+
 		return $outputImage;
 	}
-	
+
 	/**
 	 * Merge of two image to palette
 	 *
@@ -642,14 +665,14 @@ class Handler implements ImageHandlerInterface
 		if ( !$this->isResource($sourceCreateObject) ) {
 			$sourceCreateObject = $this->getInstance( $sourceCreateObject );
 		}
-		
+
 		if ( !$this->isResource($mergeCreateObject) ) {
 			$mergeCreateObject = $this->getInstance( $mergeCreateObject );
 		}
-		
+
 		return imagecopymerge($mergeCreateObject, $sourceCreateObject, 0, 0, 0, 0, imagesx($sourceCreateObject), imagesy($sourceCreateObject), $transparent);
 	}
-	
+
 	/**
 	 * Get a singletone of image file
 	 *
@@ -664,14 +687,14 @@ class Handler implements ImageHandlerInterface
 			$finfo = getImageSize($filePath);
 			if ($finfo === false) {
 				return false;
-			} 
-			
+			}
+
 			return $filePath;
 		}
-		
-		return new stdClass();
+
+		return new \stdClass();
 	}
-	
+
 	/**
 	 * Convert hex to rgb
 	 *
@@ -681,12 +704,12 @@ class Handler implements ImageHandlerInterface
 	 */
 	public function hexToRgb ($hex) {
 		$rgb = substr($hex, 2, strlen($hex)-1);
-		
+
 		$r = hexdec(substr($rgb,0,2));
 		$g = hexdec(substr($rgb,2,2));
 		$b = hexdec(substr($rgb,4,2));
-		
+
 		return array($r, $g, $b);
 	}
-	
+
 }
