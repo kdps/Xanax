@@ -322,7 +322,7 @@ class Handler implements ImageHandlerInterface
 		
 		//  0xAARRGGBB => 00000001(alpha) 00000010(red) 00000011(green) 00000100(blue)
 		$rgb = imagecolorat($imageResource, $x, $y);
-		$alpha = ($rgb >>> 24) & 0xFF;
+		$alpha = ($rgb >> 24) & 0xFF;
 		$r = ($rgb >> 16) & 0xFF;
 		$g = ($rgb >> 8) & 0xFF;
 		$b = $rgb & 0xFF;
