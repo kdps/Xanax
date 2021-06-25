@@ -1,5 +1,6 @@
 {
   "name": "kdps/xanax",
+  "version": "0.0.1",
   "type": "project",
   "description": "PHP Framework or Libraries",
   "keywords": ["php framework", "php library"],
@@ -7,10 +8,27 @@
   "require": {
     "php": ">=7.2.5",
     "phpmailer/phpmailer": "^6.1",
+    "phpunit/phpunit": "^5.5",
     "ezyang/htmlpurifier": ">=4.10.0"
   },
+  "authors": [
+      {
+          "name": "kdps",
+          "email": "kdp7584@gmail.com",
+          "role": "Developer"
+      }
+  ],
+  "support": {
+      "issues": "https://github.com/kdps/Xanax/issues",
+      "source": "https://github.com/kdps/Xanax"
+  },
   "autoload": {
-    "psr-4": {"Xanax\\": "Classes/Src/", "Xanax\\": "Plugins/"},
+    "psr-4": {
+      "Xanax\\": "Classes/Src/",
+      "Xanax\\": "Plugins/"
+    },
+    "files": [
+    ],
     "classmap": [
       ""
     ]
@@ -24,5 +42,6 @@
     "psr-4": {
       "Tests\\": "tests/"
     }
-  }
+  },
+  "minimum-stability": "stable"
 }
