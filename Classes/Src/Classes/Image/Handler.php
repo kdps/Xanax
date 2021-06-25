@@ -186,7 +186,7 @@ class Handler implements ImageHandlerInterface
 	
 	public function saveAlphaChannel($imageResource, $saveFlag = false) 
 	{
-		imageSaveAlpha($imageResource, $saveFlag)
+		imageSaveAlpha($imageResource, $saveFlag);
 	}
 	
 	public function createTrueColorImage ($width, $height) 
