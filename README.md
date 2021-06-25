@@ -18,6 +18,10 @@ Webpack
 1. Install Nodejs (https://nodejs.org/)
 1. Go to Frontend/coreJS Folder
 
+Docker
+
+1. Type "docker-compose up --build"
+
 Compatible
 ------------
 
