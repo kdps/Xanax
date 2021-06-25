@@ -520,7 +520,7 @@ class Handler implements ImageHandlerInterface
 	 * @return boolean
 	 */
 	public function isResource ( $imageResource ) {
-		if ( gettype($createObject) === 'resource') {
+		if ( gettype($imageResource) === 'resource') {
 			return true;
 		}
 		
