@@ -837,6 +837,8 @@
 				
 				if (xhr === false) return;
 				
+				xhr.open(type, url, asynchronous);
+				
 				if (type == "POST") {
 					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
 					xhr.setRequestHeader("Content-length", parameter.length);
@@ -847,7 +849,6 @@
 					asynchronous = true;
 				}
 				
-				xhr.open(type, url, asynchronous);
 				xhr.send(parameter);
 				
 				let isOnloadSupportedBrowser = ($.core.Browser.isOpera() || $.core.Browser.isSafari() || $.core.Browser.isGecko());
