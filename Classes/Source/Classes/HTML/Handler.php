@@ -24,7 +24,7 @@ class Handler
 
 	public static function generateElement($type, $content, $attributes = [])
 	{
-		$html .= sprintf('%s%s', '<', $type);
+		$html = sprintf('%s%s', '<', $type);
 
 		if (empty($attributes)) {
 			$html .= '';
