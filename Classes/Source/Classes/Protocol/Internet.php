@@ -1,9 +1,9 @@
 <?php
 
-namespace Xanax/Classes/Protocol;
+namespace Xanax\Classes\Protocol;
 
 class Internet {
-  
+
 	public function isValid(string $internetProtocol, string $type = ''): bool {
 		switch (strtolower($type)) {
 			case 'ipv4':
@@ -19,5 +19,5 @@ class Internet {
 
 		return boolval(filter_var($internetProtocol, FILTER_VALIDATE_IP, $filter));
 	}
-	
+
 }

@@ -7,7 +7,7 @@ namespace Xanax\Classes\FileSystem;
 use Xanax\Implement\FileSystemInterface as FileSystemInterface;
 
 class Handler implements FileSystemInterface {
-	
+
 	public function __construct() {
 	}
 
@@ -17,14 +17,14 @@ class Handler implements FileSystemInterface {
 
 	public function getStatFromIndex($filePath, $index) {
 		$stat = $this->getStat($filePath);
-		
+
 		if (count($stat) >= $index) {
 			return $stat[$index];
 		}
-		
+
 		return false;
 	}
-	
+
 	public function getStat($filePath) :array {
 		$return = stat($filePath);
 
@@ -82,5 +82,5 @@ class Handler implements FileSystemInterface {
 	public function get512ByteAllocatedBlocks($filePath) {
 		return $this->getStatFromIndex($filePath, 12);
 	}
-	
+
 }

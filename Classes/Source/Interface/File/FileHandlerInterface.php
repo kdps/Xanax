@@ -3,7 +3,9 @@
 namespace Xanax\Implement;
 
 interface FileHandlerInterface {
-	
+
+	public function createTemporary() :mixed;
+
 	public function isFile(string $filePath, string $containDirectory = null) :bool;
 
 	public function isEmpty(string $filePath) :bool;
@@ -34,7 +36,7 @@ interface FileHandlerInterface {
 
 	public function getInode(string $filePath);
 
-	public function getLastModifiedTime(string $filePath) :string;
+	public function getLastModifiedTime(string $filePath): int|false;
 
 	public function getCreatedDate($filePath);
 
@@ -73,5 +75,5 @@ interface FileHandlerInterface {
 	public function requireOnce(string $filePath);
 
 	public function Move(string $source, string $destination) :bool;
-	
+
 }

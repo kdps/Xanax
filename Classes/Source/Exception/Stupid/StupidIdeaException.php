@@ -1,9 +1,9 @@
 <?php
 
-namespace Xanax/Exception;
+namespace Xanax\Exception;
 
 use Exception;
 
 class StupidIdeaException extends Exception {
-	
+
 }
