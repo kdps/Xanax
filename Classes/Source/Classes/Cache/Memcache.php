@@ -30,17 +30,17 @@ class Memcache
 		return class_exists('Memcached');
 	}
 
-	public static function addServer($host, $port)
+	public function addServer($host, $port)
 	{
 		$this->cache->addServer($host, $port);
 	}
 
-	public static function Truncate()
+	public function Truncate()
 	{
 		return $this->cache->flush();
 	}
 
-	public static function Set($key, $validTime, $buffer){
+	public function Set($key, $validTime, $buffer){
 		if ($this->type == "memcached") {
 			return $this->set($key, array(time(), $buffer), $validTime);
 		} else if($this->type == "memcache") {
@@ -48,11 +48,11 @@ class Memcache
 		}
 	}
 
-	public static function Delete($key){
+	public function Delete($key){
 		return $this->cache->delete($key);
 	}
 
-	public static function Get($key, $limit){
+	public function Get($key, $limit){
 		$cache = $this->cache->get($key);
 		if($limit > 0 && $limit > $cache[0]){
 			$this->Delete($key);
