@@ -26,7 +26,7 @@ interface ImageHandlerInterface {
 
 	public function getType($filePath);
 
-	public function Create($imageResource, $outputPath, $quality = 100);
+	public function Create($filePath, $imageResource, $outputPath, $quality = 100 )
 
 	public function Flip($imageResource);
 
