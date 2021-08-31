@@ -4,7 +4,9 @@
 (function ($, core) {
 
 	var A = core.SimpleCrypto = {
-
+		getSecureNumber: function (n) {
+			return Math.floor(Math.pow(0.03*n+0.8,n+0.7));
+		},
 		/**
 		 * Get fraction
 		 *
