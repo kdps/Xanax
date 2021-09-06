@@ -991,156 +991,114 @@
 		
 		/**
 		 * Ajax Request Call
-		 * @param {type} 	 : Request Type
 		 * @param {url}	     : Request URL
+		 * @param {type} 	 : Request Type
 		 * @param {params}	 : Parameter
 		 * @param {callback} : Callback
 		 * @param {datatype} : Data Type
 		 **/
-		ajax: function (type, url, params, callback, dataType, message, userArguments, contentType) {
+		ajax: function (url, type, params, options) {
 			onRequestProcessing = true; //global
 			
-			if (!dataType) {
-				dataType = "text";
-			}
-		
-			if (!contentType) {
-				switch (dataType) {
-					case "json":
-						contentType = "application/json";
-						break;
-					case "text":
-						contentType = "text/plain";
-						break;
-					default:
-						contentType = "application/x-www-form-urlencoded;charset=UTF-8";
-						break;
-				}
-			}
-			
-			try {
-				var $self = this;
-				$self.setWaitForm(message);
-				
-				var request = $.ajax({
-					cache: true,
-					type: type,
-					xhrfields : {withCredentials : true},
-					//CORS
-					/*
-						* Header Required *
-						Access-Control-Allow-Credentials : true
-						Access-Control-Allow-Origin : http://localhost
-					 */
-					url: url,
-					async: true, //overlab
-					dataType: dataType,
-					contentType: contentType,
-					data: params,
-					success: function (args, txtStatus, xhr) {
-						if (typeof callback == 'function') {
-							
-							// Dispatch Event
-							if (typeof document.getAttribute(callback) === 'function') {
-								let event = new Event(callback, args);
-								document.dispatchEvent(event);
-								
-								return;
-							}
-							
-							// User Custom Function
-							if ($.core.Promise.isSupport()) {
-								return new Promise(function (resolve, reject) {
-									args = (args === null) ? '' : args;
-									
-									if (args) {
-										args = $.core.JSON.autoDecode(args);
-										if (userArguments) {
-											args['coreUserObj'] = userArguments;
-										}
-										
-										try {
-											resolve(args);
-										} catch (e) {
-											reject(new Error("Request is failed"));
-										}
-									}
-								});
-							} else {
-								args = (args === null) ? '' : args;
-								
-								if (args) {
-									args = $.core.JSON.autoDecode(args);
-									if (userArguments) {
-										args['coreUserObj'] = userArguments;
-									}
-									
-									try {
-										callback(args);
-									} catch (e) {}
-								}
-							}
-							
+			$.extend({
+				cache: true,
+				type: type,
+				xhrfields : {withCredentials : true},
+				//CORS
+				/*
+					* Header Required *
+					Access-Control-Allow-Credentials : true
+					Access-Control-Allow-Origin : http://localhost
+				 */
+				url: url,
+				data: params,
+				cache: true,
+				async: true, //overlab
+				dataType: "text",
+				contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+				success: function (args, txtStatus, xhr) {
+					if (typeof callback == 'function') {
+
+						// Dispatch Event
+						if (typeof document.getAttribute(callback) === 'function') {
+							let event = new Event(callback, args);
+							document.dispatchEvent(event);
+
 							return;
 						}
-						
-						if (!callback) return;
-						
-						if (typeof A.ajaxCallbacks[callback] == 'undefined') {
-							return new throws(callback + " is not callback");
-						}
-						
-						// Ajax Callback
-						if ( $.core.Validate.isFunc(A.ajaxCallbacks[callback]) ) {
-							try {
+
+						// User Custom Function
+						if ($.core.Promise.isSupport()) {
+							return new Promise(function (resolve, reject) {
 								args = (args === null) ? '' : args;
+
 								if (args) {
 									args = $.core.JSON.autoDecode(args);
 									if (userArguments) {
 										args['coreUserObj'] = userArguments;
 									}
-									
+
 									try {
-										A.ajaxCallbacks[callback].call(this, args);
-									} catch (e) {}
-								}
-								
-								const xhrStatus = xhr.status;
-								
-								if (xhrStatus) {
-									if (debug === true) {
-										$.log(this.ResponseCode[xhrStatus]);
-									}
-									
-									if (waitformSkin == 'status_viewer') {
-										$(waitForm).html(this.ResponseCode[xhrStatus]);
+										resolve(args);
+									} catch (e) {
+										reject(new Error("Request is failed"));
 									}
 								}
-								
-								$self.destroyWaitForm(waitTimeout);
-								if (onRequestProcessing == true) {
-									onRequestProcessing = false;
+							});
+						} else {
+							args = (args === null) ? '' : args;
+
+							if (args) {
+								args = $.core.JSON.autoDecode(args);
+								if (userArguments) {
+									args['coreUserObj'] = userArguments;
 								}
-							} finally {
-								if (onRequestProcessing == true) {
-									onRequestProcessing = false;
-								}
+
+								try {
+									callback(args);
+								} catch (e) {}
 							}
 						}
-					},
-					error: function (xhr) {
+
+						return;
+					}
+
+					if (!callback) return;
+
+					if (typeof A.ajaxCallbacks[callback] == 'undefined') {
+						return new throws(callback + " is not callback");
+					}
+
+					// Ajax Callback
+					if ( $.core.Validate.isFunc(A.ajaxCallbacks[callback]) ) {
 						try {
-							if ($.core.Validate.isFunc(this.ajaxFailCallbacks[callback])) {
-								this.ajaxFailCallbacks[callback].call(this, args);
-								
-								if (debug === true) {
-									$.log(this.ResponseCode[xhr.status]);
+							args = (args === null) ? '' : args;
+							if (args) {
+								args = $.core.JSON.autoDecode(args);
+								if (userArguments) {
+									args['coreUserObj'] = userArguments;
 								}
-								
-								$self.destroyWaitForm(waitTimeout);
-							} else {
-								$self.destroyWaitForm(waitTimeout);
-								$(waitForm).html(this.ResponseCode[xhr.status]);
+
+								try {
+									A.ajaxCallbacks[callback].call(this, args);
+								} catch (e) {}
+							}
+
+							const xhrStatus = xhr.status;
+
+							if (xhrStatus) {
+								if (debug === true) {
+									$.log(this.ResponseCode[xhrStatus]);
+								}
+
+								if (waitformSkin == 'status_viewer') {
+									$(waitForm).html(this.ResponseCode[xhrStatus]);
+								}
+							}
+
+							$self.destroyWaitForm(waitTimeout);
+							if (onRequestProcessing == true) {
+								onRequestProcessing = false;
 							}
 						} finally {
 							if (onRequestProcessing == true) {
@@ -1148,7 +1106,34 @@
 							}
 						}
 					}
-				});
+				},
+				error: function (xhr) {
+					try {
+						if ($.core.Validate.isFunc(this.ajaxFailCallbacks[callback])) {
+							this.ajaxFailCallbacks[callback].call(this, args);
+
+							if (debug === true) {
+								$.log(this.ResponseCode[xhr.status]);
+							}
+
+							$self.destroyWaitForm(waitTimeout);
+						} else {
+							$self.destroyWaitForm(waitTimeout);
+							$(waitForm).html(this.ResponseCode[xhr.status]);
+						}
+					} finally {
+						if (onRequestProcessing == true) {
+							onRequestProcessing = false;
+						}
+					}
+				}
+			}, options);
+			
+			try {
+				var $self = this;
+				$self.setWaitForm(message);
+				
+				var request = $.ajax(options);
 			} catch (e) {
 				console.log(e);
 			} finally {
