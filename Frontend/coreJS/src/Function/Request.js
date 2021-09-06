@@ -1000,7 +1000,7 @@
 		ajax: function (type, url, params, callback, datatype, message, options) {
 			onRequestProcessing = true; //global
 			
-			$.extend({
+			$.extend(options, {
 				cache: true,
 				type: type,
 				xhrfields : {withCredentials : true},
@@ -1127,7 +1127,7 @@
 						}
 					}
 				}
-			}, options);
+			});
 			
 			try {
 				var $self = this;
