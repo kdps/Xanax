@@ -991,13 +991,13 @@
 		
 		/**
 		 * Ajax Request Call
-		 * @param {url}	     : Request URL
 		 * @param {type} 	 : Request Type
+		 * @param {url}	     : Request URL
 		 * @param {params}	 : Parameter
 		 * @param {callback} : Callback
 		 * @param {datatype} : Data Type
 		 **/
-		ajax: function (url, type, params, options) {
+		ajax: function (type, url, params, callback, datatype, message, options) {
 			onRequestProcessing = true; //global
 			
 			$.extend({
