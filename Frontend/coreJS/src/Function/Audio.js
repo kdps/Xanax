@@ -127,7 +127,7 @@ import AudioContextObject from './Class/AudioContextObject.js';
 		 *
 		 * @return boolean
 		 **/
-		isCanPlay: function (element, type, codecs) {
+		isPlayable: function (element, type, codecs) {
 			let _codecs = '';
 			let bool;
 			
