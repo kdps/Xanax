@@ -65,40 +65,57 @@ class Handler implements ImageHandlerInterface
 		return $imageResource;
 	}
 
-	public function getExifData ($imageResource)
+	/**
+	 * Get a exif data of image file
+	 *
+	 * @param resource $imageResource
+	 *
+	 * @return mixed
+	 */
+	public function getExifData ($filePath)
 	{
-		if ( !$this->isResource($imageResource) )
+		if (function_exists('exif_read_data'))
 		{
-			$imageResource = $this->getInstance( $imageResource );
+			return exif_read_data($filePath);
 		}
 
-		$exif = exif_read_data($imageResource);
-
-		return $exif;
+		return $filePath;
 	}
 	
-	public function fixOrientation ($imageResource)
+	public function fixOrientation ($filePath, $imageResource)
 	{
-		$exif = $this->getExifData($imageResource);
+		$exif = $this->getExifData($filePath);
 		
 		$image = $imageResource;
-		
+		$degree = 0;
+		$flip = 0;
+
+		$corrections = array(
+			'1' => array(0, 0),
+			'2' => array(0, 1),
+			'3' => array(180, 0),
+			'4' => array(0, 2),
+			'5' => array(270, 1),
+			'6' => array(270, 0),
+			'7' => array(90, 1),
+			'8' => array(90, 0)
+		);
+
 		if (!empty($exif['Orientation'])) {
-			switch ($exif['Orientation']) {
-			    case 3:
-				$image = imagerotate($imageResource, 180, 0);
-				break;
+			$orientation = $exif['Orientation'];
 
-			    case 6:
-				$image = imagerotate($imageResource, 90, 0);
-				break;
+			$collect = $corrections[$orientation];
 
-			    case 8:
-				$image = imagerotate($imageResource, -90, 0);
-				break;
-			}
+			$degree = $collect[0];
+			$flip = $collect[1];
 		}
 		
+		$image = $this->Rotate($imageResource, $degree);
+
+		if ($flip == 1) {
+			$image = $this->Flip($image, 'horizontal');
+		}
+
 		return $image;
 	}
 	
@@ -279,7 +296,7 @@ class Handler implements ImageHandlerInterface
 	 */
 
 	// TODO get a args by array data
-	public function Filter ($imageResource, $type, $args1 = '', $args2 = '', $args3 = '')
+	public function Filter ($imageResource, string $type, $args1 = '', $args2 = '', $args3 = '')
 	{
 
 		$type = strtolower($type);
@@ -325,9 +342,12 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return output stream
 	 */
-	public function Draw ( $imageResource )
+	public function Draw ( $imageResource, $format )
 	{
-		$format = $this->getType( $imageResource );
+		if ( !$this->isResource($imageResource) )
+		{
+			$imageResource = $this->getInstance( $imageResource );
+		}
 
 		switch($format) {
 			case 'image/jpeg':
@@ -425,23 +445,6 @@ class Handler implements ImageHandlerInterface
 	}
 
 	/**
-	 * Get a exif data of image file
-	 *
-	 * @param string $filePath
-	 *
-	 * @return mixed
-	 */
-	public function getExifData ( $filePath )
-	{
-		if (function_exists('exif_read_data'))
-		{
-			return exif_read_data($filePath, 0, true);
-		}
-
-		return new \stdClass();
-	}
-
-	/**
 	 * Get type of image file
 	 *
 	 * @param string $filePath
@@ -453,9 +456,9 @@ class Handler implements ImageHandlerInterface
 		$format = "unknown";
 
 		if ($this->isResource($filePath)) {
-			$format = getimagesizefromstring($filePath);
+			$format = \getimagesizefromstring($filePath);
 		} else {
-            $finfo = getimagesize($filePath);
+            $finfo = \getimagesize($filePath);
             if ($finfo === false) {
                 return false;
             }
@@ -516,7 +519,7 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function Flip ( $imageResource ) {
+	public function Flip ( $imageResource, $type ) {
 		if ( !$this->isResource($imageResource) ) {
 			$imageResource = $this->getInstance( $imageResource );
 		}
@@ -612,9 +615,9 @@ class Handler implements ImageHandlerInterface
 			$imageResource = $this->getInstance( $imageResource );
 		}
 
-		$image = imagerotate($imageResource, $degrees, 0);
+		$image = \imagerotate($imageResource, $degrees, 0);
 
-		return $this->getInstance($image);
+		return $image;
 	}
 
 	/**
@@ -632,25 +635,25 @@ class Handler implements ImageHandlerInterface
 			switch ($format) {
 				case 'image/jpeg':
 					if (extension_loaded('gd')) {
-						$createObject = imagecreatefromjpeg($filePath);
+						$createObject = \imagecreatefromjpeg($filePath);
 					}
 					break;
 				case 'image/bmp':
-					$createObject = imagecreatefrombmp($filePath);
+					$createObject = \imagecreatefrombmp($filePath);
 					break;
 				case 'image/png':
 					if (extension_loaded('gd')) {
-						$createObject = imagecreatefrompng($filePath);
+						$createObject = \imagecreatefrompng($filePath);
 					}
 					break;
 				case 'image/gif':
 					if (extension_loaded('gd')) {
-						$createObject = imagecreatefromgif ($filePath);
+						$createObject = \imagecreatefromgif ($filePath);
 					}
 					break;
 				case 'image/webp':
 					if (extension_loaded('gd')) {
-						$createObject = imagecreatefromwebp($filePath);
+						$createObject = \imagecreatefromwebp($filePath);
 					}
 					break;
 				default:

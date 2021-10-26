@@ -14,21 +14,23 @@ interface ImageHandlerInterface {
 
 	public function ratioResize($imageResource, $resizeWidth, $resizeHeight);
 
-	public function FIlter($imageResource, $type, $args1 = '', $args2 = '', $args3 = '');
+	public function FIlter($imageResource, string $type, $args1 = '', $args2 = '', $args3 = '');
 
-	public function Draw($imageResource);
+	public function Draw($imageResource, $format);
 
 	public function pickColor($imageResource, $x, $y) :array;
 
 	public function drawText($imageResource, $fontSize, $x, $y, $text, $red, $green, $blue);
 
-	public function getExifData($filePath);
+	public function getExifData($imageResource);
+
+	public function fixOrientation($filePath, $imageResource);
 
 	public function getType($filePath);
 
 	public function Create($filePath, $imageResource, $outputPath, $quality = 100 );
 
-	public function Flip($imageResource);
+	public function Flip($imageResource, $type);
 
 	public function getWidth($imageResource);
 

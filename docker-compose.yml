@@ -31,4 +31,4 @@ services:
             - "8090:80"
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-            - ./root:/var/www/html
+            - ./root:/var/www/html/root
