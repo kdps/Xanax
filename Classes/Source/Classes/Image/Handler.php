@@ -65,6 +65,43 @@ class Handler implements ImageHandlerInterface
 		return $imageResource;
 	}
 
+	public function getExifData ($imageResource)
+	{
+		if ( !$this->isResource($imageResource) )
+		{
+			$imageResource = $this->getInstance( $imageResource );
+		}
+
+		$exif = exif_read_data($imageResource);
+
+		return $exif;
+	}
+	
+	public function fixOrientation ($imageResource)
+	{
+		$exif = $this->getExifData($imageResource);
+		
+		$image = $imageResource;
+		
+		if (!empty($exif['Orientation'])) {
+			switch ($exif['Orientation']) {
+			    case 3:
+				$image = imagerotate($imageResource, 180, 0);
+				break;
+
+			    case 6:
+				$image = imagerotate($imageResource, 90, 0);
+				break;
+
+			    case 8:
+				$image = imagerotate($imageResource, -90, 0);
+				break;
+			}
+		}
+		
+		return $image;
+	}
+	
 	/**
 	 * Draw eclipse to image resource
 	 *
