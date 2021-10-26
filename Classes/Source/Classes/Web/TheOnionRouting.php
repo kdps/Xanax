@@ -1,9 +1,9 @@
 <?php
 
-namespace Xanax/Classes;
+namespace Xanax\Classes\Web;
 
-use Xanax/Classes/InternetProtocol as InternetProtocol;
-use Xanax/Classes/RequestHandler as RequestHandler;
+use Xanax\Classes\Web\InternetProtocol as InternetProtocol;
+use Xanax\Classes\HTTP\Request as RequestHandler;
 
 class TheOnionRouting {
 
@@ -16,12 +16,12 @@ class TheOnionRouting {
 	}
 
 	public function isExitNode() {
-		$ipAddress = self::$requestHandlerClass:getRemoteIP();
-		$serverPort = self::$requestHandlerClass:getPort();
-		$reverseIP = self::$internetProtocolClass:toReverseOctet($_SERVER['REMOTE_ADDR']);
+		$ipAddress = self::$requestHandlerClass::getRemoteIP();
+		$serverPort = self::$requestHandlerClass::getPort();
+		$reverseIP = self::$internetProtocolClass::toReverseOctet($_SERVER['REMOTE_ADDR']);
 
 		$torExitNodeHostName = sprintf("%s.%s.%s.ip-port.exitlist.torproject.org", $reverseIP, $serverPort, $reverseIP);
-		$hostName = self::$internetProtocolClass:getByHostname($torExitNodeHostName);
+		$hostName = self::$internetProtocolClass::getByHostname($torExitNodeHostName);
 
 		return $hostName === '127.0.0.2';
 	}

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes\HTTML;
+namespace Xanax\Classes\HTTP;
 
 class Request 
 {
@@ -211,11 +211,6 @@ class Request
 		return $this->getServerArguments('HTTP_X_REWRITE_URL');
 	}
 	
-	public function getIISIsapiRewriteURL() 
-	{
-		return $this->getServerArguments('HTTP_X_REWRITE_URL');
-	}
-	
 	public function getHTTPConnection() :string 
 	{
 		return $this->getServerArguments('HTTP_CONNECTION');
@@ -241,7 +236,7 @@ class Request
 		return $this->getServerArguments('HTTP_ACCEPT');
 	}
 
-	public function getContentType() 
+	public function getHTTPContentType() 
 	{
 		return $this->getServerArguments('HTTP_CONTENT_TYPE');
 	}
@@ -316,7 +311,7 @@ class Request
 		return (strtoupper($this->getReuqestMethod()) === 'HEAD') ? true : false;
 	}
 	
-	public function isPut() 
+	public function isPatch() 
 	{
 		return (strtoupper($this->getReuqestMethod()) === 'PATCH') ? true : false;
 	}
@@ -350,7 +345,7 @@ class Request
 	{
 		$string = null;
 
-		if ($this->isPostRequest()) 
+		if ($this->isPost()) 
 		{
 			$string = isset($_POST[$parameter]) ? $_POST[$parameter] : null;
 		}
@@ -362,7 +357,7 @@ class Request
 	{
 		$string = null;
 
-		if ($this->isGetRequest()) 
+		if ($this->isGet()) 
 		{
 			$string = isset($_GET[$parameter]) ? $_GET[$parameter] : null;
 		}

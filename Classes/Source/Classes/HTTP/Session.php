@@ -70,7 +70,7 @@ class Session
 	 */
 	public function hasId() 
 	{
-		if ($this->getSessionId() == '') 
+		if ($this->getId() == '') 
 		{
 			return false;
 		}

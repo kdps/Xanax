@@ -6,18 +6,20 @@ namespace Xanax\Classes\Upload;
 
 use Xanax\Classes\File\Handler as FileHandler;
 
+use Xanax\Enumeration\UploadedFile;
+
 class Handler 
 {
 	
-	public function Get($name, $key = 'name') 
+	public function Get($name, $key = UploadedFile::NAME) 
 	{
 		if (preg_match('/^([A-Za-z0-9-_]{1,})\[[A-Za-z0-9-_]{1,}\]$/', $name, $match)) 
 		{
-			return isset($_FILES[$match[1]][$key][$match[2]]) ? $_FILES[$match[1]]['name'][$match[2]] : null;
+			return isset($_FILES[$match[1]][$key][$match[2]]) ? $_FILES[$match[1]][UploadedFile::NAME][$match[2]] : null;
 		} 
 		else 
 		{
-			if ($key === 'name') 
+			if ($key === UploadedFile::NAME) 
 			{
 				return isset($_FILES[$name]) ? $_FILES[$name] : null;
 			} 
@@ -97,30 +99,30 @@ class Handler
 
 	public function getTemporaryName($name) 
 	{
-		return $this->Get($name, 'tmp_name');
+		return $this->Get($name, UploadedFile::TEMPORARY_NAME);
 	}
 
 	public function getFileType($name) 
 	{
-		return $this->Get($name, 'type');
+		return $this->Get($name, UploadedFile::TYPE);
 	}
 
 	public function getFileName($name) 
 	{
-		return $this->Get($name, 'name');
+		return $this->Get($name, UploadedFile::NAME);
 	}
 
 	public function getFileSize($name) 
 	{
-		return $this->Get($name, 'size');
+		return $this->Get($name, UploadedFile::SIZE);
 	}
 
 	public function getFileError($name) 
 	{
-		return $this->Get($name, 'error');
+		return $this->Get($name, UploadedFile::ERROR);
 	}
 
-	public function isExists($name = 'tmp_file') 
+	public function isExists($name = UploadedFile::TEMPORARY_NAME) 
 	{
 		if ($this->Get($name) === null) {
 			return false;

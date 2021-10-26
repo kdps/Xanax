@@ -50,7 +50,7 @@ class Cookie
 		} 
 		else 
 		{
-			$this->setRaw($key, $value, $expired)
+			$this->setRaw($key, $value, $expired);
 		}
 		
 		return true;

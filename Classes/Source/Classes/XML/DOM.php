@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax/Classes/XML;
+namespace Xanax\Classes\XML;
 
 class DOM
 {
@@ -8,7 +8,7 @@ class DOM
 	private $dom;
 
 	public function __constructor() {
-		$this->dom = new DOMDocument;
+		$this->dom = new \DOMDocument;
 	}
 
 	public function Parse($xmlString) {

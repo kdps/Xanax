@@ -1,11 +1,13 @@
 <?php
 
-namespace Xanax/Classes;
+namespace Xanax\Classes\Web;
+
+use function getbyhostname;
 
 class InternetProtocol {
 
 	public function getByHostname($hostname) {
-		return getbyhostname($hostname);
+		return \getbyhostname($hostname);
 	}
 
 	public function toReverseOctet($inputip) {

@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Xanax\Classes\Exception;
+
 class Handler {
 
 	public function setError($errorRaised, $errorMessage, $fileName, $lineNumber, $context, callable $callback) {
-		$previous = set_error_handler(function ($errorRaised, $errorMessage, $fileName, $lineNumber, $context) use (&$previous) {
-			if ($previous && $callback instanceof callable) {
+		$previous = set_error_handler(function ($errorRaised, $errorMessage, $fileName, $lineNumber, $context) use (&$previous, $callback) {
+			if ($previous && is_callable($callback)) {
 				$callback($errorRaised, $errorMessage, $fileName, $lineNumber, $context);
 			} else {
 				return false;
