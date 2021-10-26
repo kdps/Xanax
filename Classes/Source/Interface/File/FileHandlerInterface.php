@@ -2,6 +2,8 @@
 
 namespace Xanax\Implement;
 
+use Xanax\Enumeration\FileMode;
+
 interface FileHandlerInterface {
 
 	public function Open($filePath, $mode, $use_include_path = false);
@@ -66,11 +68,11 @@ interface FileHandlerInterface {
 
 	public function appendContent(string $filePath, string $content = null, bool $overwrite = true) :bool;
 
-	public function Write(string $filePath, string $content = null, string $writeMode = 'w') :bool;
+	public function Write(string $filePath, string $content = null, string $writeMode = FileMode::WRITE_ONLY) :bool;
 
-	public function Read(string $filePath, int $length = -1, string $mode = 'r') : mixed;
+	public function Read(string $filePath, int $length = -1, string $mode = FileMode::READ_ONLY) : mixed;
 
-	public function readAllContent(string $filePath, string $writeMode = 'r');
+	public function readAllContent(string $filePath, string $writeMode = FileMode::READ_ONLY);
 
 	public function reverseContent(string $filePath) :bool;
 

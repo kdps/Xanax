@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\File;
 
+use Xanax\Enumeration\FileMode;
+
 // Classes
 
 use Xanax\Classes\File\FileObject as FileObject;
@@ -99,7 +101,7 @@ class Handler implements FileHandlerInterface
 		return $return;
 	}
 
-	public function getStandardErrorStream($mode = 'r')
+	public function getStandardErrorStream($mode = FileMode::READ_ONLY)
 	{
 		$phpProtocol = new PHPProtocol();
 
@@ -108,7 +110,7 @@ class Handler implements FileHandlerInterface
 		return $handler;
 	}
 
-	public function getStandardOutputStream($mode = 'r')
+	public function getStandardOutputStream($mode = FileMode::READ_ONLY)
 	{
 		$phpProtocol = new PHPProtocol();
 
@@ -117,7 +119,7 @@ class Handler implements FileHandlerInterface
 		return $handler;
 	}
 
-	public function getStandardInputStream($mode = 'r')
+	public function getStandardInputStream($mode = FileMode::READ_ONLY)
 	{
 		$phpProtocol = new PHPProtocol();
 
@@ -162,7 +164,7 @@ class Handler implements FileHandlerInterface
 		return $handler;
 	}
 
-	public function getOutputStream($mode = 'w')
+	public function getOutputStream($mode = FileMode::WRITE_ONLY)
 	{
 		$phpProtocol = new PHPProtocol();
 
@@ -192,8 +194,8 @@ class Handler implements FileHandlerInterface
 
 		// Compare the first ${chunkSize} bytes
 		// This is fast and binary files will most likely be different
-		$fp1            = $this->Open($firstPath, 'r');
-		$fp2            = $this->Open($secondPath, 'r');
+		$fp1            = $this->Open($firstPath, FileMode::READ_ONLY);
+		$fp2            = $this->Open($secondPath, FileMode::READ_ONLY);
 		$chunksAreEqual = fread($fp1, $chunkSize) == fread($fp2, $chunkSize);
 		fclose($fp1);
 		fclose($fp2);
@@ -243,7 +245,7 @@ class Handler implements FileHandlerInterface
 		return $return;
 	}
 
-	public function openProcess($processPath, $mode = 'w')
+	public function openProcess($processPath, $mode = FileMode::WRITE_ONLY)
 	{
 		$handle = popen($processPath, $mode);
 
@@ -336,7 +338,7 @@ class Handler implements FileHandlerInterface
 			return false;
 		}
 
-		$cached = $this->Open($filePath, 'w');
+		$cached = $this->Open($filePath, FileMode::WRITE_ONLY);
 		fwrite($destination, ob_get_contents());
 		fclose($destination);
 		ob_end_flush();
@@ -488,7 +490,7 @@ class Handler implements FileHandlerInterface
 
 		if (!$this->isValidHandler($filePath))
 		{
-			$filePath = $this->Open($filePath, 'r+');
+			$filePath = $this->Open($filePath, FileMode::READ_OVERWRITE);
 		}
 
 		if (!flock($filePath, LOCK_EX))
@@ -642,7 +644,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Lock($fileHandler, $mode = 'r')
+	public function Lock($fileHandler, $mode = FileMode::READ_ONLY)
 	{
 		if (!$this->isValidHandler($fileHandler))
 		{
@@ -653,10 +655,10 @@ class Handler implements FileHandlerInterface
 
 		switch ($mode)
 		{
-			case 'r':
+			case FileMode::READ_ONLY:
 				flock($fileHandler, LOCK_SH); // Lock of read mode
 				break;
-			case 'w':
+			case FileMode::WRITE_ONLY:
 				flock($fileHandler, LOCK_EX); // Lock of write mode
 				break;
 		}
@@ -861,7 +863,7 @@ class Handler implements FileHandlerInterface
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
-		$fileObject = new FileObject($filePath, false, 'r');
+		$fileObject = new FileObject($filePath, false, FileMode::READ_ONLY);
 		$fileObject->startHandle();
 		$bool = $fileObject->isEqualByLine($string);
 		$fileObject->closeFileHandle();
@@ -1450,7 +1452,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Read(string $filePath, int $length = -1, string $mode = 'r')
+	public function Read(string $filePath, int $length = -1, string $mode = FileMode::READ_ONLY)
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
@@ -1499,7 +1501,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function readAllContent(string $filePath, string $writeMode = 'r')
+	public function readAllContent(string $filePath, string $writeMode = FileMode::READ_ONLY)
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
@@ -1773,7 +1775,7 @@ class Handler implements FileHandlerInterface
 			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		$fileHandler = $this->Open($filePath, 'r');
+		$fileHandler = $this->Open($filePath, FileMode::READ_ONLY);
 		$fileSize    = $this->getSize($filePath);
 		$return      = fread($fileHandler, $fileSize);
 		fclose($fileHandler);

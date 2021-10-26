@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Compression;
 
+use Xanax\Enumeration\FileMode;
+
 class Zip
 {
 	public function getCompressSize($filePath)
@@ -50,7 +52,7 @@ class Zip
 
 		while ($zip_entry = zip_read($zip))
 		{
-			if (!zip_entry_open($zip, $zip_entry, 'r'))
+			if (!zip_entry_open($zip, $zip_entry, FileMode::READ_ONLY))
 			{
 				return false;
 			}
@@ -68,7 +70,7 @@ class Zip
 			}
 
 			$zname = zip_entry_name($zip_entry);
-			$z = fopen($zname, 'w');
+			$z = fopen($zname, FileMode::WRITE_ONLY);
 			$zz = zip_entry_read($zip_entry, $zip_fs);
 			fwrite($z, $zz);
 			fclose($z);
