@@ -112,8 +112,13 @@ class Handler implements ImageHandlerInterface
 		
 		$image = $this->Rotate($imageResource, $degree);
 
-		if ($flip == 1) {
-			$image = $this->Flip($image, 'horizontal');
+		switch ($flip) {
+			case 1:
+				$image = $this->Flip($image, 'horizontal');
+				break;
+			case 2:
+				$image = $this->Flip($image, 'vertical');
+				break;
 		}
 
 		return $image;
