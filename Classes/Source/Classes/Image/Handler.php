@@ -6,6 +6,11 @@ namespace Xanax\Classes\Image;
 
 use Xanax\Implement\ImageHandlerInterface;
 
+use Xanax\Enumeration\Orientation;
+
+use Xanax\Enumeration\ImageFilter;
+
+
 class Handler implements ImageHandlerInterface
 {
 
@@ -82,6 +87,54 @@ class Handler implements ImageHandlerInterface
 		return $filePath;
 	}
 	
+	private function getExifOrientationData($orientation)
+	{
+		$corrections = array(
+			// Horizontal (normal)
+			'1' => array(
+				"Degree" => 0, 
+				"Orientation" => Orientation::NORMAL
+			), 
+			// Mirror horizontal
+			'2' => array(
+				"Degree" => 0, 
+				"Orientation" => Orientation::HORIZONTAL
+			), 
+			// Rotate 180
+			'3' => array(
+				"Degree" => 180, 
+				"Orientation" => Orientation::NORMAL
+			), 
+			// Mirror vertical
+			'4' => array(
+				"Degree" => 0, 
+				"Orientation" => Orientation::VERTICAL
+			), 
+			// Mirror horizontal and rotate 270 CW
+			'5' => array(
+				"Degree" => 270, 
+				"Orientation" => Orientation::HORIZONTAL
+			), 
+			// Rotate 90 CW
+			'6' => array(
+				"Degree" => 270, 
+				"Orientation" => Orientation::NORMAL
+			), 
+			// Mirror horizontal and rotate 90 CW
+			'7' => array(
+				"Degree" => 90, 
+				"Orientation" => Orientation::HORIZONTAL
+			), 
+			// Rotate 270 CW
+			'8' => array(
+				"Degree" => 90, 
+				"Orientation" => Orientation::NORMAL
+			)
+		);
+
+		return $corrections[$orientation];
+	}
+
 	public function fixOrientation ($filePath, $imageResource)
 	{
 		$exif = $this->getExifData($filePath);
@@ -90,34 +143,23 @@ class Handler implements ImageHandlerInterface
 		$degree = 0;
 		$flip = 0;
 
-		$corrections = array(
-			'1' => array(0, 0),
-			'2' => array(0, 1),
-			'3' => array(180, 0),
-			'4' => array(0, 2),
-			'5' => array(270, 1),
-			'6' => array(270, 0),
-			'7' => array(90, 1),
-			'8' => array(90, 0)
-		);
-
 		if (!empty($exif['Orientation'])) {
 			$orientation = $exif['Orientation'];
 
-			$collect = $corrections[$orientation];
+			$data = $this->getExifOrientationData($orientation);
 
-			$degree = $collect[0];
-			$flip = $collect[1];
+			$degree = $collect['Degree'];
+			$flip = $collect['Orientation'];
 		}
 		
 		$image = $this->Rotate($imageResource, $degree);
 
 		switch ($flip) {
-			case 1:
-				$image = $this->Flip($image, 'horizontal');
+			case Orientation::HORIZONTAL:
+				$image = $this->Flip($image, Orientation::HORIZONTAL);
 				break;
-			case 2:
-				$image = $this->Flip($image, 'vertical');
+			case Orientation::VERTICAL:
+				$image = $this->Flip($image, Orientation::VERTICAL);
 				break;
 		}
 
@@ -301,41 +343,54 @@ class Handler implements ImageHandlerInterface
 	 */
 
 	// TODO get a args by array data
-	public function Filter ($imageResource, string $type, $args1 = '', $args2 = '', $args3 = '')
+	public function Filter ($imageResource, string $type, ...$args)
 	{
-
+		$filter = 0;
 		$type = strtolower($type);
 
-		if ($type=='reverse') {
-			imagefilter($imageResource, IMG_FILTER_NEGATE);
-		} else if ($type=='gray') {
-			imagefilter($imageResource, IMG_FILTER_GRAYSCALE);
-		} else if ($type=='edge') {
-			imagefilter($imageResource, IMG_FILTER_EDGEDETECT);
-		} else if ($type=='emboss') {
-			imagefilter($imageResource, IMG_FILTER_EMBOSS);
-		} else if ($type=='gaussian_blur') {
-			imagefilter($imageResource, IMG_FILTER_GAUSSIAN_BLUR);
-		} else if ($type=='blur') {
-			imagefilter($imageResource, IMG_FILTER_SELECTIVE_BLUR);
-		} else if ($type=='sketch') {
-			imagefilter($imageResource, IMG_FILTER_MEAN_REMOVAL);
-		} else if ($type=='brightness') {
-			//args1 = Brightness Level
-			imagefilter($imageResource, IMG_FILTER_BRIGHTNESS, $args1);
-		} else if ($type=='brightness') {
-			//args1 = Contrast Level
-			imagefilter($imageResource, IMG_FILTER_CONTRAST, $args1);
-		} else if ($type=='brightness') {
-			//args1 = Smoothness Level
-			imagefilter($imageResource, IMG_FILTER_SMOOTH, $args1);
-		} else if ($type=='pixelate') {
-			//arg1 = Block Size, arg2 = Pixelation Effect Mode
-			imagefilter($imageResource, IMG_FILTER_PIXELATE, $args1, $args2);
-		} else if ($type=='colorize') {
-			//arg1, arg2 & arg3 = red, blue, green / arg4 = alpha channel
-			imagefilter($imageResource, IMG_FILTER_COLORIZE, $args1, $args2, $args3);
+		switch ($type) {
+			case ImageFilter::REVERSE: // 0
+				$filter = IMG_FILTER_NEGATE;
+				break;
+			case ImageFilter::GRAYSCALE: // 1
+				$filter = IMG_FILTER_GRAYSCALE;
+				break;
+			case ImageFilter::BRIGHTNESS: // 2
+				$filter = IMG_FILTER_BRIGHTNESS;
+				break;
+			case ImageFilter::CONTRAST: // 3
+				$filter = IMG_FILTER_CONTRAST;
+				break;
+			case ImageFilter::COLORIZE: // 4
+				$filter = IMG_FILTER_COLORIZE;
+				break;
+			case ImageFilter::EDGEDETECT: // 5
+				$filter = IMG_FILTER_EDGEDETECT;
+				break;
+			case ImageFilter::EMBOSS: // 6
+				$filter = IMG_FILTER_EMBOSS;
+				break;
+			case ImageFilter::GAUSSIAN_BLUR: // 7
+				$filter = IMG_FILTER_GAUSSIAN_BLUR;
+				break;
+			case ImageFilter::SELECTIVE_BLUR: // 8
+				$filter = IMG_FILTER_SELECTIVE_BLUR;
+				break;
+			case ImageFilter::SKETCH: // 9
+				$filter = IMG_FILTER_MEAN_REMOVAL;
+				break;
+			case ImageFilter::SMOOTH: // 10
+				$filter = IMG_FILTER_SMOOTH;
+				break;
+			case ImageFilter::PIXELATE: // 11
+				$filter = IMG_FILTER_PIXELATE;
+				break;
+			case ImageFilter::SCATTER: // 12
+				$filter = IMG_FILTER_SCATTER;
+				break;
 		}
+
+		imagefilter($imageResource, $filter, $args);
 
 		return $imageResource;
 	}
@@ -530,13 +585,13 @@ class Handler implements ImageHandlerInterface
 		}
 
 		switch($type) {
-			case 'vertical':
+			case Orientation::VERTICAL:
 				imageflip($imageResource, IMG_FLIP_VERTICAL);
 				break;
-			case 'horizontal':
+			case Orientation::HORIZONTAL:
 				imageflip($imageResource, IMG_FLIP_HORIZONTAL);
 				break;
-			case 'both':
+			case Orientation::BOTH:
 				imageflip($imageResource, IMG_FLIP_BOTH);
 				break;
 		}
@@ -700,7 +755,6 @@ class Handler implements ImageHandlerInterface
 		$width = $this->getWidth($imageResource);
 		$height = $this->getHeight($imageResource);
 
-		//make image alpha
 		imageAlphaBlending($outputImage, false);
 		imageSaveAlpha($outputImage, false);
 
@@ -727,7 +781,10 @@ class Handler implements ImageHandlerInterface
 			$mergeCreateObject = $this->getInstance( $mergeCreateObject );
 		}
 
-		return imagecopymerge($mergeCreateObject, $sourceCreateObject, 0, 0, 0, 0, imagesx($sourceCreateObject), imagesy($sourceCreateObject), $transparent);
+		$source_width = $this->getWidth($sourceCreateObject);
+		$source_height = $this->getHeight($sourceCreateObject);
+
+		return imagecopymerge($mergeCreateObject, $sourceCreateObject, 0, 0, 0, 0, $source_width, $source_height, $transparent);
 	}
 
 	/**

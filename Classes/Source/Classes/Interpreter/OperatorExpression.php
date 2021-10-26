@@ -5,7 +5,7 @@ class OperatorExpression {
 	public function __construct() {
 	}
 	
-	public function Evaluate ( $operator, $val1, $val2 ) {
+	public function Evaluate ( $operator, int $val1, int $val2 ) {
 		$result = false;
 			
 		switch ($operator) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax\Message\Function;
+namespace Xanax\Message\Functions;
 
 class FunctionMessage
 {

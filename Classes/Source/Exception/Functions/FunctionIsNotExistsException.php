@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax\Exception\Function;
+namespace Xanax\Exception\Functions;
 
 class FunctionIsNotExistsException extends FunctionIsNotExistsException
 {

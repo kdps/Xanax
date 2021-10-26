@@ -4,6 +4,10 @@ namespace Xanax\Implement;
 
 interface FileHandlerInterface {
 
+	public function Open($filePath, $mode, $use_include_path = false);
+	
+	public function openProcess($processPath, $mode = 'w');
+
 	public function createTemporary() :mixed;
 
 	public function isFile(string $filePath, string $containDirectory = null) :bool;
@@ -36,7 +40,7 @@ interface FileHandlerInterface {
 
 	public function getInode(string $filePath);
 
-	public function getLastModifiedTime(string $filePath): int|false;
+	public function getLastModifiedTime(string $filePath): mixed;
 
 	public function getCreatedDate($filePath);
 
@@ -64,7 +68,7 @@ interface FileHandlerInterface {
 
 	public function Write(string $filePath, string $content = null, string $writeMode = 'w') :bool;
 
-	public function Read(string $filePath, int $length = -1, string $writeMode = 'r');
+	public function Read(string $filePath, int $length = -1, string $mode = 'r') : mixed;
 
 	public function readAllContent(string $filePath, string $writeMode = 'r');
 

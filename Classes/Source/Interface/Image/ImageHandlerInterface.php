@@ -14,7 +14,7 @@ interface ImageHandlerInterface {
 
 	public function ratioResize($imageResource, $resizeWidth, $resizeHeight);
 
-	public function FIlter($imageResource, string $type, $args1 = '', $args2 = '', $args3 = '');
+	public function Filter ($imageResource, string $type, ...$args);
 
 	public function Draw($imageResource, $format);
 

@@ -21,7 +21,7 @@ use Xanax\Exception\FileHandler\InvalidFileHandler as InvalidFileHandler;
 
 use Xanax\Exception\ResourceHandler\InvalidTypeException as InvalidTypeException;
 
-use Xanax\Exception\Function\FunctionIsNotExistsException as FunctionIsNotExistsException;
+use Xanax\Exception\Functions\FunctionIsNotExistsException as FunctionIsNotExistsException;
 
 // Implements
 
@@ -36,7 +36,7 @@ use Xanax\Validation\FileValidation as FileValidation;
 
 use Xanax\Message\FileHandler\FileHandlerMessage as FileHandlerMessage;
 
-use Xanax\Message\Function\FunctionMessage as FunctionMessage;
+use Xanax\Message\Functions\FunctionMessage as FunctionMessage;
 
 use function clearstatcache;
 use function fileatime;
@@ -224,7 +224,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Open($filePath, $mode, $use_include_path = false) : resource
+	public function Open($filePath, $mode, $use_include_path = false)
 	{
 		$handler = fopen($filePath, $mode);
 
@@ -243,7 +243,7 @@ class Handler implements FileHandlerInterface
 		return $return;
 	}
 
-	public function openProcess($processPath, $mode = 'w') :resource
+	public function openProcess($processPath, $mode = 'w')
 	{
 		$handle = popen($processPath, $mode);
 
@@ -1450,7 +1450,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function Read(string $filePath, int $length = -1, string $mode = 'r') :string|false
+	public function Read(string $filePath, int $length = -1, string $mode = 'r')
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
@@ -1629,7 +1629,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return string
 	 */
-	public function getLastModifiedTime(string $filePath): int|false
+	public function getLastModifiedTime(string $filePath)
 	{
 		$filePath = $this->convertToNomalizePath($filePath);
 
