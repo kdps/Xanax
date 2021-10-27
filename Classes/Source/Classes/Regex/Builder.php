@@ -125,8 +125,12 @@ class Builder
 
   // Expression
   
-  public function nodeWithoutSpecifyAttributes($node, $attribute) {
+  public function nodeWithoutAfterSpecifyAttributes($node, $attribute) {
     return "(<${node} .*?)(?:${attribute}=\".*\")?(.*?\/>)";
+  }
+
+  public function nodeWithoutSpecifyAttributes($node, $attribute) {
+    return "(<${node} .*?)(?:${attribute}=\".*\")(.*?\/>)";
   }
 
   public function positiveLookbehind($subexpression) {
