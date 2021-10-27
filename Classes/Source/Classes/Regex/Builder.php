@@ -1,8 +1,8 @@
 <?php
 
-namespace Xanax/Classes/Regex;
+namespace Xanax\Classes\Regex;
 
-use Xanax/Trait/Regex/Error;
+use Xanax\Traits\Regex\Error;
 
 class Builder
 {
@@ -125,6 +125,10 @@ class Builder
 
   // Expression
   
+  public function nodeWithoutSpecifyAttributes($node, $attribute) {
+    return "(<${node} .*?)(?:${attribute}=\".*\")?(.*?\/>)";
+  }
+
   public function positiveLookbehind($subexpression) {
     return "(?<=${subexpression})";
   }

@@ -6,6 +6,8 @@ namespace Xanax\Classes\Event;
 
 use Xanax\Implement\EventDispatcherInterface;
 
+use Xanax\Classes\Event\Instance as EventInstance;
+
 class Dispatcher implements EventDispatcherInterface
 {
 	private $listeners = [];
