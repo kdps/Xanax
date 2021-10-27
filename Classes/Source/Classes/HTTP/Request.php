@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\HTTP;
 
+use Xanax\Enumeration\HTTPRequestMethod;
+
 class Request 
 {
 	
@@ -266,7 +268,7 @@ class Request
 		return $this->getServerArguments('DOCUMENT_ROOT');
 	}
 
-	public function getReuqestMethod() 
+	public function getRequestMethod() 
 	{
 		return $this->getServerArguments('REQUEST_METHOD');
 	}
@@ -284,6 +286,26 @@ class Request
 	public function isAjax() 
 	{
 		return (!empty($this->getServerArguments('HTTP_X_REQUESTED_WITH')) && $this->isXmlHttpRequest()) ? true : false;
+	}
+
+	public function getHTTPXForwardedFor() 
+	{
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) 
+		{
+			return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+
+		return null;
+	}
+
+	public function getHTTPClientIP() 
+	{
+		if (isset($_SERVER['HTTP_CLIENT_IP'])) 
+		{
+			return $_SERVER['HTTP_CLIENT_IP'];
+		}
+
+		return null;
 	}
 
 	public function getRemoteIP() 
@@ -308,37 +330,37 @@ class Request
 
 	public function isHead() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'HEAD') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::HEAD) ? true : false;
 	}
 	
 	public function isPatch() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'PATCH') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::PATCH) ? true : false;
 	}
 	
 	public function isPut() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'PUT') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::PUT) ? true : false;
 	}
 	
 	public function isOptions() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'OPTIONS') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::OPTIONS) ? true : false;
 	}
 
 	public function isDelete() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'DELETE') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::DELETE) ? true : false;
 	}
 
 	public function isGet() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'GET') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::GET) ? true : false;
 	}
 
 	public function isPost() 
 	{
-		return (strtoupper($this->getReuqestMethod()) === 'POST') ? true : false;
+		return (strtoupper($this->getRequestMethod()) === HTTPRequestMethod::POST) ? true : false;
 	}
 
 	public function getPostParamter($parameter) 

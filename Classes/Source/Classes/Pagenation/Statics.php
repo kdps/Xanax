@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Pagenation;
 
-class Static
+class Statics
 {
 	private $page_start;
 	private $page_count;
