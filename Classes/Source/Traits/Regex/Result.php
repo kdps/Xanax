@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax/Trait/Regex;
+namespace Xanax\Traits\Regex;
 trait Result
 {
 }

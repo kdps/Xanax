@@ -1,10 +1,10 @@
 <?php
 
-namespace Xanax/Classes;
+namespace Xanax\Classes;
 
-use Xanax/Classes/Regex/StringResult as StringResult;
-use Xanax/Classes/Regex/ArrayResult as ArrayResult;
-use Xanax/Classes/Regex/Executor as Executor;
+use Xanax\Classes\Regex\StringResult as StringResult;
+use Xanax\Classes\Regex\ArrayResult as ArrayResult;
+use Xanax\Classes\Regex\Executor as Executor;
 
 class Regex
 {
@@ -19,16 +19,16 @@ class Regex
   
   public static function Match(string $pattern, string $subject) :ArrayResult
   {
-    $result = Executor::Match($pattern, $subject, $matches);
+    $result = Executor::Match($pattern, $subject);
     
-    return ArrayResult::getSingleton($result);
+    return (new ArrayResult())->getSingleton($result);
   }
   
   public static function matchAll(string $pattern, string $subject) :ArrayResult
   {
-    $result = Executor::matchAll($pattern, $subject, $matches);
+    $result = Executor::matchAll($pattern, $subject);
     
-    return ArrayResult::getSingleton($result);
+    return (new ArrayResult())->getSingleton($result);
   }
   
   public static function Split(string $pattern, $subject, int $limit = -1)

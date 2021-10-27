@@ -1,11 +1,11 @@
 <?php
 
-namespace Xanax/Trait/Regex;
+namespace Xanax\Traits\Regex;
 
 trait RegexError {
 	
 	public function getErrorConstant() {
-		return preg_last_error_constant();
+		return \preg_last_error_constant();
 	}
 
 	public function getErrorCode() {

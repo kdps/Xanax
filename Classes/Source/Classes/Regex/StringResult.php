@@ -1,8 +1,8 @@
 <?php
 
-namespace Xanax/Classes/Regex;
+namespace Xanax\Classes\Regex;
 
-use Xanax/Trait/Regex/Error;
+use Xanax\Traits\Regex\Error;
 
 class StringResult
 {
