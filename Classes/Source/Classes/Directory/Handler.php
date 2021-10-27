@@ -8,8 +8,10 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Xanax\Implement\DirectoryHandlerInterface;
 use Xanax\Implement\FileHandlerInterface;
-use Xanax\Exception\DirectoryeHandler\DirectoryIsNotExistsException;
+use Xanax\Exception\DirectoryHandler\DirectoryIsNotExistsException as DirectoryIsNotExistsException;
 use Xanax\Classes\File\Handler as FileHandler;
+
+use function delete;
 
 class Handler implements DirectoryHandlerInterface 
 {
@@ -167,7 +169,7 @@ class Handler implements DirectoryHandlerInterface
 			{
 				if ($fileInformation->isDir()) 
 				{
-					if (delete($fileInformation->getRealPath()) === false) 
+					if (unlink($fileInformation->getRealPath()) === false) 
 					{
 						return false;
 					}
@@ -295,7 +297,7 @@ class Handler implements DirectoryHandlerInterface
 				$folderPath       = $fileInformation->getPathName();
 				$newDirectoryName = preg_replace($replacement, $string, $folderPath);
 
-				if ($filePath === $newFileName) 
+				if ($folderPath === $newDirectoryName) 
 				{
 					continue;
 				}
