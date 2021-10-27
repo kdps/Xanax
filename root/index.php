@@ -1,3 +1,3 @@
 <?php
 
-echo "test123";
+include './../vendor/autoload.php';

@@ -348,8 +348,8 @@ class MultiPurposeInternetMailExtensions {
 			$extension = self::$extension;
 		}
 		
-		if (isset($this->mimeTypes[$extension])) {
-			$type = $this->mimeTypes[$extension]['type'];
+		if (isset($this->types[$extension])) {
+			$type = $this->types[$extension]['type'];
 		}
 
 		return $type;

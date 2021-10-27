@@ -6,13 +6,17 @@ namespace Xanax\Classes;
 
 use Xanax\Implement\ClientURLOptionInterface;
 
+use Xanax\Classes\Format\MultiPurposeInternetMailExtensions as MIME;
+
+use Xanax\Enumeration\HTTPRequestMethod;
+
 class ClientURLOption implements ClientURLOptionInterface {
 
 	private static $session;
 
 	private static $headerArrayData = [];
 
-	public function __construct($session = '') {
+	public function __construct(\CurlHandle $session) {
 		self::$session = $session;
 	}
 
@@ -326,6 +330,62 @@ class ClientURLOption implements ClientURLOptionInterface {
 		curl_setopt(self::$session, CURLOPT_POST, $bool);
 
 		return $this->returnContext();
+	}
+
+	/**
+	 * Request an HTTP Custom Method
+	 *
+	 * @return void
+	 */
+	private function setCustomMethod($method) {
+		curl_setopt(self::$session, CURLOPT_CUSTOMREQUEST, $method);
+
+		return $this->returnContext();
+	}
+
+	/**
+	 * Request an HTTP Options Method
+	 *
+	 * @return void
+	 */
+	private function setOptionsMethod() {
+		return $this->setCustomMethod(HTTPRequestMethod::OPTIONS);
+	}
+
+	/**
+	 * Request an HTTP Patch Method
+	 *
+	 * @return void
+	 */
+	private function setPatchMethod() {
+		return $this->setCustomMethod(HTTPRequestMethod::PATCH);
+	}
+
+	/**
+	 * Request an HTTP Head Method
+	 *
+	 * @return void
+	 */
+	private function setHeadMethod() {
+		return $this->setCustomMethod(HTTPRequestMethod::HEAD);
+	}
+
+	/**
+	 * Request an HTTP Put Method
+	 *
+	 * @return void
+	 */
+	private function setPutMethod() {
+		return $this->setCustomMethod(HTTPRequestMethod::PUT);
+	}
+
+	/**
+	 * Request an HTTP Delete Method
+	 *
+	 * @return void
+	 */
+	private function setDeleteMethod() {
+		return $this->setCustomMethod(HTTPRequestMethod::DELETE);
 	}
 
 	/**

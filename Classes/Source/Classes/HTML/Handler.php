@@ -22,7 +22,7 @@ class Handler
 		return $result;
 	}
 
-	public static function generateElement($type, $content, $attributes = [])
+	public static function generateElement($type, $content, $attributes = [], $close = false)
 	{
 		$html = sprintf('%s%s', '<', $type);
 
@@ -40,6 +40,6 @@ class Handler
 			$html .= ' ' . implode(' ', $pairs);
 		}
 
-		return sprintf('%s>%s</%s>', $html, $content, $type);
+		return $close ? sprintf('%s>', $html) : sprintf('%s>%s</%s>', $html, $content, $type);
 	}
 }
