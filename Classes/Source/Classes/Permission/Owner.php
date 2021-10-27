@@ -1,7 +1,8 @@
 <?php
 
-namespace Xanax/Classes/Permission;
+namespace Xanax\Classes\Permission;
 
+use Xanax\Classes\Permission;
 class Owner extends Permission
 {
 

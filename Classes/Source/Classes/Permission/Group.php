@@ -1,6 +1,8 @@
 <?php
 
-namespace Xanax/Classes/Permission;
+namespace Xanax\Classes\Permission;
+
+use Xanax\Classes\Permission;
 
 class Group extends Permission
 {
