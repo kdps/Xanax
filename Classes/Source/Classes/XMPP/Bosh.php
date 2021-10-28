@@ -46,7 +46,7 @@ class Bosh
             "sid" => "'$this->sid'"
         ];
 
-        return HTMLHandler::generateElement("body", $iq_element, $attributes, true);
+        return HTMLHandler::generateElement("body", $iq_element, $attributes, false);
     }
 
     public function getSessionAuth2()
@@ -55,7 +55,7 @@ class Bosh
             "xmlns" => "'urn:ietf:params:xml:ns:xmpp-session'"
         ];
 
-        $session_element = HTMLHandler::generateElement("bind", "", $session_attributes, true);
+        $session_element = HTMLHandler::generateElement("session", "", $session_attributes, true);
 
         $iq_attributes = [
             "type" => "'set'",
@@ -72,7 +72,7 @@ class Bosh
             "sid" => "'$this->sid'"
         ];
 
-        return HTMLHandler::generateElement("body", $iq_element, $attributes, true);
+        return HTMLHandler::generateElement("body", $iq_element, $attributes, false);
     }
 
     public function getBindAuth2()
@@ -98,7 +98,28 @@ class Bosh
             "sid" => "'$this->sid'"
         ];
 
-        return HTMLHandler::generateElement("body", $iq_element, $attributes, true);
+        return HTMLHandler::generateElement("body", $iq_element, $attributes, false);
+    }
+
+    public function getMessageBody($to, $message)
+    {
+        $message_body_element = HTMLHandler::generateElement("body", $message, [], true);
+
+        $message_attributes = [
+            "type" => "'groupchat'",
+            "to" => "'$to'",
+            "xmlns" => "'jabber:client'"
+        ];
+
+        $message_element = HTMLHandler::generateElement("message", $message_body_element, $message_attributes, false);
+
+        $attributes = [
+            "rid" => "'$this->rid'",
+            "sid" => "'$this->sid'",
+            "xmlns" => "'http://jabber.org/protocol/httpbind'"
+        ];
+
+        return HTMLHandler::generateElement("body", $message_element, $attributes, false);
     }
 
     public function getRestartBody($to)
