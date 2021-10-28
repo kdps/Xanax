@@ -11,6 +11,19 @@ use Xanax\Implement\ClientURLInterface;
 class ClientURL implements ClientURLInterface {
 	private static $session;
 
+	public function __construct(bool $useLocalMethod = true, string $url = '') {
+		if (!extension_loaded('curl')) {
+            throw new \ErrorException('The CURL library is NOT loaded');
+        }
+		
+		self::$session = $this->getSession();
+
+		if ($useLocalMethod) {
+			$this->Option      = new ClientURLOption(self::$session);
+			$this->Information = new ClientURLLastTransferInformation(self::$session);
+		}
+	}
+
 	public function getSession() {
 		if (self::$session == null) {
 			self::$session = $this->Initialize();
@@ -32,7 +45,9 @@ class ClientURL implements ClientURLInterface {
 	}
 
 	public function Reset() {
-		curl_reset(self::$session);
+		if (function_exists('curl_reset')) {
+			curl_reset(self::$session);
+		}
 	}
 
 	public function Option() {
@@ -49,15 +64,6 @@ class ClientURL implements ClientURLInterface {
 		}
 
 		return $this->Information;
-	}
-
-	public function __construct(bool $useLocalMethod = true, string $url = '') {
-		self::$session = $this->getSession();
-
-		if ($useLocalMethod) {
-			$this->Option      = new ClientURLOption(self::$session);
-			$this->Information = new ClientURLLastTransferInformation(self::$session);
-		}
 	}
 
 	public function setOption(int $option, $value) {
