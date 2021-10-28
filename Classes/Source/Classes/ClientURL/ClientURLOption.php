@@ -26,7 +26,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 	private function setOption($key, $value)
 	{
-		$curl_setopt(self::$session, $key, $value);
+		curl_setopt(self::$session, $key, $value);
 	}
 
 	public function disableCache(bool $bool) {
