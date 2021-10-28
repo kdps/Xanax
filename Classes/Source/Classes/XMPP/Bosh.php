@@ -4,6 +4,8 @@ namespace Xanax\Classes\XMPP;
 
 use Xanax\Classes\HTML\Handler as HTMLHandler;
 
+use Xanax\Classes\ClientURL;
+
 class Bosh 
 {
     private $user = "";
@@ -15,12 +17,30 @@ class Bosh
     private $rid;
     
     private $sid;
+
+    private $bosh_server = "";
     
     public function __construct($user, $password, $domain)
     {
         $this->user = $user;
         $this->password = $password;
         $this->domain = $domain;
+    }
+
+    public function sendBody($body)
+    {
+        $cURL = new ClientURL();
+        $cURL->Option
+            ->setURL($this->bosh_server)
+            ->setPostMethod(true)
+            ->setPostField($body)
+            ->setContentType('text/xml')
+            ->setCharset('UTF-8')
+            ->setFollowRedirects(true)
+            ->setVerbose(true)
+			->setReturnTransfer(true);
+
+        return $cURL->Execute();
     }
 
     public function getPlainHash()

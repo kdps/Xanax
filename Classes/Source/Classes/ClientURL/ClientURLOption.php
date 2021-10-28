@@ -80,7 +80,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 	 * @return void
 	 */
 	public function setPostFieldSize(int $size = 0) {
-		curl_setopt(self::$session, CURLOPT_POSTFIELDSIZE, $size);
+		curl_setopt(self::$session, \CURLOPT_POSTFIELDSIZE, $size);
 
 		return $this->returnContext();
 	}
@@ -109,6 +109,17 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 	public function setFileHandler($filePointer) {
 		curl_setopt(self::$session, CURLOPT_FILE, $filePointer);
+
+		return $this->returnContext();
+	}
+
+	/**
+	 * Verbose
+	 *
+	 * @return void
+	 */
+	public function setVerbose(bool $bool = true) {
+		curl_setopt(self::$session, CURLOPT_VERBOSE, $bool);
 
 		return $this->returnContext();
 	}
@@ -285,6 +296,10 @@ class ClientURLOption implements ClientURLOptionInterface {
 		$mimeType = $mime->getType();
 
 		return $this->setHeader('Content-Type', $mimeType);
+	}
+
+	public function setCharset($charset) {
+		return $this->setHeader('Charset', $charset);
 	}
 
 	public function setAcceptContentType($contentType) {
