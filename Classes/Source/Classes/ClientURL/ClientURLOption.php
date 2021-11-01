@@ -461,6 +461,20 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->setAuthentication(CURLAUTH_DIGEST);
 	}
 
+	private function setNoneHTTPVersion() {
+		return $this->setHTTPVersion(CURL_HTTP_VERSION_NONE);
+	}
+
+	private function setHTTPVersion1_0() {
+		return $this->setHTTPVersion(CURL_HTTP_VERSION_1_0);
+	}
+
+	private function setHTTPVersion($version) {
+		$this->setOption(CURLOPT_HTTP_VERSION, $version);
+
+		return $this->returnContext();
+	}
+
 	private function setAuthentication($authentication) {
 		$this->setOption(CURLOPT_HTTPAUTH, $authentication);
 

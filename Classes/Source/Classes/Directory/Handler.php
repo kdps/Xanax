@@ -51,6 +51,25 @@ class Handler implements DirectoryHandlerInterface
 		return $diskFreeSpaces;
 	}
 
+	/**
+	 * Get total space of root directory
+	 *
+	 * @param string $prefix
+	 *
+	 * @return int
+	 */
+	public function getTotalSpace($prefix = '/') 
+	{
+		$diskFreeSpaces = -1;
+
+		if (function_exists('disk_total_space')) 
+		{
+			$diskFreeSpaces = disk_total_space($prefix);
+		}
+
+		return $diskFreeSpaces;
+	}
+
 	public function hasCurrentWorkingLocation() 
 	{
 		return $this->getCurrentWorkingLocation();

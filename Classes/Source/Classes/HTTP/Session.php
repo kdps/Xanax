@@ -63,6 +63,26 @@ class Session
 		return $sessionId;
 	}
 
+	public function setCacheLimiter(string $value) 
+	{
+		session_cache_limiter($value);
+	}
+
+	public function getCacheLimiter() 
+	{
+		return session_cache_limiter();
+	}
+
+	public function setCacheExpire(int $value) 
+	{
+		return session_cache_expire($value);
+	}
+
+	public function Abort() 
+	{
+		return session_abort();
+	}
+
 	/**
 	 * Check that session id is exists
 	 *
@@ -152,6 +172,26 @@ class Session
 	public function setSavePath($path = '') 
 	{
 		return session_save_path($path);
+	}
+
+	public function Reset()
+	{
+		return session_reset();
+	}
+
+	public function getCookieParams()
+	{
+		return session_get_cookie_params();
+	}
+
+	public function garbageCollect()
+	{
+		return session_gc();
+	}
+
+	public function createId(string $prefix)
+	{
+		return session_create_id($prefix);
 	}
 
 	public function Commit() 
