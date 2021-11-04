@@ -10,6 +10,8 @@ use Xanax\Enumeration\Orientation;
 
 use Xanax\Enumeration\ImageFilter;
 
+use Xanax\Enumeration\ExifFileHeader;
+
 
 class Handler implements ImageHandlerInterface
 {
@@ -77,11 +79,11 @@ class Handler implements ImageHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	public function getExifData ($filePath)
+	public function getExifData ($filePath, $header = ExifFileHeader::MAIN_IMAGE)
 	{
 		if (function_exists('exif_read_data'))
 		{
-			return exif_read_data($filePath);
+			return exif_read_data($filePath, $header);
 		}
 
 		return $filePath;
@@ -148,18 +150,16 @@ class Handler implements ImageHandlerInterface
 
 			$data = $this->getExifOrientationData($orientation);
 
-			$degree = $collect['Degree'];
-			$flip = $collect['Orientation'];
+			$degree = $data['Degree'];
+			$flip = $data['Orientation'];
 		}
 		
 		$image = $this->Rotate($imageResource, $degree);
 
 		switch ($flip) {
-			case Orientation::HORIZONTAL:
-				$image = $this->Flip($image, Orientation::HORIZONTAL);
-				break;
 			case Orientation::VERTICAL:
-				$image = $this->Flip($image, Orientation::VERTICAL);
+			case Orientation::HORIZONTAL:
+				$image = $this->Flip($image, $flip);
 				break;
 		}
 
@@ -227,7 +227,7 @@ class Handler implements ImageHandlerInterface
 			$imageResource = $this->getInstance( $imageResource );
 		}
 
-		list($origin_width, $origin_height) = getimagesize($src);
+		list($origin_width, $origin_height) = getimagesize($imageResource);
 		$ratio = $origin_width / $origin_height;
 		$resizeWidth = $resizeHeight = min($resizeWidth, max($origin_width, $origin_height));
 

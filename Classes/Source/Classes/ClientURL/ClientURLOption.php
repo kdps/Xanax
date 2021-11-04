@@ -465,8 +465,28 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->setHTTPVersion(CURL_HTTP_VERSION_NONE);
 	}
 
-	private function setHTTPVersion1_0() {
+	private function setHTTPVersion_1_0() {
 		return $this->setHTTPVersion(CURL_HTTP_VERSION_1_0);
+	}
+
+	private function setHTTPVersion_1_1() {
+		return $this->setHTTPVersion(CURL_HTTP_VERSION_1_1);
+	}
+
+	private function setHTTPVersion_2_0() {
+		return $this->setHTTPVersion(CURL_HTTP_VERSION_2_0);
+	}
+
+	private function setHTTPVersion_2_TLS() {
+		return $this->setHTTPVersion(CURL_HTTP_VERSION_2TLS);
+	}
+
+	private function setLowSpeedLimitTime($value) {
+		return $this->setOption(CURLOPT_LOW_SPEED_TIME, $value);
+	}
+
+	private function setHTTPPriorKnowledge() {
+		return $this->setHTTPVersion(CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE);
 	}
 
 	private function setHTTPVersion($version) {

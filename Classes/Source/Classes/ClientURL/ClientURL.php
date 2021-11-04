@@ -11,6 +11,12 @@ use Xanax\Implement\ClientURLInterface;
 class ClientURL implements ClientURLInterface {
 	private static $session;
 
+	/** @var Xanax\Classes\ClientURLOption */
+	private $Option;
+
+	/** @var Xanax\Classes\ClientURLLastTransferInformation */
+	private $Information;
+
 	public function __construct(bool $useLocalMethod = true, string $url = '') {
 		if (!extension_loaded('curl')) {
             throw new \ErrorException('The CURL library is NOT loaded');
