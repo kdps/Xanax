@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes\Pagenation;
+namespace Xanax\Classes\Pagination;
 
 class Statics
 {
@@ -42,7 +42,7 @@ class Statics
 		// Check that needs go to first page
 		if ($this->page_start > $this->list_count) 
 		{
-			$this->needFirstPagenation = true;
+			$this->needFirstPage = true;
 		}
 	}
 	
