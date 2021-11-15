@@ -7,11 +7,9 @@ namespace Xanax\Classes\Image;
 use Xanax\Implement\ImageHandlerInterface;
 
 use Xanax\Enumeration\Orientation;
-
 use Xanax\Enumeration\ImageFilter;
-
 use Xanax\Enumeration\ExifFileHeader;
-
+use Xanax\Enumeration\MIME;
 
 class Handler implements ImageHandlerInterface
 {
@@ -410,39 +408,39 @@ class Handler implements ImageHandlerInterface
 		}
 
 		switch($format) {
-			case 'image/jpeg':
+			case MIME::IMAGE_JPEG:
 				header("Content-Type: image/jpeg");
 				imagejpeg($imageResource);
 				break;
-			case 'image/png':
+			case MIME::IMAGE_PNG:
 				header("Content-Type: image/png");
 				imagepng($imageResource);
 				break;
-			case 'image/bmp':
+			case MIME::IMAGE_BMP:
 				header("Content-Type: image/bmp");
 				imagebmp($imageResource);
 				break;
-			case  'image/gif':
+			case MIME::IMAGE_GIF:
 				header("Content-Type: image/gif");
 				imagegif ($imageResource);
 				break;
-			case  'image/wbmp':
+			case MIME::IMAGE_WBMP:
 				header("Content-Type: vnd.wap.wbmp");
 				imagewbmp($imageResource);
 				break;
-			case  'image/webp':
+			case MIME::IMAGE_WEBP:
 				header("Content-Type: image/webp");
 				imagecreatefromwebp($imageResource);
 				break;
-			case  'image/xbm':
+			case MIME::IMAGE_XBM:
 				header("Content-Type: image/xbm");
 				imagexbm($imageResource);
 				break;
-			case  'image/gd':
+			case MIME::IMAGE_GD:
 				header("Content-Type: image/gd");
 				imagegd($imageResource);
 				break;
-			case  'image/gd2':
+			case MIME::IMAGE_GD2:
 				header("Content-Type: image/gd2");
 				imagegd($imageResource);
 				break;
@@ -450,7 +448,6 @@ class Handler implements ImageHandlerInterface
 				break;
 		}
 	}
-
 
 	/**
 	 * Pick a color of specific position

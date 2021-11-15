@@ -9,5 +9,5 @@ $fixImage = "./Resources/Images/up.jpg";
 $imageHandler = new ImageHandler();
 $type = $imageHandler->getType($fixImage);
 $imageInstance = $imageHandler->getInstance($fixImage);
-$imageInstance = $imageHandler->fixOrientation($fixImage, $imageInstance);
+$imageInstance = $imageHandler->Resize($imageInstance, 100, 100);
 $imageHandler->Draw($imageInstance, $type);
