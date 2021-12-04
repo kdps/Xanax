@@ -476,88 +476,6 @@
 			return void 0 === elem.document.createElement("style").scoped;
 		},
 		
-		getRTCPeerConnection: function () {
-			_cWin.RTCPeerConnection = _cWin.RTCPeerConnection || 
-									  _cWin.webkitRTCPeerConnection || 
-									  _cWin.mozRTCPeerConnection;
-									  
-			return _cWin.RTCPeerConnection;
-		},
-		
-		hasRTCPeerConnection: function () {
-			return !!(this.getRTCPeerConnection());
-		},
-		
-		newImageCapture: function (mediaStream) {
-			var mediaStreamTrack = mediaStream.getVideoTracks()[0];
-			
-			if ($.core.Validate.isObject(mediaStreamTrack)) {
-				return new ImageCapture(mediaStreamTrack);
-			}
-		},
-		
-		startRecorder: function (onLoadCallback, onSuccessCallback, onErrorCallback) {
-			if (this.hasGetUserMedia()) {
-				navigator.mediaDevices.getUserMedia({audio: true}).then(function (stream) {
-					if (typeof onSuccessCallback == 'function') {
-						onSuccessCallback(stream);
-					}
-				}).then(function (status) {
-					if (typeof onSuccessCallback == 'function') {
-						return onSuccessCallback(status);
-					}
-				}).catch(onErrorCallback);
-			}
-		},
-		
-		startWebCam: function (onLoadCallback, onSuccessCallback, onErrorCallback) {
-			if (this.hasGetUserMedia()) {
-				this.getDeviceUserMedia({
-					video: true
-				}).then(function (mediaStream) {
-					if (typeof onLoadCallback == 'function') {
-						return onLoadCallback(mediaStream);
-					}
-				}).then(function (status) {
-					if (typeof onSuccessCallback == 'function') {
-						return onSuccessCallback(status);
-					}
-				}).catch(onErrorCallback);
-			}
-		},
-		
-		getDeviceUserMedia: function (params) {
-			return _cWin.navigator.mediaDevices.getUserMedia(params);
-		},
-		
-		getImageCaptureHandler: function () {
-			this.getDeviceUserMedia({video: true}).then(gotMedia).catch(function () {
-			//error => {
-				return false;
-			});
-			
-			function gotMedia(mediaStream) {
-				const mediaStreamTrack = mediaStream.getVideoTracks()[0];
-				const imageCapture = new ImageCapture(mediaStreamTrack);
-				return imageCapture;
-			}
-		},
-		
-		doCapture: function () {
-			var imageCapture = this.getImageCaptureHandler();
-			var blobData;
-			
-			imageCapture.takePhoto().then(function (blob) {
-			//blob => {
-				blobData = blob;
-			}).catch(function () {
-			//error => {
-				return false;
-			});
-			
-			return blobData;
-		},
-		
 		setIframeAPushState: function () {
 			if (this.hasIframe()) {
 				$("a").click(function () {
@@ -702,17 +620,6 @@
 		
 		getBodyMiddleTop: function () {
 			return Math.floor(( $("body").outerHeight(true) - $(_cWin).height()) / 2);
-		},
-		
-		getUserMedia: function () {
-			return _cNavi.getUserMedia || 
-				   _cNavi.webkitGetUserMedia || 
-				   _cNavi.mozGetUserMedia || 
-				   _cNavi.msGetUserMedia;
-		},
-		
-		hasGetUserMedia: function () {
-			return !!(this.getUserMedia());
 		},
 		
 		getVibrator: function () {
