@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\Database\Driver;
 
-class PDO
+class PHPDataObject extends \PDO
 {
 	private $connection;
 
@@ -22,12 +22,11 @@ class PDO
 				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
 				\PDO::ATTR_TIMEOUT            => 5,
 				\PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-				\PDO::ATTR_EMULATE_PREPARES   => false
+				\PDO::ATTR_EMULATE_PREPARES   => false,
+				\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
 			];
 
-			$pdo = new PDO($dns, $username, $password, $attributes);
-
-			$this->connection = $pdo;
+			parent::__construct($dns, $username, $password, $attributes);
 		} catch (\Exception $e) {
 			throw new \Exception($e->getMessage());
 		}
