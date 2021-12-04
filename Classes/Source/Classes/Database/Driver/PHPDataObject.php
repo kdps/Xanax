@@ -6,7 +6,6 @@ namespace Xanax\Classes\Database\Driver;
 
 class PHPDataObject extends \PDO
 {
-	private $connection;
 
 	public function __construct(string $host = 'localhost', string $database, string $username, string $password)
 	{
@@ -31,4 +30,15 @@ class PHPDataObject extends \PDO
 			throw new \Exception($e->getMessage());
 		}
 	}
+
+	public function insertByArray($table, $columns, $values) {
+		$column_count = count($columns);
+		$column_separated = implode(",", $columns);
+		$placeholder_separated = implode(",", array_fill(0, $column_count, "?"));
+		$sql = "INSERT INTO $table ($column_separated) VALUES ($placeholder_separated)";
+
+		$stmt= $this->prepare($sql);
+		$stmt->execute($values);
+	}
+
 }
