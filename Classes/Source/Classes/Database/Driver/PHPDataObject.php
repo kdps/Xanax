@@ -8,7 +8,7 @@ class PHPDataObject extends \PDO
 {
 	private $connection;
 
-	public function Connect(string $host = 'localhost', string $database, string $username, string $password)
+	public function __construct(string $host = 'localhost', string $database, string $username, string $password)
 	{
 		try {
 			$dns = ('mysql:' . implode(';', isset($database) ? [
