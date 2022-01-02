@@ -31,11 +31,33 @@ class Math {
     
     return (exp($x) - exp(-$x)) / (exp($x) + exp(-$x));
   }
+ 
+  // Scaled Exponential Linear Unit
+  public function selu($x) {
+    
+  }
+ 
+  // Exponential Linear Unit
+  public function elu($x) {
+    
+  }
   
+  public function maxout() {
+    
+  }
+ 
+  // Sigmoid-Weighted Linear Unit
+  public function swish($x) {
+    
+  }
+  
+
+  // Rectified Linear Unit
   public function relu($x) {
     
   }
   
+ // Gaussian Error Linear Unit
   public function gelu($x) {
   }
   
