@@ -2,6 +2,18 @@
 
 class Math {
  
+  public function erf() {
+  }
+ 
+  public function derivative() {
+  }
+ 
+  public function partial_derivative() {
+  }
+ 
+  public function backpropagtion() {
+  }
+ 
   public function cross_entropy() {
   }
  
