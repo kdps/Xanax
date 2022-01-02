@@ -1,6 +1,6 @@
 <?php
 
-class Math {
+class ActivationFunctions {
  
   public function erf() {
   }
