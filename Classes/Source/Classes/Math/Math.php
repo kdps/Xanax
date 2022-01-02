@@ -2,6 +2,9 @@
 
 class Math {
  
+  public function softmax($x) {
+  }
+ 
   public function sigmoid($x) {
     return 1 / (1 + exp(-$x));
   }
