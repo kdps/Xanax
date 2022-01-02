@@ -2,6 +2,9 @@
 
 class Math {
  
+  public function cross_entropy() {
+  }
+ 
   public function softmax($x) {
   }
  
