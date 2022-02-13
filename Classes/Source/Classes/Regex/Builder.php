@@ -12,6 +12,10 @@ class Builder
     return "[a-zA-Z_\x7f-\xff]";
   }
   
+  public function negativeSet($expression) {
+    return "[^${expression}]";
+  }
+  
   public function Url() {
     return "(?<=(([\<a href])))?(?2)?(?>)(?1)(?=[http|https]).{4,5}[A-Za-z]\:\/\/\b[0-9a-zA-Z\?\=.\/\_\-]{1,}\b";
   }
