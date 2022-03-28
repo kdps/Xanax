@@ -1,0 +1,34 @@
+{
+  "name": "Xanax",
+  "version": "0.1",
+  "scripts": {
+      "grunt": "grunt",
+      "tsc-build": "tsc --build",
+      "tsc-clean": "tsc --build --clean",
+      "webpack-build": "webpack",
+      "webpack-watch": "webpack -w",
+  },
+  "dependencies": {
+    "@vue/cli": "^4.5.13",
+    "vue": "^2.6.14",
+    "redis": "^3.1.2",
+    "jsdom": "^19.0.0",
+    "jquery": "^3.6.0",
+    "axios": "^0.21.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@types/jquery": "^3.5.14",
+    "typescript": "^4.6.2",
+    "grunt": "^1.4.1",
+    "grunt-contrib-handlebars": "^3.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.13",
+    "ts-loader": "^9.2.7",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
