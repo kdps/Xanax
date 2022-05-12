@@ -1958,9 +1958,9 @@ class Handler implements FileHandlerInterface
 			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
-		if ($this->isFile($destination))
+		if (!$this->isFile($destination))
 		{
-
+			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
 		$return = rename($source, $destination);
