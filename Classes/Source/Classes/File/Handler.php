@@ -1934,7 +1934,7 @@ class Handler implements FileHandlerInterface
 
 		if (!$this->isFile($filePath))
 		{
-			throw new FileIsNotExistsException(FileHandlerMessage::getFileIsNotExistsMessage());
+			throw new TargetIsNotFileException(FileHandlerMessage::getFileIsNotExistsMessage());
 		}
 
 		require_once $filePath;
