@@ -19,9 +19,24 @@ class PostgreSQL
     pg_close($this->connection);
   }
   
+  public function getHostname()
+  {
+    return pg_host($this->connection);
+  }
+  
   public function fetchRow(\PgSql\Result $result)
   {
     return pg_fetch_row($result);
+  }
+  
+  public function fetchArray(PgSql\Result $result, int $row = null) : array|false
+  {
+    return pg_fetch_assoc($result, $row);
+  }
+  
+  public function fetchAll(PgSql\Result $result, int $mode = PGSQL_ASSOC) :array
+  {
+    return pg_fetch_all($result, $mode);
   }
   
   public function affectedRows(\PgSql\Result $result) :int
