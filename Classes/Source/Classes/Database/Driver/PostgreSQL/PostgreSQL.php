@@ -19,6 +19,21 @@ class PostgreSQL
     pg_close($this->connection);
   }
   
+  public function getNumberOfFields(PgSql\Result $result) :int
+  {
+    return pg_num_fields($result);
+  }
+  
+  public function getNumberOfRows(PgSql\Result $result) :int
+  {
+    return pg_num_rows($result);
+  }
+  
+  public function getPort()
+  {
+    return pg_port($this->connection);
+  }
+  
   public function getHostname()
   {
     return pg_host($this->connection);
@@ -52,6 +67,16 @@ class PostgreSQL
   public function getDatabaseName()
   {
     return pg_dbname($this->connection);
+  }
+  
+  public function getLastError()
+  {
+    return pg_last_error();
+  }
+  
+  public function freeResultSet(\PgSql\Result $result)
+  {
+    pg_free_result($result);
   }
   
 }
