@@ -61,4 +61,8 @@ class Request
     $this->Set(HTTPRequestMethod::PATCH, $pattern, $callback);
   }
   
+  public function Run()
+  {
+  }
+  
 }
