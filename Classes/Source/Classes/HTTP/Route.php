@@ -10,32 +10,55 @@ class Request
 {
   private $routes = array();
   
-  public function Get() 
+  private function Unset()
   {
   }
   
-  public function Post() 
+  private function Set($method, $pattern, $callback)
+  {
+    $this->routes[$method][] = array(
+      'pattern' => $pattern,
+      'callback' => $callback,
+    );
+  }
+  
+  public function Trigger()
   {
   }
   
-  public function Delete() 
+  public function On($method, $pattern, $callback)
   {
+    $this->Set($method, $pattern, $callback);
   }
   
-  public function Put() 
+  public function onGet($pattern, $callback) 
   {
+    $this->Set(HTTPRequestMethod::GET, $pattern, $callback);
   }
   
-  public function Options() 
+  public function onPost($pattern, $callback) 
   {
+    $this->Set(HTTPRequestMethod::POST, $pattern, $callback);
   }
   
-  public function Patch() 
+  public function onDelete($pattern, $callback) 
   {
+    $this->Set(HTTPRequestMethod::DELETE, $pattern, $callback);
   }
   
-  public function Patch() 
+  public function onPut($pattern, $callback) 
   {
+    $this->Set(HTTPRequestMethod::PUT, $pattern, $callback);
+  }
+  
+  public function onOptions($pattern, $callback) 
+  {
+    $this->Set(HTTPRequestMethod::OPTIONS, $pattern, $callback);
+  }
+  
+  public function onPatch($pattern, $callback) 
+  {
+    $this->Set(HTTPRequestMethod::PATCH, $pattern, $callback);
   }
   
 }
