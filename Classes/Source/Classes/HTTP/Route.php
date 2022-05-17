@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Xanax\Classes\HTTP;
 
-use Xanax\Enumeration\HTTPRequestMethod;
+use Xanax\Enumeration\HTTPRequestMethod as HTTPRequestMethod;
 
 class Request 
 {
@@ -14,7 +14,7 @@ class Request
   {
   }
   
-  private function Set($method, $pattern, $callback)
+  private function Set(HTTPRequestMethod $method, $pattern, $callback)
   {
     $this->routes[$method][] = array(
       'pattern' => $pattern,
@@ -26,7 +26,7 @@ class Request
   {
   }
   
-  public function On($method, $pattern, $callback)
+  public function On(HTTPRequestMethod $method, $pattern, $callback)
   {
     $this->Set($method, $pattern, $callback);
   }
