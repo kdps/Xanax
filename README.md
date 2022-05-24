@@ -36,4 +36,4 @@ Please use the GitHub
 
 License
 -------
-Xanax is [MIT License](https://en.wikipedia.org/wiki/MIT_License) software. See the LICENSE.txt file in the core directory for complete text.
+Xanax is [LGPL License] software. See the LICENSE.txt file in the core directory for complete text.
