@@ -2,6 +2,8 @@
 
 namespace Xanax\Classes;
 
+use RecursiveArrayIterator;
+
 class ArrayObject {
 
   public function getKeys(array $array) {
@@ -44,10 +46,6 @@ class ArrayObject {
     return ksort($array);
   }
 
-  public function getAllValues(array $array) {
-    return array_values($array);
-  }
-
   public function FetchKey(array $array) {
     return key($array);
   }
@@ -62,11 +60,11 @@ class ArrayObject {
 
   public function getDepth(array $array) {
     $depth = 0;
-    $arrayReclusive = new RecursiveArrayIterator($array);
-    $iteratorReclusive = new RecursiveIteratorIterator($arrayReclusive);
+    $arrayReclusive = new \RecursiveArrayIterator($array);
+    $iteratorReclusive = new \RecursiveIteratorIterator($arrayReclusive);
 
     foreach ($iteratorReclusive as $iterator) {
-        $currentDepth = $reclusive->getDepth();
+        $currentDepth = $iterator->getDepth();
 
         $depth = $currentDepth > $depth ? $currentDepth : $depth;
     }
