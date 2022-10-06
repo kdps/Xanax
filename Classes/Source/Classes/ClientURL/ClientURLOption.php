@@ -16,7 +16,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 	private static $headerArrayData = [];
 
-	public function __construct(\CurlHandle $session) {
+	public function __construct($session) {
 		self::$session = $session;
 	}
 
@@ -177,7 +177,37 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->returnContext();
 	}
 
-	public function setCookieJar($jar) {
+	public function setBufferSize($size) {
+		$this->setOption(CURLOPT_BUFFERSIZE, $size);
+		
+		return $this->returnContext();
+	}
+
+	public function enableTCPFastOpen($enable) {
+		$this->setOption(CURLOPT_TCP_FASTOPEN, $enable);
+		
+		return $this->returnContext();
+	}
+
+	public function setNoProgress($number) {
+		$this->setOption(CURLOPT_NOPROGRESS, $number);
+		
+		return $this->returnContext();
+	}
+
+	public function setProgressCallback($name) {
+		$this->setOption(CURLOPT_PROGRESSFUNCTION, $name);
+		
+		return $this->returnContext();
+	}
+
+	public function setMaxRedirects(int $number) {
+		$this->setOption(CURLOPT_MAXREDIRS, $number);
+
+		return $this->returnContext();
+	}
+
+	public function setCookieJar(string $jar) {
 		$this->setOption(CURLOPT_COOKIEJAR, $jar);
 
 		return $this->returnContext();
@@ -185,6 +215,12 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 	public function setProxyType($type) {
 		$this->setOption(CURLOPT_PROXYTYPE, $type);
+
+		return $this->returnContext();
+	}
+
+	public function enableTCPKeepAlive(bool $enable) {
+		$this->setOption(CURLOPT_TCP_KEEPALIVE, $enable);
 
 		return $this->returnContext();
 	}

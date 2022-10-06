@@ -10,7 +10,7 @@ interface FileHandlerInterface {
 	
 	public function openProcess($processPath, $mode = 'w');
 
-	public function createTemporary() :mixed;
+	public function createTemporary();
 
 	public function isFile(string $filePath, string $containDirectory = null) :bool;
 
@@ -42,7 +42,7 @@ interface FileHandlerInterface {
 
 	public function getInode(string $filePath);
 
-	public function getLastModifiedTime(string $filePath): mixed;
+	public function getLastModifiedTime(string $filePath);
 
 	public function getCreatedDate($filePath);
 
@@ -70,7 +70,7 @@ interface FileHandlerInterface {
 
 	public function Write(string $filePath, string $content = null, string $writeMode = FileMode::WRITE_ONLY) :bool;
 
-	public function Read(string $filePath, int $length = -1, string $mode = FileMode::READ_ONLY) : mixed;
+	public function Read(string $filePath, int $length = -1, string $mode = FileMode::READ_ONLY);
 
 	public function readAllContent(string $filePath, string $writeMode = FileMode::READ_ONLY);
 

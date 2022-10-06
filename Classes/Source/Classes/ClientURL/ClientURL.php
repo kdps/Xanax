@@ -12,10 +12,10 @@ class ClientURL implements ClientURLInterface {
 	private static $session;
 
 	/** @var Xanax\Classes\ClientURLOption */
-	private $Option;
+	public ClientURLOption $Option;
 
 	/** @var Xanax\Classes\ClientURLLastTransferInformation */
-	private $Information;
+	private ClientURLLastTransferInformation $Information;
 
 	public function __construct(bool $useLocalMethod = true, string $url = '') {
 		if (!extension_loaded('curl')) {

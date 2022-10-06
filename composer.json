@@ -8,7 +8,7 @@
   "require": {
     "php": ">=7.2.5",
     "phpmailer/phpmailer": "^6.1",
-    "phpunit/phpunit": "^5.5",
+    "phpunit/phpunit": "^8.5",
     "ezyang/htmlpurifier": ">=4.10.0"
   },
   "authors": [

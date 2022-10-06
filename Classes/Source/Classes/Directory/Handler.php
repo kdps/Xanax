@@ -234,6 +234,11 @@ class Handler implements DirectoryHandlerInterface
 		}
 	}
 
+	public function test() {
+		return new fakeString();
+
+	}
+
 	/**
 	 * Get file size of directory
 	 *

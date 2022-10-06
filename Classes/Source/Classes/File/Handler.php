@@ -559,7 +559,7 @@ class Handler implements FileHandlerInterface
 	 *
 	 * @return resource
 	 */
-	public function createTemporary() :mixed
+	public function createTemporary()
 	{
 		return tmpfile();
 	}
