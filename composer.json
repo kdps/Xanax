@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Xanax\\": "Classes/Src/",
+      "Xanax\\": "Classes/Source/",
       "Xanax\\": "Plugins/"
     },
     "files": [

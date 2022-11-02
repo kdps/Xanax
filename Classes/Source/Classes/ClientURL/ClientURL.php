@@ -6,6 +6,7 @@ namespace Xanax\Classes;
 
 use Xanax\Classes\ClientURLOption as ClientURLOption;
 use Xanax\Classes\ClientURLLastTransferInformation as ClientURLLastTransferInformation;
+use Xanax\Classes\Data\StringObject as StringObject;
 use Xanax\Implement\ClientURLInterface;
 
 class ClientURL implements ClientURLInterface {
@@ -81,6 +82,6 @@ class ClientURL implements ClientURLInterface {
 	}
 
 	public function Execute() {
-		return curl_exec(self::$session);
+		return new StringObject(curl_exec(self::$session));
 	}
 }

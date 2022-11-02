@@ -3,6 +3,7 @@
 'use strict'
 
 import AudioContextObject from './Class/AudioContextObject.js';
+
 (function ($, core) {
 
 	var A = core.Audio = {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanax\Classes\String;
+namespace Xanax\Classes\Data;
 
 class Unicode 
 {

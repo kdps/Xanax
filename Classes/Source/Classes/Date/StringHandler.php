@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Xanax\Classes\String;
+namespace Xanax\Classes\Data;
 
 use Xanax\Exception\MemoryAllocatedException;
 
@@ -91,53 +91,20 @@ class StringHandler
 		return $result;
 	}
 
-	public static function toUpper($text)
+	public static function toUpperCase($text)
 	{
 		return strtoupper($text);
 	}
 
-	public static function toLower($text)
+	public static function toLowerCase($text)
 	{
 		return strtolower($text);
 	}
 
-	public function unhtmlSpecialChars($string)
-	{
-		$entity = array('&quot;', '&#039;', '&#39;', '&lt;', '&gt;', '&amp;');
-		$symbol = array('"', "'", "'", '<', '>', '&');
-		return str_replace($entity, $symbol, $string);
-	}
-
-	public function entityToTag($string, $names)
-	{
-		$attr = ' ([a-z]+)=&quot;([\w!#$%()*+,\-.\/:;=?@~\[\] ]|&amp|&#039|&#39)+&quot;';
-		$name_list = explode(',', $names);
-		foreach ($name_list as $name)
-		{
-			$string = preg_replace_callback("{&lt;($name)(($attr)*)&gt;(.*?)&lt;/$name&gt;}is", array('Utility', 'replace'), $string);
-		}
-
-		return $string;
-	}
-
-	public function stripTags($string, $tags='')
-	{
-		if ($tags === '')
-		{
-			return strip_tags($string);
-		}
-
-		$tags = str_replace(',', '><', $tags);
-		$tags = "<$tags>";
-
-		return strip_tags($string, $tags);
-	}
-
-
 	public static function getUrlParameter($args)
 	{
 		$parameter = null;
-		$rewriteParams = new stdClass;
+		$rewriteParams = new \stdClass();
 		$func_num = func_num_args();
 		$func_get = func_get_args();
 
@@ -217,16 +184,6 @@ class StringHandler
 		$input = preg_replace($regexp, $replace, $input);
 		$input = str_replace("\t", '    ', $input);
 		return $input;
-	}
-
-	public function nlToBr($string)
-	{
-		return preg_replace('/\r\n?|\n/', '<br />', $string);
-	}
-
-	public function brToNl($string)
-	{
-		return str_replace('<br />', "\r\n", $string);
 	}
 
 	public static function removeNullByte($input)
@@ -510,8 +467,7 @@ class StringHandler
 				$string = strip_tags($string);
 				break;
 			case 'JSON':
-				if ( !$this->isJson( $string )
-			    	{
+				if ( !$this->isJson( $string )) {
 					$string = false;
 				}
 
@@ -633,17 +589,9 @@ class StringHandler
 		return $id;
 	}
 
-	public function stripTags($string, $tags = '')
-    	{
-		if ($tags === '')
-		{
-			return strip_tags($string);
-		}
-
-		$tags = str_replace(',', '><', $tags);
-		$tags = "<$tags>";
-
-		return strip_tags($string, $tags);
+	public function Length($data)
+	{
+		return \strlen($data);
 	}
 
 	public function replaceToHtmlSource($match)
@@ -721,16 +669,6 @@ class StringHandler
 		return $result;
 	}
 
-	public function removeDot(string $string)
-    	{
-		return preg_replace("#(.*)-(.*)-(.*).(\d)-(.*)#", '$1-$2-$3$4-$5', $string);
-	}
-
-	public function toUpper(string $string)
-    	{
-		return strtoupper($string);
-	}
-
 	public function removeNullBytes(string $string)
     	{
 		$clean = str_replace("\x00", '', $string);
@@ -740,16 +678,16 @@ class StringHandler
 		return $clean;
 	}
 
-	public function toLower(string $string)
-	{
-		return strtolower($string);
-	}
-
 	public function getRandomHex(int $length = 32)
 	{
 		$output = $this->getRandomBytes($length);
 
 		return bin2hex($output);
+	}
+
+	public function isNull($string)
+	{
+		return is_null($string);
 	}
 
 	public function getRandomBytes(int $length = 32)
