@@ -56,9 +56,9 @@ interface ClientURLOptionInterface {
 	
 	public function setHeader(string $key, string $value, bool $overwrite = false);
 	
-	public function setXmlContentType();
+	public function setAcceptXml();
 	
-	public function setJsonContentType();
+	public function setAcceptJson();
 	
 	public function setHeaders($headers = []);
 	

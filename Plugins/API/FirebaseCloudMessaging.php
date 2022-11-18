@@ -3,7 +3,7 @@
 namespace Xanax\Plugin;
 
 use Xanax\Classes\ClientURL;
-use Xanax\Classes\String\StringHandler;
+use Xanax\Classes\Data\StringHandler;
 
 class FirebaseCloudMessaging {
 
@@ -17,6 +17,7 @@ class FirebaseCloudMessaging {
 	private $Sound = "default";
 	private $DataContent = array();
 	private $NotificationContent = array();
+	private $Topic = '';
 
 	public function __construct() {
 		$this->RequestUrl = "https://fcm.googleapis.com/fcm/send";
@@ -32,6 +33,10 @@ class FirebaseCloudMessaging {
 		if (is_array($notificationContent)) {
 			$this->NotificationContent = $notificationContent;
 		}
+	}
+
+	public function setTopic($topic) {
+		$this->Topic = $topic;
 	}
 
 	public function setServerApiKey($key) {
@@ -93,7 +98,8 @@ class FirebaseCloudMessaging {
 		$dataContent = array_merge($dataContent, $this->DataContent);
 
 		$postData = array(
-			'registration_ids'		=> $this->RegistrationIds,
+			//'registration_ids'		=> $this->RegistrationIds,
+			'to'					=> $this->Topic,
 			'notification'			 => $notificationContent,
 			'data'					=> $dataContent,
 			"priority"				=> "high",
@@ -121,6 +127,8 @@ class FirebaseCloudMessaging {
 
 		$stringHandler = new StringHandler();
 		$isJson = $stringHandler->isJson($result);
+
+		echo print_r($result);
 
 		if ($isJson) {
 			$this->ResultData = json_decode($result);

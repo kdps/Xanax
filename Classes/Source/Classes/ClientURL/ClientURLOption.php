@@ -14,7 +14,7 @@ class ClientURLOption implements ClientURLOptionInterface {
 
 	private static $session;
 
-	private static $headerArrayData = [];
+	public static $options = [];
 
 	public function __construct($session) {
 		self::$session = $session;
@@ -225,6 +225,12 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->returnContext();
 	}
 
+	public function setHeaderOut(bool $enable) {
+		$this->setOption(CURLINFO_HEADER_OUT, $enable);
+
+		return $this->returnContext();
+	}
+
 	public function setFileHandler($filePointer) {
 		$this->setOption(CURLOPT_FILE, $filePointer);
 
@@ -408,9 +414,13 @@ class ClientURLOption implements ClientURLOptionInterface {
 		$headerData = [$key, $value];
 
 		if (!$overwrite) {
-			array_push(self::$headerArrayData, $headerData);
+			array_push(self::$options, $headerData);
 
-			$this->setOption(CURLOPT_HTTPHEADER, self::$headerArrayData);
+			$headers = array_map(function ($header) {
+				return implode(': ', $header);
+			}, self::$options);
+
+			$this->setOption(CURLOPT_HTTPHEADER, $headers);
 		} else {
 			$this->setOption(CURLOPT_HTTPHEADER, $headerData);
 		}
@@ -419,8 +429,6 @@ class ClientURLOption implements ClientURLOptionInterface {
 	}
 
 	public function setContentType(string $applicationType) {
-		$value = '';
-
 		// https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types
 		$mime     = new MIME($applicationType);
 		$mimeType = $mime->getType();
@@ -432,16 +440,20 @@ class ClientURLOption implements ClientURLOptionInterface {
 		return $this->setHeader('Charset', $charset);
 	}
 
-	public function setAcceptContentType($contentType) {
+	public function setAccept($contentType) {
 		return $this->setHeader('Accept', $contentType);
 	}
 
-	public function setXmlContentType() {
-		return $this->setAcceptContentType('xml');
+	public function setAcceptXml() {
+		return $this->setAccept('xml');
 	}
 
-	public function setJsonContentType() {
-		return $this->setAcceptContentType('json');
+	public function setAcceptJson() {
+		return $this->setAccept('json');
+	}
+
+	public function setContentTypeJson() {
+		return $this->setContentType('json');
 	}
 
 	/**
@@ -475,6 +487,34 @@ class ClientURLOption implements ClientURLOptionInterface {
 		$this->setOption(CURLOPT_POST, $bool);
 
 		return $this->returnContext();
+	}
+
+	/**
+	 * Request an HTTP GET Method
+	 *
+	 * @return void
+	 */
+	public function setGetMethod(bool $bool = true) {
+		$this->setOption(CURLOPT_HTTPGET, $bool);
+
+		return $this->returnContext();
+	}
+	
+	public function setHeaderCallback($method) {
+		curl_setopt(self::$session, CURLOPT_HEADERFUNCTION, $method);
+	}
+
+	private function receiveResponseHeader() {
+		$this->setHeaderCallback(function ($ch, $header) use (&$headers) {
+			$matches = array();
+		
+			if ( preg_match('/^([^:]+)\s*:\s*([^\x0D\x0A]*)\x0D?\x0A?$/', $header, $matches) )
+			{
+				$headers[$matches[1]][] = $matches[2];
+			}
+
+			return strlen($header);
+		});
 	}
 
 	private function setAnySafeAuthentication() {
@@ -587,18 +627,6 @@ class ClientURLOption implements ClientURLOptionInterface {
 	private function setDeleteMethod() {
 		return $this->setCustomMethod(HTTPRequestMethod::DELETE);
 	}
-
-	/**
-	 * Request an HTTP GET Method
-	 *
-	 * @return void
-	 */
-	public function setGetMethod(bool $bool = true) {
-		$this->setPostMethod(!$bool);
-
-		return$this->returnContext();
-	}
-
 
 	public function setReturnTransfer(bool $hasResponse = true) {
 		$this->setOption(CURLOPT_RETURNTRANSFER, $hasResponse);

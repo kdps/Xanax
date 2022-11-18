@@ -7,9 +7,9 @@
   "license": "MIT",
   "require": {
     "php": ">=7.2.5",
+    "ezyang/htmlpurifier": ">=4.10.0",
     "phpmailer/phpmailer": "^6.1",
-    "phpunit/phpunit": "^8.5",
-    "ezyang/htmlpurifier": ">=4.10.0"
+    "phpunit/phpunit": "^8.5"
   },
   "authors": [
       {

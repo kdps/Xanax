@@ -81,7 +81,17 @@ class ClientURL implements ClientURLInterface {
 		curl_close(self::$session);
 	}
 
+	public function getHeaderOptions() {
+		return $this->Option::$headerArrayData;
+	}
+
 	public function Execute() {
-		return new StringObject(curl_exec(self::$session));
+		$result = curl_exec(self::$session);
+
+		if (getType($result) == 'string') {
+			return new StringObject($result);
+		}
+
+		return $result;
 	}
 }
