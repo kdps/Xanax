@@ -10,21 +10,19 @@ class FirebaseCloudMessagingV1 {
 	private $ServerApiKey;
     private $RequestUrl;
 
-	public function __construct() {
-        $this->ServerApiKey = '949740214663';
-		$this->RequestUrl = 'https://fcm.googleapis.com/v1/projects/flutterapp-b80f3/messages:send';
+	public function __construct($serverApiKey, $requestUrl) {
+        $this->ServerApiKey = $serverApiKey;
+		$this->RequestUrl = $requestUrl;
 	}
 
-    public function getToken() {	
+    public function getToken($tokenUrl) {	
         $headers = array(
             sprintf("Authorization: Bearer %s", $this->ServerApiKey),
             'Content-Type: application/json'
         );
 
-        $url = 'https://iamcredentials.googleapis.com/v1/flutterapp-b80f3:generateAccessToken';
-    
         $cURL = new ClientURL();
-		$cURL->Option->setURL($url)
+		$cURL->Option->setURL($tokenUrl)
 					 ->setPostMethod(true)
 					 ->setHeaders($headers)
 					 ->setPostField(json_encode(array('Content')))

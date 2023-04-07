@@ -60,7 +60,7 @@ class FirebaseCloudMessaging {
 	}
 
 	public function getResults() {
-		return $this->ResultData->results;
+		return is_object($this->ResultData) ? $this->ResultData->results : $this->ResultData;
 	}
 
 	public function setBadgeCount($count) {
@@ -98,8 +98,8 @@ class FirebaseCloudMessaging {
 		$dataContent = array_merge($dataContent, $this->DataContent);
 
 		$postData = array(
-			//'registration_ids'		=> $this->RegistrationIds,
-			'to'					=> $this->Topic,
+			'registration_ids'		=> $this->RegistrationIds,
+			//'to'					=> $this->Topic,
 			'notification'			 => $notificationContent,
 			'data'					=> $dataContent,
 			"priority"				=> "high",
@@ -128,10 +128,10 @@ class FirebaseCloudMessaging {
 		$stringHandler = new StringHandler();
 		$isJson = $stringHandler->isJson($result);
 
-		echo print_r($result);
-
 		if ($isJson) {
 			$this->ResultData = json_decode($result);
+		} else {
+			$this->ResultData = $result;
 		}
 	}
 
